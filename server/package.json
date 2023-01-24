@@ -1,0 +1,14 @@
+{
+  "name": "spending-tracker-server",
+  "version": "1.0.0",
+  "description": "\"Node.js backend for spending tracker application\"",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
