@@ -17,6 +17,7 @@ app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use("/api/user", require("./routes/userRoutes"));
 
 app.get("/", (req, res, next) => {
   console.log(req.path,req.method);
