@@ -1,4 +1,4 @@
-// const jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
@@ -35,29 +35,59 @@ const registerUser = asyncHandler(async (req, res) => {
     res.status(201).json({
       _id: user.id,
       name: user.name,
-      email: user.email
+      email: user.email,
+      token: generateToken(user.id)
+
     });
   } else {
     res.status(400);
     throw new Error("Invalid user data");
   }
-
-  res.json({message: "Registered user"});
 });
 
 // @desc    Log in existing user
 // @route   POST /api/user/login
 // @access  Public
 const loginUser = asyncHandler(async (req, res) => {
-  res.json({message: "Logged in user"});
+  const { email, password } = req.body;
+
+  const user = await User.findOne({email});
+
+  const validPassword = await bcrypt.compare(password, user.password);
+
+  if(user && validPassword) {
+    res.json({
+      _id: user.id,
+      name: user.name,
+      email: user.email,
+      token: generateToken(user._id)
+    });
+  } else {
+    res.status(400);
+    throw new Error("Invalid credentials");
+  }
 });
 
 // @desc    Get existing user data
 // @route   POST /api/user/profile
 // @access  Private
 const getUser = asyncHandler(async (req, res) => {
-  res.json({message: "Retreived user data"});
+  const { _id, name, email } = await User.findById(req.user.id);
+
+  res.status(200).json({
+    id: _id,
+    name,
+    email
+  });
 });
+
+
+// Generate JWT
+const generateToken = (id) => {
+  return jwt.sign({ id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_VALID_FOR
+  });
+};
 
 module.exports = {
   registerUser,
