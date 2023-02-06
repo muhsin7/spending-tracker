@@ -1,6 +1,6 @@
 {
   "name": "spending-tracker-server",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "\"Node.js backend for spending tracker application\"",
   "main": "app.js",
   "scripts": {
