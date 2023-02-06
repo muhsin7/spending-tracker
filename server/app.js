@@ -19,6 +19,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/api/user", require("./routes/userRoutes"));
 
+app.use("/api/category", require("./routes/categoryRoutes"));
+
 app.get("/", (req, res, next) => {
   console.log(req.path,req.method);
   next();
