@@ -1,0 +1,57 @@
+h2{
+    text-align: center;
+}
+
+.div-login{
+    width:300px;
+    height:400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    margin: 0 auto;
+    border: 1px solid #dbdbdb;
+    border-radius: 5px;
+    padding: 20px;
+    margin-top: 15vh;
+    background-color: white;
+}
+
+input{
+    width: 95%;
+    border: 1px solid #dbdbdb;
+    padding: 5px;
+    margin: 3px;
+    border-radius: 5px;
+    background-color: #fafafa;
+    box-shadow: none;
+}
+
+#logInButton{
+    width: 95%;
+    margin: 10px ;
+    background-color: dodgerblue;
+    padding: 5px;
+    font-weight: 600;
+    border: none;
+    color: white;
+    border-radius: 5px;
+}
+
+#registerButton{
+    border: none;
+    background: none;
+    color: black;
+    text-decoration: underline;
+    padding: 5px;
+    width: 95%;
+    margin: 10px;
+    padding-bottom: 10px;
+    border-radius: 5px;
+    text-align: center;
+    
+}
+
+body {
+    background-image: url("Images/moneyDollars.jpeg");
+}
+
