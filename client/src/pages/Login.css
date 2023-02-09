@@ -30,7 +30,7 @@ input{
     width: 95%;
     margin: 10px ;
     background-color: dodgerblue;
-    padding: 5px;
+    padding: 7px;
     font-weight: 600;
     border: none;
     color: white;
@@ -46,7 +46,7 @@ input{
     width: 95%;
     margin: 10px;
     padding-bottom: 10px;
-    border-radius: 5px;
+    border-radius: 7px;
     text-align: center;
     
 }
@@ -55,3 +55,13 @@ body {
     background-image: url("Images/moneyDollars.jpeg");
 }
 
+#forgotPassword{
+    border: none;
+    background: none;
+    color: blue;
+    width: 100%;
+    text-align: right;
+    text-decoration: underline;
+    padding-bottom: 15px;
+    font-size: 13px;
+}
