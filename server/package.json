@@ -4,6 +4,7 @@
   "description": "\"Node.js backend for spending tracker application\"",
   "main": "app.js",
   "scripts": {
+    "test": "cross-env NODE_ENV=test mocha --exit",
     "start": "node app.js",
     "dev": "nodemon app.js"
   },
@@ -21,6 +22,8 @@
   },
   "devDependencies": {
     "chai": "^4.3.7",
+    "chai-http": "^4.3.0",
+    "cross-env": "^7.0.3",
     "eslint": "^8.33.0",
     "eslint-plugin-chai-expect": "^3.0.0",
     "eslint-plugin-mocha": "^10.1.0",
