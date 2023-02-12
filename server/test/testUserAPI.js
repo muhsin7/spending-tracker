@@ -19,10 +19,9 @@ describe("User tests", () => {
         name: "Jill",
         email: "jill@example.com",
         password: "123"
-      }, () => {
-        done();
-      });
+      }, () => {});
     });
+    done();
   });
 
   //Registration tests
@@ -46,8 +45,9 @@ describe("User tests", () => {
           res.body.should.have.property("name").eql(validUser.name);
           res.body.should.have.property("email").eql(validUser.email);
           res.body.should.have.property("token");
-          done();
         });
+      
+      done();
     });
 
     it("Register a user without an email", (done) => {
@@ -62,10 +62,10 @@ describe("User tests", () => {
         .send(noEmailUser)
         .end((err, res) => {
           res.should.have.status(400);
-          //Further tests wil be implemented once better error reporting is implemented.
-          done();
+          //Further tests will be implemented once better error reporting is implemented.
         });
         
+      done();
     });
 
     it("Register a user with an existing email", (done) => {
@@ -81,10 +81,10 @@ describe("User tests", () => {
         .send(noEmailUser)
         .end((err, res) => {
           res.should.have.status(400);
-          //Further tests wil be implemented once better error reporting is implemented.
-          done();
+          //Further tests will be implemented once better error reporting is implemented.
         });
         
+      done();
     });
   });
 });
