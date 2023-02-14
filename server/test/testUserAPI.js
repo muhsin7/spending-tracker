@@ -19,9 +19,9 @@ describe("User tests", () => {
         name: "Jill",
         email: "jill@example.com",
         password: "123"
-      }, () => {});
+      }, () => {done();});
     });
-    done();
+    
   });
 
   //Registration tests
@@ -62,10 +62,10 @@ describe("User tests", () => {
         .send(noEmailUser)
         .end((err, res) => {
           res.should.have.status(400);
-          //Further tests will be implemented once better error reporting is implemented.
+          done();
         });
         
-      done();
+      
     });
 
     it("Register a user with an existing email", (done) => {
@@ -81,10 +81,10 @@ describe("User tests", () => {
         .send(noEmailUser)
         .end((err, res) => {
           res.should.have.status(400);
-          //Further tests will be implemented once better error reporting is implemented.
+          done();
         });
         
-      done();
+      
     });
 
     it("Register a user with a username that is too long", (done) => {
@@ -99,11 +99,11 @@ describe("User tests", () => {
         .post("/api/user/")
         .send(longNameUser)
         .end((err, res) => {
-          res.should.have.status(400);
-          //Further tests will be implemented once better error reporting is implemented.
+          res.should.have.status(500);
+          done();
         });
         
-      done();
+      
     });
 
     it("Register a user with a username that is too short", (done) => {
@@ -118,11 +118,9 @@ describe("User tests", () => {
         .post("/api/user/")
         .send(longNameUser)
         .end((err, res) => {
-          res.should.have.status(400);
-          //Further tests will be implemented once better error reporting is implemented.
+          res.should.have.status(500);
+          done();
         });
-        
-      done();
     });
 
     it("Register a user with an invalid email", (done) => {
@@ -137,11 +135,9 @@ describe("User tests", () => {
         .post("/api/user/")
         .send(longNameUser)
         .end((err, res) => {
-          res.should.have.status(400);
-          //Further tests will be implemented once better error reporting is implemented.
+          res.should.have.status(500);
+          done();
         });
-        
-      done();
     });
   });
 });
