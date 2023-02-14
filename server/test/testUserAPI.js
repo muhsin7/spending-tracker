@@ -19,9 +19,9 @@ describe("User tests", () => {
         name: "Jill",
         email: "jill@example.com",
         password: "123"
-      }, () => {});
+      }, () => {done();});
     });
-    done();
+    
   });
 
   //Registration tests
@@ -52,7 +52,7 @@ describe("User tests", () => {
 
     it("Register a user without an email", (done) => {
       let noEmailUser = {
-        name: "name",
+        name: "John",
         password: "123"
       };
 
@@ -62,15 +62,15 @@ describe("User tests", () => {
         .send(noEmailUser)
         .end((err, res) => {
           res.should.have.status(400);
-          //Further tests will be implemented once better error reporting is implemented.
+          done();
         });
         
-      done();
+      
     });
 
     it("Register a user with an existing email", (done) => {
       let noEmailUser = {
-        name: "Jack",
+        name: "John",
         email: "jill@example.com",
         password: "123"
       };
@@ -81,10 +81,63 @@ describe("User tests", () => {
         .send(noEmailUser)
         .end((err, res) => {
           res.should.have.status(400);
-          //Further tests will be implemented once better error reporting is implemented.
+          done();
         });
         
-      done();
+      
+    });
+
+    it("Register a user with a username that is too long", (done) => {
+      let longNameUser = {
+        name: "a".repeat(21),
+        email: "john@example.com",
+        password: "123"
+      };
+
+      chai
+        .request(app)
+        .post("/api/user/")
+        .send(longNameUser)
+        .end((err, res) => {
+          res.should.have.status(500);
+          done();
+        });
+        
+      
+    });
+
+    it("Register a user with a username that is too short", (done) => {
+      let longNameUser = {
+        name: "a",
+        email: "john@example.com",
+        password: "123"
+      };
+
+      chai
+        .request(app)
+        .post("/api/user/")
+        .send(longNameUser)
+        .end((err, res) => {
+          res.should.have.status(500);
+          done();
+        });
+    });
+
+    it("Register a user with an invalid email", (done) => {
+      let longNameUser = {
+        name: "John",
+        email: "johnexample.com",
+        password: "123"
+      };
+
+      chai
+        .request(app)
+        .post("/api/user/")
+        .send(longNameUser)
+        .end((err, res) => {
+          res.should.have.status(500);
+          done();
+        });
     });
   });
 });
@@ -92,6 +145,8 @@ describe("User tests", () => {
 // No name (fail)
 
 // No password (fail)
+
+// Email too long (fail)
 
 
 // // LOGIN
