@@ -25,8 +25,7 @@ describe("Category tests", () => {
       Category.create({
         name: "Food",
         userId: USER
-      }, () => {});
+      }, () => {done();});
     });
-    done();
   });
 });
