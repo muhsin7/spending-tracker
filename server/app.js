@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 require("dotenv").config();
 const mongoose = require("mongoose");
+const { errorLogger, errorHandler, notFoundHandler } = require("./middleware/errorMiddleware");
 
 const app = express();
 const port = process.env.PORT;
@@ -32,6 +33,11 @@ app.get("/", (req, res, next) => {
   console.log(req.path,req.method);
   next();
 });
+
+// Error handling middlewares
+app.use(errorLogger);
+app.use(errorHandler);
+app.use(notFoundHandler);
 
 mongoose.connect(dbURI)
   .then(() => {
