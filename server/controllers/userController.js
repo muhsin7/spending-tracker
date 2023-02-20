@@ -31,19 +31,14 @@ const registerUser = asyncHandler(async (req, res) => {
       email,
       password: hashedPassword
     });
+    
+    res.status(201).json({
+      _id: user.id,
+      name: user.name,
+      email: user.email,
+      token: generateToken(user.id)
 
-    if(user) {
-      res.status(201).json({
-        _id: user.id,
-        name: user.name,
-        email: user.email,
-        token: generateToken(user.id)
-  
-      });
-    } else {
-      res.status(400);
-      throw new Error("Invalid user data");
-    }
+    });
   }
   //Catch validation error if form data is invalid
   catch(error) {
