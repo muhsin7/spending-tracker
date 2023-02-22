@@ -1,24 +1,56 @@
 import React from "react";
 import './Login.css';
 import { Navigate } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios"; 
+import { useToken } from "../Authentication/useToken";
 
 function Login() {
 
+        const [token, setToken] = useToken();
+        const [errorMessage, setErrorMessage] = useState('')
         const [goToRegister, setGoToRegister] = React.useState(false);
+        const [emailValue, setEmailValue] = useState('');
+        const [passwordValue, setPasswordValue] = useState('');
+
 
         if(goToRegister){
             return<Navigate to="/register"/>;
         }
 
+        const onLoginClicked = async () => {
+            const response = await axios.post('/api/login', {
+                email: emailValue,
+                password: passwordValue,
+            });
+            
+            const {token} = response.data;
+            setToken(token);
+            return <Navigate to = "/"/>;
+        }
+
         return(
             <div className="div-login">
                 <h2>Login</h2>
+                {errorMessage && <div className="Error">{errorMessage}</div>}
                 <div>
                     <form>
-                        <input type='email' name='email' placeholder="Email:" required/>
-                        <input type='password' name='password' placeholder="Password:" required/>
+                        <input value = {emailValue} 
+                        onChange={e => setEmailValue(e.target.value)}
+                        type='email' 
+                        name='email' 
+                        placeholder="Email:" required/>
+                        <input 
+                        value = {passwordValue} 
+                        onChange={e => setPasswordValue(e.target.value)}
+                        type='password' 
+                        name='password' 
+                        placeholder="Password:" required/>
                         <button id="forgotPassword">Forgot your password?</button>
-                        <button type="submit" id="logInButton" >Log In</button>
+                        <button 
+                        onClick={onLoginClicked}
+                        type="submit" id="logInButton" >Log In</button>
+
                         <button onClick={() => {
                             setGoToRegister(true);
                         }}
