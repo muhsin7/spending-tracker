@@ -62,6 +62,10 @@ describe("User tests", () => {
         .send(noEmailUser)
         .end((err, res) => {
           res.should.have.status(400);
+          res.body.should.be.a("object");
+          res.body.should.have.property("error");
+          res.body.should.have.property("message");
+          res.body.should.have.property("status");
           done();
         });
         
@@ -69,7 +73,7 @@ describe("User tests", () => {
     });
 
     it("Register a user with an existing email", (done) => {
-      let noEmailUser = {
+      let existingEmailUser = {
         name: "John",
         email: "jill@example.com",
         password: "123"
@@ -78,9 +82,13 @@ describe("User tests", () => {
       chai
         .request(app)
         .post("/api/user/")
-        .send(noEmailUser)
+        .send(existingEmailUser)
         .end((err, res) => {
           res.should.have.status(400);
+          res.body.should.be.a("object");
+          res.body.should.have.property("error");
+          res.body.should.have.property("message");
+          res.body.should.have.property("status");
           done();
         });
         
@@ -99,7 +107,11 @@ describe("User tests", () => {
         .post("/api/user/")
         .send(longNameUser)
         .end((err, res) => {
-          res.should.have.status(500);
+          res.should.have.status(400);
+          res.body.should.be.a("object");
+          res.body.should.have.property("error");
+          res.body.should.have.property("message");
+          res.body.should.have.property("status");
           done();
         });
         
@@ -118,7 +130,11 @@ describe("User tests", () => {
         .post("/api/user/")
         .send(longNameUser)
         .end((err, res) => {
-          res.should.have.status(500);
+          res.should.have.status(400);
+          res.body.should.be.a("object");
+          res.body.should.have.property("error");
+          res.body.should.have.property("message");
+          res.body.should.have.property("status");
           done();
         });
     });
@@ -135,7 +151,11 @@ describe("User tests", () => {
         .post("/api/user/")
         .send(longNameUser)
         .end((err, res) => {
-          res.should.have.status(500);
+          res.should.have.status(400);
+          res.body.should.be.a("object");
+          res.body.should.have.property("error");
+          res.body.should.have.property("message");
+          res.body.should.have.property("status");
           done();
         });
     });
