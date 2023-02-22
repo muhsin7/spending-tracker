@@ -19,10 +19,12 @@ function Login() {
         }
 
         const onLoginClicked = async () => {
-            const response = await axios.post('/api/login', {
+            const response = await axios.post('/api/user/login', {
                 email: emailValue,
                 password: passwordValue,
             });
+
+            console.log(response);
             
             const {token} = response.data;
             setToken(token);
@@ -49,7 +51,7 @@ function Login() {
                         <button id="forgotPassword">Forgot your password?</button>
                         <button 
                         onClick={onLoginClicked}
-                        type="submit" id="logInButton" >Log In</button>
+                        type="button" id="logInButton" >Log In</button>
 
                         <button onClick={() => {
                             setGoToRegister(true);
