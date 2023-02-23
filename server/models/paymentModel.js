@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const paymentSchema = mongoose.Schema({
   title: {
     type: String,
-    rquired: true
+    required: true
   },
   description: {
     type: String,
@@ -12,6 +12,10 @@ const paymentSchema = mongoose.Schema({
   image: {
     data: Buffer,
     contentType: String
+  },
+  amount: {
+    type: Number,
+    required: true
   },
   categoryId: {
     type: mongoose.Schema.Types.ObjectId,
