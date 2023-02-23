@@ -3,6 +3,7 @@ import Login from "./pages/Login"
 import Register from "./pages/Register"
 import Dashboard from "./pages/Dashboard"
 import UpdateUser from "./pages/UpdateUser"
+import UserPage from "./pages/UserPage"
 
 function App() {
   return (
@@ -15,7 +16,8 @@ function App() {
             <Route path="/" element={<Dashboard />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/user" element={<UpdateUser />} />
+            <Route path="/user" element={<UserPage />} />
+            <Route path="/user/update" element={<UpdateUser />} />
           </Routes>
         </div>
       </Router>

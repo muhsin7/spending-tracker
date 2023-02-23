@@ -1,6 +1,6 @@
 import React from "react";
 import './Login.css';
-import { Navigate } from "react-router-dom";
+import { Navigate, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios"; 
 import { useToken } from "../Authentication/useToken";
@@ -12,6 +12,7 @@ function Login() {
         const [goToRegister, setGoToRegister] = React.useState(false);
         const [emailValue, setEmailValue] = useState('');
         const [passwordValue, setPasswordValue] = useState('');
+        const navigate = useNavigate();
 
 
         if(goToRegister){
@@ -24,11 +25,11 @@ function Login() {
                 password: passwordValue,
             });
 
-            console.log(response);
-            
             const {token} = response.data;
             setToken(token);
-            return <Navigate to = "/"/>;
+
+            navigate('/user');
+            // return <Navigate to = "/user"/>;
         }
 
         return(
