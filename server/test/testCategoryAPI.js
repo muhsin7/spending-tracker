@@ -10,22 +10,38 @@ const should = chai.should();
 
 chai.use(chaiHttp);
 
-//TEST CATEGORY API
+// TEST CATEGORY API
 describe("Category tests", () => {
-  
-  //Flush test database and create mock category
-  beforeEach((done) => {
-    Category.remove({}, () => {
-      const USER = User({
-        name: "John",
-        email: "johndoe@example.com",
-        password: "password"
-      });
-      
-      Category.create({
-        name: "Food",
-        userId: USER
-      }, () => {done();});
-    });
+  before(async() => {
+    // flush DB before tests
+    await Category.deleteMany({});
+    await User.deleteMany({});
+
+    // load required objects to database
+    const USER = {
+      name: "John",
+      email: "johndoe@example.com",
+      password: "password"
+    };
+
+    await User.create(USER);
+  })
+
+  beforeEach(async() => {
+    // flush categories
+    await Category.deleteMany({});
+
+    const USER = await User.findOne({name:"John"});
+
+    await Category.create({
+      name: "Groceries",
+      userId: USER._id
+    })
+  });
+
+  after(async() => {
+    // flush DB after tests
+    await Category.deleteMany({});
+    await User.deleteMany({});
   });
 });
