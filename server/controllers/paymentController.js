@@ -21,10 +21,11 @@ const getPayment = asyncHandler(async (req, res) => {
 // post new
 const createPayment = asyncHandler(async (req, res) => {
   try {
-    const {title, description, image, categoryId} = req.body;
-    const payment = await Payment.create({title, description, image, categoryId, userId: req.user.id});
+    const {title, description, amount, image, categoryId} = req.body;
+    const payment = await Payment.create({title, description, amount, image, categoryId, userId: req.user.id});
     res.status(200).json(payment);
   } catch (error) {
+    console.log(error);
     res.status(400).json({error: error.message});
   }
 });
