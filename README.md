@@ -16,7 +16,7 @@ npm install
 ### Client
 To install client dependencies:
 ```bash
-cd client/spending-tracker
+cd client
 npm install
 ```
 
@@ -29,6 +29,6 @@ node app.js
 ```
 ### Client
 ```bash
-cd client/spending-tracker
+cd client
 npm start
 ```
