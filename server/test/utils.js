@@ -3,6 +3,7 @@ const Category = require("../models/categoryModel");
 const Payment = require("../models/paymentModel");
 const User = require("../models/userModel");
 const SpendingLimit = require("../models/spendingLimitModel");
+const jwt = require("jsonwebtoken");
 
 const chai = require("chai");
 const should = chai.should();
@@ -23,7 +24,14 @@ const assertError = (res, code) => {
   res.body.should.have.property("stacktrace");
 };
 
+const generateToken = (user) => {
+  return jwt.sign({ id:user._id }, process.env.JWT_SECRET, {
+    expiresIn: process.env.JWT_VALID_FOR
+  });
+};
+
 module.exports = {
   flushDB,
-  assertError
+  assertError,
+  generateToken
 };
