@@ -10,6 +10,15 @@ const flushDB = async () => {
   await SpendingLimit.deleteMany({});
 };
 
+const assertError = (res) => {
+  res.should.have.status(400);
+  res.body.should.be.a("object");
+  res.body.should.have.property("error");
+  res.body.should.have.property("message");
+  res.body.should.have.property("status");
+};
+
 module.exports = {
-  flushDB
+  flushDB,
+  assertError
 };
