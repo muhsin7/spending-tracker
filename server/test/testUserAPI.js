@@ -7,6 +7,8 @@ const chaiHttp = require("chai-http");
 const app = require("../app.js");
 const should = chai.should();
 
+const {flushDB} = require("./utils.js");
+
 chai.use(chaiHttp);
 
 //TEST USER API
@@ -14,13 +16,12 @@ describe("User tests", () => {
   
   //Flush test database and create mock user
   beforeEach(async () => {
-    await 
-    
-    User.create({
+    await flushDB();
+    await User.create({
       name: "Jill",
       email: "jill@example.com",
       password: "123"
-    }
+    });
   });
 
   //Registration tests
