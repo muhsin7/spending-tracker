@@ -1,7 +1,11 @@
+/* eslint-disable no-unused-vars */
 const Category = require("../models/categoryModel");
 const Payment = require("../models/paymentModel");
 const User = require("../models/userModel");
 const SpendingLimit = require("../models/spendingLimitModel");
+
+const chai = require("chai");
+const should = chai.should();
 
 const flushDB = async () => {
   await Category.deleteMany({});
