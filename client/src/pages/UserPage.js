@@ -1,14 +1,13 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useToken } from "../Authentication/useToken";
-import { useUser } from "../Authentication/useUser";
 
 export default function UserPage() {
   const [token, setToken] = useToken();
   const [user, setUser] = useState({});
 
   useEffect(() => {
-    const response = axios.get('/api/user/profile', {
+    axios.get('/api/user/profile', {
         headers: {
             "Authorization": "Bearer " + token
         }
