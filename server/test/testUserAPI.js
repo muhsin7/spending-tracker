@@ -13,41 +13,36 @@ chai.use(chaiHttp);
 describe("User tests", () => {
   
   //Flush test database and create mock user
-  beforeEach((done) => {
-    User.remove({}, () => {
-      User.create({
-        name: "Jill",
-        email: "jill@example.com",
-        password: "123"
-      }, () => {done();});
-    });
+  beforeEach(async () => {
+    await 
     
+    User.create({
+      name: "Jill",
+      email: "jill@example.com",
+      password: "123"
+    }
   });
 
   //Registration tests
   describe("Registration", () => {
 
-    it("Register a valid user", (done) => {
+    it("Register a valid user", async () => {
       let validUser = {
         name: "John",
         email: "john@example.com",
         password: "123"
       };
 
-      chai
-        .request(app)
+      const res = await chai.request(app)
         .post("/api/user/")
-        .send(validUser)
-        .end((err, res) => {
-          res.should.have.status(201);
-          res.body.should.be.a("object");
-          res.body.should.have.property("_id");
-          res.body.should.have.property("name").eql(validUser.name);
-          res.body.should.have.property("email").eql(validUser.email);
-          res.body.should.have.property("token");
-        });
+        .send(validUser);
       
-      done();
+      res.should.have.status(201);
+      res.body.should.be.a("object");
+      res.body.should.have.property("_id");
+      res.body.should.have.property("name").eql(validUser.name);
+      res.body.should.have.property("email").eql(validUser.email);
+      res.body.should.have.property("token");
     });
 
     it("Register a user without an email", (done) => {
