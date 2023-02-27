@@ -23,7 +23,7 @@ const createCategory = asyncHandler(async (req, res) => {
   try {
     const {name} = req.body;
     const category = await Category.create({name, userId: req.user.id});
-    res.status(200).json(category);
+    res.status(201).json(category);
   } catch (error) {
     res.status(400).json({error: error.message});
   }
