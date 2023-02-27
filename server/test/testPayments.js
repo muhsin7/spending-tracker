@@ -3,6 +3,8 @@ const Category = require("../models/categoryModel");
 const Payment = require("../models/paymentModel");
 const User = require("../models/userModel");
 
+const {flushDB} = require("./utils");
+
 const chai = require("chai");
 const should = chai.should();
 
@@ -14,19 +16,6 @@ const jwt = require("jsonwebtoken");
 chai.use(chaiHttp);
 
 describe("Payment tests", () => {
-
-  const flushDB = async () => {
-    await Category.deleteMany({});
-    await User.deleteMany({});
-    await Payment.deleteMany({});
-  };// Flush collections from database
-
-  const getUserAndCategory = async () => {
-    const user = await User.findOne({name: "Jill"});
-    const category = await Category.findOne({name: "Groceries"});
-    return {user, category};
-  };// Get user and category
-
   before(async() => {
     // flush DB before tests
     await flushDB();
@@ -56,15 +45,19 @@ describe("Payment tests", () => {
   });
 
   describe("Model tests", () => {
+    let user;
+    let category;
 
     beforeEach(async() => {
       //flush payments
       await Payment.deleteMany({});
+
+      user = await User.findOne({name: "Jill"});
+      category = await Category.findOne({name: "Groceries"});
+      
     });
 
     it("should save a valid payment", async() => {
-      const {user, category} = await getUserAndCategory();
-
       await Payment.create({
         title: "Carrots",
         description: "A 1kg bag of carrots",
@@ -81,8 +74,6 @@ describe("Payment tests", () => {
     });
 
     it("should require a title", async() => {
-      const {user, category} = await getUserAndCategory();
-
       await Payment.create({
         description: "A 1kg bag of carrots",
         amount: 2,
@@ -99,8 +90,6 @@ describe("Payment tests", () => {
     });
 
     it("should require a description", async() => {
-      const {user, category} = await getUserAndCategory();
-
       await Payment.create({
         title: "Carrots",
         amount: 2,
@@ -117,8 +106,6 @@ describe("Payment tests", () => {
     });
 
     it("should require an amount", async() => {
-      const {user, category} = await getUserAndCategory();
-
       await Payment.create({
         title: "Carrots",
         description: "A 1kg bag of carrots",
@@ -135,8 +122,6 @@ describe("Payment tests", () => {
     });
 
     it("should require a category", async() => {
-      const {user} = await getUserAndCategory();
-
       await Payment.create({
         title: "Carrots",
         description: "A 1kg bag of carrots",
@@ -153,8 +138,6 @@ describe("Payment tests", () => {
     });
 
     it("should require a user", async() => {
-      const {category} = await getUserAndCategory();
-
       await Payment.create({
         title: "Carrots",
         description: "A 1kg bag of carrots",
@@ -172,7 +155,6 @@ describe("Payment tests", () => {
   });
 
   describe("API tests", () => {
-
     it("should require a logged in user to create a payment");
     it("should not allow the user to create a payment in a category they do not own");
     it("should post a valid payment");
