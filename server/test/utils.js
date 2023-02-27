@@ -20,6 +20,7 @@ const assertError = (res) => {
   res.body.should.have.property("error");
   res.body.should.have.property("message");
   res.body.should.have.property("status");
+  res.body.should.have.property("stacktrace");
 };
 
 module.exports = {
