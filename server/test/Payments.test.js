@@ -4,14 +4,12 @@ const Payment = require("../models/paymentModel");
 const User = require("../models/userModel");
 
 const chai = require("chai");
-const expect = chai.expect;
 const should = chai.should();
 
 const chaiHttp = require("chai-http");
 const app = require("../app");
 
 const jwt = require("jsonwebtoken");
-const { get } = require("mongoose");
 
 chai.use(chaiHttp);
 
@@ -19,8 +17,8 @@ describe("Payment tests", () => {
 
   const flushDB = async () => {
     await Category.deleteMany({});
-    await Payment.deleteMany({});
     await User.deleteMany({});
+    await Payment.deleteMany({});
   };// Flush collections from database
 
   const getUserAndCategory = async () => {
@@ -58,6 +56,12 @@ describe("Payment tests", () => {
   });
 
   describe("Model tests", () => {
+
+    beforeEach(async() => {
+      //flush payments
+      await Payment.deleteMany({});
+    });
+
     it("should save a valid payment", async() => {
       const {user, category} = await getUserAndCategory();
 
@@ -131,7 +135,7 @@ describe("Payment tests", () => {
     });
 
     it("should require a category", async() => {
-      const {user, category} = await getUserAndCategory();
+      const {user} = await getUserAndCategory();
 
       await Payment.create({
         title: "Carrots",
@@ -149,7 +153,7 @@ describe("Payment tests", () => {
     });
 
     it("should require a user", async() => {
-      const {user, category} = await getUserAndCategory();
+      const {category} = await getUserAndCategory();
 
       await Payment.create({
         title: "Carrots",
@@ -165,5 +169,24 @@ describe("Payment tests", () => {
           should.not.exist(payment, "The payment should have been invalid");
         }); 
     });
+  });
+
+  describe("API tests", () => {
+
+    it("should require a logged in user to create a payment");
+    it("should not allow the user to create a payment in a category they do not own");
+    it("should post a valid payment");
+    it("should require a logged in user to get payments");
+    it("should get payments");
+    it("should only get payments belonging to the user");
+    it("should require a logged in user to get a specific payment");
+    it("should get a specific payment");
+    it("should prevent the user from getting a payment of a different user");
+    it("should require a logged in user to delete a payment");
+    it("should delete a specified payment");
+    it("should prevent the user from deleting another user's payment");
+    it("should require a logged in user to update a payment");
+    it("should update a specified payment");
+    it("should prevent the user from modifying another user's payment");
   });
 });
