@@ -56,7 +56,7 @@ describe("User tests", () => {
         .post("/api/user/")
         .send(noEmailUser);
       
-      utils.assertError(res);
+      utils.assertError(res, 400);
     });
 
     it("Register a user with an existing email", async () => {
@@ -70,7 +70,7 @@ describe("User tests", () => {
         .post("/api/user/")
         .send(existingEmailUser);
       
-      utils.assertError(res);
+      utils.assertError(res, 400);
     });
 
     it("Register a user with a username that is too long", async () => {
@@ -84,7 +84,7 @@ describe("User tests", () => {
         .post("/api/user/")
         .send(longNameUser);
       
-      utils.assertError(res);
+      utils.assertError(res, 400);
     });
 
     it("Register a user with a username that is too short", async () => {
@@ -98,7 +98,7 @@ describe("User tests", () => {
         .post("/api/user/")
         .send(shortNameUser);
       
-      utils.assertError(res);
+      utils.assertError(res, 400);
     });
 
     it("Register a user with an invalid email", async () => {
@@ -112,7 +112,7 @@ describe("User tests", () => {
         .post("/api/user/")
         .send(invalidEmailUser);
       
-      utils.assertError(res);
+      utils.assertError(res, 400);
     });
   });
 });
