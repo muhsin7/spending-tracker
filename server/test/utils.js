@@ -14,8 +14,8 @@ const flushDB = async () => {
   await SpendingLimit.deleteMany({});
 };
 
-const assertError = (res) => {
-  res.should.have.status(400);
+const assertError = (res, code) => {
+  res.should.have.status(code);
   res.body.should.be.a("object");
   res.body.should.have.property("error");
   res.body.should.have.property("message");
