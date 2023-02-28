@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "cross-env NODE_ENV=test mocha --exit",
-    "test-single": "mocha --exit",
+    "test-single": "cross-env NODE_ENV=test mocha --exit --grep",
     "start": "node app.js",
     "dev": "nodemon app.js"
   },
