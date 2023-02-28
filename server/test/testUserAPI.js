@@ -7,157 +7,112 @@ const chaiHttp = require("chai-http");
 const app = require("../app.js");
 const should = chai.should();
 
+const utils = require("./utils.js");
+
 chai.use(chaiHttp);
 
 //TEST USER API
 describe("User tests", () => {
   
   //Flush test database and create mock user
-  beforeEach((done) => {
-    User.remove({}, () => {
-      User.create({
-        name: "Jill",
-        email: "jill@example.com",
-        password: "123"
-      }, () => {done();});
+  beforeEach(async () => {
+    await utils.flushDB();
+    await User.create({
+      name: "Jill",
+      email: "jill@example.com",
+      password: "123"
     });
-    
   });
 
   //Registration tests
   describe("Registration", () => {
 
-    it("Register a valid user", (done) => {
+    it("Register a valid user", async () => {
       let validUser = {
         name: "John",
         email: "john@example.com",
         password: "123"
       };
 
-      chai
-        .request(app)
+      const res = await chai.request(app)
         .post("/api/user/")
-        .send(validUser)
-        .end((err, res) => {
-          res.should.have.status(201);
-          res.body.should.be.a("object");
-          res.body.should.have.property("_id");
-          res.body.should.have.property("name").eql(validUser.name);
-          res.body.should.have.property("email").eql(validUser.email);
-          res.body.should.have.property("token");
-        });
+        .send(validUser);
       
-      done();
+      res.should.have.status(201);
+      res.body.should.be.a("object");
+      res.body.should.have.property("_id");
+      res.body.should.have.property("name").eql(validUser.name);
+      res.body.should.have.property("email").eql(validUser.email);
+      res.body.should.have.property("token");
     });
 
-    it("Register a user without an email", (done) => {
+    it("Register a user without an email", async () => {
       let noEmailUser = {
         name: "John",
         password: "123"
       };
 
-      chai
-        .request(app)
+      const res = await chai.request(app)
         .post("/api/user/")
-        .send(noEmailUser)
-        .end((err, res) => {
-          res.should.have.status(400);
-          res.body.should.be.a("object");
-          res.body.should.have.property("error");
-          res.body.should.have.property("message");
-          res.body.should.have.property("status");
-          done();
-        });
-        
+        .send(noEmailUser);
       
+      utils.assertError(res, 400);
     });
 
-    it("Register a user with an existing email", (done) => {
+    it("Register a user with an existing email", async () => {
       let existingEmailUser = {
         name: "John",
         email: "jill@example.com",
         password: "123"
       };
 
-      chai
-        .request(app)
+      const res = await chai.request(app)
         .post("/api/user/")
-        .send(existingEmailUser)
-        .end((err, res) => {
-          res.should.have.status(400);
-          res.body.should.be.a("object");
-          res.body.should.have.property("error");
-          res.body.should.have.property("message");
-          res.body.should.have.property("status");
-          done();
-        });
-        
+        .send(existingEmailUser);
       
+      utils.assertError(res, 400);
     });
 
-    it("Register a user with a username that is too long", (done) => {
+    it("Register a user with a username that is too long", async () => {
       let longNameUser = {
         name: "a".repeat(21),
         email: "john@example.com",
         password: "123"
       };
 
-      chai
-        .request(app)
+      const res = await chai.request(app)
         .post("/api/user/")
-        .send(longNameUser)
-        .end((err, res) => {
-          res.should.have.status(400);
-          res.body.should.be.a("object");
-          res.body.should.have.property("error");
-          res.body.should.have.property("message");
-          res.body.should.have.property("status");
-          done();
-        });
-        
+        .send(longNameUser);
       
+      utils.assertError(res, 400);
     });
 
-    it("Register a user with a username that is too short", (done) => {
-      let longNameUser = {
+    it("Register a user with a username that is too short", async () => {
+      let shortNameUser = {
         name: "a",
         email: "john@example.com",
         password: "123"
       };
 
-      chai
-        .request(app)
+      const res = await chai.request(app)
         .post("/api/user/")
-        .send(longNameUser)
-        .end((err, res) => {
-          res.should.have.status(400);
-          res.body.should.be.a("object");
-          res.body.should.have.property("error");
-          res.body.should.have.property("message");
-          res.body.should.have.property("status");
-          done();
-        });
+        .send(shortNameUser);
+      
+      utils.assertError(res, 400);
     });
 
-    it("Register a user with an invalid email", (done) => {
-      let longNameUser = {
+    it("Register a user with an invalid email", async () => {
+      let invalidEmailUser = {
         name: "John",
         email: "johnexample.com",
         password: "123"
       };
 
-      chai
-        .request(app)
+      const res = await chai.request(app)
         .post("/api/user/")
-        .send(longNameUser)
-        .end((err, res) => {
-          res.should.have.status(400);
-          res.body.should.be.a("object");
-          res.body.should.have.property("error");
-          res.body.should.have.property("message");
-          res.body.should.have.property("status");
-          done();
-        });
+        .send(invalidEmailUser);
+      
+      utils.assertError(res, 400);
     });
   });
 });
