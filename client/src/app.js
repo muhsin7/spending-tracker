@@ -1,9 +1,9 @@
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
-import Login from "./pages/Login"
-import Register from "./pages/Register"
-import Dashboard from "./pages/Dashboard"
-import UpdateUser from "./pages/UpdateUser"
-import UserPage from "./pages/UserPage"
+import Login from "./pages/login"
+import Register from "./pages/register"
+import Dashboard from "./pages/dashboard"
+import UpdateUser from "./pages/updateUser"
+import UserPage from "./pages/userPage"
 
 function App() {
   return (

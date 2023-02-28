@@ -1,9 +1,9 @@
 import React from "react";
-import './Login.css';
+import './login.css';
 import { Navigate, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios"; 
-import { useToken } from "../Authentication/useToken";
+import { useToken } from "../authentication/useToken";
 
 function Login() {
 
