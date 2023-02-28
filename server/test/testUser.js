@@ -277,28 +277,8 @@ describe("User tests", () => {
       
       utils.assertError(res, 401);
     });
-    
+
     it("should not provide a user with an expired token their profile");
   });
   
 });
-
-
-// // LOGIN
-
-// Valid login (success)
-
-// No email (fail)
-
-// No password (fail)
-
-// Invalid password (fail)
-
-
-// // GET PROFILE
-
-// Valid get (success)
-
-// Invalid JWT (fail)
-
-// Expired JWT
