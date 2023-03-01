@@ -1,8 +1,13 @@
 import {useState} from "react"
 import { Link } from 'react-router-dom';
 import "./register.css"
+import { useNavigate } from "react-router-dom";
+import axios from "axios"; 
+import { useToken } from "../Authentication/useToken";
+
 
 export default function Register() {
+    const [token, setToken] = useToken();
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -11,6 +16,19 @@ export default function Register() {
       })
 
     const { name, email, password, password2 } = formData
+    const navigate = useNavigate();
+
+  //   const onLoginClicked = async () => {
+  //     const response = await axios.post('/api/user/login', {
+  //         email: emailValue,
+  //         password: passwordValue,
+  //     });
+
+  //     const {token} = response.data;
+  //     setToken(token);
+
+  //     navigate('/user');
+  // }
 
     const onChange = (e) => {
     setFormData((prevState) => ({
@@ -19,18 +37,22 @@ export default function Register() {
     }))
     }
 
-    const onSubmit = (e) => {
+    const onSubmit = async (e) => {
     e.preventDefault()
 
         if (password !== password2) {
             window.alert('Passwords do not match')
         } else {
-            window.alert("Creating user...")
-            const userData = {
-            name,
-            email,
-            password,
-            }
+          const response = await axios.post('/api/user', {
+            name: formData.name,
+            email: formData.email,
+            password: formData.password,
+          });
+  
+          const {token} = response.data;
+          setToken(token);
+    
+          navigate('/user');
         }
     }
 
