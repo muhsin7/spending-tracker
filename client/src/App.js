@@ -4,6 +4,7 @@ import Register from "./pages/Register"
 import Dashboard from "./pages/dashboard/Dashboard"
 import UpdateUser from "./pages/UpdateUser"
 import UserPage from "./pages/UserPage"
+import './styles/styles.css'
 
 function App() {
   return (
