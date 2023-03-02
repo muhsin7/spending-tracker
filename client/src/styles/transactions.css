@@ -1,0 +1,27 @@
+.dashboard-transactions {
+    width: 25%;  
+} 
+
+.transaction-card {
+    background-color: #1e1e1e;
+    margin-bottom: 0.5em;
+    padding: 0.5em;
+    border-radius: 12px;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.transaction-card:last-child {
+    margin-bottom: 0;
+}
+
+.transaction-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.transaction-title {
+    font-size: 1em;
+    font-weight: bolder;
+}
