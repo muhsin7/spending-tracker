@@ -257,7 +257,7 @@ describe("Payment tests", () => {
         .send(await genPayment())
         .set("Authorization", ("Bearer " + authToken));
 
-      res.should.have.status(200);
+      res.should.have.status(201);
       res.should.have.property("body");
       res.body.should.have.property("title", "Carrots");
       res.body.should.have.property("description", "A 1kg bag of carrots");
