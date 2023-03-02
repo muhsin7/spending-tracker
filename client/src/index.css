@@ -1,3 +1,8 @@
+* {
+  box-sizing: border-box;
+  --button-text-green: #00B57F
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
 
 body {
@@ -12,4 +17,12 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+button{
+  cursor: pointer;
+}
+
+ul{
+  list-style: none;
 }
