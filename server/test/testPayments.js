@@ -278,6 +278,8 @@ describe("Payment tests", () => {
       res.body.should.have.property("amount", payment.amount);
     });
 
+    it("Should not get a payment that does not exist");
+
     it("should prevent the user from getting a payment of a different user", async() => {
       const res = await chai.request(app)
         .get("/api/payment/" + otherPayment._id)
@@ -299,6 +301,8 @@ describe("Payment tests", () => {
       assertError(resPost, 404);
       should.not.exist(resPost.body, "Document should have been deleted");
     });
+
+    it("Should not delete a payment that does not exist");
 
     it("should prevent the user from deleting another user's payment", async() => {
       const res = await chai.request(app)
@@ -343,6 +347,8 @@ describe("Payment tests", () => {
       resPost.body.should.have.property("description", "A 1kg bag of carrots");
       resPost.body.should.have.property("amount", 2);
     });
+
+    it("Should not update a payment that does not exist");
 
     it("should prevent the user from modifying another user's payment", async() => {
       const res = await chai.request(app)
