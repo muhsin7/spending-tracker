@@ -1,9 +1,9 @@
-body{
+/* body{
     font-family: 'Karla', sans-serif;
     display: flex;
     justify-content: center; 
     margin: 0;
-}
+} */
 
 .registerPage{
     height: 100vh;
@@ -42,10 +42,10 @@ body{
 }
 
 h1{
-    font-family: 'Karla', sans-serif;
+    /* font-family: 'Karla', sans-serif; */
     font-size: 3rem;
     font-weight: 750;
-    margin-bottom: 100px;
+    /* margin-bottom: 100px; */
 }
 
 fieldset{

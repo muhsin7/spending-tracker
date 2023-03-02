@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import "./register.css"
 import { useNavigate } from "react-router-dom";
 import axios from "axios"; 
-import { useToken } from "../Authentication/useToken";
+import { useToken } from "../authentication/useToken";
 
 
 export default function Register() {
