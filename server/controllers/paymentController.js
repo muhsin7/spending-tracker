@@ -7,6 +7,35 @@ const getPayments = asyncHandler(async (req, res) => {
   res.status(200).json(payments);
 });
   
+// summary
+const getSummary = asyncHandler(async (req, res) => {
+  let days = req.query.days;
+  const dt = new Date();
+
+  const lastDay = await Payment.countDocuments({userId: req.user.id, createdAt: {$gt: new Date(dt.getFullYear(), dt.getMonth(), dt.getDate(), 0)}});
+  let weekCuttOff = new Date();
+  weekCuttOff.setDate(weekCuttOff.getDate() - 7);
+  const lastWeek = await Payment.countDocuments({userId: req.user.id, createdAt: {$gt: weekCuttOff}});
+  const lastMonth = await Payment.countDocuments({userId: req.user.id, createdAt: {$gt: new Date(dt.getFullYear(), dt.getMonth(), 1)}});
+  const lastYear = await Payment.countDocuments({userId: req.user.id, createdAt: {$gt: new Date(dt.getFullYear(), 0, 1)}});
+
+  let json = {
+    year: lastYear,
+    month: lastMonth,
+    week: lastWeek,
+    day: lastDay
+  };
+
+  if (days !== undefined) {
+    let customCutOff = new Date();
+    customCutOff.setDate(customCutOff.getDate() - days);
+    const lastCustom = await Payment.countDocuments({userId: req.user.id, createdAt: {$gt: customCutOff}});
+    json.custom = lastCustom;
+  }
+
+  res.status(200).json(json);
+});
+
 // get specific
 const getPayment = asyncHandler(async (req, res) => {
   try {
@@ -54,6 +83,7 @@ const updatePayment = asyncHandler(async (req, res) => {
   
 module.exports = {
   getPayments,
+  getSummary,
   getPayment,
   createPayment,
   deletePayment,
