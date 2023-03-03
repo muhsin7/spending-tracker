@@ -1,5 +1,6 @@
-h2{
+.loginTitle{
     text-align: center;
+    width: 100%;
 }
 
 .div-login{
@@ -16,7 +17,7 @@ h2{
     background-color: white;
 }
 
-input{
+.inputBoxLogin{
     width: 95%;
     border: 1px solid #dbdbdb;
     padding: 5px;
@@ -52,7 +53,7 @@ input{
 }
 
 body {
-    background-image: url("images/moneyDollars.jpeg");
+    /* background-image: url("images/moneyDollars.jpeg");  */
 }
 
 #forgotPassword{

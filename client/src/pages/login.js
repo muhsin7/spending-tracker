@@ -34,16 +34,19 @@ function Login() {
 
     return(
         <div className="div-login">
-            <h2>Login</h2>
+            <h2 className="loginTitle">Login</h2>
             {errorMessage && <div className="Error">{errorMessage}</div>}
             <div>
                 <form>
-                    <input value = {emailValue} 
+                    <input 
+                    className="inputBoxLogin"
+                    value = {emailValue}
                     onChange={e => setEmailValue(e.target.value)}
                     type='email' 
                     name='email' 
                     placeholder="Email:" required/>
                     <input 
+                    className="inputBoxLogin"
                     value = {passwordValue} 
                     onChange={e => setPasswordValue(e.target.value)}
                     type='password' 
