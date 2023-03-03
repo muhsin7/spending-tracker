@@ -2,7 +2,6 @@ body{
     font-family: 'Karla', sans-serif;
     display: flex;
     justify-content: center; 
-    margin: 0;
 }
 
 .registerPage{
@@ -20,6 +19,7 @@ body{
     height: 100%;
     background: linear-gradient(var(--button-text-green), #f0e004);
     clip-path: circle(50% at 115% 0%);
+    z-index: -1;
 }
 .registerPage::after{
     content:"";
@@ -41,17 +41,18 @@ body{
     border-radius: 10px;
 }
 
-h1{
+.form h1{
     font-family: 'Karla', sans-serif;
     font-size: 3rem;
     font-weight: 750;
-    margin-bottom: 100px;
+    margin: 50px;
 }
 
 fieldset{
     height: 400px;
     width: 500px;
     margin-bottom: 50px;
+    padding-top: 50px;
     display: flex;
     flex-direction: column;
     justify-content: center;
