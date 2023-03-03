@@ -4,6 +4,7 @@ import Register from "./pages/register"
 import Dashboard from "./pages/dashboard"
 import UpdateUser from "./pages/updateUser"
 import UserPage from "./pages/userPage"
+import AddCategory from "./pages/addCategory"
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/user" element={<UserPage />} />
             <Route path="/user/update" element={<UpdateUser />} />
+            <Route path="/addCategory" element={<AddCategory />} />
           </Routes>
         </div>
       </Router>
