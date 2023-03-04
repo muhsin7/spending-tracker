@@ -1,0 +1,23 @@
+.header {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-bottom: 1px solid var(--button-text-green);
+    margin-bottom: 50px;
+    width: 80vw;
+  }  
+
+  .header ul {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  } 
+  
+  .header ul li {
+    margin-left: 500px;
+  }
+
+  .btn-header {
+    height: 50px; 
+    width: 190%;
+  }

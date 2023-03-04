@@ -8,7 +8,7 @@ export default function UserPage() {
   const [user, setUser] = useState({});
 
   useEffect(() => {
-    const response = axios.get('/api/user/profile', {
+    axios.get('/api/user/profile', {
         headers: {
             "Authorization": "Bearer " + token
         }
