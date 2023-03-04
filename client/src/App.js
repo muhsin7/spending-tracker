@@ -4,6 +4,7 @@ import Register from "./pages/Register"
 import Dashboard from "./pages/dashboard/Dashboard"
 import UpdateUser from "./pages/UpdateUser"
 import UserPage from "./pages/UserPage"
+import PaymentsPage from "./pages/paymentsPage/PaymentsPage"
 import './styles/styles.css'
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
             <Route path="/register" element={<Register />} />
             <Route path="/user" element={<UserPage />} />
             <Route path="/user/update" element={<UpdateUser />} />
+            <Route path="/payments" element={<PaymentsPage />} />
           </Routes>
         </div>
       </Router>
