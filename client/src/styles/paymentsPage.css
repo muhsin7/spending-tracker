@@ -30,6 +30,11 @@
   justify-content: space-between;
 }
 
+.payment-card:hover {
+  background-color: #00A56F;
+  color: beige;
+}
+
 .payment-card:last-child {
   margin-bottom: 0;
 }
