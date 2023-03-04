@@ -1,0 +1,45 @@
+.payments-page {
+  margin: 3%;
+}
+
+.payments-header {
+  background-color: #00B57F;
+  display: inline-flex;
+  border-radius: 16px;
+  padding: 1rem;
+}
+
+.payments-container {
+  background-color: #00B57F;
+  color: black;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 16px;
+}
+
+.payment-card {
+  background-color: #00955F;
+  margin-bottom: 0.5em;
+  padding: 0.5em;
+  border-radius: 12px;
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.payment-card:last-child {
+  margin-bottom: 0;
+}
+
+.payment-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.payment-title {
+  font-size: 1em;
+  font-weight: bolder;
+}
