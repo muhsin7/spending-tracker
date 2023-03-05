@@ -1,12 +1,13 @@
 import PaymentCard from "./PaymentCard";
 
-export default function PaymentsHistory() {
-    return (
-        <div className="payments-container">
-            <PaymentCard />
-            <PaymentCard />
-            <PaymentCard />
-            <PaymentCard />
-        </div>
-    )
+export default function PaymentsHistory(props) {
+  return (
+    <div className="payments-container">
+      <PaymentCard
+        title="Maccies burger and chips"
+        date="1st January 2023"
+        price="- £1.99"
+      />
+    </div>
+  )
 }
