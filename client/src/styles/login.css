@@ -38,7 +38,7 @@
     border-radius: 5px;
 }
 
-#registerButton{
+#loginRegisterButton{
     border: none;
     background: none;
     color: black;
@@ -56,7 +56,7 @@ body {
     /* background-image: url("images/moneyDollars.jpeg");  */
 }
 
-#forgotPassword{
+#loginForgotPassword{
     border: none;
     background: none;
     color: blue;

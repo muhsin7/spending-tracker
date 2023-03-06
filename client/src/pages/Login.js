@@ -1,5 +1,4 @@
 import React from "react";
-import './login.css';
 import { Navigate, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios"; 
@@ -19,48 +18,61 @@ function Login() {
         return<Navigate to="/register"/>;
     }
 
+
+    handleValidation = () => {
+        let formIsValid = true;
+        const regex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+        if(regex.test(this.state.email) === false){
+            formIsValid = false;
+            setErrorMessage("Please enter a valid email.");
+        }
+        return formIsValid;
+    };
+
+
     const onLoginClicked = async () => {
-        const response = await axios.post('/api/user/login', {
-            email: emailValue,
-            password: passwordValue,
-        });
-
-        const {token} = response.data;
-        setToken(token);
-
-        navigate('/user');
-        // return <Navigate to = "/user"/>;
+        if (handleValidation) {
+            const response = await axios.post('/api/user/login', {
+                email: emailValue,
+                password: passwordValue,
+            });
+    
+            const {token} = response.data;
+            setToken(token);
+    
+            navigate('/dashboard');
+        }
     }
 
     return(
         <div className="div-login">
             <h2 className="loginTitle">Login</h2>
-            {errorMessage && <div className="Error">{errorMessage}</div>}
+            {errorMessage && <div className="loginErrorMessage">{errorMessage}</div>}
             <div>
                 <form>
                     <input 
-                    className="inputBoxLogin"
-                    value = {emailValue}
-                    onChange={e => setEmailValue(e.target.value)}
-                    type='email' 
-                    name='email' 
-                    placeholder="Email:" required/>
+                        className="inputBoxLogin"
+                        value = {emailValue}
+                        onChange={e => setEmailValue(e.target.value)}
+                        type='email' 
+                        name='email' 
+                        placeholder="Email:" required/>
                     <input 
-                    className="inputBoxLogin"
-                    value = {passwordValue} 
-                    onChange={e => setPasswordValue(e.target.value)}
-                    type='password' 
-                    name='password' 
-                    placeholder="Password:" required/>
-                    <button id="forgotPassword">Forgot your password?</button>
+                        className="inputBoxLogin"
+                        value = {passwordValue} 
+                        onChange={e => setPasswordValue(e.target.value)}
+                        type='password' 
+                        name='password' 
+                        placeholder="Password:" required/>
+                    <button id="loginForgotPassword">Forgot your password?</button>
                     <button 
-                    onClick={onLoginClicked}
-                    type="button" id="logInButton" >Log In</button>
-
+                        disabled = {!emailValue || !passwordValue}
+                        onClick={onLoginClicked}
+                        type="button" id="logInButton" >Log In</button>
                     <button onClick={() => {
                         setGoToRegister(true);
                     }}
-                        id = "registerButton" >Don't have an account? Register here!</button>
+                        id = "loginRegisterButton" >Don't have an account? Register here!</button>
                 </form>
             </div>
         </div>
@@ -68,3 +80,4 @@ function Login() {
 }
 
 export default Login;
+
