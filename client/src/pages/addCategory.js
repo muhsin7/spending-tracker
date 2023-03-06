@@ -1,4 +1,3 @@
-import './addCategory.css';
 import React from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -21,7 +20,7 @@ function AddCategory() {
     
         const {token} = response.data;
         setToken(token);
-        return <Navigate to = "/"/>;
+        return <Navigate to = "/dashboard"/>;
     }
 
     return(
