@@ -3,6 +3,10 @@
     width: 100%;
 }
 
+.loginErrorMessage{
+    color : black;
+}
+
 .div-login{
     width:300px;
     height:400px;
@@ -52,9 +56,11 @@
     
 }
 
-body {
-    /* background-image: url("images/moneyDollars.jpeg");  */
+/* body {
+    /* background-image: url("images/moneyDollars.jpeg"); 
 }
+*/
+
 
 #loginForgotPassword{
     border: none;

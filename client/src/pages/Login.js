@@ -19,7 +19,7 @@ function Login() {
     }
 
 
-    handleValidation = () => {
+    const handleValidation = () => {
         let formIsValid = true;
         const regex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
         if(regex.test(this.state.email) === false){
@@ -30,7 +30,8 @@ function Login() {
     };
 
 
-    const onLoginClicked = async () => {
+    const onLoginClicked = async (e) => {
+        e.preventDefault();
         if (handleValidation) {
             const response = await axios.post('/api/user/login', {
                 email: emailValue,
@@ -66,7 +67,6 @@ function Login() {
                         placeholder="Password:" required/>
                     <button id="loginForgotPassword">Forgot your password?</button>
                     <button 
-                        disabled = {!emailValue || !passwordValue}
                         onClick={onLoginClicked}
                         type="button" id="logInButton" >Log In</button>
                     <button onClick={() => {
