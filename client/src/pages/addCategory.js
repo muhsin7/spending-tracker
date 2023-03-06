@@ -24,26 +24,29 @@ function AddCategory() {
     }
 
     return(
-        <div className="div-category">
-            <h2 id = "categoryTitle">Add Category</h2>
+        <div className="div-addCategory">
             {errorMessage && <div className="Error">{errorMessage}</div>}
-            <fieldset>
-            <div className='form-group'>
-                <form className = 'categoryForm'onSubmit = {onSubmit}>
-                    <input
-                    className='inputBox' 
-                    value = {categoryValue} 
-                    onChange={e => setCategoryValue(e.target.value)}
-                    placeholder="Name of the category:" required/>
-                    <input 
-                    className='inputBox'
-                    value = {spendingLimit} 
-                    onChange={e => setSpendingLimitValue(e.target.value)} 
-                    placeholder="Spending Limit:" required/>
-                    <button id = "addCategory" >Add</button>
-                </form>
-            </div>
-            </fieldset>
+            <section className='addCategoryForm'>
+                <h2 className= "addCategoryTitle">Add Category</h2>
+                <fieldset className="addCategoryFields">
+                    <form onSubmit = {onSubmit}>
+                        <div className='addCategoryInputBox'>
+                            <input
+                                value = {categoryValue} 
+                                onChange={e => setCategoryValue(e.target.value)}
+                                placeholder="Name of the category:" required/>
+                        </div>
+                        <div className='addCategoryInputBox'>
+                            <input 
+                                value = {spendingLimit} 
+                                onChange={e => setSpendingLimitValue(e.target.value)} 
+                                placeholder="Spending Limit:" required/>
+                        </div>
+                        <button id = "addCategoryButton" >Add</button>
+                    </form>
+                </fieldset>
+            </section>
+          
         </div>
     )
 }
