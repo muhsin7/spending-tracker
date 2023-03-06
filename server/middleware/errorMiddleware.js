@@ -1,5 +1,6 @@
 function errorLogger(err, req, res, next) {
   console.log( `error: ${err.message}`);
+  console.log( `error: ${err.stack}` );
   next(err);
 }
 
@@ -10,7 +11,7 @@ function errorHandler(err, req, res, next) {
   const status = res.statusCode || 500;
   res
     .status(status)
-    .json({ error: err.name, message: err.message, status: status });
+    .json({ error: err.name, message: err.message, status: status, stacktrace: err.stack });
 }
 
 // eslint-disable-next-line no-unused-vars

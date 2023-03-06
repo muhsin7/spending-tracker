@@ -1,10 +1,12 @@
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
-import Login from "./pages/login"
-import Register from "./pages/register"
-import Dashboard from "./pages/dashboard"
-import UpdateUser from "./pages/updateUser"
-import UserPage from "./pages/userPage"
 import AddCategory from "./pages/addCategory"
+import Login from "./pages/Login"
+import Register from "./pages/Register"
+import Dashboard from "./pages/dashboard/Dashboard"
+import UpdateUser from "./pages/UpdateUser"
+import UserPage from "./pages/UserPage"
+import PaymentsPage from "./pages/paymentsPage/PaymentsPage"
+import './styles/styles.css'
 
 function App() {
   return (
@@ -20,6 +22,7 @@ function App() {
             <Route path="/user" element={<UserPage />} />
             <Route path="/user/update" element={<UpdateUser />} />
             <Route path="/addCategory" element={<AddCategory />} />
+            <Route path="/payments" element={<PaymentsPage />} />
           </Routes>
         </div>
       </Router>

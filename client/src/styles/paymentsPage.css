@@ -1,0 +1,74 @@
+/* PAYMENT PAGE */
+
+.payments-page {
+  margin: 3%;
+}
+
+.payments-header {
+  background-color: #00B57F;
+  display: inline-flex;
+  border-radius: 16px;
+  padding: 1rem;
+}
+
+.payments-container {
+  background-color: #00B57F;
+  color: black;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 16px;
+}
+
+
+
+/* PAYMENT CARD */
+
+.payment-card {
+  background-color: #00955F;
+  margin-bottom: 0.5em;
+  padding: 0.5em;
+  border-radius: 12px;
+  width: 100%;
+  word-wrap: break-word;
+}
+
+.payment-card:hover {
+  background-color: #00A56F;
+  color: beige;
+}
+
+.payment-card:last-child {
+  margin-bottom: 0;
+}
+
+.payment-card-top {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-flow: row wrap;
+}
+
+.payment-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.payment-title {
+  font-size: 1.5em;
+  font-weight: bolder;
+}
+
+.payment-amount {
+  color: darkred;
+}
+
+.payment-description {
+  font-style: italic;
+}
+
+.payment-date {
+  font-weight: bolder;
+}
