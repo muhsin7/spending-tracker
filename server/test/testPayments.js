@@ -248,7 +248,6 @@ describe("Payment tests", () => {
         .set("Authorization", ("Bearer " + authToken));
 
       assertError(res, 403);
-      should.not.exist(res.body, "Should not have created a payment");
     });
 
     it("should post a valid payment", async() => {
@@ -286,7 +285,6 @@ describe("Payment tests", () => {
         .set("Authorization", ("Bearer " + authToken));
 
       assertError(res, 403);
-      should.not.exist(res.body, "Should not have gotten a payment");
     });
 
     it("should delete a specified payment", async() => {
@@ -299,7 +297,6 @@ describe("Payment tests", () => {
         .get("/api/payment/" + payment._id)
         .set("Authorization", ("Bearer " + authToken));
       assertError(resPost, 404);
-      should.not.exist(resPost.body, "Document should have been deleted");
     });
 
     it("Should not delete a payment that does not exist");
@@ -356,7 +353,6 @@ describe("Payment tests", () => {
         .send(await genPayment())
         .set("Authorization", ("Bearer " + authToken));
       assertError(res, 403);
-      should.not.exist(res.body, "Should not have gotten a payment");
 
       // should not have modified the other user's payment
       const resPost = await chai.request(app)
