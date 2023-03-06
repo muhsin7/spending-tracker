@@ -17,12 +17,11 @@ export default function PaymentsPage() {
       setPayments(res.data);
     });
   }, []);
-  alert(payments)
 
   return (
     <div className="payments-page">
       <h1 className="payments-header">Payments Page</h1>
-      <PaymentsHistory payments={payments}/> 
+      <PaymentsHistory payments={payments}/>
     </div>
   )
 }
