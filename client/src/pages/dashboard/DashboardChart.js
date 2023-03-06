@@ -1,14 +1,38 @@
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
 import { useEffect, useState } from 'react';
 
+const dateStringFromUnixString = (unixTimeString) => new Date(Number(unixTimeString)).toLocaleDateString();
+
+function CustomTooltip({ payload, label, active }) {
+    if (active) {
+      return (
+        <div className="custom-tooltip">
+          <div className="tooltip-label">{`${dateStringFromUnixString(label)}`}</div>
+          <div className="intro">${payload[0].value}</div>
+        </div>
+      );
+    }
+  
+    return null;
+  }
+
+const ascendingCompare = (A, B) => {
+    if(A === B) {
+        return 0;
+    } else {
+        return A < B ? -1 : 1
+    }
+}
 
 const processData = ({data, cumulative=false}) => {
     let dataByDate = [];
     let total = 0;
+    data.sort((a, b) => ascendingCompare(Number(a.createdAt.$date.$numberLong), Number(b.createdAt.$date.$numberLong)));
     data.reduce(function(res, value) {
         // console.log(total);
         let onlyDate = new Date(Number(value.createdAt.$date.$numberLong));
-        const dateString = onlyDate.toLocaleDateString();
+        const dateString = onlyDate.setUTCHours(0, 0, 0, 0).toString();
+        // const dateString = onlyDate.toLocaleDateString();
 
         if (!res[dateString]) {
             res[dateString] = {
@@ -21,6 +45,7 @@ const processData = ({data, cumulative=false}) => {
         total += value.amount
         return res;
     }, {});
+
 
     return dataByDate;
 }
@@ -346,16 +371,8 @@ export default function DashboardChart() {
     const [isCumulative, setIsCumulative] = useState(false);
 
     const [dataByDate, setDataByDate] = useState(processData({data}));
-    
-    // console.log(dataByDate);
-    useEffect(() => {
-        console.log(isCumulative);
-      }, [isCumulative]);
 
     const toggleCumulative = (event) => {
-        console.log("CUMULATIVE BEFORE IS" + isCumulative)
-        // if(data) {
-            console.log("HELLO");
             event.persist();
             setIsCumulative(event.target.checked);
             if(event.target.checked) {
@@ -363,12 +380,8 @@ export default function DashboardChart() {
             } else {
                 setDataByDate(processData({data, cumulative: false}));
             }
-            console.log("CUMULATIVE AFTER IS" + isCumulative)
-
-        // }
     } 
     
-    const renderTimeLabel = ({ payload, x, y, width, height, value }) => "a";
 
     const renderLineChart = (
       <>
@@ -376,9 +389,13 @@ export default function DashboardChart() {
             <LineChart width={600} height={300} data={dataByDate} margin={{ top: 5, right: 10, bottom: 5, left: 0 }}>
                 <Line type="monotone" dataKey="amount" strokeWidth={2.5} stroke="#00B57F  " />
                 <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-                <XAxis dataKey="date" label={renderTimeLabel} />
+                <XAxis
+                    dataKey="date"
+                    domain={["auto", "auto"]}
+                    tickFormatter={unixTimeString => dateStringFromUnixString(unixTimeString)}
+                />
                 <YAxis />
-                <Tooltip />
+                <Tooltip content={<CustomTooltip />}/>
             </LineChart>
             <label class="checkbox-label">
                 <input type="checkbox" checked={isCumulative} onChange={toggleCumulative} />

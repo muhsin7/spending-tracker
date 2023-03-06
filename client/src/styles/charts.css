@@ -16,6 +16,17 @@ input[type="checkbox"] {
     accent-color: #00B57F;
 }
 
+.custom-tooltip {
+    background-color: white;
+    border-color: grey;
+    border-width: 1px;
+    padding: 0.5em 1em 0.5em 1em;
+}
+
+.tooltip-label {
+    font-weight:bolder;
+}
+
 .noselect {
     -webkit-touch-callout: none; /* iOS Safari */
       -webkit-user-select: none; /* Safari */
