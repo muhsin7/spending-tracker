@@ -7,9 +7,9 @@ export default function PaymentsHistory() {
     "_id": {
       "$oid": "64010056df38280a58a1c1ca"
     },
-    "title": "day",
-    "description": "in the last day",
-    "amount": 4,
+    "title": "Maccies",
+    "description": "Big Mac and fries",
+    "amount": 1.99,
     "categoryId": {
       "$oid": "6400ffc6df38280a58a1c1c5"
     },
@@ -324,7 +324,7 @@ export default function PaymentsHistory() {
 
   return (
     <div className="payments-container">
-      <tbody>{rows}</tbody>
+      {rows}
     </div>
   )
 }
