@@ -3,8 +3,31 @@
     margin: 5%;
 }
 
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+
+.dashboard-header {
+    /* grid-row: 1; */
+    grid-column: 1 12;
+}
+
+.dashboard-left {
+    grid-column-start: 1;
+    grid-column-end: 4;
+}
+
+.dashboard-right {
+    grid-column-start: 5;
+    grid-column-end: 12;
+}
+
 .dashboard-money {
-    width: 25%;
+    /* width: 25%; */
     margin-bottom: 1em;
 }
 
