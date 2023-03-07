@@ -51,10 +51,6 @@ input{
     
 }
 
-body {
-    background-image: url("Images/moneyDollars.jpeg");
-}
-
 #forgotPassword{
     border: none;
     background: none;
