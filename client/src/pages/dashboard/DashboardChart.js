@@ -1,4 +1,4 @@
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend, BarChart, Bar } from 'recharts';
 import { useEffect, useState } from 'react';
 
 const dateStringFromUnixString = (unixTimeString) => new Date(Number(unixTimeString)).toLocaleDateString();
@@ -24,15 +24,25 @@ const ascendingCompare = (A, B) => {
     }
 }
 
-const processData = ({data, cumulative=false}) => {
+const dataValueToDate = (value) => {
+    let onlyDate = new Date(Number(value.createdAt.$date.$numberLong));
+    const dateString = new Date(onlyDate.getFullYear(), onlyDate.getMonth());
+    return dateString;
+}
+
+const dataValueToMonth = (value) => {
+    let onlyDate = new Date(Number(value.createdAt.$date.$numberLong));
+    onlyDate.setUTCHours(0, 0, 0, 0);
+    const dateString = onlyDate.setUTCDate(1).toString();
+    return dateString;
+}
+
+const processData = ({data, cumulative=false, cumulateBy=dataValueToDate}) => {
     let dataByDate = [];
     let total = 0;
     data.sort((a, b) => ascendingCompare(Number(a.createdAt.$date.$numberLong), Number(b.createdAt.$date.$numberLong)));
     data.reduce(function(res, value) {
-        // console.log(total);
-        let onlyDate = new Date(Number(value.createdAt.$date.$numberLong));
-        const dateString = onlyDate.setUTCHours(0, 0, 0, 0).toString();
-        // const dateString = onlyDate.toLocaleDateString();
+        let dateString=cumulateBy(value);
 
         if (!res[dateString]) {
             res[dateString] = {
@@ -393,6 +403,9 @@ export default function DashboardChart() {
 
     const [dataByDate, setDataByDate] = useState(processData({data}));
 
+    const [dataByMonth, setDataByMonth] = useState(processData({data: data, cumulative: false, dataValueToMonth}));
+
+
     const toggleCumulative = (event) => {
             event.persist();
             setIsCumulative(event.target.checked);
@@ -462,7 +475,33 @@ export default function DashboardChart() {
             </ResponsiveContainer>
         </div>
     );
+
+    const renderBarChart = (
+        <div className="line-chart noselect dashboard-right">
+            <ResponsiveContainer width={900} height="90%">
+            <BarChart width={730} height={400} data={dataByMonth}>
+                <Bar
+                    dataKey="amount"
+                    // nameKey="date"
+                    // label={()}
+                    >
+                        {data.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                        ))}
+                </Bar>
+                <XAxis tickFormatter={unixTimeString => {
+                    const monthNames = ["January", "February", "March", "April", "May", "June",
+                    "July", "August", "September", "October", "November", "December"
+                  ];
+                  return monthNames[unixTimeString];
+                }} />
+                <YAxis />
+                <Tooltip />
+            </BarChart>
+            </ResponsiveContainer>
+        </div>
+    );
     
 
-    return renderPieChart;
+    return renderLineChart;
 }
