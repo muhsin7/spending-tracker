@@ -10,7 +10,7 @@ export default function Header() {
     return (
         <header className='header'>
           <div className='logo'>
-            <Link to='/'>Dashboard</Link>
+            <Link to='/'>Spending Tracker</Link>
           </div>
           <ul>
               <li>
