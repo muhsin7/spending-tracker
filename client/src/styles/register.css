@@ -1,5 +1,4 @@
 /* body{
-    font-family: 'Karla', sans-serif;
     display: flex;
     justify-content: center; 
     margin: 0;
@@ -32,45 +31,41 @@
 }
 
 .form{
-    background-color: #f5f7fb;
-    height: 620px;
-    width: 850px;
+    /* height: 620px;
+    width: 850px; */
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    border-radius: 10px;
 }
 
-h1{
-    /* font-family: 'Karla', sans-serif; */
-    font-size: 3rem;
-    font-weight: 750;
-    /* margin-bottom: 100px; */
-}
 
 fieldset{
-    height: 400px;
-    width: 500px;
-    margin-bottom: 50px;
-    padding-top: 50px;
+    border-radius: 10px;
+    padding: 2em 2em 2em 2em;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+
 }
 
 .form-group input {
   width: 350px;
-  height: 35px;
-  text-indent: 10px;
-  border: 1px solid #e6e6e6;
+  /* height: 35px; */
+  /* text-indent: 10px; */
+  /* border: 0; */
+  border: 1px solid #121212;
   border-radius: 5px;
-  margin-bottom: 15px;
+  margin-bottom: 0.5em;
+  font-family: 'Poppins', sans-serif;
+  padding: 1em;
 }
 
-.form-group input:focus {
-    background-color: rgb(147, 231, 147);
+.form-group input:focus textarea:focus {
+    border: 1px solid #00B57F;
+    box-shadow: none;
+    /* background-color: rgb(147, 231, 147); */
 }
 
 .btn{
@@ -89,4 +84,10 @@ fieldset{
 
 .btn:hover{
     border-radius: 30px;
+}
+
+.form-header {
+    margin: 1em 0 1em 0;
+    font-size: 2.5rem;
+    font-weight: 750;
 }
