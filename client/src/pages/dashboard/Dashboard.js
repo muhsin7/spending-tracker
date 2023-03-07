@@ -14,7 +14,7 @@ export default function Dashboard() {
                 <TransactionsPreview /> 
             </div>
             <div className="chart-container dashboard-right">
-            <DashboardChart />
+                <DashboardChart />
             </div>
         </div>
     )

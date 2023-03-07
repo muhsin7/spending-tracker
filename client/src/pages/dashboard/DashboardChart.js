@@ -1,4 +1,4 @@
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
 import { useEffect, useState } from 'react';
 
 const dateStringFromUnixString = (unixTimeString) => new Date(Number(unixTimeString)).toLocaleDateString();
@@ -366,6 +366,27 @@ export default function DashboardChart() {
         "__v": 0
       }];
 
+    const categoryData = [{
+        "name": "Grocery",
+        "amount": 100,
+    },
+    {
+        "name": "Grocer2",
+        "amount": 200,
+    },
+    {
+        "name": "Grocery3",
+        "amount": 100,
+    },
+    {
+        "name": "Groc6ery",
+        "amount": 140,
+    },
+    {
+        "name": "Gro7cery",
+        "amount": 190,
+    },]
+
     const [data, setData] = useState(dummydata);
 
     const [isCumulative, setIsCumulative] = useState(false);
@@ -384,26 +405,64 @@ export default function DashboardChart() {
     
 
     const renderLineChart = (
-      <>
-        <div className="line-chart noselect">
-            <LineChart width={600} height={300} data={dataByDate} margin={{ top: 5, right: 10, bottom: 5, left: 0 }}>
-                <Line type="monotone" dataKey="amount" strokeWidth={2.5} stroke="#00B57F  " />
-                <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-                <XAxis
-                    dataKey="date"
-                    domain={["auto", "auto"]}
-                    tickFormatter={unixTimeString => dateStringFromUnixString(unixTimeString)}
-                />
-                <YAxis />
-                <Tooltip content={<CustomTooltip />}/>
-            </LineChart>
-            <label class="checkbox-label">
+        <div className="line-chart noselect dashboard-right">
+            <ResponsiveContainer width={800} height="80%">
+                <LineChart data={dataByDate} margin={{ top: 5, right: 10, bottom: 5, left: 0 }}>
+                    <Line type="monotone" dataKey="amount" strokeWidth={2.5} stroke="#00B57F  " />
+                    <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+                    <XAxis
+                        dataKey="date"
+                        domain={["auto", "auto"]}
+                        tickFormatter={unixTimeString => dateStringFromUnixString(unixTimeString)}
+                    />
+                    <YAxis />
+                    <Tooltip content={<CustomTooltip />}/>
+                </LineChart>
+            </ResponsiveContainer>
+            <label className="checkbox-label">
                 <input type="checkbox" checked={isCumulative} onChange={toggleCumulative} />
                 <span>Cumulative data</span>
             </label>
         </div>
-      </>
     );
 
-    return renderLineChart;
+
+    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', "#8884d8"];
+    const RADIAN = Math.PI / 180;
+    const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
+      const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
+      const x = cx + radius * Math.cos(-midAngle * RADIAN);
+      const y = cy + radius * Math.sin(-midAngle * RADIAN);
+    
+      return (
+        <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
+          {`${(percent * 100).toFixed(0)}%`}
+        </text>
+      );
+    };
+
+    const renderPieChart = (
+        <div className="line-chart noselect dashboard-right">
+            <ResponsiveContainer width={900} height="90%">
+            <PieChart width={730} height={400}>
+                <Legend layout="vertical" verticalAlign="top" align="top" />
+                <Pie
+                    data={categoryData}
+                    dataKey="amount"
+                    nameKey="name"
+                    labelLine={false}
+                    label={renderCustomizedLabel}
+                    >
+                        {data.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                        ))}
+                </Pie>
+                <Tooltip />
+            </PieChart>
+            </ResponsiveContainer>
+        </div>
+    );
+    
+
+    return renderPieChart;
 }
