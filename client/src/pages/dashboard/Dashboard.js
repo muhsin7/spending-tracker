@@ -11,10 +11,13 @@ export default function Dashboard() {
             {/* <h1 className="dashboard-header">Dashboard</h1> */}
             <div className="dashboard-left">
                 <AmountSpent />
-                <TransactionsPreview /> 
+                <div className="chart-container">
+                    <DashboardChart />
+                </div>
             </div>
-            <div className="chart-container dashboard-right">
-                <DashboardChart />
+            <div className="dashboard-right">
+                <TransactionsPreview /> 
+                
             </div>
         </div>
     )

@@ -419,7 +419,7 @@ export default function DashboardChart() {
 
     const renderLineChart = (
         <div className="line-chart noselect dashboard-right">
-            <ResponsiveContainer width={800} height="80%">
+            <ResponsiveContainer width={600} height="95%">
                 <LineChart data={dataByDate} margin={{ top: 5, right: 10, bottom: 5, left: 0 }}>
                     <Line type="monotone" dataKey="amount" strokeWidth={2.5} stroke="#00B57F  " />
                     <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
