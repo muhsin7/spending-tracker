@@ -6,6 +6,10 @@ export default function PaymentCard(props) {
   // Rounds the price to 2 d.p.
   let price = (Math.round(props.payment.amount * 100) / 100).toFixed(2);
 
+  function displayImage() {
+
+  }
+
   return (
     <div className="payment-card">
       <div className="payment-info">
@@ -14,7 +18,10 @@ export default function PaymentCard(props) {
           <span className="payment-amount">{"-£" + price}</span>
         </div>
         <span className="payment-description">{description}</span>
-        <span className="payment-date">{date}</span>
+        <div className="payment-card-bottom">
+          <span className="payment-date">{date}</span>
+          <button className="payment-image-button" onClick={displayImage}>View image</button>
+        </div>
       </div>
     </div>
   )
