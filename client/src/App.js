@@ -7,13 +7,15 @@ import UpdateUser from "./pages/UpdateUser"
 import UserPage from "./pages/UserPage"
 import PaymentsPage from "./pages/paymentsPage/PaymentsPage"
 import './styles/styles.css'
+import Header from "./components/Header"
 
 function App() {
   return (
     <>
       <Router>
+    <Header />
+      <div className="border"></div>
         <div className="container">
-
           <Routes>
             {/* Only Route tags are allowed in Routes tag */}
             <Route path="/" element={<Dashboard />} />

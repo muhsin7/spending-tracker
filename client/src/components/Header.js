@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom'
-import "./header.css"
 
 export default function Header() {
 
@@ -10,12 +9,26 @@ export default function Header() {
     return (
         <header className='header'>
           <div className='logo'>
-            <Link to='/'>Spending Tracker</Link>
+          <div className='logo-text'>AllGood</div>
           </div>
-          <ul>
+          <ul className='header-links'>
+              <li>
+                <div className='header-link'>Contact Us</div>
+              </li>
+              <li>
+                <div className='header-link'>About</div>
+              </li>
+              <li>
+                <div className='header-link'>Home</div>
+              </li>
+              <li>
+                <button className='btn btn-header btn-ghost' onClick={onLogout}>
+                    Sign up
+                </button>
+              </li>
               <li>
                 <button className='btn btn-header' onClick={onLogout}>
-                    Logout
+                    Login
                 </button>
               </li>
           </ul>

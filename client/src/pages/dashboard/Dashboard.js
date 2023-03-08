@@ -8,7 +8,7 @@ export default function Dashboard() {
 
     return (
         <div className="dashboard dashboard-grid">
-            <h1 className="dashboard-header">Dashboard</h1>
+            {/* <h1 className="dashboard-header">Dashboard</h1> */}
             <div className="dashboard-left">
                 <AmountSpent />
                 <TransactionsPreview /> 

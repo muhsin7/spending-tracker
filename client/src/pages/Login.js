@@ -35,22 +35,21 @@ function Login() {
         password: passwordValue,
       });
 
+      console.log(response.status);
       const { token } = response.data;
       setToken(token);
 
-      navigate("/dashboard");
+      navigate("/");
     }
   };
 
-  {
-    /* // <div className="div-login"> */
-  }
+
   return (
     <main className="registerPage">
       <section className="form">
         <h1 className="form-header">Login</h1>
 
-        <div class="fieldset">
+        <div className="fieldset">
           <form onSubmit={onLoginClicked}>
             <div className="form-group">
               <input
