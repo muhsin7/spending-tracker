@@ -4,7 +4,7 @@ import "reactjs-popup/dist/index.css";
 
 export default function PaymentCard(props) {
   const TITLE = props.payment.title;
-  const DATE = "THIS IS A PLACEHOLDER FOR THE DATE";
+  const DATE = new Date(props.payment.createdAt.$date.$numberLong).toLocaleString();
   const DESCRIPTION = props.payment.description;
   const DOES_IMAGE_EXIST = props.payment.hasOwnProperty('image');
   
