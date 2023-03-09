@@ -71,5 +71,6 @@
   }
 
   .error {
-    color: var(--error-red);
+    color: var(--error-red) !important;
+    border-color: var(--error-red) !important;
   }

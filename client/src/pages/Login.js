@@ -3,9 +3,11 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { useToken } from "../authentication/useToken";
+import { useAuth } from "../authentication/useAuth";
 
 function Login() {
   const [token, setToken] = useToken();
+  const [auth, setAuth] = useAuth();
   const [errorMessage, setErrorMessage] = useState("");
   const [goToRegister, setGoToRegister] = React.useState(false);
   const [emailValue, setEmailValue] = useState("");
@@ -38,6 +40,7 @@ function Login() {
       console.log(response.status);
       const { token } = response.data;
       setToken(token);
+      setAuth(true);
 
       navigate("/");
     }

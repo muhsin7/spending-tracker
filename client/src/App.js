@@ -1,4 +1,4 @@
-import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
+import {BrowserRouter as Router, Routes, Route, BrowserRouter} from "react-router-dom"
 import AddCategory from "./pages/AddCategory"
 import Login from "./pages/Login"
 import Register from "./pages/Register"
@@ -8,12 +8,16 @@ import UserPage from "./pages/UserPage"
 import PaymentsPage from "./pages/paymentsPage/PaymentsPage"
 import './styles/styles.css'
 import Header from "./components/Header"
+import ProtectedRoute from "./authentication/ProtectedRoute"
+import { useAuth } from "./authentication/useAuth"
 
 function App() {
+  const [isAuth, setAuth] = useAuth();
+
   return (
     <>
-      <Router>
-    <Header />
+      <BrowserRouter>
+    <Header isAuth={isAuth} setAuth={setAuth} />
       <div className="border"></div>
         <div className="container">
           <Routes>
@@ -27,7 +31,7 @@ function App() {
             <Route path="/payments" element={<PaymentsPage />} />
           </Routes>
         </div>
-      </Router>
+      </BrowserRouter>
     </>
   );
 }

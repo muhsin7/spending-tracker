@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 import axios from "axios"; 
 import { useToken } from "../authentication/useToken";
+import { useAuth } from "../authentication/useAuth";
 
 
 export default function Register() {
     const [token, setToken] = useToken();
+    const [auth, setAuth] = useAuth();
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -50,6 +52,7 @@ export default function Register() {
   
           const {token} = response.data;
           setToken(token);
+          setAuth(true);
     
           navigate('/user');
         }

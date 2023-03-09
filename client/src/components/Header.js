@@ -1,9 +1,12 @@
 import { Link } from 'react-router-dom'
+import { useAuth } from '../authentication/useAuth';
 
-export default function Header() {
+export default function Header({isAuth, setAuth}) {
 
     const onLogout = () => {
-        window.alert("Logout")
+        // window.alert("Logout")
+        localStorage.removeItem('token');
+        setAuth(false);
     }
 
     return (
@@ -21,7 +24,14 @@ export default function Header() {
               <li>
                 <div className='header-link'>Home</div>
               </li>
-              <li>
+              {
+                isAuth ?(<li>
+                  <button className='btn btn-header btn-ghost error' onClick={onLogout}>
+                      Log out
+                  </button>
+                </li>) : (
+                  <>
+                  <li>
                 <button className='btn btn-header btn-ghost' onClick={onLogout}>
                     Sign up
                 </button>
@@ -30,7 +40,9 @@ export default function Header() {
                 <button className='btn btn-header' onClick={onLogout}>
                     Login
                 </button>
-              </li>
+              </li></>
+                )
+              }
           </ul>
         </header>
       )
