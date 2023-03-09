@@ -1,13 +1,14 @@
 import {useState} from "react"
 import { Link } from 'react-router-dom';
-import "./register.css"
 import { useNavigate } from "react-router-dom";
 import axios from "axios"; 
 import { useToken } from "../authentication/useToken";
+import { useAuth } from "../authentication/useAuth";
 
 
 export default function Register() {
     const [token, setToken] = useToken();
+    const [auth, setAuth] = useAuth();
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -51,6 +52,7 @@ export default function Register() {
   
           const {token} = response.data;
           setToken(token);
+          setAuth(true);
     
           navigate('/user');
         }
@@ -60,9 +62,9 @@ export default function Register() {
     return (
       <main className="registerPage">
         <section className='form'>
-          <h1>Create an account</h1>
+          <h1 className="form-header">Create an account</h1>
           
-          <fieldset>
+          <div class="fieldset">
             <form onSubmit={onSubmit}>
               <div className='form-group'>
                 <input
@@ -71,7 +73,7 @@ export default function Register() {
                   id='name'
                   name='name'
                   value={name}
-                  placeholder='Enter your name'
+                  placeholder='Name'
                   onChange={onChange}
                   required
                 />
@@ -83,7 +85,7 @@ export default function Register() {
                   id='email'
                   name='email'
                   value={email}
-                  placeholder='Enter your email'
+                  placeholder='Email'
                   onChange={onChange}
                   required
                 />
@@ -95,7 +97,7 @@ export default function Register() {
                   id='password'
                   name='password'
                   value={password}
-                  placeholder='Enter password'
+                  placeholder='Password'
                   onChange={onChange}
                   required
                 />
@@ -117,7 +119,7 @@ export default function Register() {
                 </button>
                 Already have an account? <Link to="/login">Log in</Link>
             </form>
-        </fieldset>
+        </div>
       </section>
     </main>
   )

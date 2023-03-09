@@ -3,8 +3,34 @@
     margin: 5%;
 }
 
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+}
+
+.dashboard-header {
+    /* grid-row: 1; */
+    grid-column: 1 12;
+    font-size: 3em;
+}
+
+.dashboard-left {
+    grid-column-start: 1;
+    grid-column-end: 4;
+}
+
+.dashboard-right {
+    grid-column-start: 5;
+    grid-column-end: 12;
+}
+
 .dashboard-money {
-    width: 25%;
+    width: 50%;
+    /* align-items: stretch;
+    align-self: stretch; */
     margin-bottom: 1em;
 }
 
@@ -31,3 +57,20 @@
     font-size: 90%;
     border-radius: 8px;
 }
+
+.dashboard-amount-cards {
+    display: flex;
+    align-items: stretch;
+    justify-items: stretch;
+    margin: 2em 0em;
+}
+
+.dashboard-amount-cards > * {
+    /* display: block; */
+    margin-left: 1.5em;
+  }
+
+  .error {
+    color: var(--error-red) !important;
+    border-color: var(--error-red) !important;
+  }

@@ -1,4 +1,6 @@
 import { useState } from "react";
+import AmountCard from "./AmountCard";
+import BudgetCard from "./BudgetCard";
 
 export default function AmountSpent() {
 
@@ -18,16 +20,9 @@ export default function AmountSpent() {
     }
 
     return (
-        <div className="dashboard-money dashboard-container">
-                <div className="dashboard-amount">£42</div>
-                <div className="dashboard-amount-description">
-                    <form>
-                        <label for="duration">spent { dropdownDuration === "day" ? "" : "this" } </label>
-                        <select onChange={setOption} id="amount-duraton" name="duration" className="duration-selector">
-                            { durationElements }
-                        </select>
-                    </form>
-                </div>
-            </div>
+        <div class="dashboard-amount-cards">
+            <AmountCard />
+            <BudgetCard negative={true}  hasBudget={true} />
+        </div>
     )
 }
