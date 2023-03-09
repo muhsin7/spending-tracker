@@ -4,12 +4,12 @@ const Payment = require("./models/paymentModel");
 const SpendingLimit = require("./models/spendingLimitModel");
 const utils = require("./test/utils");
 
-const { faker } = require('@faker-js/faker');
+const { faker } = require("@faker-js/faker");
 const bcrypt = require("bcrypt");
 
 const app = require("./app");
 
-const NUMBER_OF_USERS = 100;
+const NUMBER_OF_USERS = 5;
 const DEFAULT_PASSWORD = "123";
 
 function rand(max) {
@@ -26,6 +26,16 @@ async function createUser(user, pass) {
   });
 }
 
+async function getRandomCategoryFromUser(user) {
+  const userCategories = await Category.find({userId: user._id}).lean();
+  return faker.helpers.arrayElement(userCategories);
+}
+
+async function getRandomCategorySetFromUser(user) {
+  const userCategories = await Category.find({userId: user._id}).lean();
+  return faker.helpers.arrayElements(userCategories);
+}
+
 async function createDefaultModels() {
   const DEFAULT_USER = {
     name: "John Doe",
@@ -33,7 +43,11 @@ async function createDefaultModels() {
   };
 
   const user = await createUser(DEFAULT_USER, DEFAULT_PASSWORD);
-
+  
+  for(let i = 0; i < 4; ++i) await createRandomCategory(user);
+  for(let i = 0; i < 7; ++i) await createRandomPayment(user);
+  await createRandomSpendingLimits(user);
+  await createRandomOverallSpendingLinit(user);
 }
 
 async function createRandomUser() {
@@ -42,29 +56,84 @@ async function createRandomUser() {
     email: faker.internet.email()
   };
 
-  await createUser(user, DEFAULT_PASSWORD);
+  return await createUser(user, DEFAULT_PASSWORD);
 }
 
 async function createRandomCategory(user) {
-  //TODO
+  const category = {
+    name: faker.word.noun(),
+    userId: user._id
+  };
+  
+  return await Category.create(category);
 }
 
+//Currently seeded payments do not have any images attached to them
 async function createRandomPayment(user) {
-  //TODO
+  const category = await getRandomCategoryFromUser(user);
+  
+  const payment = {
+    title: faker.commerce.product(),
+    description: faker.commerce.productDescription(),
+    amount: rand(100) / 10,
+    categoryId: category._id,
+    userId: user._id
+  };
+
+  return await Payment.create(payment);
 }
 
-async function createRandomSpendingLimit(user, category) {
-  //TODO
+async function createRandomSpendingLimits(user) {
+  const categories = await getRandomCategorySetFromUser(user);
+  let spendingLimits = [];
+
+  categories.forEach(async (category) => {
+    const duration = {
+      type: faker.helpers.arrayElement(["YEAR", "MONTH", "DAY", "WEEK"])
+    };
+  
+    const spendingLimit = {
+      name: faker.word.noun(),
+      userId: user._id,
+      amount: rand(100),
+      duration: duration,
+      categoryId: category._id
+    };
+
+    spendingLimits.push(await SpendingLimit.create(spendingLimit));
+  });
+  
+  return spendingLimits;
 }
 
 async function createRandomOverallSpendingLinit(user) {
-  //TODO
+  const duration = {
+    type: faker.helpers.arrayElement(["YEAR", "MONTH", "DAY", "WEEK"])
+  };
+
+  const spendingLimit = {
+    name: faker.word.noun(),
+    userId: user._id,
+    amount: rand(100),
+    duration: duration,
+  };
+
+  return await  SpendingLimit.create(spendingLimit);
+}
+
+async function createRandomUserAndRecords() {
+  const user = await createRandomUser();
+
+  for (let i = 0; i < rand(10) + 1; ++i) await createRandomCategory(user); //Must be at least 1 category for payments to be associated with
+  for (let i = 0; i < rand(25); ++i) await createRandomPayment(user);
+  await createRandomSpendingLimits(user);
+  await createRandomOverallSpendingLinit(user);
 }
 
 async function seed() {
   await utils.flushDB();
   await createDefaultModels();
-  await createRandomUser();
+  for (let i = 0; i < NUMBER_OF_USERS; ++i) await createRandomUserAndRecords();
   process.exit();
 }
 
