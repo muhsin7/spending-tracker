@@ -97,9 +97,9 @@ async function createRandomSpendingLimits(user) {
       userId: user._id,
       amount: rand(100),
       duration: duration,
-      categoryId: category._id
+      category: category._id
     };
-
+    
     spendingLimits.push(await SpendingLimit.create(spendingLimit));
   });
   
