@@ -2,16 +2,22 @@ const express = require("express");
 const router = express.Router();
 
 
-const {getPayments, getPayment, createPayment, deletePayment, updatePayment} = require("../controllers/paymentController");
+const {getPayments, getSummary, getPayment, createPayment, deletePayment, updatePayment} = require("../controllers/paymentController");
 const { protect } = require("../middleware/authMiddleware");
+const {mustOwnValidCategory, mustOwnValidPayment} = require("../middleware/paymentMiddleware");
+
+// /api/payment
 
 router.route("/")
   .get(protect, getPayments)
-  .post(protect, createPayment);
+  .post(protect, mustOwnValidCategory, createPayment);
+
+router.route("/summary")
+  .get(protect, getSummary);
 
 router.route("/:id")
-  .get(protect, getPayment)
-  .delete(protect, deletePayment)
-  .patch(protect, updatePayment);
+  .get(protect, mustOwnValidPayment, getPayment)
+  .delete(protect, mustOwnValidPayment, deletePayment)
+  .patch(protect, mustOwnValidPayment, updatePayment);
 
 module.exports = router;

@@ -48,6 +48,7 @@ describe("Payment tests", () => {
       //flush payments
       await Payment.deleteMany({});
 
+      // load required object from database
       user = await User.findOne({name: "Jill"});
       category = await Category.findOne({name: "Groceries"});
     });
@@ -161,6 +162,10 @@ describe("Payment tests", () => {
     let otherCategory;
     let otherPayment;
 
+    /**
+     * Creates a payment object without saving it into the databse
+     * @returns Payment object
+     */
     const genPayment = async() => {
       user = await User.findOne({name: "Jill"});
       category = await Category.findOne({name: "Groceries"});
@@ -239,6 +244,7 @@ describe("Payment tests", () => {
     });
 
     it("should not allow the user to create a payment in a category they do not own", async() => {
+      const initPayments = await Payment.countDocuments();
       let payment = await genPayment();
       payment.categoryId = otherCategory._id;
 
@@ -247,17 +253,21 @@ describe("Payment tests", () => {
         .send(payment)
         .set("Authorization", ("Bearer " + authToken));
 
+      const payments = await Payment.countDocuments();
       assertError(res, 403);
-      should.not.exist(res.body, "Should not have created a payment");
+      payments.should.be.equal(initPayments); 
     });
 
     it("should post a valid payment", async() => {
+      const initPayments = await Payment.countDocuments();
       const res = await chai.request(app)
         .post("/api/payment/")
         .send(await genPayment())
         .set("Authorization", ("Bearer " + authToken));
 
-      res.should.have.status(200);
+      const payments = await Payment.countDocuments();
+      payments.should.be.equal(initPayments + 1); 
+      res.should.have.status(201);
       res.should.have.property("body");
       res.body.should.have.property("title", "Carrots");
       res.body.should.have.property("description", "A 1kg bag of carrots");
@@ -278,29 +288,50 @@ describe("Payment tests", () => {
       res.body.should.have.property("amount", payment.amount);
     });
 
+    it("should not get a payment that does not exist", async() => {
+      const res = await chai.request(app)
+        .get("/api/payment/" + "111111111111111111111111") // test with invalid id
+        .set("Authorization", ("Bearer " + authToken));
+
+      assertError(res, 404);
+    });
+
     it("should prevent the user from getting a payment of a different user", async() => {
       const res = await chai.request(app)
         .get("/api/payment/" + otherPayment._id)
         .set("Authorization", ("Bearer " + authToken));
 
       assertError(res, 403);
-      should.not.exist(res.body, "Should not have gotten a payment");
     });
 
     it("should delete a specified payment", async() => {
+      const initPayments = await Payment.countDocuments();
       const res = await chai.request(app)
         .delete("/api/payment/" + payment._id)
         .set("Authorization", ("Bearer " + authToken));
       res.should.have.status(200);
 
+      const payments = await Payment.countDocuments();
+      payments.should.be.equal(initPayments - 1); 
       const resPost = await chai.request(app)
         .get("/api/payment/" + payment._id)
         .set("Authorization", ("Bearer " + authToken));
       assertError(resPost, 404);
-      should.not.exist(resPost.body, "Document should have been deleted");
+    });
+
+    it("should not delete a payment that does not exist", async() => {
+      const initPayments = await Payment.countDocuments();
+      const res = await chai.request(app)
+        .get("/api/payment/" + "111111111111111111111111") // test with invalid id
+        .set("Authorization", ("Bearer " + authToken));
+
+      const payments = await Payment.countDocuments();
+      payments.should.be.equal(initPayments); 
+      assertError(res, 404);
     });
 
     it("should prevent the user from deleting another user's payment", async() => {
+      const initPayments = await Payment.countDocuments();
       const res = await chai.request(app)
         .delete("/api/payment/" + otherPayment._id)
         .set("Authorization", ("Bearer " + authToken));
@@ -311,6 +342,8 @@ describe("Payment tests", () => {
         .get("/api/payment/" + otherPayment._id)
         .set("Authorization", ("Bearer " + generateToken(otherUser)));
 
+      const payments = await Payment.countDocuments();
+      payments.should.be.equal(initPayments);
       resPost.should.have.status(200);
       resPost.should.have.property("body");
       should.exist(resPost.body, "Should have gotten a payment");
@@ -344,13 +377,20 @@ describe("Payment tests", () => {
       resPost.body.should.have.property("amount", 2);
     });
 
+    it("should not update a payment that does not exist", async() => {
+      const res = await chai.request(app)
+        .get("/api/payment/" + "111111111111111111111111") // test with invalid id
+        .set("Authorization", ("Bearer " + authToken));
+
+      assertError(res, 404);
+    });
+
     it("should prevent the user from modifying another user's payment", async() => {
       const res = await chai.request(app)
         .patch("/api/payment/" + otherPayment._id)
         .send(await genPayment())
         .set("Authorization", ("Bearer " + authToken));
       assertError(res, 403);
-      should.not.exist(res.body, "Should not have gotten a payment");
 
       // should not have modified the other user's payment
       const resPost = await chai.request(app)

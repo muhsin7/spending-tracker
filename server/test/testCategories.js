@@ -11,7 +11,6 @@ const app = require("../app");
 
 chai.use(chaiHttp);
 
-// TEST CATEGORY API
 describe("Category tests", () => {
   before(async() => {
     // flush DB before tests
@@ -28,6 +27,8 @@ describe("Category tests", () => {
   })
 
   after(flushDB);
+
+  // TEST MODEL
 
   describe("Model tests", () => {
     let user;
@@ -170,14 +171,20 @@ describe("Category tests", () => {
       res.body.should.have.property("name", category.name);
     });
 
+    it("should not get a category that does not exist", async() => {
+      const res = await chai.request(app)
+        .get("/api/category/" + "111111111111111111111111") // test with invalid id
+        .set("Authorization", ("Bearer " + authToken));
+
+      assertError(res, 404);
+    });
+
     it("should prevent the user from getting a category of a different user", async() => {
       const res = await chai.request(app)
         .get("/api/category/" + otherCategory._id)
         .set("Authorization", ("Bearer " + authToken));
       
-      console.log(res.status)
       assertError(res, 403);
-      should.not.exist(res.body, "Should not have gotten a category");
     });
 
     it("should delete a specified category", async() => {
@@ -190,7 +197,17 @@ describe("Category tests", () => {
         .get("/api/category/" + category._id)
         .set("Authorization", ("Bearer " + authToken));
       assertError(resPost, 404);
-      should.not.exist(resPost.body, "Document should have been deleted");
+    });
+
+    it("should not delete a category that does not exist", async() => {
+      const initCategories = await Category.countDocuments();
+      const res = await chai.request(app)
+        .get("/api/category/" + "111111111111111111111111") // test with invalid id
+        .set("Authorization", ("Bearer " + authToken));
+
+      const categories = await Category.countDocuments();
+      categories.should.be.equal(initCategories); 
+      assertError(res, 404);
     });
 
     it("should prevent the user from deleting another user's category", async() => {
@@ -231,13 +248,20 @@ describe("Category tests", () => {
       resPost.body.should.have.property("name", "Food");
     });
 
+    it("should not update a category that does not exist", async() => {
+      const res = await chai.request(app)
+        .get("/api/category/" + "111111111111111111111111") // test with invalid id
+        .set("Authorization", ("Bearer " + authToken));
+
+      assertError(res, 404);
+    });
+
     it("should prevent the user from modifying another user's category", async() => {
       const res = await chai.request(app)
         .patch("/api/category/" + otherCategory._id)
         .send(await genCategory())
         .set("Authorization", ("Bearer " + authToken));
       assertError(res, 403);
-      should.not.exist(res.body, "Should not have gotten a category");
 
       // should not have modified the other user's category
       const resPost = await chai.request(app)
