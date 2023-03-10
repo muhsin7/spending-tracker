@@ -9,6 +9,7 @@
   display: inline-flex;
   border-radius: 16px;
   padding: 1rem;
+  margin: 0.5rem;
 }
 
 .payments-container {
@@ -19,6 +20,7 @@
   flex-direction: column;
   align-items: center;
   padding: 1rem;
+  margin: 0.5rem;
   border-radius: 16px;
 }
 
@@ -46,7 +48,16 @@
 
 .payment-card-top {
   width: 100%;
-  display: flex;
+  display: grid;
+  grid-template-columns: 90% 10%;
+  justify-content: space-between;
+  flex-flow: row wrap;
+}
+
+.payment-card-bottom {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 90% 10%;
   justify-content: space-between;
   flex-flow: row wrap;
 }
@@ -62,6 +73,7 @@
 }
 
 .payment-amount {
+  text-align: right;
   color: darkred;
 }
 
@@ -71,4 +83,16 @@
 
 .payment-date {
   font-weight: bolder;
+}
+
+.payment-image-button {
+  background-color: limegreen;
+  border:none;
+  border-radius: 6px;
+}
+
+.payment-image-button:hover {
+  background-color: #00955F;
+  color: beige;
+  border-radius: 6px;
 }
