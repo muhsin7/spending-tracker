@@ -1,0 +1,42 @@
+.categoryPage{
+    padding: 2rem;
+}
+
+.categories-container { 
+    display: flex;
+    flex-wrap: wrap;
+} 
+
+.category-card {
+    margin: 2rem 2rem 2rem 0;
+    padding: 1.5rem;
+    width: 250px;
+    box-shadow: 0 0 28px 4px rgba(0,0,0,0.1);
+    transition: transform .3s ease;
+    cursor: pointer;
+}
+
+.category-card:hover{
+    transform: scale(1,1);
+}
+
+.category-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.category-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+}
+
+.category-card-button{
+    background-color: #00B57F;
+    border: none;
+    color: white;
+    font: inherit;
+    font-size: 90%;
+    border-radius: 10px;
+    margin-right: 10px;
+    padding: 0 1em 0 1em
+}
