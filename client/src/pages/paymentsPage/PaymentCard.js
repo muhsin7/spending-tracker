@@ -128,18 +128,18 @@ export default function PaymentCard(props) {
         <div className="payment-card-top">
           <input
             className="payment-title"
-            value={TITLE}
+            defaultValue={TITLE}
           />
           <input
             className="payment-amount"
-            value={"-£" + PRICE}
+            defaultValue={PRICE}
           />
         </div>
 
         <div className="payment-card-middle">
           <input
             className="payment-description"
-            value={DESCRIPTION}
+            defaultValue={DESCRIPTION}
           />
           <div className="payment-edit-delete-icons">
             <FaCheck className="payment-confirm-icon" onClick={handleConfirm} />
