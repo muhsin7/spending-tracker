@@ -46,17 +46,17 @@ export default function PaymentCard(props) {
 
 
 
-  const [edit,setEdit] = useState(false)
+  const [edit, setEdit] = useState(false);
 
   function handleEdit() {
-    
+    setEdit(!edit);
   }
 
   function handleDelete() {
 
   }
 
-  return (
+  const NORMAL_MODE = (
     <div className="payment-card">
       <span className="payment-category">{CATEGORY_NAME}</span>
 
@@ -68,7 +68,7 @@ export default function PaymentCard(props) {
 
         <div className="payment-card-middle">
           <span className="payment-description">{DESCRIPTION}</span>
-          <div classname="payment-edit-delete-icons">
+          <div className="payment-edit-delete-icons">
             <FaTrash className="payment-delete-icon" onClick={handleDelete} />
             <FaEdit className="payment-edit-icon" onClick={handleEdit} />
           </div>
@@ -84,5 +84,57 @@ export default function PaymentCard(props) {
         </div>
       </div>
     </div>
-  )
+  );
+
+  const EDIT_MODE = (
+    <div className="payment-card">
+      <input
+        className="payment-category"
+        value={CATEGORY_NAME}
+        disabled={!edit}
+      />
+
+      <div className="payment-info">
+        <div className="payment-card-top">
+          <input
+            className="payment-title"
+            value={TITLE}
+            disabled={!edit}
+          />
+          <input
+            className="payment-amount"
+            value={"-£" + PRICE}
+            disabled={!edit}
+          />
+        </div>
+
+        <div className="payment-card-middle">
+          <input
+            className="payment-description"
+            value={DESCRIPTION}
+            disabled={!edit}
+          />
+          <div className="payment-edit-delete-icons">
+            <FaTrash className="payment-delete-icon" onClick={handleDelete} />
+            <FaEdit className="payment-edit-icon" onClick={handleEdit} />
+          </div>
+        </div> 
+        
+        <div className="payment-card-bottom">
+          <input
+            className="payment-date"
+            value={DATE}
+            disabled={!edit}
+          />
+          {DOES_IMAGE_EXIST && (
+            <Popup trigger={<button className="payment-image-button">View image</button>} position="left" contentStyle={{ width: 'auto'}}>
+              <img src={imageURL} />
+            </Popup>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+
+  return ((!edit) ? NORMAL_MODE : EDIT_MODE);
 }

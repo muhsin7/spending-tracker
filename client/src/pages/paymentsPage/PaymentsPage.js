@@ -24,5 +24,5 @@ export default function PaymentsPage() {
       <h1 className="payments-header">Payments Page</h1>
       <PaymentsHistory payments={payments}/>
     </div>
-  )
+  );
 }

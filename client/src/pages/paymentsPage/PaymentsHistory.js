@@ -330,5 +330,5 @@ export default function PaymentsHistory() {
     <div className="payments-container">
       {rows}
     </div>
-  )
+  );
 }
