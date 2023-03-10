@@ -43,6 +43,10 @@ export default function PaymentCard(props) {
     console.log(imageURL);
   }
 
+
+
+  const [editButton,setEditButton] = useState(false)
+
   return (
     <div className="payment-card">
       <span className="payment-category">{CATEGORY_NAME}</span>
@@ -53,7 +57,11 @@ export default function PaymentCard(props) {
           <span className="payment-amount">{"-£" + PRICE}</span>
         </div>
 
-        <span className="payment-description">{DESCRIPTION}</span>
+        <div className="payment-card-middle">
+          <span className="payment-description">{DESCRIPTION}</span>
+          <button className="payment-edit-button">Edit</button>
+          <button className="payment-delete-button">Delete</button>
+        </div> 
         
         <div className="payment-card-bottom">
           <span className="payment-date">{DATE}</span>
