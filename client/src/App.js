@@ -6,6 +6,7 @@ import Dashboard from "./pages/dashboard/Dashboard"
 import UpdateUser from "./pages/UpdateUser"
 import UserPage from "./pages/UserPage"
 import PaymentsPage from "./pages/paymentsPage/PaymentsPage"
+import WelcomePage from "./pages/WelcomePage"
 import './styles/styles.css'
 
 function App() {
@@ -16,7 +17,7 @@ function App() {
 
           <Routes>
             {/* Only Route tags are allowed in Routes tag */}
-            <Route path="/" element={<Dashboard />} />
+            <Route path="/" element={<WelcomePage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/user" element={<UserPage />} />
