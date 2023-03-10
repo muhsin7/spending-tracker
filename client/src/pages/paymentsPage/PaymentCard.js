@@ -5,10 +5,13 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useToken } from "../../authentication/useToken";
 import { FaEdit, FaTrash} from 'react-icons/fa';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 export default function PaymentCard(props) {
   const TITLE = props.payment.title;
-  const DATE = new Date(props.payment.createdAt.$date.$numberLong).toLocaleString();
+  // const DATE = new Date(props.payment.createdAt.$date.$numberLong).toLocaleString();
+  const DATE = new Date().toLocaleString();
   const DESCRIPTION = props.payment.description;
   const DOES_IMAGE_EXIST = props.payment.hasOwnProperty('image');
   const CATEGORY_ID = props.payment.categoryId;
@@ -86,12 +89,13 @@ export default function PaymentCard(props) {
     </div>
   );
 
+  const [startDate, setStartDate] = useState(new Date(DATE));
+
   const EDIT_MODE = (
     <div className="payment-card">
       <input
         className="payment-category"
         value={CATEGORY_NAME}
-        disabled={!edit}
       />
 
       <div className="payment-info">
@@ -99,12 +103,10 @@ export default function PaymentCard(props) {
           <input
             className="payment-title"
             value={TITLE}
-            disabled={!edit}
           />
           <input
             className="payment-amount"
             value={"-£" + PRICE}
-            disabled={!edit}
           />
         </div>
 
@@ -112,7 +114,6 @@ export default function PaymentCard(props) {
           <input
             className="payment-description"
             value={DESCRIPTION}
-            disabled={!edit}
           />
           <div className="payment-edit-delete-icons">
             <FaTrash className="payment-delete-icon" onClick={handleDelete} />
@@ -121,10 +122,10 @@ export default function PaymentCard(props) {
         </div> 
         
         <div className="payment-card-bottom">
-          <input
+          <DatePicker
             className="payment-date"
-            value={DATE}
-            disabled={!edit}
+            selected={startDate}
+            onChange={(date) => setStartDate(date)}
           />
           {DOES_IMAGE_EXIST && (
             <Popup trigger={<button className="payment-image-button">View image</button>} position="left" contentStyle={{ width: 'auto'}}>
