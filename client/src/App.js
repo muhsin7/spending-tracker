@@ -6,6 +6,7 @@ import Dashboard from "./pages/dashboard/Dashboard"
 import UpdateUser from "./pages/UpdateUser"
 import UserPage from "./pages/UserPage"
 import PaymentsPage from "./pages/paymentsPage/PaymentsPage"
+import CategoriesPage from "./pages/categoriesPage/CategoriesPage"
 import './styles/styles.css'
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
             <Route path="/user/update" element={<UpdateUser />} />
             <Route path="/addCategory" element={<AddCategory />} />
             <Route path="/payments" element={<PaymentsPage />} />
+            <Route path="/categories" element={<CategoriesPage />} />
           </Routes>
         </div>
       </Router>
