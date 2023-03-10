@@ -4,7 +4,7 @@ import "reactjs-popup/dist/index.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useToken } from "../../authentication/useToken";
-import { FaEdit, FaTrash} from 'react-icons/fa';
+import { FaEdit, FaTrash, FaCheck } from 'react-icons/fa';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -53,6 +53,10 @@ export default function PaymentCard(props) {
 
   function handleEdit() {
     setEdit(!edit);
+  }
+
+  function handleConfirm() {
+
   }
 
   function handleDelete() {
@@ -116,8 +120,7 @@ export default function PaymentCard(props) {
             value={DESCRIPTION}
           />
           <div className="payment-edit-delete-icons">
-            <FaTrash className="payment-delete-icon" onClick={handleDelete} />
-            <FaEdit className="payment-edit-icon" onClick={handleEdit} />
+            <FaCheck className="payment-confirm-icon" onClick={handleConfirm} />
           </div>
         </div> 
         

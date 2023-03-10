@@ -124,6 +124,17 @@
   color: darkred;
 }
 
+.payment-confirm-icon {
+  color: greenyellow;
+  border: none;
+  border-radius: 6px;
+  float: right;
+}
+
+.payment-confirm-icon:hover {
+  color: green;
+}
+
 .payment-date {
   font-weight: bolder;
 }
