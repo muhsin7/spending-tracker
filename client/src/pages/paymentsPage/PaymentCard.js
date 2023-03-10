@@ -46,7 +46,15 @@ export default function PaymentCard(props) {
 
 
 
-  const [editButton,setEditButton] = useState(false)
+  const [edit,setEdit] = useState(false)
+
+  function handleEdit() {
+    
+  }
+
+  function handleDelete() {
+
+  }
 
   return (
     <div className="payment-card">
@@ -61,8 +69,8 @@ export default function PaymentCard(props) {
         <div className="payment-card-middle">
           <span className="payment-description">{DESCRIPTION}</span>
           <div classname="payment-edit-delete-icons">
-            <FaTrash className="payment-delete-icon" />
-            <FaEdit className="payment-edit-icon" />
+            <FaTrash className="payment-delete-icon" onClick={handleDelete} />
+            <FaEdit className="payment-edit-icon" onClick={handleEdit} />
           </div>
         </div> 
         
