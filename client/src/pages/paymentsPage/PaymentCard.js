@@ -39,6 +39,7 @@ export default function PaymentCard(props) {
 
   
 
+  // Creates an imageURL if it exists
   let imageURL = "";
 
   if (DOES_IMAGE_EXIST) {
@@ -93,14 +94,35 @@ export default function PaymentCard(props) {
     </div>
   );
 
+
+
   const [startDate, setStartDate] = useState(new Date(DATE));
+  const [newCategories, setNewCategories] = useState([]);
+  const [newCategory, setNewCategory] = useState("");
+
+  // Gets all the user's categories from the database
+  useEffect(() => {
+    axios.get('/api/category', {
+      headers: {
+        "Authorization": "Bearer " + token
+      }
+    }).then((res) => {
+      console.log(res.data);
+      setNewCategories(res.data);
+    });
+  }, []);
 
   const EDIT_MODE = (
     <div className="payment-card">
-      <input
-        className="payment-category"
-        value={CATEGORY_NAME}
-      />
+      <select
+        value={newCategory}
+        onChange={e => setNewCategory(e)}
+        defaultValue={{ value: CATEGORY_ID, label: CATEGORY_NAME}}
+      >
+        {newCategories.map((option) => (
+          <option key={option}>{option.name}</option>
+        ))}
+      </select>
 
       <div className="payment-info">
         <div className="payment-card-top">

@@ -5,7 +5,7 @@ import { useToken } from "../../authentication/useToken";
 
 export default function PaymentsPage() {
   const [token, setToken] = useToken();
-  const [payments, setPayments] = useState({});
+  const [payments, setPayments] = useState([]);
 
   // Gets all the user's payments from the database
   useEffect(() => {
