@@ -29,21 +29,20 @@ const createAchievement = asyncHandler(async (req, res) => {
   }
 });
 
-/* 
-TO UPDATE
 // update
-const updateAllAchievements = asyncHandler(async (req, res) => {
+const updateAchievement = asyncHandler(async (req, res) => {
   try {
     const {id} = req.params;
-    const achievements = await Achievement.findByIdAndUpdate({_id: id, userId: req.user.id}, {...req.body});
-    res.status(200).json(achievements);
+    const achievement = await Achievement.findByIdAndUpdate({_id: id, userId: req.user.id}, {...req.body});
+    res.status(200).json(achievement);
   } catch (error) {
     res.status(400).json({error: error.message});
   }
-}); */
+}); 
 
 module.exports = {
   getAchievements,
   getAchievement,
   createAchievement,
+  updateAchievement
 }
