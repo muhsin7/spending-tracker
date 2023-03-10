@@ -65,7 +65,7 @@
 .payment-card-middle {
   width: 100%;
   display: grid;
-  grid-template-columns: 90% 4% 6%;
+  grid-template-columns: 95% 5%;
   justify-content: space-between;
   flex-flow: row wrap;
 }
@@ -98,26 +98,30 @@
   font-style: italic;
 }
 
-.payment-edit-button {
-  background-color: orange;
+.payment-edit-delete-icons {
+  display: block;
+}
+
+.payment-edit-icon {
+  color: orange;
   border: none;
   border-radius: 6px;
+  float: right;
 }
 
-.payment-edit-button:hover {
-  background-color: orangered;
-  color: beige;
+.payment-edit-icon:hover {
+  color: orangered;
 }
 
-.payment-delete-button {
-  background-color: crimson;
+.payment-delete-icon {
+  color: crimson;
   border: none;
   border-radius: 6px;
+  float: right;
 }
 
-.payment-delete-button:hover {
-  background-color: darkred;
-  color: beige;
+.payment-delete-icon:hover {
+  color: darkred;
 }
 
 .payment-date {

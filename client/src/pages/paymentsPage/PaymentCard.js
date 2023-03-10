@@ -4,6 +4,7 @@ import "reactjs-popup/dist/index.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useToken } from "../../authentication/useToken";
+import { FaEdit, FaTrash} from 'react-icons/fa';
 
 export default function PaymentCard(props) {
   const TITLE = props.payment.title;
@@ -59,8 +60,10 @@ export default function PaymentCard(props) {
 
         <div className="payment-card-middle">
           <span className="payment-description">{DESCRIPTION}</span>
-          <button className="payment-edit-button">Edit</button>
-          <button className="payment-delete-button">Delete</button>
+          <div classname="payment-edit-delete-icons">
+            <FaTrash className="payment-delete-icon" />
+            <FaEdit className="payment-edit-icon" />
+          </div>
         </div> 
         
         <div className="payment-card-bottom">
