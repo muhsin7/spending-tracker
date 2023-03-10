@@ -10,17 +10,18 @@ function AddCategory() {
     const [token, setToken] = useToken();
     const [categoryValue, setCategoryValue] = useState('');
     const [spendingLimit, setSpendingLimitValue] = useState('');
-
+    const navigate = useNavigate();
 
     const onSubmit = async () => {
         const response = await axios.post('/api/category', {
             category: categoryValue,
             spendingLimit: spendingLimit,
         });
-    
+        navigate ("/categories");
         const {token} = response.data;
         setToken(token);
-        return <Navigate to = "/"/>;
+       
+        
     }
 
     return(
@@ -42,7 +43,7 @@ function AddCategory() {
                                 onChange={e => setSpendingLimitValue(e.target.value)} 
                                 placeholder="Spending Limit:" required/>
                         </div>
-                        <button id = "addCategoryButton" >Add</button>
+                        <button className = "addCategoryButton" >Add</button>
                     </form>
                 </fieldset>
             </section>
