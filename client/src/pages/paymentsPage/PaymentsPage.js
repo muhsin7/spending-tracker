@@ -7,6 +7,7 @@ export default function PaymentsPage() {
   const [token, setToken] = useToken();
   const [payments, setPayments] = useState({});
 
+  // Gets all the user's payments from the database
   useEffect(() => {
     axios.get('/api/payment', {
       headers: {

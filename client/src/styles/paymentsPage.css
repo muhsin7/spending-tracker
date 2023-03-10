@@ -35,6 +35,10 @@
   border-radius: 12px;
   width: 100%;
   word-wrap: break-word;
+  display: grid;
+  grid-template-columns: 10% 90%;
+  justify-content: space-between;
+  flex-flow: row wrap;
 }
 
 .payment-card:hover {
@@ -44,6 +48,10 @@
 
 .payment-card:last-child {
   margin-bottom: 0;
+}
+
+.payment-category {
+  text-decoration: underline;
 }
 
 .payment-card-top {
