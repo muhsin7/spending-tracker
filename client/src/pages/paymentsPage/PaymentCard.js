@@ -99,6 +99,7 @@ export default function PaymentCard(props) {
   const [startDate, setStartDate] = useState(new Date(DATE));
   const [newCategories, setNewCategories] = useState([]);
   const [newCategory, setNewCategory] = useState("");
+  const [newPrice, setNewPrice] = useState(PRICE);
 
   // Gets all the user's categories from the database
   useEffect(() => {
@@ -132,7 +133,11 @@ export default function PaymentCard(props) {
           />
           <input
             className="payment-amount"
-            defaultValue={PRICE}
+            pattern="^\d+(.\d+)?$"
+            value={newPrice}
+            onChange={(e) =>
+              setNewPrice((v) => (e.target.validity.valid ? e.target.value : v))
+            }
           />
         </div>
 
