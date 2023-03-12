@@ -7,6 +7,8 @@ import { useToken } from "../../authentication/useToken";
 import { FaEdit, FaTrash, FaCheck } from 'react-icons/fa';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 export default function PaymentCard(props) {
   const TITLE = props.payment.title;
@@ -61,6 +63,23 @@ export default function PaymentCard(props) {
   }
 
   function handleDelete() {
+    console.log("asdfasdf");
+    confirmAlert({
+      title: TITLE,
+      message: "Are you sure you want to delete this payment?",
+      buttons: [
+        {
+          label: "Yes",
+          onClick: deletePayment
+        },
+        {
+          label: "No"
+        }
+      ]
+    });
+  }
+
+  function deletePayment() {
 
   }
 
