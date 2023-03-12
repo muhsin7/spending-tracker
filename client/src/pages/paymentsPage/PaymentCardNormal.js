@@ -41,7 +41,8 @@ export default function PaymentCard(props) {
 
   if (DOES_IMAGE_EXIST) {
     const IMAGE = props.payment.image;
-    imageURL = `data:${IMAGE.contentType};base64,${IMAGE.data.toString('base64')}`;
+    const IMAGE_BASE64 = btoa(String.fromCharCode(...new Uint8Array(IMAGE.data.data)));
+    imageURL = `data:${IMAGE.contentType};base64,${IMAGE_BASE64}`;
   }
 
 

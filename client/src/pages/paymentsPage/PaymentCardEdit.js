@@ -7,8 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 export default function PaymentCard(props) {
   const TITLE = props.payment.title;
-  // const DATE = new Date(props.payment.createdAt.$date.$numberLong).toLocaleString();
-  const DATE = new Date().toLocaleString();
+  const DATE = new Date(props.payment.createdAt).toLocaleString();
   const DESCRIPTION = props.payment.description;
   const DOES_IMAGE_EXIST = props.payment.hasOwnProperty('image');
   const CATEGORY_ID = props.payment.categoryId;
