@@ -10,6 +10,7 @@ import './styles/styles.css'
 import Header from "./components/Header"
 import ProtectedRoute from "./authentication/ProtectedRoute"
 import { useAuth } from "./authentication/useAuth"
+import NotFound from "./pages/NotFound"
 
 function App() {
   const [isAuth, setAuth] = useAuth();
@@ -21,14 +22,21 @@ function App() {
       <div className="border"></div>
         <div className="container">
           <Routes>
-            {/* Only Route tags are allowed in Routes tag */}
-            <Route path="/" element={<Dashboard />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/user" element={<UserPage />} />
-            <Route path="/user/update" element={<UpdateUser />} />
-            <Route path="/addCategory" element={<AddCategory />} />
-            <Route path="/payments" element={<PaymentsPage />} />
+            {/* REDIRECT TO LOGIN PAGE IF NOT LOGGED IN */}
+            <Route element={<ProtectedRoute isAllowed={isAuth} redirectPath="/login"/>}>
+              <Route index path="/" element={<Dashboard />} />
+              <Route path="/user" element={<UserPage />} />
+              <Route path="/user/update" element={<UpdateUser />} />
+              <Route path="/addCategory" element={<AddCategory />} />
+              <Route path="/payments" element={<PaymentsPage />} />
+            </Route>
+            {/* REDIRECT TO DASHBOARD IF ALREADY LOGGED IN */}
+            <Route element={<ProtectedRoute isAllowed={!isAuth} redirectPath="/" />}>
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+            </Route>
+            {/* 404 PAGE FOR OTHER PATHS */}
+            <Route path='*' element={<NotFound />}/>
           </Routes>
         </div>
       </BrowserRouter>
