@@ -6,6 +6,6 @@ export default function PaymentCard(props) {
   const [edit, setEdit] = useState(false);
 
   return ((!edit)
-    ? <PaymentCardNormal payment={props.payment} edit={edit} setEdit={setEdit}/>
-    : <PaymentCardEdit payment={props.payment} edit={edit} setEdit={setEdit}/>);
+    ? <PaymentCardNormal payment={props.payment} setEdit={setEdit} />
+    : <PaymentCardEdit payment={props.payment} setEdit={setEdit} />);
 }
