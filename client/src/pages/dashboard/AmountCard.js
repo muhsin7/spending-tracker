@@ -1,10 +1,19 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-export default function AmountCard() {
+export default function AmountCard(props) {
 
     const durations = ["day", "week", "month", "year"];
 
     const [dropdownDuration, setDropdownDuration] = useState(durations[0]);
+
+    const [amount, setAmount] = useState(0);
+
+    useEffect(() => {
+        if(props.summary) {
+            console.log(props.summary);
+            setAmount(props.summary[dropdownDuration]);
+        }
+    }, [dropdownDuration, props.summary]);
 
     const durationElements = [];
 
@@ -19,7 +28,7 @@ export default function AmountCard() {
 
     return (
             <div className="dashboard-money dashboard-container">
-                    <div className="dashboard-amount">£42</div>
+                    <div className="dashboard-amount">£{amount}</div>
                 <div className="dashboard-amount-description">
                     <form>
                         <label for="duration">spent { dropdownDuration === "day" ? "" : "this" } </label>

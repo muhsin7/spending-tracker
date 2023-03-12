@@ -1,27 +1,30 @@
-import { useState } from "react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useToken } from "../../authentication/useToken";
 import AmountCard from "./AmountCard";
 import BudgetCard from "./BudgetCard";
 
 export default function AmountSpent() {
 
-    const durations = ["day", "week", "month", "year"];
+    const [summary, setSummary] = useState({});
+    const [token, setToken] = useToken();
 
-    const [dropdownDuration, setDropdownDuration] = useState(durations[0]);
 
-    const durationElements = [];
+    useEffect(() => {
+        axios.get('/api/payment/summary', {
+        headers: {
+            "Authorization": "Bearer " + token
+        }
+        }).then((res) => {
+        console.log(res.data);
+        setSummary(res.data);
+        });
+    }, []);
 
-    
-    durations.forEach(length => {
-        durationElements.push(<option value={length}>{length==="day" ? "today" : length}</option>)
-    });
-
-    function setOption(event) {
-        setDropdownDuration(event.target.value);
-    }
 
     return (
-        <div class="dashboard-amount-cards">
-            <AmountCard />
+        <div className="dashboard-amount-cards">
+            <AmountCard summary={summary}/>
             <BudgetCard negative={true}  hasBudget={true} />
         </div>
     )
