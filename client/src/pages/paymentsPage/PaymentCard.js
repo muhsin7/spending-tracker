@@ -102,6 +102,7 @@ export default function PaymentCard(props) {
   const [newTitle, setNewTitle] = useState(TITLE);
   const [newPrice, setNewPrice] = useState(PRICE);
   const [newDescription, setNewDescription] = useState(DESCRIPTION);
+  const [newImage, setNewImage] = useState([]);
 
   // Gets all the user's categories from the database
   useEffect(() => {
@@ -160,11 +161,12 @@ export default function PaymentCard(props) {
             selected={startDate}
             onChange={(date) => setStartDate(date)}
           />
-          {DOES_IMAGE_EXIST && (
-            <Popup trigger={<button className="payment-image-button">View image</button>} position="left" contentStyle={{ width: 'auto'}}>
-              <img src={imageURL} />
-            </Popup>
-          )}
+          <input
+            className="payment-image-button"
+            type="file"
+            accept="image/*"
+            onChange={(e) => setNewImage([...e.target.files])}
+          />
         </div>
       </div>
     </div>
