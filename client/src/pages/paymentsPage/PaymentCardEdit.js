@@ -61,10 +61,10 @@ export default function PaymentCard(props) {
     <div className="payment-card">
       <select
         value={newCategory}
-        onChange={e => setNewCategory(e)}
+        onChange={e => setNewCategory(e.target.value)}
       >
         {newCategories.map((option) => (
-          <option key={option}>{option.name}</option>
+          <option key={option._id}>{option.name}</option>
         ))}
       </select>
 
