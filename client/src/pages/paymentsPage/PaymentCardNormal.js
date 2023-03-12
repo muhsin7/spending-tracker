@@ -3,7 +3,6 @@ import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useToken } from "../../authentication/useToken";
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
@@ -19,14 +18,13 @@ export default function PaymentCard(props) {
 
 
   
-  const [token, setToken] = useToken();
   const [category, setCategory] = useState({});
 
   // Gets the corresponding category from the database
   useEffect(() => {
     axios.get('/api/category/' + CATEGORY_ID, {
       headers: {
-        "Authorization": "Bearer " + token
+        "Authorization": "Bearer " + props.token
       }
     }).then((res) => {
       console.log(res.data);
