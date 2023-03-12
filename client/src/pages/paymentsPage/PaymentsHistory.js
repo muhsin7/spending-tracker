@@ -324,7 +324,7 @@ export default function PaymentsHistory(props) {
 
   const rows = [];
   props.payments.forEach(e => {
-    rows.push(<PaymentCard payment={e} />);
+    rows.push(<PaymentCard payment={e} key={e.id}/>);
   });
 
   return (

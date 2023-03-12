@@ -2,6 +2,13 @@
     /* width: 25%;   */
 } 
 
+.all-payments {
+    display: flex;
+    padding: 1em;
+    height: auto;
+    justify-content: center;
+}
+
 .transaction-card {
     background-color: #1e1e1e;
     margin-bottom: 0.5em;
