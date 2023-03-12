@@ -9,6 +9,10 @@ const paymentSchema = mongoose.Schema({
     type: String,
     required: true
   },
+  date: {
+    type: Date,
+    default: Date.now
+  },
   image: {
     data: Buffer,
     contentType: String
