@@ -98,8 +98,10 @@ export default function PaymentCard(props) {
 
   const [startDate, setStartDate] = useState(new Date(DATE));
   const [newCategories, setNewCategories] = useState([]);
-  const [newCategory, setNewCategory] = useState("");
+  const [newCategory, setNewCategory] = useState(CATEGORY_ID);
+  const [newTitle, setNewTitle] = useState(TITLE);
   const [newPrice, setNewPrice] = useState(PRICE);
+  const [newDescription, setNewDescription] = useState(DESCRIPTION);
 
   // Gets all the user's categories from the database
   useEffect(() => {
@@ -118,7 +120,6 @@ export default function PaymentCard(props) {
       <select
         value={newCategory}
         onChange={e => setNewCategory(e)}
-        defaultValue={{ value: CATEGORY_ID, label: CATEGORY_NAME}}
       >
         {newCategories.map((option) => (
           <option key={option}>{option.name}</option>
@@ -129,7 +130,8 @@ export default function PaymentCard(props) {
         <div className="payment-card-top">
           <input
             className="payment-title"
-            defaultValue={TITLE}
+            value={newTitle}
+            onChange={(e) => setNewTitle(e.target.value)}
           />
           <input
             className="payment-amount"
@@ -144,7 +146,8 @@ export default function PaymentCard(props) {
         <div className="payment-card-middle">
           <input
             className="payment-description"
-            defaultValue={DESCRIPTION}
+            value={newDescription}
+            onChange={(e) => setNewDescription(e.target.value)}
           />
           <div className="payment-edit-delete-icons">
             <FaCheck className="payment-confirm-icon" onClick={handleConfirm} />
