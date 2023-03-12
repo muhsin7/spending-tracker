@@ -60,7 +60,7 @@ export default function PaymentCard(props) {
         onChange={e => setNewCategory(e.target.value)}
       >
         {newCategories.map((option) => (
-          <option key={option._id}>{option.name}</option>
+          <option key={option._id} value={option._id}>{option.name}</option>
         ))}
       </select>
 
