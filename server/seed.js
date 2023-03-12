@@ -77,7 +77,8 @@ async function createRandomPayment(user) {
     description: faker.commerce.productDescription(),
     amount: rand(100) / 10,
     categoryId: category._id,
-    userId: user._id
+    userId: user._id,
+    date: faker.date.recent(7)
   };
 
   return await Payment.create(payment);
