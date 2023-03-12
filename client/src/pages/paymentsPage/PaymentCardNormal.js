@@ -60,17 +60,13 @@ export default function PaymentCard(props) {
       buttons: [
         {
           label: "Yes",
-          onClick: deletePayment
+          onClick: props.deletePayment(props.payment.id)
         },
         {
           label: "No"
         }
       ]
     });
-  }
-
-  function deletePayment() {
-    props.deletePayment();
   }
 
   return (
