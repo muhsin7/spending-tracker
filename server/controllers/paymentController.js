@@ -12,12 +12,12 @@ const getSummary = asyncHandler(async (req, res) => {
   let days = req.query.days;
   const dt = new Date();
 
-  const lastDay = await Payment.countDocuments({userId: req.user.id, createdAt: {$gt: new Date(dt.getFullYear(), dt.getMonth(), dt.getDate(), 0)}});
+  const lastDay = await Payment.countDocuments({userId: req.user.id, date: {$gt: new Date(dt.getFullYear(), dt.getMonth(), dt.getDate(), 0)}});
   let weekCuttOff = new Date();
   weekCuttOff.setDate(weekCuttOff.getDate() - 7);
-  const lastWeek = await Payment.countDocuments({userId: req.user.id, createdAt: {$gt: weekCuttOff}});
-  const lastMonth = await Payment.countDocuments({userId: req.user.id, createdAt: {$gt: new Date(dt.getFullYear(), dt.getMonth(), 1)}});
-  const lastYear = await Payment.countDocuments({userId: req.user.id, createdAt: {$gt: new Date(dt.getFullYear(), 0, 1)}});
+  const lastWeek = await Payment.countDocuments({userId: req.user.id, date: {$gt: weekCuttOff}});
+  const lastMonth = await Payment.countDocuments({userId: req.user.id, date: {$gt: new Date(dt.getFullYear(), dt.getMonth(), 1)}});
+  const lastYear = await Payment.countDocuments({userId: req.user.id, date: {$gt: new Date(dt.getFullYear(), 0, 1)}});
 
   let json = {
     year: lastYear,
@@ -29,7 +29,7 @@ const getSummary = asyncHandler(async (req, res) => {
   if (days !== undefined) {
     let customCutOff = new Date();
     customCutOff.setDate(customCutOff.getDate() - days);
-    const lastCustom = await Payment.countDocuments({userId: req.user.id, createdAt: {$gt: customCutOff}});
+    const lastCustom = await Payment.countDocuments({userId: req.user.id, date: {$gt: customCutOff}});
     json.custom = lastCustom;
   }
 
@@ -50,8 +50,8 @@ const getPayment = asyncHandler(async (req, res) => {
 // post new
 const createPayment = asyncHandler(async (req, res) => {
   try {
-    const {title, description, amount, image, categoryId} = req.body;
-    const payment = await Payment.create({title, description, amount, image, categoryId, userId: req.user.id});
+    const {title, description, date, amount, image, categoryId} = req.body;
+    const payment = await Payment.create({title, description, date, amount, image, categoryId, userId: req.user.id});
     res.status(201).json(payment);
   } catch (error) {
     console.log(error);
