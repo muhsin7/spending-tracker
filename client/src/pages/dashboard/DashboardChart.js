@@ -25,7 +25,7 @@ const ascendingCompare = (A, B) => {
 }
 
 const dataValueToDate = (value) => {
-    let onlyDate = new Date(Number(value.createdAt.$date.$numberLong));
+    let onlyDate = new Date(Date.parse(value.createdAt));
     const dateString = new Date(onlyDate.getFullYear(), onlyDate.getMonth());
     return dateString;
 }
@@ -38,10 +38,12 @@ const dataValueToMonth = (value) => {
 }
 
 const processData = ({data, cumulative=false, cumulateBy=dataValueToDate}) => {
-    let dataByDate = [];
+    let dataByDateInternal = [];
     let total = 0;
-    data.sort((a, b) => ascendingCompare(Number(a.createdAt.$date.$numberLong), Number(b.createdAt.$date.$numberLong)));
-    data.reduce(function(res, value) {
+    console.log(data);
+    if(data !== undefined) {
+      data.sort((a, b) => ascendingCompare(new Date(Date.parse(a.createdAt)), new Date(Date.parse(b.createdAt))));
+      data.reduce(function(res, value) {
         let dateString=cumulateBy(value);
 
         if (!res[dateString]) {
@@ -49,19 +51,20 @@ const processData = ({data, cumulative=false, cumulateBy=dataValueToDate}) => {
                 date: dateString,
                 amount: cumulative ? total : 0
             };
-            dataByDate.push(res[dateString]);
+            dataByDateInternal.push(res[dateString]);
         }
         res[dateString].amount += value.amount;
         total += value.amount
         return res;
     }, {});
+    }
 
 
-    return dataByDate;
+    return dataByDateInternal;
 }
 
 
-export default function DashboardChart() {
+export default function DashboardChart(props) {
     const dummydata = [{
         "_id": {
           "$oid": "64010056df38280a58a1c1ca"
@@ -397,9 +400,15 @@ export default function DashboardChart() {
         "amount": 190,
     },]
 
-    const [data, setData] = useState(dummydata);
-
     const [isCumulative, setIsCumulative] = useState(false);
+    
+    const [data, setData] = useState([]);
+
+    // const [dataByDate, setDataByDate] = useState([]);
+
+    // const [dataByMonth, setDataByMonth] = useState([]);
+
+    // const [data, setData] = useState(dummydata);
 
     const [dataByDate, setDataByDate] = useState(processData({data}));
 
@@ -416,10 +425,17 @@ export default function DashboardChart() {
             }
     } 
     
+    useEffect(() =>
+      {
+        setData(props.payments);
+        setDataByDate(processData({data}));
+        setDataByMonth(processData({data: data, cumulative: false, dataValueToMonth}));
+        console.log(props.payments);
+      }, [props.payments])
 
     const renderLineChart = (
         <div className="line-chart noselect dashboard-right">
-            <ResponsiveContainer width="95%" height="95%">
+            <ResponsiveContainer width={800} height={300}>
                 <LineChart data={dataByDate} margin={{ top: 5, right: 10, bottom: 5, left: 0 }}>
                     <Line type="monotone" dataKey="amount" strokeWidth={2.5} stroke="#00B57F  " />
                     <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
@@ -429,7 +445,8 @@ export default function DashboardChart() {
                         tickFormatter={unixTimeString => dateStringFromUnixString(unixTimeString)}
                     />
                     <YAxis />
-                    <Tooltip content={<CustomTooltip />}/>
+                    {/* <Tooltip content={<CustomTooltip />}/> */}
+                    <Tooltip />
                 </LineChart>
             </ResponsiveContainer>
             <label className="checkbox-label">
@@ -454,53 +471,53 @@ export default function DashboardChart() {
       );
     };
 
-    const renderPieChart = (
-        <div className="line-chart noselect dashboard-right">
-            <ResponsiveContainer width={900} height="90%">
-            <PieChart width={730} height={400}>
-                <Legend layout="vertical" verticalAlign="top" align="top" />
-                <Pie
-                    data={categoryData}
-                    dataKey="amount"
-                    nameKey="name"
-                    labelLine={false}
-                    label={renderCustomizedLabel}
-                    >
-                        {data.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                        ))}
-                </Pie>
-                <Tooltip />
-            </PieChart>
-            </ResponsiveContainer>
-        </div>
-    );
+    // const renderPieChart = (
+    //     <div className="line-chart noselect dashboard-right">
+    //         <ResponsiveContainer width={900} height="90%">
+    //         <PieChart width={730} height={400}>
+    //             <Legend layout="vertical" verticalAlign="top" align="top" />
+    //             <Pie
+    //                 data={categoryData}
+    //                 dataKey="amount"
+    //                 nameKey="name"
+    //                 labelLine={false}
+    //                 label={renderCustomizedLabel}
+    //                 >
+    //                     {data.map((entry, index) => (
+    //                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+    //                     ))}
+    //             </Pie>
+    //             <Tooltip />
+    //         </PieChart>
+    //         </ResponsiveContainer>
+    //     </div>
+    // );
 
-    const renderBarChart = (
-        <div className="line-chart noselect dashboard-right">
-            <ResponsiveContainer width={900} height="90%">
-            <BarChart width={730} height={400} data={dataByMonth}>
-                <Bar
-                    dataKey="amount"
-                    // nameKey="date"
-                    // label={()}
-                    >
-                        {data.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                        ))}
-                </Bar>
-                <XAxis tickFormatter={unixTimeString => {
-                    const monthNames = ["January", "February", "March", "April", "May", "June",
-                    "July", "August", "September", "October", "November", "December"
-                  ];
-                  return monthNames[unixTimeString];
-                }} />
-                <YAxis />
-                <Tooltip />
-            </BarChart>
-            </ResponsiveContainer>
-        </div>
-    );
+    // const renderBarChart = (
+    //     <div className="line-chart noselect dashboard-right">
+    //         <ResponsiveContainer width={900} height="90%">
+    //         <BarChart width={730} height={400} data={dataByMonth}>
+    //             <Bar
+    //                 dataKey="amount"
+    //                 // nameKey="date"
+    //                 // label={()}
+    //                 >
+    //                     {data.map((entry, index) => (
+    //                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+    //                     ))}
+    //             </Bar>
+    //             <XAxis tickFormatter={unixTimeString => {
+    //                 const monthNames = ["January", "February", "March", "April", "May", "June",
+    //                 "July", "August", "September", "October", "November", "December"
+    //               ];
+    //               return monthNames[unixTimeString];
+    //             }} />
+    //             <YAxis />
+    //             <Tooltip />
+    //         </BarChart>
+    //         </ResponsiveContainer>
+    //     </div>
+    // );
     
 
     return renderLineChart;

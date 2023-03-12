@@ -18,12 +18,14 @@
 }
 
 .dashboard-left {
+    display: flex;
+    flex-direction: column;
     grid-column-start: 1;
-    grid-column-end: 4;
+    grid-column-end: 8;
 }
 
 .dashboard-right {
-    grid-column-start: 5;
+    grid-column-start: 9;
     grid-column-end: 12;
 }
 
