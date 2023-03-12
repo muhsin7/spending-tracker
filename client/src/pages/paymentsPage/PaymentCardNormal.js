@@ -10,8 +10,7 @@ import 'react-confirm-alert/src/react-confirm-alert.css';
 
 export default function PaymentCard(props) {
   const TITLE = props.payment.title;
-  // const DATE = new Date(props.payment.createdAt.$date.$numberLong).toLocaleString();
-  const DATE = new Date().toLocaleString();
+  const DATE = new Date(props.payment.createdAt).toLocaleString();
   const DESCRIPTION = props.payment.description;
   const DOES_IMAGE_EXIST = props.payment.hasOwnProperty('image');
   const CATEGORY_ID = props.payment.categoryId;
@@ -60,7 +59,7 @@ export default function PaymentCard(props) {
       buttons: [
         {
           label: "Yes",
-          onClick: props.deletePayment(props.payment.id)
+          onClick: () => props.deletePayment(props.payment._id)
         },
         {
           label: "No"

@@ -20,7 +20,7 @@ function AddCategory() {
     
         const {token} = response.data;
         setToken(token);
-        return <Navigate to = "/dashboard"/>;
+        return <Navigate to = "/"/>;
     }
 
     return(
