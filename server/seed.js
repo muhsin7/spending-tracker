@@ -75,7 +75,6 @@ async function createRandomCategory(user) {
   return await Category.create(category);
 }
 
-//Currently seeded payments do not have any images attached to them
 async function createRandomPayment(user) {
   const category = await getRandomCategoryFromUser(user);
   const image = await imageUrlToB64(faker.image.image());
@@ -89,7 +88,8 @@ async function createRandomPayment(user) {
     image: {
       data: image,
       contentType: "image/jpeg"
-    }
+    },
+    date: faker.date.recent(7)
   };
 
   return await Payment.create(payment);
