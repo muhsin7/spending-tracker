@@ -3,9 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import Popup from "reactjs-popup";
-import "reactjs-popup/dist/index.css";
 import { Buffer } from "buffer";
 
 export default function PaymentCard(props) {

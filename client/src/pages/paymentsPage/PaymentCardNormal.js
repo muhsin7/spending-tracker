@@ -1,11 +1,9 @@
 import React from "react";
-import Popup from "reactjs-popup";
-import "reactjs-popup/dist/index.css";
 import axios from "axios";
+import Popup from "reactjs-popup";
 import { useEffect, useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { confirmAlert } from "react-confirm-alert";
-import "react-confirm-alert/src/react-confirm-alert.css";
 
 export default function PaymentCard(props) {
   const TITLE = props.payment.title;
@@ -47,10 +45,6 @@ export default function PaymentCard(props) {
 
 
 
-  function handleEdit() {
-    props.setEdit(true);
-  }
-
   function handleDelete() {
     confirmAlert({
       title: TITLE,
@@ -81,7 +75,7 @@ export default function PaymentCard(props) {
           <span className="payment-description">{DESCRIPTION}</span>
           <div className="payment-edit-delete-icons">
             <FaTrash className="payment-delete-icon" onClick={handleDelete} />
-            <FaEdit className="payment-edit-icon" onClick={handleEdit} />
+            <FaEdit className="payment-edit-icon" onClick={() => props.setEdit(true)} />
           </div>
         </div> 
         
