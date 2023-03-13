@@ -1,6 +1,6 @@
 .dashboard {
     width: 100%;
-    margin: 5%;
+    /* margin: 5%; */
 }
 
 .dashboard-grid {
@@ -25,8 +25,10 @@
 }
 
 .dashboard-right {
+    display: flex;
+    flex-direction: column;
     grid-column-start: 9;
-    grid-column-end: 12;
+    grid-column-end: 13;
 }
 
 .dashboard-money {

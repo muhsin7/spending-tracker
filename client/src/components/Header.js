@@ -1,13 +1,19 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import { useAuth } from '../authentication/useAuth';
+import { useToken } from '../authentication/useToken';
 
-export default function Header({isAuth, setAuth}) {
+export default function Header(props) {
+    const [isAuth, setAuth] = props.auth;
+    const [token, setToken] = useToken();
+    const navigate = useNavigate();
 
     const onLogout = () => {
         // window.alert("Logout")
-        localStorage.removeItem('token');
+        // localStorage.removeItem('token');
+        setToken("");
         setAuth(false);
+        navigate("/");
     }
 
     return (
@@ -32,16 +38,21 @@ export default function Header({isAuth, setAuth}) {
                   </button>
                 </li>) : (
                   <>
+                <Link to={"/register"}>
                   <li>
-                <button className='btn btn-header btn-ghost' onClick={onLogout}>
-                    Sign up
-                </button>
+                  <button className='btn btn-header btn-ghost' onClick={onLogout}>
+                      Sign up
+                  </button>
               </li>
+                </Link>
+              <Link to={"/login"}>
               <li>
                 <button className='btn btn-header' onClick={onLogout}>
                     Login
                 </button>
-              </li></>
+              </li>
+              </Link>
+              </>
                 )
               }
           </ul>

@@ -32,3 +32,7 @@
     font-size: 1em;
     font-weight: bolder;
 }
+
+.transaction-section {
+    padding: 0 2em 0 2em;
+}
