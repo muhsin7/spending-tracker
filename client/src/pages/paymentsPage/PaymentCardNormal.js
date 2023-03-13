@@ -47,11 +47,11 @@ export default function PaymentCard(props) {
 
 
 
-  const handleEdit = () => {
+  function handleEdit() {
     props.setEdit(true);
   }
 
-  const handleDelete = () => {
+  function handleDelete() {
     confirmAlert({
       title: TITLE,
       message: "Are you sure you want to delete this payment?",

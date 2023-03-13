@@ -29,7 +29,7 @@ export default function PaymentCard(props) {
 
 
 
-  const handleConfirm = () => {
+  function handleConfirm () {
     props.setEdit(false);
   }
 
@@ -55,7 +55,7 @@ export default function PaymentCard(props) {
     });
   }, []);
 
-  const storeNewImage = () => {
+  function storeNewImage() {
     const file = document.querySelector("input[type=file]").files[0];
     const reader = new FileReader();
   
