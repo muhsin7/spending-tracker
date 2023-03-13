@@ -11,6 +11,7 @@ import Header from "./components/Header"
 import ProtectedRoute from "./authentication/ProtectedRoute"
 import { useAuth } from "./authentication/useAuth"
 import NotFound from "./pages/NotFound"
+import AddPayment from "./pages/AddPayment"
 
 function App() {
   const [isAuth, setAuth] = useAuth();
@@ -18,7 +19,7 @@ function App() {
   return (
     <>
       <BrowserRouter>
-    <Header isAuth={isAuth} setAuth={setAuth} />
+    <Header auth={[isAuth, setAuth]} />
       <div className="border"></div>
         <div className="container">
           <Routes>
@@ -28,6 +29,7 @@ function App() {
               <Route path="/user" element={<UserPage />} />
               <Route path="/user/update" element={<UpdateUser />} />
               <Route path="/addCategory" element={<AddCategory />} />
+              <Route path="/addPayment" element={<AddPayment/>} />
               <Route path="/payments" element={<PaymentsPage />} />
             </Route>
             {/* REDIRECT TO DASHBOARD IF ALREADY LOGGED IN */}
