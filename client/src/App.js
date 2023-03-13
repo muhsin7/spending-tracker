@@ -6,6 +6,7 @@ import Dashboard from "./pages/dashboard/Dashboard"
 import UpdateUser from "./pages/UpdateUser"
 import UserPage from "./pages/UserPage"
 import PaymentsPage from "./pages/paymentsPage/PaymentsPage"
+import WelcomePage from "./pages/WelcomePage"
 import './styles/styles.css'
 import Header from "./components/Header"
 import ProtectedRoute from "./authentication/ProtectedRoute"
@@ -23,6 +24,7 @@ function App() {
       <div className="border"></div>
         <div className="container">
           <Routes>
+            <Route path="/" element={<WelcomePage />} />
             {/* REDIRECT TO LOGIN PAGE IF NOT LOGGED IN */}
             <Route element={<ProtectedRoute isAllowed={isAuth} redirectPath="/login"/>}>
               <Route index path="/" element={<Dashboard />} />
