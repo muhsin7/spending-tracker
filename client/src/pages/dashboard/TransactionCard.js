@@ -1,6 +1,6 @@
 export default function TransactionCard(props) {
     const TITLE = props.payment.title;
-    const DATE = new Date(Date.parse(props.payment.createdAt)).toLocaleString();
+    const DATE = new Date(Date.parse(props.payment.date)).toLocaleString();
     // new Date(props.payment.createdAt.$date.$numberLong).toLocaleString()    // Rounds the price to 2 d.p.
     const PRICE = (Math.round(props.payment.amount * 100) / 100).toFixed(2);
 

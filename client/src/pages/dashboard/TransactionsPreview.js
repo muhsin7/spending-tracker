@@ -3,7 +3,7 @@ import TransactionCard from "./TransactionCard";
 export default function TransactionsPreview(props) {
     const rows = [];
     props.payments.forEach(e => {
-    rows.push(<TransactionCard payment={e} key={e.id} />);
+    rows.push(<TransactionCard payment={e} key={e._id} />);
     });
 
     return (
