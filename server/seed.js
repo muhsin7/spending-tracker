@@ -3,10 +3,12 @@ const User = require("./models/userModel");
 const Payment = require("./models/paymentModel");
 const SpendingLimit = require("./models/spendingLimitModel");
 const utils = require("./test/utils");
+const axios = require("axios");
 
 const { faker } = require("@faker-js/faker");
 const bcrypt = require("bcrypt");
 
+// eslint-disable-next-line no-unused-vars
 const app = require("./app");
 
 const NUMBER_OF_USERS = 5;
@@ -15,6 +17,11 @@ const DEFAULT_PASSWORD = "123";
 function rand(max) {
   return Math.floor(Math.random() * max);
 } 
+ 
+async function imageUrlToB64(imgURL) {
+  let image = await axios.get(imgURL, {responseType: "arraybuffer"});
+  return Buffer.from(image.data).toString("base64");
+}
 
 async function createUser(user, pass) {
   const salt = await bcrypt.genSalt(10);
@@ -68,16 +75,21 @@ async function createRandomCategory(user) {
   return await Category.create(category);
 }
 
-//Currently seeded payments do not have any images attached to them
 async function createRandomPayment(user) {
   const category = await getRandomCategoryFromUser(user);
-  
+  const image = await imageUrlToB64(faker.image.image());
+
   const payment = {
     title: faker.commerce.product(),
     description: faker.commerce.productDescription(),
     amount: rand(100) / 10,
     categoryId: category._id,
-    userId: user._id
+    userId: user._id,
+    image: {
+      data: image,
+      contentType: "image/jpeg"
+    },
+    date: faker.date.recent(7)
   };
 
   return await Payment.create(payment);
