@@ -1,15 +1,13 @@
 import React from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useToken } from "../../authentication/useToken";
 import { FaCheck } from 'react-icons/fa';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
 export default function PaymentCard(props) {
   const TITLE = props.payment.title;
-  // const DATE = new Date(props.payment.createdAt.$date.$numberLong).toLocaleString();
-  const DATE = new Date().toLocaleString();
+  const DATE = new Date(props.payment.createdAt).toLocaleString();
   const DESCRIPTION = props.payment.description;
   const DOES_IMAGE_EXIST = props.payment.hasOwnProperty('image');
   const CATEGORY_ID = props.payment.categoryId;
@@ -17,9 +15,6 @@ export default function PaymentCard(props) {
   const PRICE = (Math.round(props.payment.amount * 100) / 100).toFixed(2);
 
 
-  
-  const [token, setToken] = useToken();
-  
 
   // Creates an imageURL if it exists
   let imageURL = "";
@@ -49,7 +44,7 @@ export default function PaymentCard(props) {
   useEffect(() => {
     axios.get('/api/category', {
       headers: {
-        "Authorization": "Bearer " + token
+        "Authorization": "Bearer " + props.token
       }
     }).then((res) => {
       console.log(res.data);
@@ -64,7 +59,7 @@ export default function PaymentCard(props) {
         onChange={e => setNewCategory(e.target.value)}
       >
         {newCategories.map((option) => (
-          <option key={option._id}>{option.name}</option>
+          <option key={option._id} value={option._id}>{option.name}</option>
         ))}
       </select>
 
