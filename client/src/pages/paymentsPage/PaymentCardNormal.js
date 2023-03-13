@@ -88,8 +88,8 @@ export default function PaymentCard(props) {
         <div className="payment-card-bottom">
           <span className="payment-date">{DATE}</span>
           {DOES_IMAGE_EXIST && (
-            <Popup trigger={<button className="payment-image-button">View image</button>} contentStyle={{ width: 'auto'}} modal nested>
-              <img src={imageURL} />
+            <Popup trigger={<button className="payment-image-button">View image</button>} contentStyle={{ width: '75%', height: '75%' }} modal nested>
+              <img className="payment-image" src={imageURL} />
             </Popup>
           )}
         </div>

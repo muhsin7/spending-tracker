@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import { FaCheck } from 'react-icons/fa';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import Popup from "reactjs-popup";
+import "reactjs-popup/dist/index.css";
 
 export default function PaymentCard(props) {
   const TITLE = props.payment.title;
@@ -21,7 +23,8 @@ export default function PaymentCard(props) {
 
   if (DOES_IMAGE_EXIST) {
     const IMAGE = props.payment.image;
-    imageURL = `data:${IMAGE.contentType};base64,${IMAGE.data.toString('base64')}`;
+    const IMAGE_BASE64 = String.fromCharCode(...new Uint8Array(IMAGE.data.data));
+    imageURL = `data:${IMAGE.contentType};base64,${IMAGE_BASE64}`;
   }
 
 
@@ -51,6 +54,21 @@ export default function PaymentCard(props) {
       setNewCategories(res.data);
     });
   }, []);
+
+  function storeNewImage() {
+    const file = document.querySelector("input[type=file]").files[0];
+    const reader = new FileReader();
+  
+    reader.addEventListener(
+      "load",
+      () => setNewImage(reader.result),
+      false
+    );
+  
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  }
 
   return (
     <div className="payment-card">
@@ -97,11 +115,16 @@ export default function PaymentCard(props) {
             selected={startDate}
             onChange={(date) => setStartDate(date)}
           />
+          {DOES_IMAGE_EXIST && (
+            <Popup trigger={<button className="payment-image-button">View image</button>} contentStyle={{ width: '75%', height: '75%' }} modal nested>
+              <img className="payment-image" src={newImage} />
+            </Popup>
+          )}
           <input
             className="payment-image-button"
             type="file"
             accept="image/*"
-            onChange={(e) => setNewImage([...e.target.files])}
+            onChange={storeNewImage}
           />
         </div>
       </div>

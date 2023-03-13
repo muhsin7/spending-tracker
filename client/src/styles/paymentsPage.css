@@ -138,6 +138,7 @@
 
 .payment-image-button {
   background-color: limegreen;
+  color: black;
   border: none;
   border-radius: 6px;
   padding: 3px;
@@ -147,4 +148,10 @@
 .payment-image-button:hover {
   background-color: #00955F;
   color: beige;
+}
+
+.payment-image {
+  object-fit: scale-down;
+  width: 100%;
+  height: 100%;
 }
