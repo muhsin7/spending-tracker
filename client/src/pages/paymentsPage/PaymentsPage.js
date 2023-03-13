@@ -5,8 +5,9 @@ import { useToken } from "../../authentication/useToken";
 
 export default function PaymentsPage() {
   const [token, setToken] = useToken();
-  const [payments, setPayments] = useState({});
+  const [payments, setPayments] = useState([]);
 
+  // Gets all the user's payments from the database
   useEffect(() => {
     axios.get('/api/payment', {
       headers: {
@@ -21,7 +22,7 @@ export default function PaymentsPage() {
   return (
     <div className="payments-page">
       <h1 className="payments-header">Payments Page</h1>
-      <PaymentsHistory payments={payments}/>
+      <PaymentsHistory payments={payments} setPayments={setPayments} token={token} />
     </div>
-  )
+  );
 }

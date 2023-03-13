@@ -11,7 +11,7 @@ const getCategories = asyncHandler(async (req, res) => {
 const getCategory = asyncHandler(async (req, res) => {
   try {
     const {id} = req.params;
-    const category = await Category.find({_id: id, userId: req.user.id});
+    const category = await Category.findById({_id: id, userId: req.user.id});
     res.status(200).json(category);
   } catch (error) {
     res.status(400).json({error: error.message});
@@ -23,7 +23,7 @@ const createCategory = asyncHandler(async (req, res) => {
   try {
     const {name} = req.body;
     const category = await Category.create({name, userId: req.user.id});
-    res.status(200).json(category);
+    res.status(201).json(category);
   } catch (error) {
     res.status(400).json({error: error.message});
   }
