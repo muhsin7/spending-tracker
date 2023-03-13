@@ -20,7 +20,7 @@ function rand(max) {
  
 async function imageUrlToB64(imgURL) {
   let image = await axios.get(imgURL, {responseType: "arraybuffer"});
-  return Buffer.from(image.data);
+  return Buffer.from(image.data).toString("base64");
 }
 
 async function createUser(user, pass) {
@@ -78,9 +78,7 @@ async function createRandomCategory(user) {
 //Currently seeded payments do not have any images attached to them
 async function createRandomPayment(user) {
   const category = await getRandomCategoryFromUser(user);
-  const image = await imageUrlToB64(faker.image.food());
-  console.log(image);
-
+  const image = await imageUrlToB64(faker.image.image());
 
   const payment = {
     title: faker.commerce.product(),
