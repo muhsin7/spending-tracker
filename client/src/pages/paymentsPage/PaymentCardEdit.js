@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { FaCheck } from "react-icons/fa";
+import { FaCheck, FaTimes } from "react-icons/fa";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import Popup from "reactjs-popup";
@@ -152,6 +152,7 @@ export default function PaymentCard(props) {
           />
           <div className="payment-edit-delete-icons">
             <FaCheck className="payment-confirm-icon" onClick={handleConfirm} />
+            <FaTimes className="payment-cancel-icon" onClick={() => props.setEdit(false)} />
           </div>
         </div> 
         
