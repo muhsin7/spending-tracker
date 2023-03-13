@@ -27,13 +27,11 @@ function CategoriesPage() {
       });
 
       
-      
-
+    
     return (
         <div className = "categoryPage">
             <h1>Categories</h1>
             <Link to="/addCategory"><button className="smallButton addCategoryButton">Add a category</button></Link>
-            
             <div className="categories-container">
                 {rows}
             </div>
