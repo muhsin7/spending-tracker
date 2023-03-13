@@ -9,7 +9,7 @@ export default function PaymentsPage() {
 
   // Gets all the user's payments from the database
   useEffect(() => {
-    axios.get('/api/payment', {
+    axios.get("/api/payment", {
       headers: {
         "Authorization": "Bearer " + token
       }

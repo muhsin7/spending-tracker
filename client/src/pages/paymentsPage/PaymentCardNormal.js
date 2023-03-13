@@ -3,15 +3,15 @@ import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { FaEdit, FaTrash } from 'react-icons/fa';
-import { confirmAlert } from 'react-confirm-alert';
-import 'react-confirm-alert/src/react-confirm-alert.css';
+import { FaEdit, FaTrash } from "react-icons/fa";
+import { confirmAlert } from "react-confirm-alert";
+import "react-confirm-alert/src/react-confirm-alert.css";
 
 export default function PaymentCard(props) {
   const TITLE = props.payment.title;
   const DATE = new Date(props.payment.createdAt).toLocaleString();
   const DESCRIPTION = props.payment.description;
-  const DOES_IMAGE_EXIST = props.payment.hasOwnProperty('image');
+  const DOES_IMAGE_EXIST = props.payment.hasOwnProperty("image");
   const CATEGORY_ID = props.payment.categoryId;
   // Rounds the price to 2 d.p.
   const PRICE = (Math.round(props.payment.amount * 100) / 100).toFixed(2);
@@ -22,7 +22,7 @@ export default function PaymentCard(props) {
 
   // Gets the corresponding category from the database
   useEffect(() => {
-    axios.get('/api/category/' + CATEGORY_ID, {
+    axios.get("/api/category/" + CATEGORY_ID, {
       headers: {
         "Authorization": "Bearer " + props.token
       }
@@ -47,11 +47,11 @@ export default function PaymentCard(props) {
 
 
 
-  function handleEdit() {
+  const handleEdit = () => {
     props.setEdit(true);
   }
 
-  function handleDelete() {
+  const handleDelete = () => {
     confirmAlert({
       title: TITLE,
       message: "Are you sure you want to delete this payment?",
@@ -88,7 +88,7 @@ export default function PaymentCard(props) {
         <div className="payment-card-bottom">
           <span className="payment-date">{DATE}</span>
           {DOES_IMAGE_EXIST && (
-            <Popup trigger={<button className="payment-image-button">View image</button>} contentStyle={{ width: '75%', height: '75%' }} modal nested>
+            <Popup trigger={<button className="payment-image-button">View image</button>} contentStyle={{ width: "75%", height: "75%" }} modal nested>
               <img className="payment-image" src={imageURL} />
             </Popup>
           )}
