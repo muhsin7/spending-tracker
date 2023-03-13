@@ -12,16 +12,30 @@ function AddCategory() {
     const [spendingLimit, setSpendingLimitValue] = useState('');
     const navigate = useNavigate();
 
-    const onSubmit = async () => {
-        const response = await axios.post('/api/category', {
-            category: categoryValue,
-            spendingLimit: spendingLimit,
-        });
-        navigate ("/categories");
-        const {token} = response.data;
-        setToken(token);
-       
-        
+    const onSubmit = async (e) => {
+        e.preventDefault(); 
+        try {
+            const response = await axios.post('/api/category', {
+                name: categoryValue,
+                // spendingLimit: spendingLimit,
+            }, {
+                headers: {
+                  "Authorization": "Bearer " + token
+                }
+            });
+            navigate("/categories");   
+            await console.log(response);  
+            
+        } catch (err) {
+            if(err.response) {
+                console.log(err.response);
+            } else if (err.message) {
+                console.log(err.message);
+            } else {
+                console.log(err);
+            }
+        }   
+    
     }
 
     return(
@@ -30,7 +44,7 @@ function AddCategory() {
             <section className='addCategoryForm'>
                 <h2 className= "addCategoryTitle">Add Category</h2>
                 <fieldset className="addCategoryFields">
-                    <form onSubmit = {onSubmit}>
+                    <form>
                         <div className='addCategoryInputBox'>
                             <input
                                 value = {categoryValue} 
@@ -43,7 +57,7 @@ function AddCategory() {
                                 onChange={e => setSpendingLimitValue(e.target.value)} 
                                 placeholder="Spending Limit:" required/>
                         </div>
-                        <button className = "addCategoryButton" >Add</button>
+                        <button className = "addCategoryButton" onClick={onSubmit}>Add</button>
                     </form>
                 </fieldset>
             </section>
