@@ -1,17 +1,16 @@
 import React from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { FaCheck } from 'react-icons/fa';
+import { FaCheck, FaTimes } from "react-icons/fa";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import Popup from "reactjs-popup";
-import "reactjs-popup/dist/index.css";
+import { Buffer } from "buffer";
 
 export default function PaymentCard(props) {
   const TITLE = props.payment.title;
-  const DATE = new Date(props.payment.createdAt);
+  const DATE = new Date(props.payment.date);
   const DESCRIPTION = props.payment.description;
-  const DOES_IMAGE_EXIST = props.payment.hasOwnProperty('image');
+  const DOES_IMAGE_EXIST = props.payment.hasOwnProperty("image");
   const CATEGORY_ID = props.payment.categoryId;
   // Rounds the price to 2 d.p.
   const PRICE = (Math.round(props.payment.amount * 100) / 100).toFixed(2);
@@ -28,24 +27,69 @@ export default function PaymentCard(props) {
   }
 
 
+  const [newTitle, setNewTitle] = useState(TITLE);
+  const [newDescription, setNewDescription] = useState(DESCRIPTION);
+  const [newDate, setNewDate] = useState(DATE);
+  const [newImageURL, setNewImageURL] = useState(imageURL);
+  const [newPrice, setNewPrice] = useState(PRICE);
+  const [newCategories, setNewCategories] = useState([]);
+  const [newCategoryID, setNewCategoryID] = useState(CATEGORY_ID);
 
-  function handleConfirm() {
+
+
+  function isSameDate(date1, date2) {
+    return (
+      date1.getDate() === date2.getDate() &&
+      date1.getMonth() === date2.getMonth() &&
+      date1.getFullYear() === date2.getFullYear()
+    )
+  }
+
+  function isChanged() {
+    return (
+      newTitle !== TITLE ||
+      newDescription !== DESCRIPTION ||
+      !isSameDate(newDate, DATE) ||
+      newImageURL !== imageURL ||
+      newPrice !== PRICE ||
+      newCategoryID !== CATEGORY_ID
+    )
+  }
+
+  async function handleConfirm() {
+    if (isChanged()) {
+      let data = {
+        id: props.payment._id,
+        title: newTitle,
+        description: newDescription,
+        date: newDate,
+        amount: newPrice,
+        categoryId: newCategoryID
+      }
+
+      if (newImageURL !== imageURL) data.image = {
+        data: Buffer.from(newImageURL.substring(newImageURL.indexOf(",") + 1).toString("base64")),
+        contentType: newImageURL.substring(newImageURL.indexOf(":") + 1, newImageURL.indexOf(";"))
+      };
+
+      await axios.patch("/api/payment/" + props.payment._id, data, {
+        headers: {
+          "Authorization": "Bearer " + props.token
+        }
+      }).then((res) => {
+        console.log(res.data);
+      });
+
+      window.location.reload();
+    }
     props.setEdit(false);
   }
 
 
 
-  const [startDate, setStartDate] = useState(DATE);
-  const [newCategories, setNewCategories] = useState([]);
-  const [newCategory, setNewCategory] = useState(CATEGORY_ID);
-  const [newTitle, setNewTitle] = useState(TITLE);
-  const [newPrice, setNewPrice] = useState(PRICE);
-  const [newDescription, setNewDescription] = useState(DESCRIPTION);
-  const [newImage, setNewImage] = useState(imageURL);
-
   // Gets all the user's categories from the database
   useEffect(() => {
-    axios.get('/api/category', {
+    axios.get("/api/category", {
       headers: {
         "Authorization": "Bearer " + props.token
       }
@@ -61,7 +105,7 @@ export default function PaymentCard(props) {
   
     reader.addEventListener(
       "load",
-      () => setNewImage(reader.result),
+      () => setNewImageURL(reader.result),
       false
     );
   
@@ -73,8 +117,8 @@ export default function PaymentCard(props) {
   return (
     <div className="payment-card">
       <select
-        value={newCategory}
-        onChange={e => setNewCategory(e.target.value)}
+        value={newCategoryID}
+        onChange={e => setNewCategoryID(e.target.value)}
       >
         {newCategories.map((option) => (
           <option key={option._id} value={option._id}>{option.name}</option>
@@ -106,19 +150,20 @@ export default function PaymentCard(props) {
           />
           <div className="payment-edit-delete-icons">
             <FaCheck className="payment-confirm-icon" onClick={handleConfirm} />
+            <FaTimes className="payment-cancel-icon" onClick={() => props.setEdit(false)} />
           </div>
         </div> 
         
         <div className="payment-card-bottom">
           <DatePicker
             className="payment-date"
-            selected={startDate}
+            selected={newDate}
             dateFormat="dd/MM/yyyy"
-            onChange={(date) => setStartDate(date)}
+            onChange={(date) => setNewDate(date)}
           />
           {DOES_IMAGE_EXIST && (
-            <Popup trigger={<button className="payment-image-button">View image</button>} contentStyle={{ width: '75%', height: '75%' }} modal nested>
-              <img className="payment-image" src={newImage} />
+            <Popup trigger={<button className="payment-image-button">View image</button>} contentStyle={{ width: "75%", height: "75%" }} modal nested>
+              <img className="payment-image" src={newImageURL} />
             </Popup>
           )}
           <input

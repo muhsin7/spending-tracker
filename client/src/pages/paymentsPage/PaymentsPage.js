@@ -9,7 +9,7 @@ export default function PaymentsPage() {
 
   // Gets all the user's payments from the database
   useEffect(() => {
-    axios.get('/api/payment', {
+    axios.get("/api/payment", {
       headers: {
         "Authorization": "Bearer " + token
       }
@@ -18,6 +18,16 @@ export default function PaymentsPage() {
       setPayments(res.data);
     });
   }, []);
+
+  // Sort the payments so that the latest payment is displayed first
+  const ascendingCompare = (A, B) => {
+    if (A === B) {
+      return 0;
+    } else {
+      return A > B ? -1 : 1
+    }
+  }
+  payments.sort((a, b) => ascendingCompare(new Date(Date.parse(a.date)), new Date(Date.parse(b.date))));
 
   return (
     <div className="payments-page">

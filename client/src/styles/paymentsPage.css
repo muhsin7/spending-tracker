@@ -132,6 +132,17 @@
   color: green;
 }
 
+.payment-cancel-icon {
+  color: crimson;
+  border: none;
+  border-radius: 6px;
+  float: right;
+}
+
+.payment-cancel-icon:hover {
+  color: darkred;
+}
+
 .payment-date {
   font-weight: bolder;
 }
