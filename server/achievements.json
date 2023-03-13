@@ -1,0 +1,26 @@
+[
+  {
+    "id": 0,
+    "name": "First category",
+    "description": "Add your first caategory",
+    "goal": 1,
+    "progress": 0,
+    "completed": false
+  },
+  {
+    "id": 1,
+    "name": "First payment",
+    "description": "Add your first payment",
+    "goal": 1,
+    "progress": 0,
+    "completed": false
+  },
+  {
+    "id": 2,
+    "name": "First limit",
+    "description": "Add your first spending limit",
+    "goal": 1,
+    "progress": 0,
+    "completed": false
+  }
+]

@@ -24,7 +24,7 @@ describe("Category tests", () => {
     };
 
     await User.create(USER);
-  })
+  });
 
   after(flushDB);
 
@@ -78,7 +78,7 @@ describe("Category tests", () => {
           should.not.exist(category, "The category should have been invalid");
         }); 
     });
-  })
+  });
 
   // TEST ROUTING & CONTROLLERS
 
@@ -274,5 +274,5 @@ describe("Category tests", () => {
       resPost.body.should.have.property("name", otherCategory.name);
     });
 
-  })
+  });
 });

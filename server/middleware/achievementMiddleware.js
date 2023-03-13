@@ -4,7 +4,7 @@ const Achievement = require("../models/achievementModel");
 const mustOwnValidAchievement = asyncHandler(async(req, res, next) => {
   const {id} = req.params;
   const userId = req.user.id;
-  const achievement = await Achievement.findOne({_id: id});
+  const achievement = await Achievement.findOne({id: id});
 
   if (achievement == undefined) {
     res.status(404);
@@ -18,4 +18,20 @@ const mustOwnValidAchievement = asyncHandler(async(req, res, next) => {
   next();
 });
 
-module.exports = {mustOwnValidAchievement};
+const checkAchievementStatus = asyncHandler(async(req, res, next) => {
+    const {id} = req.params;
+    const achievement = await Achievement.findOne({id: id});
+
+    if (achievement.completed) {
+        next('route');
+    }
+
+    if (achievement.progress + 1 >= achievement.goal) {
+        achievement.completed = true;
+        await achievement.save();
+    }
+
+    next();
+});
+
+module.exports = {mustOwnValidAchievement, checkAchievementStatus};

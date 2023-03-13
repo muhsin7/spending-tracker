@@ -2,6 +2,11 @@ const mongoose = require("mongoose");
 
 const achievementSchema = mongoose.Schema(
   {
+    id: {
+      type: Number,
+      required: true,
+      unique: true
+    },
     name: {
       type: String,
       required: true,
@@ -22,7 +27,7 @@ const achievementSchema = mongoose.Schema(
     },
     completed: {
       type: Boolean,
-      required,
+      required: true,
     },
     userId: {
       type: mongoose.Schema.Types.ObjectId,

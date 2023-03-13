@@ -2,6 +2,8 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
+const Achievement = require("../models/achievementModel");
+const achievements = require("../achievements.json");
 
 // @desc    Register new user
 // @route   POST /api/user
@@ -31,6 +33,11 @@ const registerUser = asyncHandler(async (req, res) => {
       email,
       password: hashedPassword
     });
+
+    // Add all the achievements for the user
+    for (const achievement of achievements) {
+      await Achievement.create({...achievement, userId: user.id});
+    }
     
     res.status(201).json({
       _id: user.id,
