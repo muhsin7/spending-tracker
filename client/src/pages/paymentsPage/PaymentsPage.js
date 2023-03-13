@@ -19,6 +19,16 @@ export default function PaymentsPage() {
     });
   }, []);
 
+  // Sort the payments so that the latest payment is displayed first
+  const ascendingCompare = (A, B) => {
+    if (A === B) {
+      return 0;
+    } else {
+      return A > B ? -1 : 1
+    }
+  }
+  payments.sort((a, b) => ascendingCompare(new Date(Date.parse(a.date)), new Date(Date.parse(b.date))));
+
   return (
     <div className="payments-page">
       <h1 className="payments-header">Payments Page</h1>
