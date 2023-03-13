@@ -22,7 +22,7 @@ export default function PaymentsPage() {
   return (
     <div className="payments-page">
       <h1 className="payments-header">Payments Page</h1>
-      <PaymentsHistory payments={payments} setPayments={setPayments} token={token}/>
+      <PaymentsHistory payments={payments} setPayments={setPayments} token={token} />
     </div>
   );
 }

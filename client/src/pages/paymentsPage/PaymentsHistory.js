@@ -16,7 +16,7 @@ export default function PaymentsHistory(props) {
 
   const rows = [];
   props.payments.forEach(e => {
-    rows.push(<PaymentCard payment={e} deletePayment={deletePayment} key={e._id} />);
+    rows.push(<PaymentCard payment={e} deletePayment={deletePayment} key={e._id} token={props.token} />);
   });
 
   return (

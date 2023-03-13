@@ -3,7 +3,6 @@ import Popup from "reactjs-popup";
 import "reactjs-popup/dist/index.css";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useToken } from "../../authentication/useToken";
 import { FaEdit, FaTrash } from 'react-icons/fa';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
@@ -19,14 +18,13 @@ export default function PaymentCard(props) {
 
 
   
-  const [token, setToken] = useToken();
   const [category, setCategory] = useState({});
 
   // Gets the corresponding category from the database
   useEffect(() => {
     axios.get('/api/category/' + CATEGORY_ID, {
       headers: {
-        "Authorization": "Bearer " + token
+        "Authorization": "Bearer " + props.token
       }
     }).then((res) => {
       console.log(res.data);
@@ -43,7 +41,8 @@ export default function PaymentCard(props) {
 
   if (DOES_IMAGE_EXIST) {
     const IMAGE = props.payment.image;
-    imageURL = `data:${IMAGE.contentType};base64,${IMAGE.data.toString('base64')}`;
+    const IMAGE_BASE64 = String.fromCharCode(...new Uint8Array(IMAGE.data.data));
+    imageURL = `data:${IMAGE.contentType};base64,${IMAGE_BASE64}`;
   }
 
 
@@ -89,7 +88,7 @@ export default function PaymentCard(props) {
         <div className="payment-card-bottom">
           <span className="payment-date">{DATE}</span>
           {DOES_IMAGE_EXIST && (
-            <Popup trigger={<button className="payment-image-button">View image</button>} position="left" contentStyle={{ width: 'auto'}}>
+            <Popup trigger={<button className="payment-image-button">View image</button>} contentStyle={{ width: 'auto'}} modal nested>
               <img src={imageURL} />
             </Popup>
           )}
