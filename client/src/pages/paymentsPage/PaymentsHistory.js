@@ -3,8 +3,8 @@ import PropTypes from "prop-types";
 import axios from "axios";
 
 export default function PaymentsHistory(props) {
-  function deletePayment(id) {
-    axios.delete("/api/payment/" + id, {
+  async function deletePayment(id) {
+    await axios.delete("/api/payment/" + id, {
       headers: {
         "Authorization": "Bearer " + props.token
       }

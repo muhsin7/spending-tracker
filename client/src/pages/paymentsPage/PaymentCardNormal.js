@@ -9,7 +9,7 @@ import "react-confirm-alert/src/react-confirm-alert.css";
 
 export default function PaymentCard(props) {
   const TITLE = props.payment.title;
-  const DATE = new Date(props.payment.createdAt).toLocaleString();
+  const DATE_STRING = new Date(props.payment.date).toLocaleDateString();
   const DESCRIPTION = props.payment.description;
   const DOES_IMAGE_EXIST = props.payment.hasOwnProperty("image");
   const CATEGORY_ID = props.payment.categoryId;
@@ -86,7 +86,7 @@ export default function PaymentCard(props) {
         </div> 
         
         <div className="payment-card-bottom">
-          <span className="payment-date">{DATE}</span>
+          <span className="payment-date">{DATE_STRING}</span>
           {DOES_IMAGE_EXIST && (
             <Popup trigger={<button className="payment-image-button">View image</button>} contentStyle={{ width: "75%", height: "75%" }} modal nested>
               <img className="payment-image" src={imageURL} />
