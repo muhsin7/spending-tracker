@@ -9,7 +9,7 @@ import "reactjs-popup/dist/index.css";
 
 export default function PaymentCard(props) {
   const TITLE = props.payment.title;
-  const DATE = new Date(props.payment.createdAt).toLocaleString();
+  const DATE = new Date(props.payment.createdAt);
   const DESCRIPTION = props.payment.description;
   const DOES_IMAGE_EXIST = props.payment.hasOwnProperty('image');
   const CATEGORY_ID = props.payment.categoryId;
@@ -35,7 +35,7 @@ export default function PaymentCard(props) {
 
 
 
-  const [startDate, setStartDate] = useState(new Date(DATE));
+  const [startDate, setStartDate] = useState(DATE);
   const [newCategories, setNewCategories] = useState([]);
   const [newCategory, setNewCategory] = useState(CATEGORY_ID);
   const [newTitle, setNewTitle] = useState(TITLE);
@@ -113,6 +113,7 @@ export default function PaymentCard(props) {
           <DatePicker
             className="payment-date"
             selected={startDate}
+            dateFormat="dd/MM/yyyy"
             onChange={(date) => setStartDate(date)}
           />
           {DOES_IMAGE_EXIST && (
