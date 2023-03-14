@@ -26,7 +26,7 @@ function App() {
           <Routes>
             <Route path="/" element={<WelcomePage />} />
             {/* REDIRECT TO LOGIN PAGE IF NOT LOGGED IN */}
-            <Route element={<ProtectedRoute isAllowed={isAuth} redirectPath="/login"/>}>
+            <Route element={<ProtectedRoute privateRoute={isAuth} redirectPath="/login"/>}>
               <Route index path="/dashboard" element={<Dashboard />} />
               <Route path="/user" element={<UserPage />} />
               <Route path="/user/update" element={<UpdateUser />} />
@@ -35,7 +35,7 @@ function App() {
               <Route path="/payments" element={<PaymentsPage />} />
             </Route>
             {/* REDIRECT TO DASHBOARD IF ALREADY LOGGED IN */}
-            <Route element={<ProtectedRoute isAllowed={!isAuth} redirectPath="/" />}>
+            <Route element={<ProtectedRoute privateRoute={!isAuth} redirectPath="/dashboard" />}>
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
             </Route>
