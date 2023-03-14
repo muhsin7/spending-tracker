@@ -11,6 +11,7 @@ import './styles/styles.css'
 import Header from "./components/Header"
 import ProtectedRoute from "./authentication/ProtectedRoute"
 import { useAuth } from "./authentication/useAuth"
+import AddSpending from "./pages/AddSpending"
 
 function App() {
   const [isAuth, setAuth] = useAuth();
@@ -23,7 +24,7 @@ function App() {
         <div className="container">
           <Routes>
             {/* Only Route tags are allowed in Routes tag */}
-            <Route path="/" element={<Dashboard />} />
+            <Route path="/" element={<AddSpending />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/user" element={<UserPage />} />
@@ -31,6 +32,7 @@ function App() {
             <Route path="/addCategory" element={<AddCategory />} />
             <Route path="/payments" element={<PaymentsPage />} />
             <Route path="/categories" element={<CategoriesPage />} />
+            <Route path="/addCategory" element={<AddSpending />} />
           </Routes>
         </div>
       </BrowserRouter>
