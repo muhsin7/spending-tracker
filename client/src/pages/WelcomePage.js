@@ -1,6 +1,7 @@
 import React from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import '../styles/welcomePage.css';
+import graphic from "../images/graphic.png";
 
 export default function WelcomePage() {
 
@@ -16,17 +17,17 @@ export default function WelcomePage() {
             <div>
                 <div className="row">
                     <div className="column">
-                    <h1>Save money for a change.</h1>
-                    <h2>sex helps you manage your budget with ease and convenience.</h2>
+                    <h1 class="welcome-header">Save money for a change.</h1>
+                    <h2 class="welcome-subtitle">Manage your budget with ease and convenience.</h2>
                     <div className="row">
                     <button onClick={() => {
                         setGoToLogin(true);
                     }} 
-                    type="button" id="getStartedButton">Get Started</button>
+                    type="button" className="getStartedButton">Get Started</button>
                     </div>
                     </div>
-                    <div className="column">
-                    <h1>[PLACEHOLDER IMAGE]</h1>
+                    <div className="column welcome-graphic">
+                    <img src={graphic} alt="Home page graphic"/>
                     </div>
                 </div>
             </div>

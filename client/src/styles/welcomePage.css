@@ -1,5 +1,5 @@
 .welcomePage{
-    height: 100vh;
+    height: 80vh;
     width: 100vw;
     display: flex;
     justify-content: center;
@@ -17,33 +17,34 @@
     flex: 50%;
     padding: 10px;
     height: 300px;
-    margin-top: 20vh; 
+    /* margin-top: 20vh;  */
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
 
-h1{
-    font-family: 'Inter';
+.welcome-header{
+    /* font-family: 'Inter'; */
     font-style: normal;
     font-weight: 700;
-    font-size: 64px;
+    font-size: 4em;
     text-align: center;
-    line-height: 77px;
+    line-height: 1em;
     color: #000000;
 }
 
-h2{
-    font-family: 'Inter';
+.welcome-subtitle{
+    padding: 1em 0 1em 0;
+    /* font-family: 'Inter'; */
     font-style: normal;
     font-weight: 400;
-    font-size: 24px;
+    font-size: 1.5em;
     text-align: center;
     line-height: 29px;
     color: #000000;
 }
 
-#getStartedButton{
+.getStartedButton{
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -59,13 +60,26 @@ h2{
     background: #00B57F;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 8px;
+    border: none;
 
-    font-family: 'Nunito';
-    font-style: normal;
+    /* font-style: normal; */
     font-weight: 900;
     font-size: 16px;
     line-height: 130%;
     color: #FFFFFF;
+}
+
+.welcome-graphic > img {
+    width: 100%;
+    height: auto;
+    display: flex;
+    top: 50%;
+    -ms-transform: translateY(50%);
+    transform: translateY(50%);}
+
+.welcome-graphic {
+    height: 100vh;
+    z-index: 0;
 }
 
 /*
@@ -78,12 +92,12 @@ h2{
     background-image: url("/images/wallet.png");
 }
 */
-
+/* 
 body {
     background: #FFFFFF;
-}
+} */
 
-.welcomePage::before{
+/* .welcomePage::before{
     content:"";
     position: absolute;
     width: 100%;
@@ -100,4 +114,4 @@ body {
     background: linear-gradient(#11ec2e, var(--button-text-green));
     clip-path: circle(45% at 0% 120%);
     z-index: -1;
-}
+} */

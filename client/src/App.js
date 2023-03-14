@@ -27,7 +27,7 @@ function App() {
             <Route path="/" element={<WelcomePage />} />
             {/* REDIRECT TO LOGIN PAGE IF NOT LOGGED IN */}
             <Route element={<ProtectedRoute isAllowed={isAuth} redirectPath="/login"/>}>
-              <Route index path="/" element={<Dashboard />} />
+              <Route index path="/dashboard" element={<Dashboard />} />
               <Route path="/user" element={<UserPage />} />
               <Route path="/user/update" element={<UpdateUser />} />
               <Route path="/addCategory" element={<AddCategory />} />

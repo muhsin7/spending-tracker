@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { useToken } from "../../authentication/useToken";
 import AmountSpent from "./AmountSpent";
 import DashboardChart from "./DashboardChart";
@@ -23,18 +24,17 @@ export default function Dashboard() {
     
     // return <DashboardChart payments={payments} />;
     return (
-        <div className="dashboard dashboard-grid">
-            {/* <h1 className="dashboard-header">Dashboard</h1> */}
-            <div className="dashboard-left">
-                <AmountSpent payments={payments} />
-                <div className="chart-container">
-                    <DashboardChart payments={payments} />
+            <div className="dashboard dashboard-grid">
+                {/* <h1 className="dashboard-header">Dashboard</h1> */}
+                <div className="dashboard-left">
+                    <AmountSpent payments={payments} />
+                    <div className="chart-container">
+                        <DashboardChart payments={payments} />
+                    </div>
+                </div>
+                <div className="dashboard-right">
+                    <TransactionsPreview payments={payments} />       
                 </div>
             </div>
-            <div className="dashboard-right">
-                <TransactionsPreview payments={payments} /> 
-                
-            </div>
-        </div>
     )
 }
