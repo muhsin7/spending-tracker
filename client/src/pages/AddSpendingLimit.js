@@ -16,29 +16,10 @@ export default function AddSpendingLimit() {
 
   useEffect(() => console.log(token), [token]);
 
-  function getBase64(file, cb) {
-    let reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = function () {
-      return reader.result;
-    };
-    reader.onerror = function (error) {
-      console.log("Error: ", error);
-    };
-  }
-
-  const handleFileRead = async (target) => {
-    const file = target.files[0];
-    let base64 = await getBase64(file);
-    console.log(base64);
-    return base64;
-  };
-
   const onFormChange = async (event) => {
     event.preventDefault();
     const target = event.target;
-    const value =
-      target.type === "file" ? await handleFileRead(target) : target.value;
+    const value = target.value;
     const name = target.name;
 
     setFormValues({
@@ -50,27 +31,26 @@ export default function AddSpendingLimit() {
 
   // Gets all the user's categories from the database
   useEffect(() => {
-    axios
-      .get("/api/category", {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      })
-      .then(async (res) => {
-        await setNewCategories(res.data);
-        // TODO: set an initial value for the category selected
-      });
+    axios.get("/api/category", {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    }).then(async (res) => {
+      await setNewCategories(res.data);
+    });
   }, []);
 
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("/api/payment",
+      const response = await axios.post("/api/limit",
         {
           name: formValues["name"],
           amount: formValues["amount"],
-          duration: formValues["duration"],
-          categoryId: formValues["categoryId"],
+          duration: {
+            type: formValues["duration"]
+          },
+          category: formValues["categoryId"],
         }, {
           headers: {
             Authorization: "Bearer " + token,
@@ -108,7 +88,6 @@ export default function AddSpendingLimit() {
               />
             </div>
             <div className="addCategoryInputBox">
-              {/* <label for="amount">Amount</label> */}
               <input
                 type="number"
                 className="form-control"
@@ -119,20 +98,25 @@ export default function AddSpendingLimit() {
                 onChange={onFormChange}
               />
             </div>
-            <select
-              value={formValues["duration"]}
-              onChange={onFormChange}
-            >
-              {["YEAR", "MONTH", "DAY", "WEEK"].map((option) => (
-                <option key={option} value={option}>{option}</option>
-              ))}
-            </select>
+            <div className="addCategoryInputBox">
+              <select
+                value={formValues["duration"]}
+                name="duration"
+                onChange={onFormChange}
+              >
+                <option key="" value=""></option>
+                {["YEAR", "MONTH", "DAY", "WEEK"].map((option) => (
+                  <option key={option} value={option}>{option}</option>
+                ))}
+              </select>
+            </div>
             <div className="addCategoryInputBox">
               <select
                 value={formValues["categoryId"]}
                 name="categoryId"
                 onChange={onFormChange}
               >
+                <option key="" value=""></option>
                 {newCategories.map((option) => (
                   <option key={option._id} value={option._id}>{option.name}</option>
                 ))}
