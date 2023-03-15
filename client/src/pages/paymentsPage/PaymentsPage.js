@@ -9,14 +9,16 @@ export default function PaymentsPage() {
 
   // Gets all the user's payments from the database
   useEffect(() => {
-    axios.get("/api/payment", {
-      headers: {
-        "Authorization": "Bearer " + token
-      }
-    }).then((res) => {
-      console.log(res.data);
-      setPayments(res.data);
-    });
+    axios
+      .get("/api/payment", {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setPayments(res.data);
+      });
   }, []);
 
   // Sort the payments so that the latest payment is displayed first
@@ -24,15 +26,21 @@ export default function PaymentsPage() {
     if (A === B) {
       return 0;
     } else {
-      return A > B ? -1 : 1
+      return A > B ? -1 : 1;
     }
-  }
-  payments.sort((a, b) => ascendingCompare(new Date(Date.parse(a.date)), new Date(Date.parse(b.date))));
+  };
+  payments.sort((a, b) =>
+    ascendingCompare(new Date(Date.parse(a.date)), new Date(Date.parse(b.date)))
+  );
 
   return (
     <div className="payments-page">
       <h1 className="payments-header">Payments Page</h1>
-      <PaymentsHistory payments={payments} setPayments={setPayments} token={token} />
+      <PaymentsHistory
+        payments={payments}
+        setPayments={setPayments}
+        token={token}
+      />
     </div>
   );
 }

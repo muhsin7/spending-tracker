@@ -5,7 +5,7 @@
 }
 
 .payments-header {
-  background-color: #00B57F;
+  background-color: #00b57f;
   display: inline-flex;
   border-radius: 16px;
   padding: 1rem;
@@ -13,7 +13,7 @@
 }
 
 .payments-container {
-  background-color: #00B57F;
+  background-color: #00b57f;
   color: black;
   display: flex;
   justify-content: center;
@@ -24,12 +24,10 @@
   border-radius: 16px;
 }
 
-
-
 /* PAYMENT CARD */
 
 .payment-card {
-  background-color: #00955F;
+  background-color: #00955f;
   margin-bottom: 0.5em;
   padding: 0.5em;
   border-radius: 12px;
@@ -42,7 +40,7 @@
 }
 
 .payment-card:hover {
-  background-color: #00A56F;
+  background-color: #00a56f;
   color: beige;
 }
 
@@ -157,7 +155,7 @@
 }
 
 .payment-image-button:hover {
-  background-color: #00955F;
+  background-color: #00955f;
   color: beige;
 }
 
