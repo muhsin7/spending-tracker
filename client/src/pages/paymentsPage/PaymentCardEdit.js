@@ -54,6 +54,7 @@ export default function PaymentCard(props) {
   }
 
   async function handleConfirm() {
+    // No need to return here as setting edit as false will change the payment card back to normal
     if (!isChanged()) props.setEdit(false);
 
     if (!newPrice.match(/^\d+(.\d+)?$/)) {
@@ -114,9 +115,7 @@ export default function PaymentCard(props) {
 
     reader.addEventListener("load", () => setNewImageURL(reader.result), false);
 
-    if (file) {
-      reader.readAsDataURL(file);
-    }
+    if (file) reader.readAsDataURL(file);
   }
 
   return (
