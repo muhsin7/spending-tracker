@@ -58,6 +58,11 @@ export default function PaymentCard(props) {
 
   async function handleConfirm() {
     if (isChanged()) {
+      if (!newPrice.match(/^\d+(.\d+)?$/)) {
+        alert("The price entered isn't a valid number!");
+        return;
+      }
+
       let data = {
         id: props.payment._id,
         title: newTitle,
@@ -134,11 +139,8 @@ export default function PaymentCard(props) {
           />
           <input
             className="payment-amount"
-            pattern="^\d+(.\d+)?$"
             value={newPrice}
-            onChange={(e) =>
-              setNewPrice((v) => (e.target.validity.valid ? e.target.value : v))
-            }
+            onChange={(e) => setNewPrice(e.target.value)}
           />
         </div>
 
