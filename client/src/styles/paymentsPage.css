@@ -1,7 +1,7 @@
 /* PAYMENT PAGE */
 
 .payments-page {
-  margin: 3%;
+  margin: 1%;
 }
 
 .payments-top {
@@ -22,6 +22,8 @@
   display: inline-flex;
   border-radius: 16px;
   padding: 1rem;
+  margin-right: 0.5rem;
+  float: right;
 }
 
 .payments-filter-by-text {
@@ -30,6 +32,24 @@
 }
 
 .payments-filter-by {
+  padding: 0.2rem;
+  width: 100px;
+}
+
+.payments-sort-by-section {
+  background-color: #00b57f;
+  display: inline-flex;
+  border-radius: 16px;
+  padding: 1rem;
+  float: right;
+}
+
+.payments-sort-by-text {
+  padding: 0.2rem;
+  margin-inline: 0.2rem;
+}
+
+.payments-sort-by {
   padding: 0.2rem;
   width: 100px;
 }
@@ -49,6 +69,7 @@
 
 .payments-plus-icon {
   float: right;
+  font-size: 24px;
 }
 
 .payments-container {

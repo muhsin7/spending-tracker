@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useToken } from "../../authentication/useToken";
 import { useNavigate } from "react-router-dom";
+import { FaPlus } from "react-icons/fa";
 
 export default function PaymentsPage() {
   const [token, setToken] = useToken();
@@ -44,6 +45,25 @@ export default function PaymentsPage() {
     <div className="payments-page">
       <div className="payments-top">
         <h1 className="payments-header">Payments Page</h1>
+        
+        <div className="payments-sort-by-section">
+          <span className="payments-sort-by-text">Sort by:</span>
+          <select
+            className="payments-sort-by"
+            value={filterBy}
+            onChange={(e) => confirmFilterBy(e)}
+          >
+            <option key="" value=""></option>
+            {["category", "title", "description", "price", "date"].map(
+              (option) => (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              )
+            )}
+          </select>
+        </div>
+
         <div className="payments-filter-by-section">
           <span className="payments-filter-by-text">Filter by:</span>
           <select
@@ -68,7 +88,7 @@ export default function PaymentsPage() {
         onClick={() => navigate("/addPayment")}
       >
         <span>Click to add new payment</span>
-        <span className="payments-plus-icon">+</span>
+        <FaPlus className="payments-plus-icon" />
       </div>
 
       <PaymentsHistory
