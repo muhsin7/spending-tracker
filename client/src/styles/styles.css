@@ -7,6 +7,8 @@
 @import url("register.css");
 @import url("charts.css");
 @import url("header.css");
+@import url("notFound.css");
 @import url("reactjs-popup/dist/index.css");
 @import url("react-datepicker/dist/react-datepicker.css");
 @import url("react-confirm-alert/src/react-confirm-alert.css");
+@import url("welcomePage.css");

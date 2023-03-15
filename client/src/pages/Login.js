@@ -32,17 +32,16 @@ function Login() {
   const onLoginClicked = async (e) => {
     e.preventDefault();
     if (handleValidation) {
-      const response = await axios.post("/api/user/login", {
+      await axios.post("/api/user/login", {
         email: emailValue,
         password: passwordValue,
+      }).then((res) => {
+        console.log(res.status);
+        const { token } = res.data;
+        setToken(token);
+        setAuth(true);
+        navigate("/dashboard");
       });
-
-      console.log(response.status);
-      const { token } = response.data;
-      setToken(token);
-      setAuth(true);
-
-      navigate("/");
     }
   };
 
