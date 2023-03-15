@@ -13,6 +13,7 @@ import ProtectedRoute from "./authentication/ProtectedRoute"
 import { useAuth } from "./authentication/useAuth"
 import NotFound from "./pages/NotFound"
 import AddPayment from "./pages/AddPayment"
+import AddSpendingLimit from "./pages/AddSpendingLimit"
 
 function App() {
   const [isAuth, setAuth] = useAuth();
@@ -32,6 +33,7 @@ function App() {
               <Route path="/user/update" element={<UpdateUser />} />
               <Route path="/addCategory" element={<AddCategory />} />
               <Route path="/addPayment" element={<AddPayment/>} />
+              <Route path="/addSpendingLimit" element={<AddSpendingLimit/>} />
               <Route path="/payments" element={<PaymentsPage />} />
             </Route>
             {/* REDIRECT TO DASHBOARD IF ALREADY LOGGED IN */}
