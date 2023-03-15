@@ -7,9 +7,29 @@
 .payments-header {
   background-color: #00b57f;
   display: inline-flex;
+  font-size: 36px;
   border-radius: 16px;
   padding: 1rem;
   margin: 0.5rem;
+}
+
+.payments-filter-by-section {
+  background-color: #00b57f;
+  display: inline-flex;
+  border-radius: 16px;
+  padding: 1rem;
+  margin: 0.5rem;
+}
+
+.payments-filter-by-text {
+  padding: 0.2rem;
+  margin: 0.2rem;
+}
+
+.payments-filter-by {
+  padding: 0.2rem;
+  margin: 0.2rem;
+  width: 100px;
 }
 
 .payments-container {
@@ -49,6 +69,7 @@
 }
 
 .payment-category {
+  padding: 0.2rem;
   text-decoration: underline;
 }
 
@@ -151,6 +172,7 @@
   border: none;
   border-radius: 6px;
   padding: 3px;
+  margin: 3px;
   float: right;
 }
 

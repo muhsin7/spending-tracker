@@ -6,6 +6,7 @@ import { useToken } from "../../authentication/useToken";
 export default function PaymentsPage() {
   const [token, setToken] = useToken();
   const [payments, setPayments] = useState([]);
+  const [filterBy, setFilterBy] = useState("");
 
   // Gets all the user's payments from the database
   useEffect(() => {
@@ -33,9 +34,26 @@ export default function PaymentsPage() {
     ascendingCompare(new Date(Date.parse(a.date)), new Date(Date.parse(b.date)))
   );
 
+  function confirmFilterBy(e) {
+    setFilterBy(e.target.value);
+  }
+
   return (
     <div className="payments-page">
       <h1 className="payments-header">Payments Page</h1>
+      <div className="payments-filter-by-section">
+        <span className="payments-filter-by-text">Filter by:</span>
+        <select
+          className="payments-filter-by"
+          value={filterBy}
+          onChange={(e) => confirmFilterBy(e)}
+        >
+          <option key="" value=""></option>
+          {["category", "title", "description", "price", "date"].map((option) => (
+            <option key={option} value={option}>{option}</option>
+          ))}
+        </select>
+      </div>
       <PaymentsHistory
         payments={payments}
         setPayments={setPayments}
