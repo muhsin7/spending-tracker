@@ -14,36 +14,34 @@ export default function PaymentCard(props) {
   // Rounds the price to 2 d.p.
   const PRICE = (Math.round(props.payment.amount * 100) / 100).toFixed(2);
 
-
-  
   const [category, setCategory] = useState({});
 
   // Gets the corresponding category from the database
   useEffect(() => {
-    axios.get("/api/category/" + CATEGORY_ID, {
-      headers: {
-        "Authorization": "Bearer " + props.token
-      }
-    }).then((res) => {
-      console.log(res.data);
-      setCategory(res.data);
-    });
+    axios
+      .get("/api/category/" + CATEGORY_ID, {
+        headers: {
+          Authorization: "Bearer " + props.token,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setCategory(res.data);
+      });
   }, []);
 
   const CATEGORY_NAME = category.name;
-
-  
 
   // Creates an imageURL if it exists
   let imageURL = "";
 
   if (DOES_IMAGE_EXIST) {
     const IMAGE = props.payment.image;
-    const IMAGE_BASE64 = String.fromCharCode(...new Uint8Array(IMAGE.data.data));
+    const IMAGE_BASE64 = String.fromCharCode(
+      ...new Uint8Array(IMAGE.data.data)
+    );
     imageURL = `data:${IMAGE.contentType};base64,${IMAGE_BASE64}`;
   }
-
-
 
   function handleDelete() {
     confirmAlert({
@@ -52,12 +50,12 @@ export default function PaymentCard(props) {
       buttons: [
         {
           label: "Yes",
-          onClick: () => props.deletePayment(props.payment._id)
+          onClick: () => props.deletePayment(props.payment._id),
         },
         {
-          label: "No"
-        }
-      ]
+          label: "No",
+        },
+      ],
     });
   }
 
@@ -75,20 +73,25 @@ export default function PaymentCard(props) {
           <span className="payment-description">{DESCRIPTION}</span>
           <div className="payment-edit-delete-icons">
             <FaTrash className="payment-delete-icon" onClick={handleDelete} />
-            <FaEdit className="payment-edit-icon" onClick={() => props.setEdit(true)} />
+            <FaEdit
+              className="payment-edit-icon"
+              onClick={() => props.setEdit(true)}
+            />
           </div>
-        </div> 
-        
+        </div>
+
         <div className="payment-card-bottom">
           <span className="payment-date">{DATE_STRING}</span>
           {DOES_IMAGE_EXIST && (
             <Popup
-              trigger={<button className="payment-image-button">View image</button>}
+              trigger={
+                <button className="payment-image-button">View image</button>
+              }
               contentStyle={{
                 width: "75%",
                 height: "75%",
                 backgroundColor: "rgba(30, 30, 30, 0.6)",
-                border: "none"
+                border: "none",
               }}
               modal
               nested
