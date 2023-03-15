@@ -43,22 +43,25 @@ export default function PaymentCard(props) {
   }
 
   function isChanged() {
+    // Assume that checks for newPrice and PRICE being valid numbers have already been done
     return (
       newTitle !== TITLE ||
       newDescription !== DESCRIPTION ||
       !isSameDate(newDate, DATE) ||
       newImageURL !== imageURL ||
-      newPrice !== PRICE ||
+      parseFloat(newPrice) !== parseFloat(PRICE) ||
       newCategoryID !== CATEGORY_ID
     );
   }
 
   async function handleConfirm() {
-    // No need to return here as setting edit as false will change the payment card back to normal
-    if (!isChanged()) props.setEdit(false);
-
     if (!newPrice.match(/^\d+(.\d+)?$/)) {
       alert("The price entered isn't a valid number!");
+      return;
+    }
+
+    if (!isChanged()) {
+      props.setEdit(false);
       return;
     }
 
@@ -121,6 +124,7 @@ export default function PaymentCard(props) {
   return (
     <div className="payment-card">
       <select
+        className="payment-category"
         value={newCategoryID}
         onChange={(e) => setNewCategoryID(e.target.value)}
       >
