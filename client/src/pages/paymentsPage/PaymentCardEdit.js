@@ -54,47 +54,44 @@ export default function PaymentCard(props) {
   }
 
   async function handleConfirm() {
-    if (isChanged()) {
-      if (!newPrice.match(/^\d+(.\d+)?$/)) {
-        alert("The price entered isn't a valid number!");
-        return;
-      }
+    if (!isChanged()) props.setEdit(false);
 
-      let data = {
-        id: props.payment._id,
-        title: newTitle,
-        description: newDescription,
-        date: newDate,
-        amount: newPrice,
-        categoryId: newCategoryID,
+    if (!newPrice.match(/^\d+(.\d+)?$/)) {
+      alert("The price entered isn't a valid number!");
+      return;
+    }
+
+    let data = {
+      id: props.payment._id,
+      title: newTitle,
+      description: newDescription,
+      date: newDate,
+      amount: newPrice,
+      categoryId: newCategoryID,
+    };
+
+    if (newImageURL !== imageURL)
+      data.image = {
+        data: Buffer.from(
+          newImageURL.substring(newImageURL.indexOf(",") + 1).toString("base64")
+        ),
+        contentType: newImageURL.substring(
+          newImageURL.indexOf(":") + 1,
+          newImageURL.indexOf(";")
+        ),
       };
 
-      if (newImageURL !== imageURL)
-        data.image = {
-          data: Buffer.from(
-            newImageURL
-              .substring(newImageURL.indexOf(",") + 1)
-              .toString("base64")
-          ),
-          contentType: newImageURL.substring(
-            newImageURL.indexOf(":") + 1,
-            newImageURL.indexOf(";")
-          ),
-        };
+    await axios
+      .patch("/api/payment/" + props.payment._id, data, {
+        headers: {
+          Authorization: "Bearer " + props.token,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
 
-      await axios
-        .patch("/api/payment/" + props.payment._id, data, {
-          headers: {
-            Authorization: "Bearer " + props.token,
-          },
-        })
-        .then((res) => {
-          console.log(res.data);
-        });
-
-      window.location.reload();
-    }
-    props.setEdit(false);
+    window.location.reload();
   }
 
   // Gets all the user's categories from the database
