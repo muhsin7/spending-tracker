@@ -60,7 +60,6 @@ const getNoSpendingLimitCategory = asyncHandler(async (req, res) => {
     const spendingLimits = await SpendingLimit.find({userId: req.user.id});
 
     const categoryIds = spendingLimits.map(sl => sl.category);
-    console.log(categoryIds);
     const filteredCategories = categories.filter(cat => !categoryIds.some(cid => cat._id.equals(cid)));
     //some() is used here instead of includes() because === equality does not work with ObjectIds (immutability stuff)
 
