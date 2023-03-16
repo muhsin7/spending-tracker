@@ -21,7 +21,6 @@ const getCategoriesWithSpendingLimits = asyncHandler(async (req, res) => {
       userId: cat.userId,
       spendingLimit: sl[0]
     };
-
   }));
 
   res.status(200).json(catWithSL);

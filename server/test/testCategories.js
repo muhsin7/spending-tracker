@@ -151,6 +151,17 @@ describe("Category tests", () => {
     });
 
     it("should get categories along with spending limits belonging to the user", async() => {
+
+      await SpendingLimit.create({
+        name: "Spending Limit", 
+        userId: user._id,
+        amount: 100,
+        duration: {
+          type: "WEEK"
+        },
+        category: category._id
+      });
+
       const res = await chai.request(app)
         .get("/api/category/withSpendingLimit")
         .set("Authorization", ("Bearer " + authToken));
@@ -160,7 +171,8 @@ describe("Category tests", () => {
       should.exist(res.body, "Should have gotten an array of categories");
       res.body.length.should.equal(1, "Should have only received one category");
       res.body[0].should.have.property("name", category.name);
-      res.body[0].should.have.property("spendingLimit", "none");
+      res.body[0].should.have.property("spendingLimit");
+      res.body[0].spendingLimit.name.should.equal("Spending Limit");
     });
 
     it("should post a valid category", async() => {
