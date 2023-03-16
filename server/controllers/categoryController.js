@@ -19,9 +19,8 @@ const getCategoriesWithSpendingLimits = asyncHandler(async (req, res) => {
       _id: cat._id,
       name: cat.name,
       userId: cat.userId,
-      spendingLimit: sl[0] === undefined ? "none" : sl[0].amount.toString()
+      spendingLimit: sl[0]
     };
-    
   }));
 
   res.status(200).json(catWithSL);
