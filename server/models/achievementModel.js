@@ -5,11 +5,13 @@ const achievementModelSchema = mongoose.Schema(
   {
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      required: true
+      required: true,
+      ref: "User"
     },
     achievementId: {
       type: mongoose.Schema.Types.ObjectId,
-      required: true
+      required: true,
+      ref: "AchievementRequirement"
     },
     date: {
       type: Date,
