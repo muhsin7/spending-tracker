@@ -10,17 +10,32 @@ function AddCategory() {
     const [token, setToken] = useToken();
     const [categoryValue, setCategoryValue] = useState('');
     const [spendingLimit, setSpendingLimitValue] = useState('');
+    const navigate = useNavigate();
 
-
-    const onSubmit = async () => {
-        const response = await axios.post('/api/category', {
-            category: categoryValue,
-            spendingLimit: spendingLimit,
-        });
+    const onSubmit = async (e) => {
+        e.preventDefault(); 
+        try {
+            const response = await axios.post('/api/category', {
+                name: categoryValue,
+                // spendingLimit: spendingLimit,
+            }, {
+                headers: {
+                  "Authorization": "Bearer " + token
+                }
+            });
+            navigate("/categories");   
+            await console.log(response);  
+            
+        } catch (err) {
+            if(err.response) {
+                console.log(err.response);
+            } else if (err.message) {
+                console.log(err.message);
+            } else {
+                console.log(err);
+            }
+        }   
     
-        const {token} = response.data;
-        setToken(token);
-        return <Navigate to = "/"/>;
     }
 
     return(
@@ -29,7 +44,7 @@ function AddCategory() {
             <section className='addCategoryForm'>
                 <h2 className= "addCategoryTitle">Add Category</h2>
                 <fieldset className="addCategoryFields">
-                    <form onSubmit = {onSubmit}>
+                    <form>
                         <div className='addCategoryInputBox'>
                             <input
                                 value = {categoryValue} 
@@ -42,7 +57,7 @@ function AddCategory() {
                                 onChange={e => setSpendingLimitValue(e.target.value)} 
                                 placeholder="Spending Limit:" required/>
                         </div>
-                        <button id = "addCategoryButton" >Add</button>
+                        <button className = "addCategoryButton" onClick={onSubmit}>Add</button>
                     </form>
                 </fieldset>
             </section>

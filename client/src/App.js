@@ -7,13 +7,14 @@ import UpdateUser from "./pages/UpdateUser"
 import UserPage from "./pages/UserPage"
 import PaymentsPage from "./pages/paymentsPage/PaymentsPage"
 import WelcomePage from "./pages/WelcomePage"
+import CategoriesPage from "./pages/categoriesPage/CategoriesPage"
 import './styles/styles.css'
 import Header from "./components/Header"
 import ProtectedRoute from "./authentication/ProtectedRoute"
 import { useAuth } from "./authentication/useAuth"
 import NotFound from "./pages/NotFound"
 import AddPayment from "./pages/AddPayment"
-import Background from "./pages/Background"
+import AddSpendingLimit from "./pages/AddSpendingLimit"
 
 function App() {
   const [isAuth, setAuth] = useAuth();
@@ -34,7 +35,9 @@ function App() {
               <Route path="/user/update" element={<UpdateUser />} />
               <Route path="/addCategory" element={<AddCategory />} />
               <Route path="/addPayment" element={<AddPayment/>} />
+              <Route path="/addSpendingLimit" element={<AddSpendingLimit/>} />
               <Route path="/payments" element={<PaymentsPage />} />
+              <Route path="/categories" element={<CategoriesPage />} />
             </Route>
             {/* REDIRECT TO DASHBOARD IF ALREADY LOGGED IN */}
             <Route element={<ProtectedRoute privateRoute={!isAuth} redirectPath="/dashboard" />}>
