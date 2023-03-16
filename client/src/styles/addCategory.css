@@ -71,7 +71,7 @@
     background-color: rgb(147, 231, 147);
 }
 
-#addCategoryButton{
+.addCategoryButton{
     margin-top: 50px;
     color: #fff;
     font-weight: 900;
@@ -85,7 +85,8 @@
     margin-bottom: 30px;
 }
 
-#addCategoryButton:hover{
+.addCategoryButton:hover{
     border-radius: 30px;
 }
+
 

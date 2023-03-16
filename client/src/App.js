@@ -7,6 +7,7 @@ import UpdateUser from "./pages/UpdateUser"
 import UserPage from "./pages/UserPage"
 import PaymentsPage from "./pages/paymentsPage/PaymentsPage"
 import WelcomePage from "./pages/WelcomePage"
+import CategoriesPage from "./pages/categoriesPage/CategoriesPage"
 import './styles/styles.css'
 import Header from "./components/Header"
 import ProtectedRoute from "./authentication/ProtectedRoute"
@@ -35,6 +36,7 @@ function App() {
               <Route path="/addPayment" element={<AddPayment/>} />
               <Route path="/addSpendingLimit" element={<AddSpendingLimit/>} />
               <Route path="/payments" element={<PaymentsPage />} />
+              <Route path="/categories" element={<CategoriesPage />} />
             </Route>
             {/* REDIRECT TO DASHBOARD IF ALREADY LOGGED IN */}
             <Route element={<ProtectedRoute privateRoute={!isAuth} redirectPath="/dashboard" />}>

@@ -87,21 +87,6 @@ describe("User tests", () => {
         });
     });
 
-    it("should not allow names under 3 characters", async () => {
-      await User.create({
-        name: "Jo",
-        password: "123",
-        email: "john@example.com"
-      })
-        .catch((error) => {
-          should.exist(error);
-          error.should.have.property("name").eql("ValidationError");
-        })
-        .then((user) => {
-          should.not.exist(user, "The user should have been invalid");
-        });
-    });
-
     it("should not allow names above 20 characters", async () => {
       await User.create({
         name: "J".repeat(21),

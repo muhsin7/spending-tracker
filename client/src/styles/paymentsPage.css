@@ -1,35 +1,92 @@
 /* PAYMENT PAGE */
 
 .payments-page {
-  margin: 3%;
+  margin: 1%;
+}
+
+.payments-top {
+  margin-bottom: 0.5rem;
 }
 
 .payments-header {
-  background-color: #00B57F;
+  background-color: #00b57f;
+  display: inline-flex;
+  font-size: 36px;
+  border-radius: 16px;
+  padding: 1rem;
+  margin-right: 0.5rem;
+}
+
+.payments-filter-by-section {
+  background-color: #00b57f;
   display: inline-flex;
   border-radius: 16px;
   padding: 1rem;
-  margin: 0.5rem;
+  margin-right: 0.5rem;
+  float: right;
+}
+
+.payments-filter-by-text {
+  padding: 0.2rem;
+  margin-inline: 0.2rem;
+}
+
+.payments-filter-by {
+  padding: 0.2rem;
+  width: 100px;
+}
+
+.payments-sort-by-section {
+  background-color: #00b57f;
+  display: inline-flex;
+  border-radius: 16px;
+  padding: 1rem;
+  float: right;
+}
+
+.payments-sort-by-text {
+  padding: 0.2rem;
+  margin-inline: 0.2rem;
+}
+
+.payments-sort-by {
+  padding: 0.2rem;
+  width: 100px;
+}
+
+.payments-add-payment {
+  margin-bottom: 0.5rem;
+  background-color: #00b57f;
+  border-radius: 16px;
+  padding: 1rem;
+}
+
+.payments-add-payment:hover {
+  background-color: #00955f;
+  color: beige;
+  cursor: pointer;
+}
+
+.payments-plus-icon {
+  float: right;
+  font-size: 24px;
 }
 
 .payments-container {
-  background-color: #00B57F;
+  background-color: #00b57f;
   color: black;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
   padding: 1rem;
-  margin: 0.5rem;
   border-radius: 16px;
 }
-
-
 
 /* PAYMENT CARD */
 
 .payment-card {
-  background-color: #00955F;
+  background-color: #00955f;
   margin-bottom: 0.5em;
   padding: 0.5em;
   border-radius: 12px;
@@ -42,7 +99,7 @@
 }
 
 .payment-card:hover {
-  background-color: #00A56F;
+  background-color: #00a56f;
   color: beige;
 }
 
@@ -51,6 +108,7 @@
 }
 
 .payment-category {
+  padding: 0.2rem;
   text-decoration: underline;
 }
 
@@ -108,6 +166,7 @@
 
 .payment-edit-icon:hover {
   color: orangered;
+  cursor: pointer;
 }
 
 .payment-delete-icon {
@@ -119,6 +178,7 @@
 
 .payment-delete-icon:hover {
   color: darkred;
+  cursor: pointer;
 }
 
 .payment-confirm-icon {
@@ -130,6 +190,7 @@
 
 .payment-confirm-icon:hover {
   color: green;
+  cursor: pointer;
 }
 
 .payment-cancel-icon {
@@ -141,6 +202,7 @@
 
 .payment-cancel-icon:hover {
   color: darkred;
+  cursor: pointer;
 }
 
 .payment-date {
@@ -152,13 +214,16 @@
   color: black;
   border: none;
   border-radius: 6px;
-  padding: 3px;
+  padding: 4px;
+  margin-inline: 3px;
+  margin-inline-end: 0;
   float: right;
 }
 
 .payment-image-button:hover {
-  background-color: #00955F;
+  background-color: #00955f;
   color: beige;
+  cursor: pointer;
 }
 
 .payment-image {
