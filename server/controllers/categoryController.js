@@ -8,6 +8,25 @@ const getCategories = asyncHandler(async (req, res) => {
   res.status(200).json(categories);
 });
 
+//get all categories with spending limits
+const getCategoriesWithSpendingLimits = asyncHandler(async (req, res) => {
+  const categories = await Category.find({userId: req.user.id});
+  const catWithSL = await Promise.all(categories.map(async (cat) => {
+    const sl = await SpendingLimit.find({category: cat._id, userId: req.user.id});
+
+    ///... operation does not work here due to mongoose wackiness
+    return {
+      _id: cat._id,
+      name: cat.name,
+      userId: cat.userId,
+      spendingLimit: sl[0] === undefined ? "none" : sl[0].amount.toString()
+    };
+    
+  }));
+
+  res.status(200).json(catWithSL);
+});
+
 // get specific
 const getCategory = asyncHandler(async (req, res) => {
   try {
@@ -71,6 +90,7 @@ const getNoSpendingLimitCategory = asyncHandler(async (req, res) => {
 
 module.exports = {
   getCategories,
+  getCategoriesWithSpendingLimits,
   getCategory,
   createCategory,
   deleteCategory,

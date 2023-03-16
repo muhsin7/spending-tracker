@@ -150,6 +150,19 @@ describe("Category tests", () => {
       res.body[0].should.have.property("name", category.name);
     });
 
+    it("should get categories along with spending limits belonging to the user", async() => {
+      const res = await chai.request(app)
+        .get("/api/category/withSpendingLimit")
+        .set("Authorization", ("Bearer " + authToken));
+        
+      res.should.have.status(200);
+      res.should.have.property("body");
+      should.exist(res.body, "Should have gotten an array of categories");
+      res.body.length.should.equal(1, "Should have only received one category");
+      res.body[0].should.have.property("name", category.name);
+      res.body[0].should.have.property("spendingLimit", "none");
+    });
+
     it("should post a valid category", async() => {
       const res = await chai.request(app)
         .post("/api/category/")
