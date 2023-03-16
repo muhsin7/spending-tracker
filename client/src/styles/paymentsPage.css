@@ -51,7 +51,15 @@
 
 .payments-sort-by {
   padding: 0.2rem;
-  width: 100px;
+  width: 135px;
+}
+
+.payments-sort-by option:nth-child(2n+1), .payments-filter-by option:nth-child(2n+1) {
+  background-color: lightgreen;
+}
+
+.payments-sort-by option:nth-child(2n+0), .payments-filter-by option:nth-child(2n+0) {
+  background-color: lightpink;
 }
 
 .payments-add-payment {
