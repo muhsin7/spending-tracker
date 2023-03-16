@@ -1,4 +1,5 @@
 const Category = require("../models/categoryModel");
+const SpendingLimit = require("../models/spendingLimitModel");
 const asyncHandler = require("express-async-handler");
 
 // get all
@@ -52,10 +53,28 @@ const updateCategory = asyncHandler(async (req, res) => {
   }
 });
 
+// get categories without spending limits
+const getNoSpendingLimitCategory = asyncHandler(async (req, res) => {
+  try {
+    const categories = await Category.find({userId: req.user.id});
+    console.log(categories);
+    const spendingLimits = await SpendingLimit.find({userId: req.user.id});
+    console.log(spendingLimits);
+    const categoryIds = spendingLimits.map(sl => sl.category);
+    console.log(categoryIds);
+    const filteredCategories = categories.filter(cat => !(categoryIds.some(cid => cid.equals(cat._id))));
+    console.log(filteredCategories);
+    res.status(200).json(filteredCategories);
+  } catch (error) {
+    res.status(400).json({error: error.message});
+  }
+});
+
 module.exports = {
   getCategories,
   getCategory,
   createCategory,
   deleteCategory,
-  updateCategory
+  updateCategory,
+  getNoSpendingLimitCategory
 };

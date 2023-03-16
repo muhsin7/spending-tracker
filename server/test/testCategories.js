@@ -1,5 +1,6 @@
 const Category = require("../models/categoryModel");
 const User = require("../models/userModel");
+const SpendingLimit = require("../models/spendingLimitModel");
 
 const {flushDB, assertError, generateToken} = require("./utils");
 
@@ -24,7 +25,7 @@ describe("Category tests", () => {
     };
 
     await User.create(USER);
-  })
+  });
 
   after(flushDB);
 
@@ -78,7 +79,7 @@ describe("Category tests", () => {
           should.not.exist(category, "The category should have been invalid");
         }); 
     });
-  })
+  });
 
   // TEST ROUTING & CONTROLLERS
 
@@ -274,5 +275,30 @@ describe("Category tests", () => {
       resPost.body.should.have.property("name", otherCategory.name);
     });
 
-  })
+    it("should return categories without a spending limit associated with them", async() => {
+      otherCategory.userId = user._id;
+      await otherCategory.save();
+
+      await SpendingLimit.create({
+        name: "Spending Limit", 
+        userId: user._id,
+        amount: 100,
+        duration: {
+          type: "WEEK"
+        },
+        category: category._id
+      });
+
+      const res = await chai.request(app)
+        .get("/api/category/noSpendingLimit")
+        .set("Authorization", ("Bearer " + authToken));
+      
+      console.log(res.body);
+      res.should.have.status(200);
+      res.should.have.property("body");
+      should.exist(res.body, "Should have gotten an array of categories");
+      res.body.length.should.equal(1, "Should have only received one category");
+      res.body[0].should.have.property("name", otherCategory.name);
+    });
+  });
 });
