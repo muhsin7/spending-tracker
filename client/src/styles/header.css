@@ -11,7 +11,8 @@
   position: sticky;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 20px;
+  padding: 0 40px;
+  top: 20px;
   /* position:fixed;   */
   z-index:1; /*Add this*/
   /* margin: 20px; */
@@ -80,4 +81,67 @@
 .header-links > * {
   display: block;
   margin-left: 1.5em;
+}
+
+
+/* Popup section */
+.popup{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+  width: 1366px;
+  height: 768px;
+  background: #fff;
+  z-index: 1;
+  text-align: center;
+}
+
+.overlay {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+  z-index: 1;
+}
+
+.overlay{
+  background: rgba(0, 0, 0,0.7);
+}
+
+.popup h2{
+  padding: 40px 0 20px 0;
+  margin-bottom: 120px;
+  font-size: 50px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  background: #f5f7fb;
+}
+
+.popup ul li{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.popup ul li .box{
+  border: 2px solid var(--button-text-green);
+  width: 500px;
+  height: 50px;
+  line-height: 45px;
+  margin-left: 50px;
+}
+
+.popup .close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  height: 50px;
+  width: 90px;
 }
