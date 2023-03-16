@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useToken } from "../../authentication/useToken";
 import { useUser } from "../../authentication/useUser";
-import AmountSpent from "./AmountSpent";
-import CategoryPieChart from "./CategoryPieChart";
-import DashboardChart from "./DashboardChart";
-import TransactionsPreview from "./TransactionsPreview";
+import AmountSpent from "./cards/AmountSpent";
+import CategoryPieChart from "./charts/CategoryPieChart";
+import DashboardChart from "./charts/DashboardChart";
+import TransactionsPreview from "./transactions/TransactionsPreview";
 
 export default function Dashboard() {
     const [token, setToken] = useToken();

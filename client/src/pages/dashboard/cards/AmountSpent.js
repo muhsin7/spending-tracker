@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useToken } from "../../authentication/useToken";
+import { useToken } from "../../../authentication/useToken";
 import AmountCard from "./AmountCard";
 import BudgetCard from "./BudgetCard";
 
