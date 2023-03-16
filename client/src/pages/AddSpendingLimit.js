@@ -56,11 +56,11 @@ export default function AddSpendingLimit() {
 
       let req;
 
-      if (formValues["categoryId"] === 1) {
+      if (formValues["categoryId"] === "1") {
         req = BASE_REQ
       }
       else {
-        req = {...BASE_REQ, categoryId: formValues["categoryId"]}
+        req = {...BASE_REQ, category: formValues["categoryId"]}
       }
 
       const response = await axios
