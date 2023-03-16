@@ -22,7 +22,8 @@ export default function BudgetCard(props) {
                 {
                     props.hasBudget ? (
                     <>
-                    <div className={`dashboard-amount ${props.negative ? "error" : ""}`}>{props.negative ? "-" : ""}£42</div>
+                    {/* <div className={`dashboard-amount ${props.negative ? "error" : ""}`}>{props.negative ? "-" : ""}£42</div> */}
+                    <div className={`dashboard-amount`}>{props.negative ? "-" : ""}£42<sup className="warning-emoji">{props.negative ? "⚠️" : ""}</sup></div>
                     <div className="dashboard-amount-description">
                         <form>
                             <label for="duration">left to spend { dropdownDuration === "day" ? "" : "this" } </label>
