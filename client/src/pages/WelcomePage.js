@@ -17,8 +17,8 @@ export default function WelcomePage() {
             <div>
                 <div className="row">
                     <div className="column">
-                    <h1 class="welcome-header">Save money for a change.</h1>
-                    <h2 class="welcome-subtitle">Manage your budget with ease and convenience.</h2>
+                    <h1 className = "welcome-header">Save money for a change.</h1>
+                    <h2 className ="welcome-subtitle">Manage your budget with ease and convenience.</h2>
                     <div className="row">
                     <button onClick={() => {
                         setGoToLogin(true);
