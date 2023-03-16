@@ -13,6 +13,7 @@ import ProtectedRoute from "./authentication/ProtectedRoute"
 import { useAuth } from "./authentication/useAuth"
 import NotFound from "./pages/NotFound"
 import AddPayment from "./pages/AddPayment"
+import Background from "./pages/Background"
 
 function App() {
   const [isAuth, setAuth] = useAuth();
@@ -23,6 +24,7 @@ function App() {
     <Header auth={[isAuth, setAuth]} />
       <div className="border"></div>
         <div className="container">
+          {/* <Background /> */}
           <Routes>
             <Route path="/" element={<WelcomePage />} />
             {/* REDIRECT TO LOGIN PAGE IF NOT LOGGED IN */}
