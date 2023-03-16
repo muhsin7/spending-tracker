@@ -26,15 +26,32 @@ export default function Header(props) {
       </Link>
 
       <ul className="header-links">
-        <li>
-          <div className="header-link">Contact Us</div>
-        </li>
-        <li>
-          <div className="header-link">About</div>
-        </li>
-        <li>
-          <div className="header-link">Home</div>
-        </li>
+        {isAuth ? (
+          <>
+            <Link to={"/payments"}>
+              <li>
+                <div className="header-link">Payments</div>
+              </li>
+            </Link>
+            <Link to={"/categories"}>
+              <li>
+                <div className="header-link">Categories</div>
+              </li>
+            </Link>
+            <Link to={"/register"}>
+              <li>
+                <div className="header-link">Limits</div>
+              </li>
+            </Link>
+            <Link to={"/register"}>
+              <li>
+                <div className="header-link">Reports</div>
+              </li>
+            </Link>
+          </>
+        ) : (
+          []
+        )}
         {isAuth ? (
           <li>
             <button
