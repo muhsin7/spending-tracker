@@ -18,6 +18,18 @@ const getSpendingLimit = asyncHandler(async (req, res) => {
   }
 });
 
+// get by category id use id "1" for global
+const getSpendingLimitByCategory = asyncHandler(async (req, res) => {
+  try {
+    let {categoryId} = req.params;
+    if (categoryId === "1") categoryId = undefined;
+    const spendingLimit = await SpendingLimit.find({category: categoryId, userId: req.user.id});
+    res.status(200).json(spendingLimit);
+  } catch(error) {
+    res.status(400).json({error: error.message});
+  }
+});
+
 // post new
 const createSpendingLimit = asyncHandler(async (req, res) => {
   try {
@@ -61,6 +73,7 @@ const updateSpendingLimit = asyncHandler(async (req, res) => {
 module.exports = {
   getAllSpendingLimits,
   getSpendingLimit,
+  getSpendingLimitByCategory,
   createSpendingLimit,
   deleteSpendingLimit,
   updateSpendingLimit
