@@ -43,7 +43,7 @@ export default function Header(props) {
         <li>
           <div className="header-link">Home</div>
         </li>
-        {true ? (
+        {isAuth ? (
           <>
           <li>
             <div className="header-link" onClick={toggleAccountPopup}>Account</div>
