@@ -54,11 +54,13 @@
   width: 135px;
 }
 
-.payments-sort-by option:nth-child(2n+1), .payments-filter-by option:nth-child(2n+1) {
+.payments-sort-by option:nth-child(2n + 1),
+.payments-filter-by option:nth-child(2n + 1) {
   background-color: lightgreen;
 }
 
-.payments-sort-by option:nth-child(2n+0), .payments-filter-by option:nth-child(2n+0) {
+.payments-sort-by option:nth-child(2n + 0),
+.payments-filter-by option:nth-child(2n + 0) {
   background-color: lightpink;
 }
 

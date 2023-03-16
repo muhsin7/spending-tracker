@@ -1,4 +1,5 @@
 import PaymentsHistory from "./PaymentsHistory";
+import PaymentsSortBy from "./PaymentsSortBy";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useToken } from "../../authentication/useToken";
@@ -9,26 +10,15 @@ export default function PaymentsPage() {
   const [token, setToken] = useToken();
   const [payments, setPayments] = useState([]);
   const [filterBy, setFilterBy] = useState("");
-  const [sortBy, setSortBy] = useState("Date (latest first)");
   const navigate = useNavigate();
-  const SORT_BY_OPTIONS = [
-    "Category (a -> z)",
-    "Category (z -> a)",
-    "Title (a -> z)",
-    "Title (z -> a)",
-    "Price (lowest first)",
-    "Price (highest first)",
-    "Date (earliest first)",
-    "Date (latest first)"
-  ];
   const FILTER_BY_OPTIONS = [
     "",
     "Category",
     "Title",
     "Description",
     "Price",
-    "Date"
-  ]
+    "Date",
+  ];
 
   // Gets all the user's payments from the database
   useEffect(() => {
@@ -56,10 +46,6 @@ export default function PaymentsPage() {
     ascendingCompare(new Date(Date.parse(a.date)), new Date(Date.parse(b.date)))
   );
 
-  function confirmSortBy(e) {
-    setSortBy(e.target.value);
-  }
-
   function confirmFilterBy(e) {
     setFilterBy(e.target.value);
   }
@@ -68,23 +54,8 @@ export default function PaymentsPage() {
     <div className="payments-page">
       <div className="payments-top">
         <h1 className="payments-header">Payments Page</h1>
-        
-        <div className="payments-sort-by-section">
-          <span className="payments-sort-by-text">Sort by:</span>
-          <select
-            className="payments-sort-by"
-            value={sortBy}
-            onChange={(e) => confirmSortBy(e)}
-          >
-            {SORT_BY_OPTIONS.map(
-              (option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              )
-            )}
-          </select>
-        </div>
+
+        <PaymentsSortBy payments={payments} />
 
         <div className="payments-filter-by-section">
           <span className="payments-filter-by-text">Filter by:</span>
@@ -93,13 +64,11 @@ export default function PaymentsPage() {
             value={filterBy}
             onChange={(e) => confirmFilterBy(e)}
           >
-            {FILTER_BY_OPTIONS.map(
-              (option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              )
-            )}
+            {FILTER_BY_OPTIONS.map((option) => (
+              <option key={option} value={option}>
+                {option}
+              </option>
+            ))}
           </select>
         </div>
       </div>
