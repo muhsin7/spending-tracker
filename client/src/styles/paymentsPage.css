@@ -28,12 +28,19 @@
 
 .payments-filter-by-text {
   padding: 0.2rem;
-  margin-inline: 0.2rem;
+  margin-right: 0.2rem;
 }
 
 .payments-filter-by {
   padding: 0.2rem;
   width: 100px;
+  margin-right: 0.5rem;
+}
+
+.payments-filter-by-input {
+  width: 180px;
+  height: 28px;
+  padding: 0.1rem;
 }
 
 .payments-sort-by-section {
@@ -46,7 +53,7 @@
 
 .payments-sort-by-text {
   padding: 0.2rem;
-  margin-inline: 0.2rem;
+  margin-right: 0.2rem;
 }
 
 .payments-sort-by {
@@ -217,6 +224,9 @@
 
 .payment-date {
   font-weight: bolder;
+  width: 180px;
+  height: 28px;
+  padding: 0.1rem;
 }
 
 .payment-image-button {

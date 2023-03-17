@@ -45,7 +45,11 @@ export default function PaymentsPage() {
           setPayments={setPayments}
           token={token}
         />
-        <PaymentsFilterBy payments={payments} setPayments={setPayments} />
+        <PaymentsFilterBy
+          payments={payments}
+          setPayments={setPayments}
+          token={token}
+        />
       </div>
 
       <div
