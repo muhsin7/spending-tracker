@@ -64,7 +64,7 @@ export default function Register() {
         <section className='form'>
           <h1 className="form-header">Create an account</h1>
           
-          <div class="fieldset">
+          <div className="fieldset">
             <form onSubmit={onSubmit}>
               <div className='form-group'>
                 <input

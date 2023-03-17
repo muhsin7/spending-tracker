@@ -18,10 +18,28 @@ const getSpendingLimit = asyncHandler(async (req, res) => {
   }
 });
 
+// get by category id use id "1" for global
+const getSpendingLimitByCategory = asyncHandler(async (req, res) => {
+  try {
+    let {categoryId} = req.params;
+    if (categoryId === "1") categoryId = undefined;
+    const spendingLimit = await SpendingLimit.find({category: categoryId, userId: req.user.id});
+    res.status(200).json(spendingLimit);
+  } catch(error) {
+    res.status(400).json({error: error.message});
+  }
+});
+
 // post new
 const createSpendingLimit = asyncHandler(async (req, res) => {
   try {
     const {name, amount, duration, category} = req.body;
+    //User cannot create multiple spending limits for one category or have multiple global limits
+    const existingSpendingLimit = await SpendingLimit.find( {userId: req.user.id, category: category} );
+    if (existingSpendingLimit.length) {
+      throw new Error("You must only have one spending limit per category!");
+    }
+
     const spendingLimit = await SpendingLimit.create({name: name, amount: amount, duration: duration, category: category, userId: req.user.id});
     res.status(200).json(spendingLimit);
   } catch (error) {
@@ -55,6 +73,7 @@ const updateSpendingLimit = asyncHandler(async (req, res) => {
 module.exports = {
   getAllSpendingLimits,
   getSpendingLimit,
+  getSpendingLimitByCategory,
   createSpendingLimit,
   deleteSpendingLimit,
   updateSpendingLimit
