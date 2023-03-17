@@ -21,8 +21,6 @@ export default function PaymentsPage() {
         },
       })
       .then((res) => {
-        console.log(res.data);
-
         setPayments(
           res.data.sort((a, b) => {
             const A = new Date(Date.parse(a.date));
@@ -42,7 +40,11 @@ export default function PaymentsPage() {
       <div className="payments-top">
         <h1 className="payments-header">Payments Page</h1>
 
-        <PaymentsSortBy payments={payments} setPayments={setPayments} token={token} />
+        <PaymentsSortBy
+          payments={payments}
+          setPayments={setPayments}
+          token={token}
+        />
         <PaymentsFilterBy payments={payments} setPayments={setPayments} />
       </div>
 
