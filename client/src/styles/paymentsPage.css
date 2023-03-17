@@ -40,7 +40,7 @@
 .payments-filter-by-input {
   width: 180px;
   height: 28px;
-  padding: 0.1rem;
+  padding: 0.2rem;
 }
 
 .payments-sort-by-section {
@@ -226,7 +226,7 @@
   font-weight: bolder;
   width: 180px;
   height: 28px;
-  padding: 0.1rem;
+  padding: 0.2rem;
 }
 
 .payment-image-button {
