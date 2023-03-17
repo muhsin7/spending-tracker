@@ -31,10 +31,12 @@ export default function PaymentsPage(props) {
 
   function confirmFilterBy(e) {
     setFilterBy(e.target.value);
+
     switch (e.target.value) {
       case "":
         setFilterByInputCode([]);
         break;
+
       case "Category":
         setFilterByInputCode([
           <input
@@ -53,6 +55,7 @@ export default function PaymentsPage(props) {
           />,
         ]);
         break;
+
       case "Title":
         setFilterByInputCode([
           <input
@@ -68,6 +71,7 @@ export default function PaymentsPage(props) {
           />,
         ]);
         break;
+
       case "Description":
         setFilterByInputCode([
           <input
@@ -83,6 +87,7 @@ export default function PaymentsPage(props) {
           />,
         ]);
         break;
+
       case "Price":
         setFilterByInputCode([
           <input
@@ -98,6 +103,7 @@ export default function PaymentsPage(props) {
           />,
         ]);
         break;
+
       default:
         // Default will occur when the date option is selected
         break;
@@ -129,6 +135,20 @@ export default function PaymentsPage(props) {
             selected={date}
             onChange={(date) => {
               setDate(date);
+
+              function isSameDate(date1, date2) {
+                return (
+                  date1.getDate() === date2.getDate() &&
+                  date1.getMonth() === date2.getMonth() &&
+                  date1.getFullYear() === date2.getFullYear()
+                );
+              }
+
+              props.setPayments(
+                props.payments.filter((payment) =>
+                  isSameDate(new Date(Date.parse(payment.date)), date)
+                )
+              );
             }}
           />
         )}
