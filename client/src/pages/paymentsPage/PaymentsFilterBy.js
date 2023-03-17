@@ -4,7 +4,7 @@ import DatePicker from "react-datepicker";
 export default function PaymentsPage() {
   const [filterBy, setFilterBy] = useState("");
   const [filterByInputCode, setFilterByInputCode] = useState([]);
-  const [filterByInput, setFilterByInput] = useState("");
+  const [date, setDate] = useState(null);
   const FILTER_BY_OPTIONS = [
     "",
     "Category",
@@ -23,46 +23,49 @@ export default function PaymentsPage() {
       case "Category":
         setFilterByInputCode([
           <input
-            value={filterByInput}
-            onChange={(e) => setFilterByInput(e.target.value)}
+            className="payments-filter-by-input"
+            key="Category"
+            onChange={(e) => {
+              const INPUT = e.target.value;
+            }}
           />,
         ]);
         break;
       case "Title":
         setFilterByInputCode([
           <input
-            value={filterByInput}
-            onChange={(e) => setFilterByInput(e.target.value)}
+            className="payments-filter-by-input"
+            key="Title"
+            onChange={(e) => {
+              const INPUT = e.target.value;
+            }}
           />,
         ]);
         break;
       case "Description":
         setFilterByInputCode([
           <input
-            value={filterByInput}
-            onChange={(e) => setFilterByInput(e.target.value)}
+            className="payments-filter-by-input"
+            key="Description"
+            onChange={(e) => {
+              const INPUT = e.target.value;
+            }}
           />,
         ]);
         break;
       case "Price":
         setFilterByInputCode([
           <input
-            value={filterByInput}
-            onChange={(e) => setFilterByInput(e.target.value)}
-          />,
-        ]);
-        break;
-      case "Date":
-        setFilterByInputCode([
-          <DatePicker
-            className="payment-date"
-            dateFormat="dd/MM/yyyy"
-            onChange={(date) => setFilterByInput(date)}
+            className="payments-filter-by-input"
+            key="Price"
+            onChange={(e) => {
+              const INPUT = e.target.value;
+            }}
           />,
         ]);
         break;
       default:
-        console.log("ERROR");
+        // Default will occur when the date option is selected
         break;
     }
   }
@@ -81,7 +84,21 @@ export default function PaymentsPage() {
           </option>
         ))}
       </select>
-      <div>{filterByInputCode}</div>
+      <div>
+        {filterBy !== "Date" ? (
+          filterByInputCode
+        ) : (
+          <DatePicker
+            className="payment-date"
+            dateFormat="dd/MM/yyyy"
+            key="Date"
+            selected={date}
+            onChange={(date) => {
+              setDate(date);
+            }}
+          />
+        )}
+      </div>
     </div>
   );
 }

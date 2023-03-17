@@ -37,6 +37,12 @@
   margin-right: 0.5rem;
 }
 
+.payments-filter-by-input {
+  width: 180px;
+  height: 28px;
+  padding: 0.1rem;
+}
+
 .payments-sort-by-section {
   background-color: #00b57f;
   display: inline-flex;
@@ -218,6 +224,9 @@
 
 .payment-date {
   font-weight: bolder;
+  width: 180px;
+  height: 28px;
+  padding: 0.1rem;
 }
 
 .payment-image-button {
