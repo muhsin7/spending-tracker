@@ -31,32 +31,47 @@ export default function AddSpendingLimit() {
 
   // Gets all the user's categories from the database
   useEffect(() => {
-    axios.get("/api/category", {
+    axios.get("/api/category/noSpendingLimit", {
       headers: {
         Authorization: "Bearer " + token,
       },
     }).then(async (res) => {
-      await setNewCategories(res.data);
+      console.log(res.data);
+      let catList = res.data;
+      catList.push({_id: "1", name: "Global"})
+      await setNewCategories(catList);
     });
   }, []);
 
   const onSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("/api/limit",
-        {
-          name: formValues["name"],
-          amount: formValues["amount"],
-          duration: {
-            type: formValues["duration"]
-          },
-          category: formValues["categoryId"],
-        }, {
+      const BASE_REQ = {
+        name: formValues["name"],
+        amount: formValues["amount"],
+        duration: {
+          type: formValues["duration"]
+        },
+      };
+
+      let req;
+
+      if (formValues["categoryId"] === "1") {
+        req = BASE_REQ
+      }
+      else {
+        req = {...BASE_REQ, category: formValues["categoryId"]}
+      }
+
+      const response = await axios
+        .post("/api/limit", req,  {
           headers: {
             Authorization: "Bearer " + token,
           },
         }
-      ).then((res) => console.log(res));
+        )
+        .then((res) => console.log(res));
+        
     } catch (err) {
       if (err.response) {
         console.log(err.response);

@@ -8,7 +8,7 @@ export default function TransactionsPreview(props) {
 
     return (
         <div className="transaction-section">
-            <h1>Transactions</h1>
+            <h2>Transactions</h2>
             <div className="dashboard-transactions dashboard-container">
                 {rows}
                 <div className="all-payments btn btn-header">All Payments</div>
