@@ -1,10 +1,12 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
+import axios from "axios";
 
-export default function PaymentsPage() {
+export default function PaymentsPage(props) {
   const [filterBy, setFilterBy] = useState("");
   const [filterByInputCode, setFilterByInputCode] = useState([]);
   const [date, setDate] = useState(null);
+  const [categories, setCategories] = useState([]);
   const FILTER_BY_OPTIONS = [
     "",
     "Category",
@@ -13,6 +15,19 @@ export default function PaymentsPage() {
     "Price",
     "Date",
   ];
+
+  // Gets all the user's categories from the database
+  useEffect(() => {
+    axios
+      .get("/api/category", {
+        headers: {
+          Authorization: "Bearer " + props.token,
+        },
+      })
+      .then((res) => {
+        setCategories(res.data);
+      });
+  }, []);
 
   function confirmFilterBy(e) {
     setFilterBy(e.target.value);
@@ -26,7 +41,14 @@ export default function PaymentsPage() {
             className="payments-filter-by-input"
             key="Category"
             onChange={(e) => {
-              const INPUT = e.target.value;
+              props.setPayments(
+                props.payments.filter((payment) =>
+                  categories
+                    .find((category) => category._id === payment.categoryId)
+                    .name.toLowerCase()
+                    .includes(e.target.value)
+                )
+              );
             }}
           />,
         ]);
@@ -37,7 +59,11 @@ export default function PaymentsPage() {
             className="payments-filter-by-input"
             key="Title"
             onChange={(e) => {
-              const INPUT = e.target.value;
+              props.setPayments(
+                props.payments.filter((payment) =>
+                  payment.title.toLowerCase().includes(e.target.value)
+                )
+              );
             }}
           />,
         ]);
