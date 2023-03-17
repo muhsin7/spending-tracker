@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 export default function PaymentsSortBy(props) {
   const [sortBy, setSortBy] = useState("Date (latest first)");
+  const [categories, setCategories] = useState([]);
   const SORT_BY_OPTIONS = [
     "Category (a -> z)",
     "Category (z -> a)",
@@ -13,21 +15,137 @@ export default function PaymentsSortBy(props) {
     "Date (latest first)",
   ];
 
+  // Gets all the user's categories from the database
+  useEffect(() => {
+    axios
+      .get("/api/category", {
+        headers: {
+          Authorization: "Bearer " + props.token,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setCategories(res.data);
+      });
+  }, []);
+
   // Sort the payments so that the latest payment is displayed first
-  const ascendingCompare = (A, B) => {
+  function ascendingCompare(A, B) {
+    if (A === B) {
+      return 0;
+    } else {
+      return A < B ? -1 : 1;
+    }
+  }
+
+  // Sort the payments so that the latest payment is displayed first
+  function descendingCompare(A, B) {
     if (A === B) {
       return 0;
     } else {
       return A > B ? -1 : 1;
     }
-  };
+  }
 
-  props.payments.sort((a, b) =>
-    ascendingCompare(new Date(Date.parse(a.date)), new Date(Date.parse(b.date)))
-  );
+  function aCategoryFirst() {
+    props.setPayments([
+      ...props.payments.sort((a, b) =>
+        ascendingCompare(
+          categories.find((category) => category._id === a.categoryId).name,
+          categories.find((category) => category._id === b.categoryId).name
+        )
+      ),
+    ]);
+  }
+
+  function zCategoryFirst() {
+    props.setPayments([
+      ...props.payments.sort((a, b) =>
+        descendingCompare(
+          categories.find((category) => category._id === a.categoryId).name,
+          categories.find((category) => category._id === b.categoryId).name
+        )
+      ),
+    ]);
+  }
+
+  function aTitleFirst() {
+    props.setPayments([
+      ...props.payments.sort((a, b) => ascendingCompare(a.title, b.title)),
+    ]);
+  }
+
+  function zTitleFirst() {
+    props.setPayments([
+      ...props.payments.sort((a, b) => descendingCompare(a.title, b.title)),
+    ]);
+  }
+
+  function lowestDateFirst() {
+    props.setPayments([
+      ...props.payments.sort((a, b) => ascendingCompare(a.amount, b.amount)),
+    ]);
+  }
+
+  function highestDateFirst() {
+    props.setPayments([
+      ...props.payments.sort((a, b) => descendingCompare(a.amount, b.amount)),
+    ]);
+  }
+
+  function earliestDateFirst() {
+    props.setPayments([
+      ...props.payments.sort((a, b) =>
+        ascendingCompare(
+          new Date(Date.parse(a.date)),
+          new Date(Date.parse(b.date))
+        )
+      ),
+    ]);
+  }
+
+  function latestDateFirst() {
+    props.setPayments([
+      ...props.payments.sort((a, b) =>
+        descendingCompare(
+          new Date(Date.parse(a.date)),
+          new Date(Date.parse(b.date))
+        )
+      ),
+    ]);
+  }
 
   function confirmSortBy(e) {
     setSortBy(e.target.value);
+    switch (e.target.value) {
+      case "Category (a -> z)":
+        aCategoryFirst();
+        break;
+      case "Category (z -> a)":
+        zCategoryFirst();
+        break;
+      case "Title (a -> z)":
+        aTitleFirst();
+        break;
+      case "Title (z -> a)":
+        zTitleFirst();
+        break;
+      case "Price (lowest first)":
+        lowestDateFirst();
+        break;
+      case "Price (highest first)":
+        highestDateFirst();
+        break;
+      case "Date (earliest first)":
+        earliestDateFirst();
+        break;
+      case "Date (latest first)":
+        latestDateFirst();
+        break;
+      default:
+        console.log("ERROR");
+        break;
+    }
   }
 
   return (

@@ -22,7 +22,18 @@ export default function PaymentsPage() {
       })
       .then((res) => {
         console.log(res.data);
-        setPayments(res.data);
+
+        setPayments(
+          res.data.sort((a, b) => {
+            const A = new Date(Date.parse(a.date));
+            const B = new Date(Date.parse(b.date));
+            if (A === B) {
+              return 0;
+            } else {
+              return A > B ? -1 : 1;
+            }
+          })
+        );
       });
   }, []);
 
@@ -31,8 +42,8 @@ export default function PaymentsPage() {
       <div className="payments-top">
         <h1 className="payments-header">Payments Page</h1>
 
-        <PaymentsSortBy payments={payments} />
-        <PaymentsFilterBy payments={payments} />
+        <PaymentsSortBy payments={payments} setPayments={setPayments} token={token} />
+        <PaymentsFilterBy payments={payments} setPayments={setPayments} />
       </div>
 
       <div
