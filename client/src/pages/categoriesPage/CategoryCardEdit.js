@@ -6,10 +6,10 @@ import { Buffer } from "buffer";
 export default function CategoryCardEdit(props) {
   const ID = props.category._id;
   const TITLE = props.category.name;
-//   const SPENDINGLIMIT = props.category.spendingLimit
+  // const SPENDINGLIMIT = props.category.spendingLimit
  
   const [newTitle, setNewTitle] = useState(TITLE);
-//   const [newSpendingLimit, setNewSpendingLimit] = useState(SPENDINGLIMIT);
+  // const [newSpendingLimit, setNewSpendingLimit] = useState(SPENDINGLIMIT);
 
     useEffect(() => {
         console.log(newTitle)
@@ -17,8 +17,9 @@ export default function CategoryCardEdit(props) {
 
   function isChanged() {
     return (
-      newTitle !== TITLE
-    //   newSpendingLimit !== SPENDINGLIMIT
+      newTitle !== TITLE 
+      // ||
+      // newSpendingLimit !== SPENDINGLIMIT
     );
   }
 
@@ -31,7 +32,7 @@ export default function CategoryCardEdit(props) {
     let data = {
         id: props.category._id,
         name: newTitle,
-        //spendingLimit: newSpendingLimit
+        // spendingLimit: newSpendingLimit
       }
      await axios
       .patch("/api/category/" + props.category._id, data, {
@@ -59,7 +60,7 @@ export default function CategoryCardEdit(props) {
       <input
             className="category-spending-limit"
             // value={newSpendingLimit}
-            // onChange={(e) => setNewTitle(e.target.value)}
+            // onChange={(e) => setNewSpendingLimit(e.target.value)}
        />
       <button className="category-card-button" onClick={handleConfirm}>Confirm</button>
       <button className="category-card-button" onClick={() => props.setEdit(false)}>Cancel</button>
