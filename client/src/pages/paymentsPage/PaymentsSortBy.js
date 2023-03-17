@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 export default function PaymentsSortBy(props) {
   const [sortBy, setSortBy] = useState("Date (latest first)");
+  const [categories, setCategories] = useState([]);
   const SORT_BY_OPTIONS = [
     "Category (a -> z)",
     "Category (z -> a)",
@@ -12,6 +14,20 @@ export default function PaymentsSortBy(props) {
     "Date (earliest first)",
     "Date (latest first)",
   ];
+
+  // Gets all the user's categories from the database
+  useEffect(() => {
+    axios
+      .get("/api/category", {
+        headers: {
+          Authorization: "Bearer " + props.token,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setCategories(res.data);
+      });
+  }, []);
 
   // Sort the payments so that the latest payment is displayed first
   function ascendingCompare(A, B) {
@@ -29,6 +45,28 @@ export default function PaymentsSortBy(props) {
     } else {
       return A > B ? -1 : 1;
     }
+  }
+
+  function aCategoryFirst() {
+    props.setPayments([
+      ...props.payments.sort((a, b) =>
+        ascendingCompare(
+          categories.find((category) => category._id === a.categoryId).name,
+          categories.find((category) => category._id === b.categoryId).name
+        )
+      ),
+    ]);
+  }
+
+  function zCategoryFirst() {
+    props.setPayments([
+      ...props.payments.sort((a, b) =>
+        descendingCompare(
+          categories.find((category) => category._id === a.categoryId).name,
+          categories.find((category) => category._id === b.categoryId).name
+        )
+      ),
+    ]);
   }
 
   function earliestDateFirst() {
@@ -57,8 +95,10 @@ export default function PaymentsSortBy(props) {
     setSortBy(e.target.value);
     switch (e.target.value) {
       case "Category (a -> z)":
+        aCategoryFirst();
         break;
       case "Category (z -> a)":
+        zCategoryFirst();
         break;
       case "Title (a -> z)":
         break;
