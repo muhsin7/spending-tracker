@@ -74,7 +74,11 @@ export default function PaymentsPage(props) {
             className="payments-filter-by-input"
             key="Description"
             onChange={(e) => {
-              const INPUT = e.target.value;
+              props.setPayments(
+                props.payments.filter((payment) =>
+                  payment.description.toLowerCase().includes(e.target.value)
+                )
+              );
             }}
           />,
         ]);
@@ -85,7 +89,11 @@ export default function PaymentsPage(props) {
             className="payments-filter-by-input"
             key="Price"
             onChange={(e) => {
-              const INPUT = e.target.value;
+              props.setPayments(
+                props.payments.filter((payment) =>
+                  ("-£" + payment.amount.toString()).includes(e.target.value)
+                )
+              );
             }}
           />,
         ]);
