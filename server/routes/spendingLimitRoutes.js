@@ -7,13 +7,17 @@ const {
   getSpendingLimit,
   createSpendingLimit,
   deleteSpendingLimit,
-  updateSpendingLimit
+  updateSpendingLimit,
+  getSpendingLimitByCategory
 } = require("../controllers/spendingLimitController");
 const { protect } = require("../middleware/authMiddleware");
 
 router.route("/")
   .get(protect, getAllSpendingLimits)
   .post(protect, createSpendingLimit);
+
+router.route("/byCategory/:categoryId")
+  .get(protect, getSpendingLimitByCategory);
 
 router.route("/:id")
   .get(protect, getSpendingLimit)

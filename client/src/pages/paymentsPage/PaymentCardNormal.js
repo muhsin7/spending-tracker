@@ -25,7 +25,6 @@ export default function PaymentCard(props) {
         },
       })
       .then((res) => {
-        console.log(res.data);
         setCategory(res.data);
       });
   }, []);
