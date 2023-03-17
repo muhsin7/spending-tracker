@@ -18,7 +18,6 @@ function CategoryCard(props) {
   const [edit, setEdit] = useState(false);
 
 
-
   const deleteCategory = async () => {
     try {
       const response = await axios.delete('/api/category/' + ID, {
@@ -80,7 +79,7 @@ function CategoryCard(props) {
         <div className="category-info">
             <div className="category-title">{TITLE}</div>
         </div>
-        <div className="category-spending-limit">Spending Limit: {SPENDINGLIMIT}</div>
+        <div className="category-spending-limit">{"Spending Limit: " + SPENDINGLIMIT}</div>
         <button className="category-card-button" onClick={handleCategoryEdit}>Edit</button>
         <button className="category-card-button" onClick={handleCategoryDelete}>Delete </button>
       </div>
