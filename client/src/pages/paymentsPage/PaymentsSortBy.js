@@ -28,7 +28,6 @@ export default function PaymentsSortBy(props) {
       });
   }, []);
 
-  // Sort the payments so that the latest payment is displayed first
   function ascendingCompare(A, B) {
     if (A === B) {
       return 0;
@@ -37,7 +36,6 @@ export default function PaymentsSortBy(props) {
     }
   }
 
-  // Sort the payments so that the latest payment is displayed first
   function descendingCompare(A, B) {
     if (A === B) {
       return 0;

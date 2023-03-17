@@ -28,12 +28,13 @@
 
 .payments-filter-by-text {
   padding: 0.2rem;
-  margin-inline: 0.2rem;
+  margin-right: 0.2rem;
 }
 
 .payments-filter-by {
   padding: 0.2rem;
   width: 100px;
+  margin-right: 0.5rem;
 }
 
 .payments-sort-by-section {
@@ -46,7 +47,7 @@
 
 .payments-sort-by-text {
   padding: 0.2rem;
-  margin-inline: 0.2rem;
+  margin-right: 0.2rem;
 }
 
 .payments-sort-by {
