@@ -9,16 +9,13 @@
 }
 
 .payments-header {
-  background-color: #00b57f;
   display: inline-flex;
   font-size: 36px;
-  border-radius: 16px;
   padding: 1rem;
-  margin-right: 0.5rem;
 }
 
 .payments-filter-by-section {
-  background-color: #00b57f;
+  background-color: #222828;
   display: inline-flex;
   border-radius: 16px;
   padding: 1rem;
@@ -44,7 +41,7 @@
 }
 
 .payments-sort-by-section {
-  background-color: #00b57f;
+  background-color: #222828;
   display: inline-flex;
   border-radius: 16px;
   padding: 1rem;
@@ -73,13 +70,13 @@
 
 .payments-add-payment {
   margin-bottom: 0.5rem;
-  background-color: #00b57f;
+  background-color: #181e1e;
   border-radius: 16px;
   padding: 1rem;
 }
 
 .payments-add-payment:hover {
-  background-color: #00955f;
+  background-color: #222828;
   color: beige;
   cursor: pointer;
 }
@@ -90,7 +87,7 @@
 }
 
 .payments-container {
-  background-color: #00b57f;
+  background-color: #181e1e;
   color: black;
   display: flex;
   justify-content: center;
@@ -103,7 +100,7 @@
 /* PAYMENT CARD */
 
 .payment-card {
-  background-color: #00955f;
+  background-color: #222828;
   margin-bottom: 0.5em;
   padding: 0.5em;
   border-radius: 12px;
@@ -116,7 +113,7 @@
 }
 
 .payment-card:hover {
-  background-color: #00a56f;
+  background-color: #272d2d;
   color: beige;
 }
 
@@ -163,7 +160,7 @@
 .payment-amount {
   text-align: right;
   font-size: 1.3em;
-  color: darkred;
+  color: red;
 }
 
 .payment-description {
