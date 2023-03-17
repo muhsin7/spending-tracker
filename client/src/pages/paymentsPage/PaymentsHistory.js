@@ -4,15 +4,11 @@ import axios from "axios";
 
 export default function PaymentsHistory(props) {
   async function deletePayment(id) {
-    await axios
-      .delete("/api/payment/" + id, {
-        headers: {
-          Authorization: "Bearer " + props.token,
-        },
-      })
-      .then((res) => {
-        console.log(res.data);
-      });
+    await axios.delete("/api/payment/" + id, {
+      headers: {
+        Authorization: "Bearer " + props.token,
+      },
+    });
     props.setPayments(props.payments.filter((payment) => payment._id !== id));
   }
 
