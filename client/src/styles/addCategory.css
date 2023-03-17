@@ -1,5 +1,5 @@
 .div-addCategory{
-    height: 100vh;
+    height: 80vh;
     width: 100vw;
     display: flex;
     justify-content: center;
@@ -54,10 +54,11 @@
     text-align: center;
     border-radius: 10px;
     outline: none;
+    padding-top: 50px;
 }
 
 
-.addCategoryInputBox input {
+.addCategoryInputBox input, .addCategoryInputBox select {
   width: 350px;
   height: 45px;
   text-indent: 10px;
@@ -67,7 +68,7 @@
   margin-top: 10px;
 }
 
-.addCategoryInputBox input:focus {
+.addCategoryInputBox input:focus, .addCategoryInputBox select:focus {
     background-color: rgb(147, 231, 147);
 }
 
