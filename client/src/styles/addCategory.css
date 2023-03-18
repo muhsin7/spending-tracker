@@ -1,4 +1,4 @@
-.div-addCategory{
+.div-inputForm{
     height: 80vh;
     width: 100vw;
     display: flex;
@@ -6,7 +6,7 @@
     align-items: center;
 }
 
-.div-addCategory::before{
+.div-inputForm::before{
     content:"";
     position: absolute;
     width: 100%;
@@ -15,7 +15,7 @@
     clip-path: circle(50% at 115% 0%);
 }
 
-.div-addCategory::after{
+.div-inputForm::after{
     content:"";
     position: absolute;
     width: 100%;
@@ -25,13 +25,13 @@
 }
 
 
-.addCategoryTitle{
+.inputFormTitle{
     font-size: 3rem;
     font-weight: 750;
 }
 
 
-.addCategoryFields{
+.inputFormFields{
     height: 350px;
     width: 500px;
     margin-bottom: 50px;
@@ -44,7 +44,7 @@
 }
 
 
-.addCategoryForm{
+.inputForm{
     background-color: #f5f7fb;
     height: 550px;
     width: 750px;  
@@ -58,7 +58,7 @@
 }
 
 
-.addCategoryInputBox input, .addCategoryInputBox select {
+.inputFormInputBox input, .inputFormInputBox select {
   width: 350px;
   height: 45px;
   text-indent: 10px;
@@ -68,11 +68,11 @@
   margin-top: 10px;
 }
 
-.addCategoryInputBox input:focus, .addCategoryInputBox select:focus {
+.inputFormInputBox input:focus, .inputFormInputBox select:focus {
     background-color: rgb(147, 231, 147);
 }
 
-.addCategoryButton{
+.inputFormButton{
     margin-top: 50px;
     color: #fff;
     font-weight: 900;
@@ -86,8 +86,10 @@
     margin-bottom: 30px;
 }
 
-.addCategoryButton:hover{
+.inputFormButton:hover{
     border-radius: 30px;
 }
 
-
+.error-message {
+    color: red;
+}

@@ -24,25 +24,20 @@ function AddCategory() {
                 }
             });
             navigate("/categories");   
-            await console.log(response);  
+            console.log(response);  
             
         } catch (err) {
-            if(err.response) {
-                console.log(err.response);
-            } else if (err.message) {
-                console.log(err.message);
-            } else {
-                console.log(err);
-            }
+            console.log(err.response.data)
+            setErrorMessage(err.response.data.error);
         }   
     
     }
 
     return(
         <div className="div-inputForm">
-            {errorMessage && <div className="Error">{errorMessage}</div>}
             <section className='inputForm'>
                 <h2 className= "inputFormTitle">Add Category</h2>
+                {errorMessage && <div className="error-message">{errorMessage}</div>}
                 <fieldset className="inputFormFields">
                     <form>
                         <div className='inputFormInputBox'>

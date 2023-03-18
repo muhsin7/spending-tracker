@@ -58,44 +58,41 @@ function AddPayment() {
                 "Authorization": "Bearer " + token
             }
             }).then(async (res) => {
-                await setNewCategories(res.data);
-                // TODO: set an initial value for the category selected
+                setNewCategories(res.data);
             });
         }, []);
 
     const onSubmit = async (e) => {
         e.preventDefault();
         try {
+            console.log(formValues);
             const response = await axios.post('/api/payment', {
                 title: formValues["title"],
                 description: formValues["description"],
                 amount: formValues["amount"],
                 image: formValues["image"],
-                categoryId: formValues["categoryId"],
+                categoryId: formValues["categoryId"]
             }, {
                 headers: {
                     "Authorization": "Bearer " + token
                 }
-            }).then(res => console.log(res));
+            }).then(res => {
+                console.log(res)
+            });
         } catch (err) {
-            if(err.response) {
-                console.log(err.response);
-            } else if (err.message) {
-                console.log(err.message);
-            } else {
-                console.log(err);
-            }
+            console.log(err.response.data);
+            setErrorMessage(err.response.data.message);
         }
     }
 
     return(
-        <div className="div-addCategory">
-            {errorMessage && <div className="Error">{errorMessage}</div>}
-            <section className='addCategoryForm'>
-                <h2 className= "addCategoryTitle">Add Category</h2>
-                <fieldset className="addCategoryFields">
+        <div className="div-inputForm">
+            <section className='inputForm'>
+                <h2 className= "inputFormTitle">Add Payment</h2>
+                {errorMessage && <div className="error-message">{errorMessage}</div>}
+                <fieldset className="inputFormFields">
                     <form onSubmit = {onSubmit}>
-                        <div className='addCategoryInputBox'>
+                        <div className='inputFormInputBox'>
                             <input
                                 type="text"
                                 className="form-control"
@@ -107,7 +104,7 @@ function AddPayment() {
                                 required
                                 />
                         </div>
-                        <div className='addCategoryInputBox'>
+                        <div className='inputFormInputBox'>
                             <input
                                 type="text"
                                 className="form-control"
@@ -118,7 +115,7 @@ function AddPayment() {
                                 onChange={onFormChange}
                             />
                         </div>
-                        <div className='addCategoryInputBox'>
+                        <div className='inputFormInputBox'>
                             {/* <label for="amount">Amount</label> */}
                             <input
                                 type="number"
@@ -130,18 +127,18 @@ function AddPayment() {
                                 onChange={onFormChange}
                             />
                         </div>
-                        <div className='addCategoryInputBox'>
+                        <div className='inputFormInputBox'>
                             <select
                                 value={formValues["categoryId"]}
                                 name="categoryId"
                                 onChange={onFormChange}
-                            >
+                            >   <option key="" value=""></option>
                                 {newCategories.map((option) => (
                                 <option key={option._id} value={option._id}>{option.name}</option>
                                 ))}
                             </select>
                         </div>
-                        <div className='addCategoryInputBox'>
+                        <div className='inputFormInputBox'>
                             <input
                                 type="file"
                                 alt="Receipt image"

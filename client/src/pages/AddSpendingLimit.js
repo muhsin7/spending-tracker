@@ -34,7 +34,6 @@ export default function AddSpendingLimit() {
 
   // Gets all the user's categories from the database
   useEffect(() => {
-    setErrorMessage("Test error message");
     axios.get("/api/category/noSpendingLimit", {
       headers: {
         Authorization: "Bearer " + token,
@@ -78,24 +77,21 @@ export default function AddSpendingLimit() {
       console.log(response);
       
       if (response.status === 200) navigate("/categories");
-      else {
-        setErrorMessage(response.data.error);
-      }
-        
+
     } catch (err) {
       console.log(err.response.data)
-      setErrorMessage(err.response.data.error);
+      setErrorMessage(err.response.data.message);
     }
   };
 
   return (
-    <div className="div-addCategory">
-      <section className="addCategoryForm">
-        <h2 className="addCategoryTitle">Add Spending Limit</h2>
-        {errorMessage && <div className="Error">{errorMessage}</div>}
-        <fieldset className="addCategoryFields">
+    <div className="div-inputForm">
+      <section className="inputForm">
+        <h2 className="inputFormTitle">Add Spending Limit</h2>
+        {errorMessage && <div className="error-message">{errorMessage}</div>}
+        <fieldset className="inputFormFields">
           <form onSubmit={onSubmit}>
-            <div className="addCategoryInputBox">
+            <div className="inputFormInputBox">
               <input
                 type="text"
                 className="form-control"
@@ -107,7 +103,7 @@ export default function AddSpendingLimit() {
                 required
               />
             </div>
-            <div className="addCategoryInputBox">
+            <div className="inputFormInputBox">
               <input
                 type="number"
                 className="form-control"
@@ -118,7 +114,7 @@ export default function AddSpendingLimit() {
                 onChange={onFormChange}
               />
             </div>
-            <div className="addCategoryInputBox">
+            <div className="inputFormInputBox">
               <select
                 value={formValues["duration"]}
                 name="duration"
@@ -130,13 +126,13 @@ export default function AddSpendingLimit() {
                 ))}
               </select>
             </div>
-            <div className="addCategoryInputBox">
+            <div className="inputFormInputBox">
               <select
                 value={formValues["categoryId"]}
                 name="categoryId"
                 onChange={onFormChange}
               >
-                <option key="" value=""></option>
+                <option key="" value=""></option> 
                 {newCategories.map((option) => (
                   <option key={option._id} value={option._id}>{option.name}</option>
                 ))}
