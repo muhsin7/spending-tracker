@@ -5,7 +5,7 @@ import { useToken } from "../authentication/useToken";
 
 export default function Header(props) {
   const [popup, setPopup] = useState(false)
-  const [changePassword, setChangePassword]=  useState(false)
+  const [user, setUser] = useState({});
 
   const [isAuth, setAuth] = props.auth;
   const [token, setToken] = useToken();
@@ -22,9 +22,6 @@ export default function Header(props) {
 
   const toggleAccountPopup = () => {
     setPopup(!popup)
-    if (!popup) {
-      setChangePassword(false)
-    }
   };
 
   return (
@@ -83,47 +80,11 @@ export default function Header(props) {
   <>
   <div className='overlay' onClick={toggleAccountPopup}></div>
     <div className='popup'>
-    <h2>Account</h2>
+    <h2>Account details</h2>
     <ul>
-      <li><h3>Name: </h3><div className='box'>Placeholder Name</div></li>
-      <li><h3>Email: </h3> <div className='box'>Placeholder Email</div></li>
+      <li><h3>Name: </h3><div className='box'>{user.name}</div></li>
+      <li><h3>Email: </h3> <div className='box'>{user.email}</div></li>
     </ul>
-
-    {/* <button className='btn password-btn' onClick={toggleChangePassword}>Change Password</button>
-
-    {changePassword && (
-        <form>
-          <div className='form-group'>
-            <input
-              type='password'
-              className='form-control'
-              id='password'
-              name='password'
-              value={password}
-              placeholder='Enter new password'
-              onChange={onChange}
-              required
-            />
-          </div>
-          <div className='form-group'>
-            <input
-              type='password'
-              className='form-control'
-              id='password2'
-              name='password2'
-              value={password2}
-              placeholder='Confirm new password'
-              onChange={onChange}
-              required
-            />
-          </div>
-          <button type='submit' className='btn submit-btn'>
-              Submit
-            </button>
-        </form>
-    )}
-
- */}
 
     <button className="btn close-btn" onClick={toggleAccountPopup}>
       CLOSE
