@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
 import { useToken } from "../authentication/useToken";
+import { useNavigate } from "react-router-dom";
 
 export default function AddSpendingLimit() {
   const [newCategories, setNewCategories] = useState([]);
@@ -13,6 +14,8 @@ export default function AddSpendingLimit() {
     duration: "",
     categoryId: "",
   });
+
+  const navigate = useNavigate();
 
   useEffect(() => console.log(token), [token]);
 
@@ -31,6 +34,7 @@ export default function AddSpendingLimit() {
 
   // Gets all the user's categories from the database
   useEffect(() => {
+    setErrorMessage("Test error message");
     axios.get("/api/category/noSpendingLimit", {
       headers: {
         Authorization: "Bearer " + token,
@@ -69,25 +73,26 @@ export default function AddSpendingLimit() {
             Authorization: "Bearer " + token,
           },
         }
-        )
-        .then((res) => console.log(res));
+      );
+
+      console.log(response);
+      
+      if (response.status === 200) navigate("/categories");
+      else {
+        setErrorMessage(response.data.error);
+      }
         
     } catch (err) {
-      if (err.response) {
-        console.log(err.response);
-      } else if (err.message) {
-        console.log(err.message);
-      } else {
-        console.log(err);
-      }
+      console.log(err.response.data)
+      setErrorMessage(err.response.data.error);
     }
   };
 
   return (
     <div className="div-addCategory">
-      {errorMessage && <div className="Error">{errorMessage}</div>}
       <section className="addCategoryForm">
         <h2 className="addCategoryTitle">Add Spending Limit</h2>
+        {errorMessage && <div className="Error">{errorMessage}</div>}
         <fieldset className="addCategoryFields">
           <form onSubmit={onSubmit}>
             <div className="addCategoryInputBox">

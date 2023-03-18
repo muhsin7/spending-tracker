@@ -39,25 +39,25 @@ function AddCategory() {
     }
 
     return(
-        <div className="div-addCategory">
+        <div className="div-inputForm">
             {errorMessage && <div className="Error">{errorMessage}</div>}
-            <section className='addCategoryForm'>
-                <h2 className= "addCategoryTitle">Add Category</h2>
-                <fieldset className="addCategoryFields">
+            <section className='inputForm'>
+                <h2 className= "inputFormTitle">Add Category</h2>
+                <fieldset className="inputFormFields">
                     <form>
-                        <div className='addCategoryInputBox'>
+                        <div className='inputFormInputBox'>
                             <input
                                 value = {categoryValue} 
                                 onChange={e => setCategoryValue(e.target.value)}
                                 placeholder="Name of the category:" required/>
                         </div>
-                        <div className='addCategoryInputBox'>
+                        <div className='inputFormInputBox'>
                             <input 
                                 value = {spendingLimit} 
                                 onChange={e => setSpendingLimitValue(e.target.value)} 
                                 placeholder="Spending Limit:" required/>
                         </div>
-                        <button className = "addCategoryButton" onClick={onSubmit}>Add</button>
+                        <button className = "inputFormButton" onClick={onSubmit}>Add</button>
                     </form>
                 </fieldset>
             </section>
