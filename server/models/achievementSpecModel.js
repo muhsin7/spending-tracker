@@ -19,6 +19,11 @@ const categoryAchievementSchema = mongoose.Schema({
   paymentsInCategory: REQUIREMENT,
 });
 
+const checkIsCategoryAchievement = (object) => {
+  return (object.noCategories != null 
+    || object.paymentsInCategory != null);
+};
+
 const paymentAchievementSchema = mongoose.Schema({
   noPayments: REQUIREMENT,
   largestPayment: REQUIREMENT,
@@ -28,11 +33,26 @@ const paymentAchievementSchema = mongoose.Schema({
   perDay: REQUIREMENT
 });
 
+const checkIsPaymentAchievement = (object) => {
+  return (object.noPayments != null 
+    || object.largestPayment != null
+    || object.perYear != null
+    || object.perMonth != null
+    || object.perWeek != null
+    || object.perDay  != null);
+};
+
 const limitAchievementSchema = mongoose.Schema({
   limitsSet: REQUIREMENT,
   limitsMetStreak: REQUIREMENT,
   limitsMet: REQUIREMENT
 });
+
+const checkIsLimitAchievement = (object) => {
+  return (object.limitsSet != null 
+    || object.limitsMetStreak != null
+    || object.limitsMet != null);
+};
 
 const categoryAchievementModel = mongoose.model("categoryAchievement", categoryAchievementSchema);
 const paymentAchievementModel = mongoose.model("paymentAchievement", paymentAchievementSchema);
@@ -42,7 +62,8 @@ const achievementSpecSchema = mongoose.Schema({
   title: {
     type: String,
     required: true,
-    immutable: true
+    immutable: true,
+    unique: true
   },
   description: {
     type: String,
@@ -51,7 +72,7 @@ const achievementSpecSchema = mongoose.Schema({
   },
   type: {
     type: String,
-    required: true,
+    enum: ["category, payment, limit"],
     immutable: true
   },
   exp: {
@@ -65,7 +86,7 @@ const achievementSpecSchema = mongoose.Schema({
     immutable: true,
     validate: {
       validator: (value) => {
-        return value instanceof categoryAchievementModel || value instanceof paymentAchievementModel || value instanceof limitAchievementModel;
+        return checkIsCategoryAchievement(value) || checkIsPaymentAchievement(value) || checkIsLimitAchievement(value);
       },
       message: "Invalid achievement type"
     }
