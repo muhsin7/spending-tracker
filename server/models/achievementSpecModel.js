@@ -11,7 +11,7 @@ const REQUIREMENT = {
     enum: ["AND", "OR"],
     default: "AND",
     immutable: true
-  },
+  }
 };
 
 const categoryAchievementSchema = mongoose.Schema({
@@ -54,6 +54,10 @@ const checkIsLimitAchievement = (object) => {
     || object.limitsMet != null);
 };
 
+const categoryAchievementModel = mongoose.model("categoryAchievement", categoryAchievementSchema);
+const paymentAchievementModel = mongoose.model("paymentAchievement", paymentAchievementSchema);
+const limitAchievementModel = mongoose.model("limitAchievement", limitAchievementSchema);
+
 const achievementSpecSchema = mongoose.Schema({
   title: {
     type: String,
@@ -92,15 +96,15 @@ const achievementSpecSchema = mongoose.Schema({
 achievementSpecSchema.pre("save", async function(next) {
   if (checkIsCategoryAchievement(this.requirements)) {
     this.type = "category";
-    this.requirements = new categoryAchievementSchema(this.requirements);
+    this.requirements = new categoryAchievementModel(this.requirements);
 
   } else if (checkIsPaymentAchievement(this.requirements)) {
     this.type = "payment";
-    this.requirements = new paymentAchievementSchema(this.requirements);
+    this.requirements = new paymentAchievementModel(this.requirements);
 
   } else if (checkIsLimitAchievement(this.requirements)) {
     this.type = "limit";
-    this.requirements = new limitAchievementSchema(this.requirements);
+    this.requirements = new limitAchievementModel(this.requirements);
 
   } else {
     throw new Error("Invalid achievement type");

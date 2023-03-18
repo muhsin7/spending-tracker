@@ -19,7 +19,7 @@ describe("Achievement tests", () => {
     await flushDB();
 
     const ACHIEVEMENT_SPEC = {
-      title: "Achievement",
+      title: "categoryAchievement",
       description: "An achievement",
       exp: 10,
       requirements: {
@@ -33,7 +33,16 @@ describe("Achievement tests", () => {
   });
 
   describe("AchievementSpec model tests", () => {
-    it("should create a valid category achievement");
+    it("should create a valid category achievement", async() => {
+      // category achievement created in beforeEach
+      const achievement = await AchievementSpec.findOne({title: "categoryAchievement"});
+      should.exist(achievement);
+      achievement.should.have.property("title").eql("categoryAchievement");
+      achievement.should.have.property("description").eql("An achievement");
+      achievement.should.have.property("exp");
+      achievement.should.have.property("type").eql("category");
+    });
+
     it("should create a valid payment achievement");
     it("should create a valid limit achievement");
     it("should not create an ahcievement of an invalid type");
