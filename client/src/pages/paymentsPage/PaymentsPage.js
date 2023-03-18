@@ -10,6 +10,7 @@ import { FaPlus } from "react-icons/fa";
 export default function PaymentsPage() {
   const [token, setToken] = useToken();
   const [payments, setPayments] = useState([]);
+  const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
 
   // Gets all the user's payments from the database
@@ -35,6 +36,19 @@ export default function PaymentsPage() {
       });
   }, []);
 
+  // Gets all the user's categories from the database
+  useEffect(() => {
+    axios
+      .get("/api/category", {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
+      .then((res) => {
+        setCategories(res.data);
+      });
+  }, []);
+
   return (
     <div className="payments-page">
       <div className="payments-top">
@@ -43,11 +57,13 @@ export default function PaymentsPage() {
         <PaymentsSortBy
           payments={payments}
           setPayments={setPayments}
+          categories={categories}
           token={token}
         />
         <PaymentsFilterBy
           payments={payments}
           setPayments={setPayments}
+          categories={categories}
           token={token}
         />
       </div>
@@ -63,6 +79,7 @@ export default function PaymentsPage() {
       <PaymentsHistory
         payments={payments}
         setPayments={setPayments}
+        categories={categories}
         token={token}
       />
     </div>

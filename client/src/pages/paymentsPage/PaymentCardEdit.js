@@ -31,7 +31,6 @@ export default function PaymentCard(props) {
   const [newDate, setNewDate] = useState(DATE);
   const [newImageURL, setNewImageURL] = useState(imageURL);
   const [newPrice, setNewPrice] = useState(PRICE);
-  const [newCategories, setNewCategories] = useState([]);
   const [newCategoryID, setNewCategoryID] = useState(CATEGORY_ID);
 
   function isSameDate(date1, date2) {
@@ -94,19 +93,6 @@ export default function PaymentCard(props) {
     window.location.reload();
   }
 
-  // Gets all the user's categories from the database
-  useEffect(() => {
-    axios
-      .get("/api/category", {
-        headers: {
-          Authorization: "Bearer " + props.token,
-        },
-      })
-      .then((res) => {
-        setNewCategories(res.data);
-      });
-  }, []);
-
   function storeNewImage() {
     const file = document.querySelector("input[type=file]").files[0];
     const reader = new FileReader();
@@ -123,7 +109,7 @@ export default function PaymentCard(props) {
         value={newCategoryID}
         onChange={(e) => setNewCategoryID(e.target.value)}
       >
-        {newCategories.map((option) => (
+        {props.categories.map((option) => (
           <option key={option._id} value={option._id}>
             {option.name}
           </option>

@@ -17,6 +17,7 @@ export default function PaymentsHistory(props) {
     rows.push(
       <PaymentCard
         payment={e}
+        categories={props.categories}
         deletePayment={deletePayment}
         key={e._id}
         token={props.token}
