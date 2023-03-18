@@ -3,6 +3,7 @@ import { Navigate, useNavigate, useNavigation } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios"; 
 import { useToken } from "../authentication/useToken";
+import { Buffer } from "buffer";
 
 function AddPayment() {
     const navigate = useNavigate();
@@ -20,6 +21,8 @@ function AddPayment() {
         }
     )
 
+    const [newImageURL, setNewImageURL] = useState("");
+
     useEffect(() => console.log(token), [token]);
 
     function getBase64(file, cb) {
@@ -32,6 +35,15 @@ function AddPayment() {
             console.log('Error: ', error);
         };
     }
+
+    function storeNewImage() {
+        const file = document.querySelector("input[type=file]").files[0];
+        const reader = new FileReader();
+    
+        reader.addEventListener("load", () => setNewImageURL(reader.result), false);
+    
+        if (file) reader.readAsDataURL(file);
+      }
 
     const handleFileRead = async (target) => {
         const file = target.files[0];
@@ -71,7 +83,15 @@ function AddPayment() {
                 title: formValues["title"],
                 description: formValues["description"],
                 amount: formValues["amount"],
-                image: formValues["image"],
+                image: newImageURL === "" ? undefined : {
+                    data: Buffer.from(
+                      newImageURL.substring(newImageURL.indexOf(",") + 1).toString("base64")
+                    ),
+                    contentType: newImageURL.substring(
+                      newImageURL.indexOf(":") + 1,
+                      newImageURL.indexOf(";")
+                    ),
+                },
                 categoryId: formValues["categoryId"],
                 date: formValues["date"]
             }, {
@@ -84,6 +104,7 @@ function AddPayment() {
             if (response.status === 201) navigate("/payments");
 
         } catch (err) {
+            console.log(err);
             if(err.response.data.message) setErrorMessage(err.response.data.message);
             else if(err.response.data.error) setErrorMessage(err.response.data.error);
         }
@@ -156,15 +177,10 @@ function AddPayment() {
                         </div>
                         <div className='inputFormInputBox'>
                             <input
+                                className="payment-image-button"
                                 type="file"
-                                alt="Receipt image"
-                                accept="image/png, image/jpeg"
-                                // className="form-control"
-                                // id="image"
-                                name="image"
-                                // // value={formValues["image"]}
-                                // label="Payment image"
-                                onChange={onFormChange}
+                                accept="image/*"
+                                onChange={storeNewImage}
                             />
                         </div>
                         <input onClick={onSubmit} type="button" className="btn btn-header" value="Add payment" />
