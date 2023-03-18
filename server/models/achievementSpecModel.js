@@ -25,7 +25,7 @@ const paymentAchievementSchema = mongoose.Schema({
   perYear: REQUIREMENT,
   perMonth: REQUIREMENT,
   perWeek: REQUIREMENT,
-  perDAy: REQUIREMENT
+  perDay: REQUIREMENT
 });
 
 const limitAchievementSchema = mongoose.Schema({
@@ -51,6 +51,11 @@ const achievementSpecSchema = mongoose.Schema({
   },
   type: {
     type: String,
+    required: true,
+    immutable: true
+  },
+  exp: {
+    type: Number,
     required: true,
     immutable: true
   },
@@ -80,4 +85,4 @@ achievementSpecSchema.pre("save", (next) => {
   next();
 });
 
-module.exports = mongoose.model("achievementSpec", achievementSpecSchema);
+module.exports = mongoose.model("AchievementSpec", achievementSpecSchema);

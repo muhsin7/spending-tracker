@@ -22,4 +22,4 @@ const achievementModelSchema = mongoose.Schema(
   }
 );
 
-module.exports = mongoose.model("achievement", achievementModelSchema);
+module.exports = mongoose.model("Achievement", achievementModelSchema);
