@@ -17,7 +17,7 @@ function AddCategory() {
         try {
             const response = await axios.post('/api/category', {
                 name: categoryValue,
-                // spendingLimit: spendingLimit,
+            //  spendingLimit: spendingLimit,
             }, {
                 headers: {
                   "Authorization": "Bearer " + token

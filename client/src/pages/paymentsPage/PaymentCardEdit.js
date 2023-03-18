@@ -85,15 +85,11 @@ export default function PaymentCard(props) {
         ),
       };
 
-    await axios
-      .patch("/api/payment/" + props.payment._id, data, {
-        headers: {
-          Authorization: "Bearer " + props.token,
-        },
-      })
-      .then((res) => {
-        console.log(res.data);
-      });
+    await axios.patch("/api/payment/" + props.payment._id, data, {
+      headers: {
+        Authorization: "Bearer " + props.token,
+      },
+    });
 
     window.location.reload();
   }
@@ -107,7 +103,6 @@ export default function PaymentCard(props) {
         },
       })
       .then((res) => {
-        console.log(res.data);
         setNewCategories(res.data);
       });
   }, []);
