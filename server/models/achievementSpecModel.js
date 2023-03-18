@@ -11,12 +11,12 @@ const REQUIREMENT = {
     enum: ["AND", "OR"],
     default: "AND",
     immutable: true
-  }
+  },
 };
 
 const categoryAchievementSchema = mongoose.Schema({
-  noCategories: REQUIREMENT,
-  paymentsInCategory: REQUIREMENT,
+  noCategories: {type: REQUIREMENT,required: false},
+  paymentsInCategory: {type: REQUIREMENT,required: false},
 });
 
 const checkIsCategoryAchievement = (object) => {
@@ -25,12 +25,12 @@ const checkIsCategoryAchievement = (object) => {
 };
 
 const paymentAchievementSchema = mongoose.Schema({
-  noPayments: REQUIREMENT,
-  largestPayment: REQUIREMENT,
-  perYear: REQUIREMENT,
-  perMonth: REQUIREMENT,
-  perWeek: REQUIREMENT,
-  perDay: REQUIREMENT
+  noPayments: {type: REQUIREMENT,required: false},
+  largestPayment: {type: REQUIREMENT,required: false},
+  perYear: {type: REQUIREMENT,required: false},
+  perMonth: {type: REQUIREMENT,required: false},
+  perWeek: {type: REQUIREMENT,required: false},
+  perDay: {type: REQUIREMENT,required: false}
 });
 
 const checkIsPaymentAchievement = (object) => {
@@ -43,9 +43,9 @@ const checkIsPaymentAchievement = (object) => {
 };
 
 const limitAchievementSchema = mongoose.Schema({
-  limitsSet: REQUIREMENT,
-  limitsMetStreak: REQUIREMENT,
-  limitsMet: REQUIREMENT
+  limitsSet: {type: REQUIREMENT,required: false},
+  limitsMetStreak: {type: REQUIREMENT,required: false},
+  limitsMet: {type: REQUIREMENT,required: false}
 });
 
 const checkIsLimitAchievement = (object) => {
@@ -53,10 +53,6 @@ const checkIsLimitAchievement = (object) => {
     || object.limitsMetStreak != null
     || object.limitsMet != null);
 };
-
-const categoryAchievementModel = mongoose.model("categoryAchievement", categoryAchievementSchema);
-const paymentAchievementModel = mongoose.model("paymentAchievement", paymentAchievementSchema);
-const limitAchievementModel = mongoose.model("limitAchievement", limitAchievementSchema);
 
 const achievementSpecSchema = mongoose.Schema({
   title: {
@@ -93,16 +89,24 @@ const achievementSpecSchema = mongoose.Schema({
   }
 });
 
-achievementSpecSchema.pre("save", (next) => {
-  if (this.requirements instanceof categoryAchievementModel) {
+achievementSpecSchema.pre("save", async function(next) {
+  if (checkIsCategoryAchievement(this.requirements)) {
     this.type = "category";
+    this.requirements = new categoryAchievementSchema(this.requirements);
 
-  } else if (this.requirements instanceof paymentAchievementModel) {
+  } else if (checkIsPaymentAchievement(this.requirements)) {
     this.type = "payment";
+    this.requirements = new paymentAchievementSchema(this.requirements);
 
-  } else if (this.requirements instanceof limitAchievementModel) {
+  } else if (checkIsLimitAchievement(this.requirements)) {
     this.type = "limit";
+    this.requirements = new limitAchievementSchema(this.requirements);
+
+  } else {
+    throw new Error("Invalid achievement type");
   }
+
+  console.log("reached");
   next();
 });
 
