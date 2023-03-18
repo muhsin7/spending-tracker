@@ -15,6 +15,7 @@ function AddPayment() {
             "description": "",
             "amount": 0,
             "image": "",
+            "date": new Date(),
             "categoryId": "",
         }
     )
@@ -71,7 +72,8 @@ function AddPayment() {
                 description: formValues["description"],
                 amount: formValues["amount"],
                 image: formValues["image"],
-                categoryId: formValues["categoryId"]
+                categoryId: formValues["categoryId"],
+                date: formValues["date"]
             }, {
                 headers: {
                     "Authorization": "Bearer " + token
@@ -80,7 +82,7 @@ function AddPayment() {
 
             console.log(response);
             if (response.status === 201) navigate("/payments");
-            
+
         } catch (err) {
             if(err.response.data.message) setErrorMessage(err.response.data.message);
             else if(err.response.data.error) setErrorMessage(err.response.data.error);
@@ -139,6 +141,18 @@ function AddPayment() {
                                 <option key={option._id} value={option._id}>{option.name}</option>
                                 ))}
                             </select>
+                        </div>
+                        <div className='inputFormInputBox'>
+                            {/* <label for="amount">Amount</label> */}
+                            <input
+                                type="date"
+                                className="form-control"
+                                id="date"
+                                name="date"
+                                value={formValues["date"]}
+                                placeholder="Date"
+                                onChange={onFormChange}
+                            />
                         </div>
                         <div className='inputFormInputBox'>
                             <input

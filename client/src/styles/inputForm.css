@@ -45,10 +45,9 @@
 
 
 .inputForm{
-    background-color: #f5f7fb;
-    height: 550px;
-    width: 750px;  
+    width: 750px;
     display: flex;
+    height: fit-content;
     flex-direction: column;
     align-items: center;
     text-align: center;
