@@ -23,8 +23,8 @@ function AddCategory() {
                   "Authorization": "Bearer " + token
                 }
             });
-            navigate("/categories");   
-            console.log(response);  
+            
+            if (response.status === 200) navigate("/categories");
             
         } catch (err) {
             console.log(err.response.data)

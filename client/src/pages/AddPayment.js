@@ -5,6 +5,7 @@ import axios from "axios";
 import { useToken } from "../authentication/useToken";
 
 function AddPayment() {
+    const navigate = useNavigate();
     const [newCategories, setNewCategories] = useState([]);
     const [errorMessage, setErrorMessage] = useState('')
     const [token, setToken] = useToken();
@@ -65,7 +66,6 @@ function AddPayment() {
     const onSubmit = async (e) => {
         e.preventDefault();
         try {
-            console.log(formValues);
             const response = await axios.post('/api/payment', {
                 title: formValues["title"],
                 description: formValues["description"],
@@ -76,12 +76,14 @@ function AddPayment() {
                 headers: {
                     "Authorization": "Bearer " + token
                 }
-            }).then(res => {
-                console.log(res)
-            });
+            })
+
+            console.log(response);
+            if (response.status === 201) navigate("/payments");
+            
         } catch (err) {
-            console.log(err.response.data);
-            setErrorMessage(err.response.data.message);
+            if(err.response.data.message) setErrorMessage(err.response.data.message);
+            else if(err.response.data.error) setErrorMessage(err.response.data.error);
         }
     }
 

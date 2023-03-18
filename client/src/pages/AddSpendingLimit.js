@@ -75,12 +75,11 @@ export default function AddSpendingLimit() {
       );
 
       console.log(response);
-      
       if (response.status === 200) navigate("/categories");
 
     } catch (err) {
       console.log(err.response.data)
-      setErrorMessage(err.response.data.message);
+      setErrorMessage(err.response.data.error);
     }
   };
 
