@@ -36,10 +36,13 @@ export default function PaymentCard(props) {
 
   if (DOES_IMAGE_EXIST) {
     const IMAGE = props.payment.image;
-    const IMAGE_BASE64 = String.fromCharCode(
-      ...new Uint8Array(IMAGE.data.data)
-    );
-    imageURL = `data:${IMAGE.contentType};base64,${IMAGE_BASE64}`;
+    const base64 = btoa(new Uint8Array(IMAGE.data.data).reduce(
+      function (data, byte) {
+          return data + String.fromCharCode(byte);
+      },
+    ));
+    //console.log(base64);
+    imageURL = `data:${IMAGE.contentType};base64,${base64}`;
   }
 
   function handleDelete() {

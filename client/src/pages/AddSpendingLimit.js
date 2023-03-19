@@ -41,13 +41,23 @@ export default function AddSpendingLimit() {
     }).then(async (res) => {
       console.log(res.data);
       let catList = res.data;
-      catList.push({_id: "1", name: "Global"})
+      catList.push({_id: "1", name: "Global"}) //Global spending limit will have id value 1
       await setNewCategories(catList);
     });
   }, []);
 
   const onSubmit = async (e) => {
-    e.preventDefault();
+
+    //Check all values are filled in
+    for (let name in formValues) {
+      console.log(name);
+      if (formValues[name] === "" || formValues[name] === 0) {
+        console.log("fail");
+        setErrorMessage(`Value '${name}' is required!`);
+        return;
+      }
+    }
+  
     try {
       const BASE_REQ = {
         name: formValues["name"],
@@ -59,6 +69,7 @@ export default function AddSpendingLimit() {
 
       let req;
 
+      //Set global spending limit if chosen
       if (formValues["categoryId"] === "1") {
         req = BASE_REQ
       }
@@ -75,7 +86,7 @@ export default function AddSpendingLimit() {
       );
 
       console.log(response);
-      if (response.status === 200) navigate("/categories");
+      if (response.status === 201) navigate("/categories");
 
     } catch (err) {
       console.log(err.response.data)

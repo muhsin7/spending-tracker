@@ -9,22 +9,29 @@ function AddCategory() {
     const [errorMessage, setErrorMessage] = useState('')
     const [token, setToken] = useToken();
     const [categoryValue, setCategoryValue] = useState('');
-    const [spendingLimit, setSpendingLimitValue] = useState('');
     const navigate = useNavigate();
 
     const onSubmit = async (e) => {
         e.preventDefault();
+
+        //Check all values are filled in
+        if (categoryValue === "") {
+            setErrorMessage("Category name is required!");
+            return;
+        }
+        
         try {
             const response = await axios.post('/api/category', {
-                name: categoryValue,
-            //  spendingLimit: spendingLimit,
+                name: categoryValue
             }, {
                 headers: {
                   "Authorization": "Bearer " + token
                 }
             });
             
-            if (response.status === 200) navigate("/categories");
+            console.log(response);
+
+            if (response.status === 201) navigate("/categories");
             
         } catch (err) {
             console.log(err.response.data)
@@ -45,12 +52,6 @@ function AddCategory() {
                                 value = {categoryValue} 
                                 onChange={e => setCategoryValue(e.target.value)}
                                 placeholder="Name of the category:" required/>
-                        </div>
-                        <div className='inputFormInputBox'>
-                            <input 
-                                value = {spendingLimit} 
-                                onChange={e => setSpendingLimitValue(e.target.value)} 
-                                placeholder="Spending Limit:" required/>
                         </div>
                         <button className = "inputFormButton" onClick={onSubmit}>Add</button>
                     </form>

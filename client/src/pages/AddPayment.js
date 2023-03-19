@@ -77,6 +77,14 @@ function AddPayment() {
         }, []);
 
     const onSubmit = async (e) => {
+        //Check all values are filled in
+        for (let name in formValues) {
+            if (formValues[name] === "" || formValues[name] === 0) {
+                setErrorMessage(`Value '${name}' is required!`);
+                return;
+            }
+        }
+
         e.preventDefault();
         try {
             const response = await axios.post('/api/payment', {
