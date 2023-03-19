@@ -132,6 +132,7 @@ export default function PaymentsSortBy(props) {
         console.log("ERROR");
         break;
     }
+    props.setDefaultPayments(props.payments);
   }
 
   return (
