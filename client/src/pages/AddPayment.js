@@ -21,6 +21,15 @@ function AddPayment() {
         }
     )
 
+    const requiredValues = {
+            "title": true,
+            "description": true,
+            "amount": true,
+            "image": false,
+            "date": true,
+            "categoryId": true
+    }
+
     const [newImageURL, setNewImageURL] = useState("");
 
     useEffect(() => console.log(token), [token]);
@@ -79,7 +88,7 @@ function AddPayment() {
     const onSubmit = async (e) => {
         //Check all values are filled in
         for (let name in formValues) {
-            if (formValues[name] === "" || formValues[name] === 0) {
+            if (requiredValues[name] && (formValues[name] === "" || formValues[name] === 0)) {
                 setErrorMessage(`Value '${name}' is required!`);
                 return;
             }
