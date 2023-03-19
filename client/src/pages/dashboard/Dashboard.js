@@ -6,6 +6,7 @@ import { useUser } from "../../authentication/useUser";
 import AmountSpent from "./cards/AmountSpent";
 import CategoryPieChart from "./charts/CategoryPieChart";
 import DashboardChart from "./charts/DashboardChart";
+import DashboardLimits from "./llimits/DashboardLimits";
 import TransactionsPreview from "./transactions/TransactionsPreview";
 
 export default function Dashboard() {
@@ -24,7 +25,7 @@ export default function Dashboard() {
                 "Authorization": "Bearer " + token
             }
         }).then((res) => {
-            console.log(res.data);
+            // console.log(res.data);
             setUser(res.data);
         });
       }, []);
@@ -35,7 +36,7 @@ export default function Dashboard() {
             "Authorization": "Bearer " + token
         }
         }).then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setPayments(res.data);
         });
     }, []);
@@ -63,6 +64,9 @@ export default function Dashboard() {
                 </div>
                 <div className="dashboard-bottom-left">
                         <TransactionsPreview payments={payments} /> 
+                </div>
+                <div className="dashboard-bottom-middle">
+                        <DashboardLimits payments={payments} /> 
                 </div>
             </div>
     )

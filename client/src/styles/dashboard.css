@@ -8,7 +8,7 @@
     grid-template-columns: repeat(12, 1fr);
     grid-template-rows: auto 1fr;
     grid-column-gap: 0px;
-    grid-row-gap: 0px;
+    grid-row-gap: 30px;
 }
 
 .dashboard-header {
@@ -50,6 +50,13 @@
     flex-direction: column;
     grid-column-start: 1;
     grid-column-end: 5;
+}
+
+.dashboard-bottom-middle {
+    display: flex;
+    flex-direction: column;
+    grid-column-start: 5;
+    grid-column-end: 8;
 }
 
 .dashboard-left-bottom {
