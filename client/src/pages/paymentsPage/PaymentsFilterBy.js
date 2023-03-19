@@ -19,17 +19,21 @@ export default function PaymentsPage(props) {
 
     switch (e.target.value) {
       case "":
+        props.setPayments(props.originalPayments);
+        setDate(null);
         setFilterByInputCode([]);
         break;
 
       case "Category":
+        props.setPayments(props.originalPayments);
+        setDate(null);
         setFilterByInputCode([
           <input
             className="payments-filter-by-input"
             key="Category"
             onChange={(e) => {
               props.setPayments(
-                props.payments.filter((payment) =>
+                props.originalPayments.filter((payment) =>
                   props.categories
                     .find((category) => category._id === payment.categoryId)
                     .name.toLowerCase()
@@ -42,13 +46,15 @@ export default function PaymentsPage(props) {
         break;
 
       case "Title":
+        props.setPayments(props.originalPayments);
+        setDate(null);
         setFilterByInputCode([
           <input
             className="payments-filter-by-input"
             key="Title"
             onChange={(e) => {
               props.setPayments(
-                props.payments.filter((payment) =>
+                props.originalPayments.filter((payment) =>
                   payment.title.toLowerCase().includes(e.target.value)
                 )
               );
@@ -58,13 +64,15 @@ export default function PaymentsPage(props) {
         break;
 
       case "Description":
+        props.setPayments(props.originalPayments);
+        setDate(null);
         setFilterByInputCode([
           <input
             className="payments-filter-by-input"
             key="Description"
             onChange={(e) => {
               props.setPayments(
-                props.payments.filter((payment) =>
+                props.originalPayments.filter((payment) =>
                   payment.description.toLowerCase().includes(e.target.value)
                 )
               );
@@ -74,13 +82,15 @@ export default function PaymentsPage(props) {
         break;
 
       case "Price":
+        props.setPayments(props.originalPayments);
+        setDate(null);
         setFilterByInputCode([
           <input
             className="payments-filter-by-input"
             key="Price"
             onChange={(e) => {
               props.setPayments(
-                props.payments.filter((payment) =>
+                props.originalPayments.filter((payment) =>
                   ("-£" + payment.amount.toString()).includes(e.target.value)
                 )
               );
@@ -91,6 +101,7 @@ export default function PaymentsPage(props) {
 
       default:
         // Default will occur when the date option is selected
+        props.setPayments(props.originalPayments);
         break;
     }
   }
@@ -130,7 +141,7 @@ export default function PaymentsPage(props) {
               }
 
               props.setPayments(
-                props.payments.filter((payment) =>
+                props.originalPayments.filter((payment) =>
                   isSameDate(new Date(Date.parse(payment.date)), date)
                 )
               );

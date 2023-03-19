@@ -10,6 +10,7 @@ import { FaPlus } from "react-icons/fa";
 export default function PaymentsPage() {
   const [token, setToken] = useToken();
   const [payments, setPayments] = useState([]);
+  const [originalPayments, setOriginalPayments] = useState([]);
   const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
 
@@ -22,17 +23,18 @@ export default function PaymentsPage() {
         },
       })
       .then((res) => {
-        setPayments(
-          res.data.sort((a, b) => {
-            const A = new Date(Date.parse(a.date));
-            const B = new Date(Date.parse(b.date));
-            if (A === B) {
-              return 0;
-            } else {
-              return A > B ? -1 : 1;
-            }
-          })
-        );
+        const DATA = res.data.sort((a, b) => {
+          const A = new Date(Date.parse(a.date));
+          const B = new Date(Date.parse(b.date));
+          if (A === B) {
+            return 0;
+          } else {
+            return A > B ? -1 : 1;
+          }
+        });
+
+        setPayments(DATA);
+        setOriginalPayments(DATA);
       });
   }, []);
 
@@ -62,6 +64,7 @@ export default function PaymentsPage() {
         />
         <PaymentsFilterBy
           payments={payments}
+          originalPayments={originalPayments}
           setPayments={setPayments}
           categories={categories}
           token={token}
