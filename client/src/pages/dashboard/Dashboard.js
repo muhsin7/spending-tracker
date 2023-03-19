@@ -60,7 +60,7 @@ export default function Dashboard() {
                         </div>      */}
                 </div>
                 <div className="dashboard-right">
-                        <CategoryPieChart />
+                        <CategoryPieChart payments={payments}/>
                 </div>
                 <div className="dashboard-bottom-left">
                         <TransactionsPreview payments={payments} /> 
