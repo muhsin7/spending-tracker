@@ -4,6 +4,7 @@ import { useState } from "react";
 import axios from "axios"; 
 import { useToken } from "../authentication/useToken";
 import { Buffer } from "buffer";
+import Background from "./Background";
 
 function AddPayment() {
     const navigate = useNavigate();
@@ -140,6 +141,7 @@ function AddPayment() {
 
     return(
         <div className="div-inputForm">
+            <Background />
             <section className='inputForm'>
                 <h2 className= "inputFormTitle">Add Payment</h2>
                 {errorMessage && <div className="error-message">{errorMessage}</div>}
