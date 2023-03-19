@@ -23,6 +23,15 @@ function AddCategory() {
                   "Authorization": "Bearer " + token
                 }
             });
+            // const catID = response.data._id;
+            // const limitResponse = await axios.post('/api/category', {
+            //     name: categoryValue,
+            //     spendingLimit: spendingLimit,
+            // }, {
+            //     headers: {
+            //       "Authorization": "Bearer " + token
+            //     }
+            // });
             navigate("/categories");   
             await console.log(response);  
             
