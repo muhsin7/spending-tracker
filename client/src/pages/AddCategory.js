@@ -32,6 +32,17 @@ function AddCategory() {
             console.log(response);
 
             if (response.status === 201) navigate("/categories");
+            // const catID = response.data._id;
+            // const limitResponse = await axios.post('/api/category', {
+            //     name: categoryValue,
+            //     spendingLimit: spendingLimit,
+            // }, {
+            //     headers: {
+            //       "Authorization": "Bearer " + token
+            //     }
+            // });
+            navigate("/categories");   
+            await console.log(response);  
             
         } catch (err) {
             console.log(err.response.data)
