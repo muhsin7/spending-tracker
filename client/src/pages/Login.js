@@ -4,6 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useToken } from "../authentication/useToken";
 import { useAuth } from "../authentication/useAuth";
+import Background from "./Background";
 
 function Login() {
   const [token, setToken] = useToken();
@@ -48,6 +49,7 @@ function Login() {
 
   return (
     <main className="registerPage">
+        <Background />
       <section className="form">
         <h1 className="form-header">Login</h1>
 
@@ -80,7 +82,7 @@ function Login() {
             <button type="submit" className="btn">
               Login
             </button>
-            Don't have an account? <Link to="/register">Register here!</Link>
+            <div class="login-signup-link">Don't have an account? <Link to="/register">Register here!</Link></div>
           </form>
         </div>
       </section>

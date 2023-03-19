@@ -7,8 +7,10 @@ function CustomTooltip({ payload, label, active }) {
     if (active) {
       return (
         <div className="custom-tooltip">
-          <div className="tooltip-label">{`${dateStringFromUnixString(label)}`}</div>
-          <div className="intro">${payload[0].value}</div>
+          {/* <div className="tooltip-label">{`${dateStringFromUnixString(label)}`}</div> */}
+          {/* <div className="intro">-£{payload[0].value}</div> */}
+          <div className="tooltip-label">{payload ? `-£${payload[0].value}` : "Error"}</div>
+
         </div>
       );
     }
@@ -117,21 +119,23 @@ export default function DashboardChart(props) {
         setDataByMonth(processData({data: data, cumulative: false, dataValueToMonth}));
       }, [props.payments]);
 
-      console.log(dataByDate);
 
     const renderLineChart = (
-        <div className="line-chart noselect dashboard-right">
-            <ResponsiveContainer width={800} height={300}>
+        <>
+        <div className="line-chart noselect dashboard-left">
+            <ResponsiveContainer>
                 <LineChart data={dataByDate} margin={{ top: 5, right: 10, bottom: 5, left: 0 }}>
                     <Line type="monotone" dataKey="amount" strokeWidth={2.5} stroke="#00B57F  " />
-                    <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+                    {/* <CartesianGrid stroke="#ccc" strokeDasharray="5 5" /> */}
+                    <CartesianGrid stroke='none' />
                     <XAxis
+                        stroke="#ccc"
                         dataKey="date"
                         domain={["auto", "auto"]}
                         tickFormatter={unixTimeString => dateStringFromUnixString(unixTimeString)}
                     />
-                    <YAxis />
-                    {/* <Tooltip content={<CustomTooltip />}/> */}
+                    <YAxis stroke="#ccc" tickFormatter={amount => "£"+amount}/>
+                    <Tooltip filterNull={false} content={<CustomTooltip />}/>
                     <Tooltip />
                 </LineChart>
             </ResponsiveContainer>
@@ -140,44 +144,9 @@ export default function DashboardChart(props) {
                 <span>Cumulative data</span>
             </label>
         </div>
+        </>
     );
 
-
-    const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', "#8884d8"];
-    const RADIAN = Math.PI / 180;
-    const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
-      const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-      const x = cx + radius * Math.cos(-midAngle * RADIAN);
-      const y = cy + radius * Math.sin(-midAngle * RADIAN);
-    
-      return (
-        <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
-          {`${(percent * 100).toFixed(0)}%`}
-        </text>
-      );
-    };
-
-    // const renderPieChart = (
-    //     <div className="line-chart noselect dashboard-right">
-    //         <ResponsiveContainer width={900} height="90%">
-    //         <PieChart width={730} height={400}>
-    //             <Legend layout="vertical" verticalAlign="top" align="top" />
-    //             <Pie
-    //                 data={categoryData}
-    //                 dataKey="amount"
-    //                 nameKey="name"
-    //                 labelLine={false}
-    //                 label={renderCustomizedLabel}
-    //                 >
-    //                     {data.map((entry, index) => (
-    //                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-    //                     ))}
-    //             </Pie>
-    //             <Tooltip />
-    //         </PieChart>
-    //         </ResponsiveContainer>
-    //     </div>
-    // );
 
     // const renderBarChart = (
     //     <div className="line-chart noselect dashboard-right">

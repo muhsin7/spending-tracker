@@ -25,6 +25,7 @@ function App() {
     <Header auth={[isAuth, setAuth]} />
       <div className="border"></div>
         <div className="container">
+          {/* <Background /> */}
           <Routes>
             <Route path="/" element={<WelcomePage />} />
             {/* REDIRECT TO LOGIN PAGE IF NOT LOGGED IN */}

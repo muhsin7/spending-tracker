@@ -10,7 +10,7 @@ export default function AmountCard(props) {
 
     useEffect(() => {
         if(props.summary) {
-            console.log(props.summary);
+            // console.log(props.summary);
             setAmount(props.summary[dropdownDuration]);
         }
     }, [dropdownDuration, props.summary]);
