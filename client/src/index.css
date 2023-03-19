@@ -6,6 +6,7 @@
   --button-text-green: #00B57F;
   --secondary-yellow: #FFB036;
   --error-red: #EF0033;
+  overflow: hidden;
 }
 
 *,*:focus,*:hover{
