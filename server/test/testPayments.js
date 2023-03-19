@@ -258,6 +258,8 @@ describe("Payment tests", () => {
       payments.should.be.equal(initPayments); 
     });
 
+    it("should get a summary of payments");
+
     it("should post a valid payment", async() => {
       const initPayments = await Payment.countDocuments();
       const res = await chai.request(app)

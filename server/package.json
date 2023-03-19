@@ -5,9 +5,11 @@
   "main": "app.js",
   "scripts": {
     "test": "cross-env NODE_ENV=test mocha --exit",
-    "test-single": "mocha --exit",
+    "test-single": "cross-env NODE_ENV=test mocha --exit --grep",
     "start": "node app.js",
-    "dev": "nodemon app.js"
+    "concStart": "concurrently \"npm run start\" \"cd ../client && npm start\"",
+    "dev": "nodemon app.js",
+    "seed": "node seed.js"
   },
   "author": "All Good",
   "license": "ISC",
@@ -22,8 +24,10 @@
     "mongoose": "^6.9.0"
   },
   "devDependencies": {
+    "@faker-js/faker": "^7.6.0",
     "chai": "^4.3.7",
     "chai-http": "^4.3.0",
+    "concurrently": "^7.6.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.33.0",
     "eslint-plugin-chai-expect": "^3.0.0",
