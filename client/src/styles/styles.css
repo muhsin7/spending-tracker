@@ -2,7 +2,7 @@
 @import url("transactions.css");
 @import url("paymentsPage.css");
 @import url("login.css");
-@import url("addCategory.css");
+@import url("inputForm.css");
 @import url("categoriesPage.css");
 @import url("register.css");
 @import url("charts.css");
@@ -12,3 +12,5 @@
 @import url("react-datepicker/dist/react-datepicker.css");
 @import url("react-confirm-alert/src/react-confirm-alert.css");
 @import url("welcomePage.css");
+@import url("background.css");
+@import url("dashboardLimit.css");

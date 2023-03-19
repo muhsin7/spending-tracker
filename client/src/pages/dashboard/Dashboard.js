@@ -2,13 +2,33 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useToken } from "../../authentication/useToken";
-import AmountSpent from "./AmountSpent";
-import DashboardChart from "./DashboardChart";
-import TransactionsPreview from "./TransactionsPreview";
+import { useUser } from "../../authentication/useUser";
+import AmountSpent from "./cards/AmountSpent";
+import CategoryPieChart from "./charts/CategoryPieChart";
+import DashboardChart from "./charts/DashboardChart";
+import DashboardLimits from "./llimits/DashboardLimits";
+import TransactionsPreview from "./transactions/TransactionsPreview";
 
 export default function Dashboard() {
     const [token, setToken] = useToken();
     const [payments, setPayments] = useState([]);
+    const [user, setUser] = useState({});
+
+    // useEffect(() => {
+    //     setUser(userHook);
+    // }, [userHook]);
+
+
+    useEffect(() => {
+        axios.get('/api/user/profile', {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        }).then((res) => {
+            // console.log(res.data);
+            setUser(res.data);
+        });
+      }, []);
 
     useEffect(() => {
         axios.get('/api/payment', {
@@ -16,7 +36,7 @@ export default function Dashboard() {
             "Authorization": "Bearer " + token
         }
         }).then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setPayments(res.data);
         });
     }, []);
@@ -25,15 +45,28 @@ export default function Dashboard() {
     // return <DashboardChart payments={payments} />;
     return (
             <div className="dashboard dashboard-grid">
-                {/* <h1 className="dashboard-header">Dashboard</h1> */}
+                <div className="dashboard-header">
+                    <h1>Overview</h1>
+                    <h3>Hi{user.name ? ` ${user.name.split(" ")[0]}, ` : "! "}get your summary of your transactions here</h3>
+                </div>
                 <div className="dashboard-left">
-                    <AmountSpent payments={payments} />
-                    <div className="chart-container">
-                        <DashboardChart payments={payments} />
+                    <div className="dashboard-row">
+                        <AmountSpent payments={payments} />
+                        <div className="chart-container">
+                            <DashboardChart payments={payments} />
+                        </div>
                     </div>
+                    {/* <div class="dashboard-left-bottom">
+                        </div>      */}
                 </div>
                 <div className="dashboard-right">
-                    <TransactionsPreview payments={payments} />       
+                        <CategoryPieChart />
+                </div>
+                <div className="dashboard-bottom-left">
+                        <TransactionsPreview payments={payments} /> 
+                </div>
+                <div className="dashboard-bottom-middle">
+                        <DashboardLimits payments={payments} /> 
                 </div>
             </div>
     )

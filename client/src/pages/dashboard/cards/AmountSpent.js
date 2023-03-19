@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useToken } from "../../authentication/useToken";
+import { useToken } from "../../../authentication/useToken";
 import AmountCard from "./AmountCard";
 import BudgetCard from "./BudgetCard";
 
@@ -16,7 +16,7 @@ export default function AmountSpent() {
             "Authorization": "Bearer " + token
         }
         }).then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setSummary(res.data);
         });
     }, []);

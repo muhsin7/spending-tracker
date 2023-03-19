@@ -74,6 +74,10 @@
   cursor: pointer;
 }
 
+.header-links a {
+  text-decoration: none;
+}
+
 .header-link:hover {
   color: var(--button-text-green);
 }

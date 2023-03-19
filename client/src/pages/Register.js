@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios"; 
 import { useToken } from "../authentication/useToken";
 import { useAuth } from "../authentication/useAuth";
+import Background from "./Background";
 
 
 export default function Register() {
@@ -61,6 +62,7 @@ export default function Register() {
 
     return (
       <main className="registerPage">
+        <Background />
         <section className='form'>
           <h1 className="form-header">Create an account</h1>
           
@@ -117,7 +119,7 @@ export default function Register() {
                 <button type='submit' className='btn'>
                   Create Account
                 </button>
-                Already have an account? <Link to="/login">Log in</Link>
+                <div class="login-signup-link">Already have an account? <Link to="/login">Log in</Link></div>
             </form>
         </div>
       </section>
