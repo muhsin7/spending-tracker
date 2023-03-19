@@ -1,7 +1,5 @@
 import React from "react";
-import axios from "axios";
 import Popup from "reactjs-popup";
-import { useEffect, useState } from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { confirmAlert } from "react-confirm-alert";
 
@@ -13,6 +11,7 @@ export default function PaymentCard(props) {
   const CATEGORY_ID = props.payment.categoryId;
   // Rounds the price to 2 d.p.
   const PRICE = (Math.round(props.payment.amount * 100) / 100).toFixed(2);
+<<<<<<< HEAD
 
   const [category, setCategory] = useState({});
 
@@ -40,6 +39,11 @@ export default function PaymentCard(props) {
   }, []);
 
   const CATEGORY_NAME = category.name;
+=======
+  const CATEGORY_NAME = props.categories.find(
+    (category) => category._id === CATEGORY_ID
+  ).name;
+>>>>>>> 16.f-payments_filter_by
 
   // Creates an imageURL if it exists
   let imageURL = "";

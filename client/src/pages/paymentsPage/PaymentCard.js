@@ -8,6 +8,7 @@ export default function PaymentCard(props) {
   return !edit ? (
     <PaymentCardNormal
       payment={props.payment}
+      categories={props.categories}
       setEdit={setEdit}
       deletePayment={props.deletePayment}
       token={props.token}
@@ -15,6 +16,7 @@ export default function PaymentCard(props) {
   ) : (
     <PaymentCardEdit
       payment={props.payment}
+      categories={props.categories}
       setEdit={setEdit}
       token={props.token}
     />
