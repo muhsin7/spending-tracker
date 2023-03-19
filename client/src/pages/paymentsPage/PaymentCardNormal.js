@@ -5,7 +5,7 @@ import { confirmAlert } from "react-confirm-alert";
 
 export default function PaymentCard(props) {
   const TITLE = props.payment.title;
-  const DATE_STRING = new Date(props.payment.date).toLocaleDateString();
+  const DATE_STRING = new Date(props.payment.date).toLocaleString();
   const DESCRIPTION = props.payment.description;
   const DOES_IMAGE_EXIST = props.payment.hasOwnProperty("image");
   const CATEGORY_ID = props.payment.categoryId;
