@@ -22,20 +22,31 @@ function AddPayment() {
 
     function getBase64(file, cb) {
         let reader = new FileReader();
-        reader.readAsDataURL(file);
         reader.onload = function () {
-            return reader.result;
+            console.log(reader.result);
+            cb(reader.result);
         };
         reader.onerror = function (error) {
             console.log('Error: ', error);
         };
+        reader.readAsDataURL(file);
     }
 
     const handleFileRead = async (target) => {
-        const file = target.files[0];
-        let base64 = await getBase64(file);
-        console.log(base64);
-        return base64;
+        // const file = target.files[0];
+        // let base64 = "t";
+        // await getBase64(file, (val) => { base64=val });
+        // console.log(base64);
+        // return base64;
+        const file = document.querySelector("input[type=file]").files[0];
+        const reader = new FileReader();
+
+        reader.addEventListener("load", () => ({
+            ...formValues,
+            image: reader.result
+        }), false);
+
+        if (file) reader.readAsDataURL(file);
     }
 
     const onFormChange = async (event) => {
@@ -99,9 +110,9 @@ function AddPayment() {
                             <input
                                 type="text"
                                 className="form-control"
-                                id="name"
+                                id="title"
                                 name="title"
-                                value={formValues["name"]}
+                                value={formValues["title"]}
                                 placeholder="Payment name"
                                 onChange={onFormChange}
                                 required
@@ -136,6 +147,7 @@ function AddPayment() {
                                 name="categoryId"
                                 onChange={onFormChange}
                             >
+                                <option key="" value=""></option>
                                 {newCategories.map((option) => (
                                 <option key={option._id} value={option._id}>{option.name}</option>
                                 ))}
