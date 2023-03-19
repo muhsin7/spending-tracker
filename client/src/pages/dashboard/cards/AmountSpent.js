@@ -16,7 +16,7 @@ export default function AmountSpent() {
             "Authorization": "Bearer " + token
         }
         }).then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setSummary(res.data);
         });
     }, []);

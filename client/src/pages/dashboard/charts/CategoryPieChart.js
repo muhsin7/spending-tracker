@@ -55,6 +55,7 @@ export default function CategoryPieChart(props) {
   ];
 
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884d8"];
+  // const COLORS = ["#f0e004", "#00C49F", "#FFBB28", "#FF8042", "#ccc"];
   const RADIAN = Math.PI / 180;
   const renderCustomizedLabel = ({
     cx,

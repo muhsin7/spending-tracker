@@ -119,7 +119,6 @@ export default function DashboardChart(props) {
         setDataByMonth(processData({data: data, cumulative: false, dataValueToMonth}));
       }, [props.payments]);
 
-      console.log(dataByDate);
 
     const renderLineChart = (
         <>
@@ -130,7 +129,7 @@ export default function DashboardChart(props) {
                     {/* <CartesianGrid stroke="#ccc" strokeDasharray="5 5" /> */}
                     <CartesianGrid stroke='none' />
                     <XAxis
-                    stroke="#ccc"
+                        stroke="#ccc"
                         dataKey="date"
                         domain={["auto", "auto"]}
                         tickFormatter={unixTimeString => dateStringFromUnixString(unixTimeString)}
