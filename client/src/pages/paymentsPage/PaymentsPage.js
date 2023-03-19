@@ -52,7 +52,7 @@ export default function PaymentsPage() {
   return (
     <div className="payments-page">
       <div className="payments-top">
-        <h1 className="payments-header">Payments Page</h1>
+        <h1 className="payments-header">Payments</h1>
 
         <PaymentsSortBy
           payments={payments}

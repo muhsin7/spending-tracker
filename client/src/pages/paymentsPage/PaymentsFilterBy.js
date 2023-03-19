@@ -114,7 +114,7 @@ export default function PaymentsPage(props) {
           filterByInputCode
         ) : (
           <DatePicker
-            className="payment-date"
+            className="payments-filter-by-input"
             dateFormat="dd/MM/yyyy"
             key="Date"
             selected={date}
