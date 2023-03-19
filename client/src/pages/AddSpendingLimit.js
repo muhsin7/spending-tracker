@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
 import { useToken } from "../authentication/useToken";
+import { useNavigate } from "react-router-dom";
 
 export default function AddSpendingLimit() {
   const [newCategories, setNewCategories] = useState([]);
@@ -13,6 +14,8 @@ export default function AddSpendingLimit() {
     duration: "",
     categoryId: "",
   });
+
+  const navigate = useNavigate();
 
   useEffect(() => console.log(token), [token]);
 
@@ -38,13 +41,23 @@ export default function AddSpendingLimit() {
     }).then(async (res) => {
       console.log(res.data);
       let catList = res.data;
-      catList.push({_id: "1", name: "Global"})
+      catList.push({_id: "1", name: "Global"}) //Global spending limit will have id value 1
       await setNewCategories(catList);
     });
   }, []);
 
   const onSubmit = async (e) => {
-    e.preventDefault();
+
+    //Check all values are filled in
+    for (let name in formValues) {
+      console.log(name);
+      if (formValues[name] === "" || formValues[name] === 0) {
+        console.log("fail");
+        setErrorMessage(`Value '${name}' is required!`);
+        return;
+      }
+    }
+  
     try {
       const BASE_REQ = {
         name: formValues["name"],
@@ -56,6 +69,7 @@ export default function AddSpendingLimit() {
 
       let req;
 
+      //Set global spending limit if chosen
       if (formValues["categoryId"] === "1") {
         req = BASE_REQ
       }
@@ -69,28 +83,25 @@ export default function AddSpendingLimit() {
             Authorization: "Bearer " + token,
           },
         }
-        )
-        .then((res) => console.log(res));
-        
+      );
+
+      console.log(response);
+      if (response.status === 201) navigate("/categories");
+
     } catch (err) {
-      if (err.response) {
-        console.log(err.response);
-      } else if (err.message) {
-        console.log(err.message);
-      } else {
-        console.log(err);
-      }
+      console.log(err.response.data)
+      setErrorMessage(err.response.data.error);
     }
   };
 
   return (
-    <div className="div-addCategory">
-      {errorMessage && <div className="Error">{errorMessage}</div>}
-      <section className="addCategoryForm">
-        <h2 className="addCategoryTitle">Add Spending Limit</h2>
-        <fieldset className="addCategoryFields">
+    <div className="div-inputForm">
+      <section className="inputForm">
+        <h2 className="inputFormTitle">Add Spending Limit</h2>
+        {errorMessage && <div className="error-message">{errorMessage}</div>}
+        <fieldset className="inputFormFields">
           <form onSubmit={onSubmit}>
-            <div className="addCategoryInputBox">
+            <div className="inputFormInputBox">
               <input
                 type="text"
                 className="form-control"
@@ -102,7 +113,7 @@ export default function AddSpendingLimit() {
                 required
               />
             </div>
-            <div className="addCategoryInputBox">
+            <div className="inputFormInputBox">
               <input
                 type="number"
                 className="form-control"
@@ -113,7 +124,7 @@ export default function AddSpendingLimit() {
                 onChange={onFormChange}
               />
             </div>
-            <div className="addCategoryInputBox">
+            <div className="inputFormInputBox">
               <select
                 value={formValues["duration"]}
                 name="duration"
@@ -125,13 +136,13 @@ export default function AddSpendingLimit() {
                 ))}
               </select>
             </div>
-            <div className="addCategoryInputBox">
+            <div className="inputFormInputBox">
               <select
                 value={formValues["categoryId"]}
                 name="categoryId"
                 onChange={onFormChange}
               >
-                <option key="" value=""></option>
+                <option key="" value=""></option> 
                 {newCategories.map((option) => (
                   <option key={option._id} value={option._id}>{option.name}</option>
                 ))}

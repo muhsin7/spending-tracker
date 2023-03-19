@@ -3,8 +3,10 @@ import { Navigate, useNavigate, useNavigation } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios"; 
 import { useToken } from "../authentication/useToken";
+import { Buffer } from "buffer";
 
 function AddPayment() {
+    const navigate = useNavigate();
     const [newCategories, setNewCategories] = useState([]);
     const [errorMessage, setErrorMessage] = useState('')
     const [token, setToken] = useToken();
@@ -14,9 +16,21 @@ function AddPayment() {
             "description": "",
             "amount": 0,
             "image": "",
+            "date": new Date(),
             "categoryId": "",
         }
     )
+
+    const requiredValues = {
+            "title": true,
+            "description": true,
+            "amount": true,
+            "image": false,
+            "date": true,
+            "categoryId": true
+    }
+
+    const [newImageURL, setNewImageURL] = useState("");
 
     useEffect(() => console.log(token), [token]);
 
@@ -31,6 +45,15 @@ function AddPayment() {
         };
         reader.readAsDataURL(file);
     }
+
+    function storeNewImage() {
+        const file = document.querySelector("input[type=file]").files[0];
+        const reader = new FileReader();
+    
+        reader.addEventListener("load", () => setNewImageURL(reader.result), false);
+    
+        if (file) reader.readAsDataURL(file);
+      }
 
     const handleFileRead = async (target) => {
         // const file = target.files[0];
@@ -69,44 +92,60 @@ function AddPayment() {
                 "Authorization": "Bearer " + token
             }
             }).then(async (res) => {
-                await setNewCategories(res.data);
-                // TODO: set an initial value for the category selected
+                setNewCategories(res.data);
             });
         }, []);
 
     const onSubmit = async (e) => {
+        //Check all values are filled in
+        for (let name in formValues) {
+            if (requiredValues[name] && (formValues[name] === "" || formValues[name] === 0)) {
+                setErrorMessage(`Value '${name}' is required!`);
+                return;
+            }
+        }
+
         e.preventDefault();
         try {
             const response = await axios.post('/api/payment', {
                 title: formValues["title"],
                 description: formValues["description"],
                 amount: formValues["amount"],
-                image: formValues["image"],
+                image: newImageURL === "" ? undefined : {
+                    data: Buffer.from(
+                      newImageURL.substring(newImageURL.indexOf(",") + 1).toString("base64")
+                    ),
+                    contentType: newImageURL.substring(
+                      newImageURL.indexOf(":") + 1,
+                      newImageURL.indexOf(";")
+                    ),
+                },
                 categoryId: formValues["categoryId"],
+                date: formValues["date"]
             }, {
                 headers: {
                     "Authorization": "Bearer " + token
                 }
-            }).then(res => console.log(res));
+            })
+
+            console.log(response);
+            if (response.status === 201) navigate("/payments");
+
         } catch (err) {
-            if(err.response) {
-                console.log(err.response);
-            } else if (err.message) {
-                console.log(err.message);
-            } else {
-                console.log(err);
-            }
+            console.log(err);
+            if(err.response.data.message) setErrorMessage(err.response.data.message);
+            else if(err.response.data.error) setErrorMessage(err.response.data.error);
         }
     }
 
     return(
-        <div className="div-addCategory">
-            {errorMessage && <div className="Error">{errorMessage}</div>}
-            <section className='addCategoryForm'>
-                <h2 className= "addCategoryTitle">Add Category</h2>
-                <fieldset className="addCategoryFields">
+        <div className="div-inputForm">
+            <section className='inputForm'>
+                <h2 className= "inputFormTitle">Add Payment</h2>
+                {errorMessage && <div className="error-message">{errorMessage}</div>}
+                <fieldset className="inputFormFields">
                     <form onSubmit = {onSubmit}>
-                        <div className='addCategoryInputBox'>
+                        <div className='inputFormInputBox'>
                             <input
                                 type="text"
                                 className="form-control"
@@ -118,7 +157,7 @@ function AddPayment() {
                                 required
                                 />
                         </div>
-                        <div className='addCategoryInputBox'>
+                        <div className='inputFormInputBox'>
                             <input
                                 type="text"
                                 className="form-control"
@@ -129,7 +168,7 @@ function AddPayment() {
                                 onChange={onFormChange}
                             />
                         </div>
-                        <div className='addCategoryInputBox'>
+                        <div className='inputFormInputBox'>
                             {/* <label for="amount">Amount</label> */}
                             <input
                                 type="number"
@@ -141,7 +180,7 @@ function AddPayment() {
                                 onChange={onFormChange}
                             />
                         </div>
-                        <div className='addCategoryInputBox'>
+                        <div className='inputFormInputBox'>
                             <select
                                 value={formValues["categoryId"]}
                                 name="categoryId"
@@ -153,17 +192,24 @@ function AddPayment() {
                                 ))}
                             </select>
                         </div>
-                        <div className='addCategoryInputBox'>
+                        <div className='inputFormInputBox'>
+                            {/* <label for="amount">Amount</label> */}
                             <input
-                                type="file"
-                                alt="Receipt image"
-                                accept="image/png, image/jpeg"
-                                // className="form-control"
-                                // id="image"
-                                name="image"
-                                // // value={formValues["image"]}
-                                // label="Payment image"
+                                type="date"
+                                className="form-control"
+                                id="date"
+                                name="date"
+                                value={formValues["date"]}
+                                placeholder="Date"
                                 onChange={onFormChange}
+                            />
+                        </div>
+                        <div className='inputFormInputBox'>
+                            <input
+                                className="payment-image-button"
+                                type="file"
+                                accept="image/*"
+                                onChange={storeNewImage}
                             />
                         </div>
                         <input onClick={onSubmit} type="button" className="btn btn-header" value="Add payment" />

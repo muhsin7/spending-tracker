@@ -16,6 +16,16 @@ export default function PaymentCard(props) {
 
   const [category, setCategory] = useState({});
 
+  function _arrayBufferToBase64( buffer ) {
+    var binary = '';
+    var bytes = new Uint8Array( buffer );
+    var len = bytes.byteLength;
+    for (var i = 0; i < len; i++) {
+        binary += String.fromCharCode( bytes[ i ] );
+    }
+    return binary;
+  } 
+
   // Gets the corresponding category from the database
   useEffect(() => {
     axios
@@ -25,7 +35,6 @@ export default function PaymentCard(props) {
         },
       })
       .then((res) => {
-        console.log(res.data);
         setCategory(res.data);
       });
   }, []);
@@ -37,10 +46,8 @@ export default function PaymentCard(props) {
 
   if (DOES_IMAGE_EXIST) {
     const IMAGE = props.payment.image;
-    const IMAGE_BASE64 = String.fromCharCode(
-      ...new Uint8Array(IMAGE.data.data)
-    );
-    imageURL = `data:${IMAGE.contentType};base64,${IMAGE_BASE64}`;
+    const base64 =_arrayBufferToBase64(IMAGE.data.data);
+    imageURL = `data:${IMAGE.contentType};base64,${base64}`;
   }
 
   function handleDelete() {

@@ -35,13 +35,15 @@ const createSpendingLimit = asyncHandler(async (req, res) => {
   try {
     const {name, amount, duration, category} = req.body;
     //User cannot create multiple spending limits for one category or have multiple global limits
+    if (category === "") {
+      throw new Error("You must select a category!");
+    }
     const existingSpendingLimit = await SpendingLimit.find( {userId: req.user.id, category: category} );
     if (existingSpendingLimit.length) {
       throw new Error("You must only have one spending limit per category!");
     }
-
     const spendingLimit = await SpendingLimit.create({name: name, amount: amount, duration: duration, category: category, userId: req.user.id});
-    res.status(200).json(spendingLimit);
+    res.status(201).json(spendingLimit);
   } catch (error) {
     res.status(400).json({error: error.message});
   }

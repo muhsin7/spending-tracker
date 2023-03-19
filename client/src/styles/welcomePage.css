@@ -78,6 +78,11 @@
     line-height: 130%;
     color: #FFFFFF;
 }
+.getStartedButton:hover{
+    -ms-transform: scale(1.05);
+    transform: scale(1.05);
+    transition: 300ms ease-in-out;
+}
 
 .welcome-graphic > img {
     width: 100%;
