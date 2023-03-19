@@ -1,26 +1,99 @@
 [
   {
-    "id": 0,
-    "name": "First category",
-    "description": "Add your first caategory",
-    "goal": 1,
-    "progress": 0,
-    "completed": false
+    "title": "First category",
+    "description": "Add your first category",
+    "exp": 10,
+    "requirements": {
+      "noCategories": {
+        "target": 1
+      }
+    }
   },
   {
-    "id": 1,
-    "name": "First payment",
+    "title": "First payment",
     "description": "Add your first payment",
-    "goal": 1,
-    "progress": 0,
-    "completed": false
+    "exp": 10,
+    "requirements": {
+      "noPayments": {
+        "target": 1
+      }
+    }
   },
   {
-    "id": 2,
-    "name": "First limit",
-    "description": "Add your first spending limit",
-    "goal": 1,
-    "progress": 0,
-    "completed": false
+    "title": "Grouper",
+    "description": "Add 10 categories",
+    "exp": 20,
+    "requirements": {
+      "noCategories": {
+        "target": 10
+      }
+    }
+  },
+  {
+    "title": "Grouper",
+    "description": "Add 10 categories",
+    "exp": 20,
+    "requirements": {
+      "noCategories": {
+        "target": 10
+      }
+    }
+  },
+  {
+    "title": "Seperator",
+    "description": "Add 50 categories",
+    "exp": 35,
+    "requirements": {
+      "noCategories": {
+        "target": 50
+      }
+    }
+  },
+  {
+    "title": "Grouper",
+    "description": "Add 10 categories",
+    "exp": 20,
+    "requirements": {
+      "noCategories": {
+        "target": 10
+      }
+    }
+  },
+  {
+    "title": "Increasing wealth",
+    "description": "Add 50 payments",
+    "exp": 35,
+    "requirements": {
+      "noPayments": {
+        "target": 50
+      }
+    }
+  },
+  {
+    "title": "Rich",
+    "description": "Add 100 payments",
+    "exp": 75,
+    "requirements": {
+      "noPayments": {
+        "target": 100
+      }
+    }
+  },
+  {
+    "title": "The meaning of life, the universe, and everything",
+    "description": "42",
+    "exp": 42,
+    "requirements": {
+      "noPayments": {
+        "target": 42
+      },
+      "noCategories": {
+        "target": 42
+      },
+      "payments in category": {
+        "target": 42
+      },
+      "boolOp": "OR"
+    }
   }
 ]
