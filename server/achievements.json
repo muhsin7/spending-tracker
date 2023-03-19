@@ -85,15 +85,17 @@
     "exp": 42,
     "requirements": {
       "noPayments": {
-        "target": 42
+        "target": 42,
+        "boolOp": "OR"
       },
       "noCategories": {
-        "target": 42
+        "target": 42,
+        "boolOp": "OR"
       },
-      "payments in category": {
-        "target": 42
-      },
-      "boolOp": "OR"
+      "paymentsInCategory": {
+        "target": 42,
+        "boolOp": "OR"
+      }
     }
   }
 ]
