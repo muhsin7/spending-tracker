@@ -13,7 +13,7 @@ function AddCategory() {
     const navigate = useNavigate();
 
     const onSubmit = async (e) => {
-        e.preventDefault(); 
+        e.preventDefault();
         try {
             const response = await axios.post('/api/category', {
                 name: categoryValue,
