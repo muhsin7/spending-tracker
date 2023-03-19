@@ -11,9 +11,9 @@ export default function PaymentCard(props) {
   const CATEGORY_ID = props.payment.categoryId;
   // Rounds the price to 2 d.p.
   const PRICE = (Math.round(props.payment.amount * 100) / 100).toFixed(2);
-<<<<<<< HEAD
-
-  const [category, setCategory] = useState({});
+  const CATEGORY_NAME = props.categories.find(
+    (category) => category._id === CATEGORY_ID
+  ).name;
 
   function _arrayBufferToBase64( buffer ) {
     var binary = '';
@@ -23,27 +23,7 @@ export default function PaymentCard(props) {
         binary += String.fromCharCode( bytes[ i ] );
     }
     return binary;
-  } 
-
-  // Gets the corresponding category from the database
-  useEffect(() => {
-    axios
-      .get("/api/category/" + CATEGORY_ID, {
-        headers: {
-          Authorization: "Bearer " + props.token,
-        },
-      })
-      .then((res) => {
-        setCategory(res.data);
-      });
-  }, []);
-
-  const CATEGORY_NAME = category.name;
-=======
-  const CATEGORY_NAME = props.categories.find(
-    (category) => category._id === CATEGORY_ID
-  ).name;
->>>>>>> 16.f-payments_filter_by
+  }
 
   // Creates an imageURL if it exists
   let imageURL = "";
