@@ -4,17 +4,26 @@ import user from "@testing-library/user-event"
 import React from "react";
 import { ReactDOM } from "react";
 
-test("renders login page correctly", async () => {
+test("login form works correctly", async () => {
     
     const onLoginClicked = jest.fn();
 
+    // render(<Login onLoginClicked = {onLoginClicked} />)
+
+    // let container = null;
+    // // beforeEach(() => {
+    // // // setup a DOM element as a render target
+    // // container = document.createElement("div");
+    // // document.body.appendChild(container);
+    // });
+
     // beforeEach(() => {
-    //     onSubmit.mockClear();
+    //     onLoginClicked.mockClear();
     //     render(<Login onSubmit={onLoginClicked} />);
     // });
 
-    // const root = document.createElement("div");
-    // ReactDOM.render(<Login />,root);
+    const root = document.createElement("div");
+    ReactDOM.renderer(<Login />,root);
 
     expect(root.querySelector("h1").textContent).toBe("Login");
     expect(root.querySelector("#loginButton").textContent).toBe("Login");
