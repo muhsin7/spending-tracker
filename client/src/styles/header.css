@@ -123,6 +123,7 @@
   font-size: 50px;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   background: #f5f7fb;
+  color: #000;
 }
 
 .popup ul li{
@@ -134,12 +135,19 @@
   font-weight: 500;
 }
 
+.popup ul li h3{
+  color: #000;
+}
+
 .popup ul li .box{
   border: 2px solid var(--button-text-green);
   width: 500px;
   height: 50px;
   line-height: 45px;
   margin-left: 50px;
+  color: #000;
+  font-weight: 700;
+  text-transform: capitalize;
 }
 
 .popup .close-btn {
