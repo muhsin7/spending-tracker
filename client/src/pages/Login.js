@@ -42,7 +42,7 @@ function Login() {
         const { token } = res.data;
         setToken(token);
         setAuth(true);
-        window.location.reload(true); //FUCK YOU
+        window.location.reload(true);
       }
     }
     catch (err) {

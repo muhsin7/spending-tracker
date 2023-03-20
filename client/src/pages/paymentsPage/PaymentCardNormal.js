@@ -13,7 +13,7 @@ export default function PaymentCard(props) {
   const PRICE = (Math.round(props.payment.amount * 100) / 100).toFixed(2);
   const CATEGORY_NAME = props.categories.find(
     (category) => category._id === CATEGORY_ID
-  ).name;
+  );
 
   function _arrayBufferToBase64( buffer ) {
     var binary = '';
@@ -52,7 +52,7 @@ export default function PaymentCard(props) {
 
   return (
     <div className="payment-card">
-      <span className="payment-category">{CATEGORY_NAME}</span>
+      <span className="payment-category">{CATEGORY_NAME ? CATEGORY_NAME.name : "..."}</span>
 
       <div className="payment-info">
         <div className="payment-card-top">
