@@ -1,0 +1,9 @@
+.achievements-page {
+  margin: 1%;
+}
+
+.achievements-header {
+  display: inline-flex;
+  font-size: 36px;
+  padding: 1rem;
+}
