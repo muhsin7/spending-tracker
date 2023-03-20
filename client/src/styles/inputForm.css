@@ -61,14 +61,12 @@
   width: 350px;
   height: 45px;
   text-indent: 10px;
-  border: 1px solid #e6e6e6;
+  border: 1px solid #867c6e;
+  font-family: 'Poppins', sans-serif;
   border-radius: 5px;
   margin-bottom: 10px;
   margin-top: 10px;
-}
-
-.inputFormInputBox input:focus, .inputFormInputBox select:focus {
-    background-color: rgb(147, 231, 147);
+  background-color: #181A1B;
 }
 
 .inputFormButton{

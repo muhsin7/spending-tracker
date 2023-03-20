@@ -15,6 +15,7 @@ import { useAuth } from "./authentication/useAuth"
 import NotFound from "./pages/NotFound"
 import AddPayment from "./pages/AddPayment"
 import AddSpendingLimit from "./pages/AddSpendingLimit"
+import EditSpendingLimit from "./pages/EditSpendingLimit"
 
 function App() {
   const [isAuth, setAuth] = useAuth();
@@ -35,6 +36,7 @@ function App() {
               <Route path="/addCategory" element={<AddCategory />} />
               <Route path="/addPayment" element={<AddPayment/>} />
               <Route path="/addSpendingLimit" element={<AddSpendingLimit/>} />
+              <Route path="/editSpendingLimit" element={<EditSpendingLimit/>} />
               <Route path="/payments" element={<PaymentsPage />} />
               <Route path="/categories" element={<CategoriesPage />} />
             </Route>
