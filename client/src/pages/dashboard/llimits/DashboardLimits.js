@@ -13,7 +13,7 @@ export default function DashboardLimits(props) {
             "Authorization": "Bearer " + token
         }
         }).then((res) => {
-        console.log(filterData(res.data));
+        // console.log(filterData(res.data));
         setData(res.data);
         });
     }, []);
@@ -28,8 +28,10 @@ export default function DashboardLimits(props) {
 
     const getPaymentsOfId = (id) => {
         let res = [];
-        for(const e of props.payments) {
-            if(e._id === id) res.push(e);
+        // console.log(props.payments);
+        for(const e of data) {
+            if(e.categoryId === id) res.push(e);
+            // console.log(e.categoryId + " " + res.length);
         }
         return res;
     }

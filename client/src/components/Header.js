@@ -1,7 +1,7 @@
-import { useState } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
-import { useAuth } from "../authentication/useAuth";
+import { Link, useNavigate } from "react-router-dom";
 import { useToken } from "../authentication/useToken";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 export default function Header(props) {
   const [popup, setPopup] = useState(false)
@@ -10,6 +10,17 @@ export default function Header(props) {
   const [isAuth, setAuth] = props.auth;
   const [token, setToken] = useToken();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    axios.get('/api/user/profile', {
+        headers: {
+            "Authorization": "Bearer " + token
+        }
+    }).then((res) => {
+        console.log(res.data);
+        setUser(res.data);
+    });
+  }, []);
 
   const onLogout = () => {
     // window.alert("Logout")
@@ -56,13 +67,7 @@ export default function Header(props) {
                 <div className="header-link">Reports</div>
               </li>
             </Link>
-          </>
-        ) : (
-          []
-        )}
-        {isAuth ? (
-          <>
-          <li>
+            <li>
             <div className="header-link" onClick={toggleAccountPopup}>Account</div>
           </li>
           <li>
