@@ -1,0 +1,18 @@
+.level-page {
+  margin: 1%;
+  background-color: #222828;
+  margin-bottom: 1em;
+  margin-inline: 0.5em;
+  padding: 1em;
+  border-radius: 12px;
+  word-wrap: break-word;
+}
+
+.level-progress-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.level-progress-text {
+  margin-bottom: 0.5em;
+}

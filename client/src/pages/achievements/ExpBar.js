@@ -1,4 +1,4 @@
-export default function AchievementCardProgress(props) {
+export default function ExpBar(props) {
   const { bgcolor, completed } = props;
 
   const containerStyles = {
