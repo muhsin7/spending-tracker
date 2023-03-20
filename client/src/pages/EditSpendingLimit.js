@@ -60,10 +60,52 @@ export default function AddSpendingLimit() {
       });
     })
     .catch((err) => {
-      //if categoryID given is fake
-      navigate("/categories");
+      //If catID is 1, then they are trying to edit the global spending limit
+      if(catID !== "1") {
+        navigate("/categories");
+      }
+      else {
+        setCategory({
+          _id: "1",
+          name: "Global"
+        });
+        
+        axios.get(`/api/limit/byCategory/${catID}`, {
+          headers: {
+            Authorization: "Bearer " + token,
+          }
+        })
+          .then((res2) => {
+            console.log(res2);
+            const spendingLimit = res2.data[0];
+            setSpendingLimit(spendingLimit._id);
+            setFormValues({
+              ...formValues,
+              name: spendingLimit.name,
+              amount: spendingLimit.amount,
+              duration: spendingLimit.duration.type,
+              categoryId: "1"
+          });
+        })
+          .catch((err) => {
+            navigate("/categories");
+          });
+      }
     });
   }, []);
+
+  const onDelete = async (e) => {
+    const response = await axios
+        .delete(`/api/limit/${spendingLimit}`, {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+
+      console.log(response);
+      if (response.status === 200) navigate("/categories");
+  }
 
   const onSubmit = async (e) => {
 
@@ -168,8 +210,14 @@ export default function AddSpendingLimit() {
             <input
               onClick={onSubmit}
               type="button"
-              className="btn btn-header"
-              value="Add spending limit"
+              className="btn btn-header btn-form-submit"
+              value="Edit spending limit"
+            />
+            <input
+              onClick={onDelete}
+              type="button"
+              className="btn btn-header btn-form-submit"
+              value="Delete spending limit"
             />
           </form>
         </fieldset>

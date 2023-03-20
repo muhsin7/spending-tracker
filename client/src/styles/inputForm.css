@@ -90,3 +90,7 @@
 .error-message {
     color: red;
 }
+
+.btn-form-submit {
+    padding: 5px;
+}
