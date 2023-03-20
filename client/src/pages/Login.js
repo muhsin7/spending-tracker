@@ -1,6 +1,5 @@
 import React from "react";
-import { useEffect } from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { useToken } from "../authentication/useToken";
@@ -11,10 +10,8 @@ function Login() {
   const [token, setToken] = useToken();
   const [auth, setAuth] = useAuth();
   const [errorMessage, setErrorMessage] = useState("");
-  const [goToRegister, setGoToRegister] = React.useState(false);
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
-  const navigate = useNavigate();
 
   const handleValidation = () => {
     let formIsValid = true;
