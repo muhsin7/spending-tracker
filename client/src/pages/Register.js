@@ -10,6 +10,7 @@ import Background from "./Background";
 export default function Register() {
     const [token, setToken] = useToken();
     const [auth, setAuth] = useAuth();
+    const [errorMessage, setErrorMessage] = useState("");
     const [formData, setFormData] = useState({
         name: '',
         email: '',
@@ -43,7 +44,7 @@ export default function Register() {
     e.preventDefault()
 
         if (password !== password2) {
-            window.alert('Passwords do not match')
+            setErrorMessage('Passwords do not match')
         } else {
           const response = await axios.post('/api/user', {
             name: formData.name,
@@ -65,7 +66,7 @@ export default function Register() {
         <Background />
         <section className='form'>
           <h1 className="form-header">Create an account</h1>
-          
+          {errorMessage && <div className="error-message">{errorMessage}</div>}
           <div className="fieldset">
             <form onSubmit={onSubmit}>
               <div className='form-group'>

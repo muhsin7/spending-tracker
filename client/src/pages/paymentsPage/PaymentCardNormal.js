@@ -5,7 +5,7 @@ import { confirmAlert } from "react-confirm-alert";
 
 export default function PaymentCard(props) {
   const TITLE = props.payment.title;
-  const DATE_STRING = new Date(props.payment.date).toLocaleDateString();
+  const DATE_STRING = new Date(props.payment.date).toLocaleString();
   const DESCRIPTION = props.payment.description;
   const DOES_IMAGE_EXIST = props.payment.hasOwnProperty("image");
   const CATEGORY_ID = props.payment.categoryId;
@@ -13,7 +13,7 @@ export default function PaymentCard(props) {
   const PRICE = (Math.round(props.payment.amount * 100) / 100).toFixed(2);
   const CATEGORY_NAME = props.categories.find(
     (category) => category._id === CATEGORY_ID
-  ).name;
+  );
 
   function _arrayBufferToBase64( buffer ) {
     var binary = '';
@@ -52,7 +52,7 @@ export default function PaymentCard(props) {
 
   return (
     <div className="payment-card">
-      <span className="payment-category">{CATEGORY_NAME}</span>
+      <span className="payment-category">{CATEGORY_NAME ? CATEGORY_NAME.name : "..."}</span>
 
       <div className="payment-info">
         <div className="payment-card-top">
