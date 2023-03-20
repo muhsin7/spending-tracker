@@ -40,5 +40,17 @@
 }
 
 .achievement-description {
+  margin-bottom: 0.5em;
   font-size: 16px;
+}
+
+.achievement-medal {
+  height: 200px;
+  object-fit: scale-down;
+}
+
+.achievement-disabled-medal {
+  height: 200px;
+  object-fit: scale-down;
+  filter: grayscale(100%);
 }
