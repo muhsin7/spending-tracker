@@ -3,7 +3,28 @@
 }
 
 .achievements-header {
-  display: inline-flex;
   font-size: 36px;
   padding: 1rem;
+}
+
+.achievement-section {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  justify-content: center;
+}
+
+.achievement-card {
+  background-color: #222828;
+  margin-bottom: 0.5em;
+  margin-inline: 0.25em;
+  padding: 0.5em;
+  border-radius: 12px;
+  width: 350px;
+  word-wrap: break-word;
+}
+
+.achievement-info {
+  font-size: 24px;
+  margin-bottom: 0.5em;
 }
