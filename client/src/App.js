@@ -27,7 +27,6 @@ function App() {
         <div className="container">
           {/* <Background /> */}
           <Routes>
-            <Route path="/" element={<WelcomePage />} />
             {/* REDIRECT TO LOGIN PAGE IF NOT LOGGED IN */}
             <Route element={<ProtectedRoute privateRoute={isAuth} redirectPath="/login"/>}>
               <Route index path="/dashboard" element={<Dashboard />} />
@@ -41,6 +40,7 @@ function App() {
             </Route>
             {/* REDIRECT TO DASHBOARD IF ALREADY LOGGED IN */}
             <Route element={<ProtectedRoute privateRoute={!isAuth} redirectPath="/dashboard" />}>
+              <Route path="/" element={<WelcomePage />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
             </Route>
