@@ -24,6 +24,10 @@
   word-wrap: break-word;
 }
 
+.achievement-card:hover {
+  background-color: #272d2d;
+}
+
 .achievement-info {
   margin-bottom: 0.5em;
   display: flex;

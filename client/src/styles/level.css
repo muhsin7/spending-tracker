@@ -8,6 +8,10 @@
   word-wrap: break-word;
 }
 
+.level-page:hover {
+  background-color: #272d2d;
+}
+
 .level-progress-section {
   display: flex;
   flex-direction: column;
