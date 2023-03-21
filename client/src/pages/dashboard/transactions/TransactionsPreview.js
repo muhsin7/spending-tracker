@@ -15,7 +15,7 @@ export default function TransactionsPreview(props) {
             <h2>Transactions</h2>
             <div className="dashboard-container preview-container">
                 <div className="dashboard-transactions ">
-                    {rows}
+                    {rows.splice(0, 5)}
                 </div>
                 <Link to="/payments"><div className="all-payments btn">All Payments</div></Link>
             </div>

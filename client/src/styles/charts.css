@@ -4,14 +4,18 @@
 
 .line-chart {
     /* flex-direction: column; */
-    height: 36vh;
-    width: 100vh;
+    height: 40vh;
+    width: 90vh;
     /* top: 50%; */
     /* transform: translateY(20%);   */
 }
 
 .pie-chart {
     width: 100%;
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    /* margin: 1em; */
 }
 
 .checkbox-label {

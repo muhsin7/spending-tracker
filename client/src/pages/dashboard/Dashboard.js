@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useToken } from "../../authentication/useToken";
 import { useUser } from "../../authentication/useUser";
+import AccountCard from "./cards/AccountCard";
 import AmountSpent from "./cards/AmountSpent";
 import CategoryPieChart from "./charts/CategoryPieChart";
 import DashboardChart from "./charts/DashboardChart";
@@ -62,13 +63,17 @@ export default function Dashboard() {
                         </div>      */}
                 </div>
                 <div className="dashboard-right pie-chart">
-                        <CategoryPieChart payments={payments}/>
+                    <AccountCard />
                 </div>
                 <div className="dashboard-bottom-left">
                         <TransactionsPreview payments={payments} /> 
                 </div>
                 <div className="dashboard-bottom-middle">
                         <DashboardLimits payments={payments} /> 
+                </div>
+                <div className="dashboard-right pie-chart">
+                    <h2>Category Data</h2>
+                    <CategoryPieChart payments={payments}/>
                 </div>
             </div>
     )
