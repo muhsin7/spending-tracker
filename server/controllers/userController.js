@@ -90,7 +90,10 @@ const getUser = asyncHandler(async (req, res) => {
   });
 });
 
-const increaseLevel = asyncHandler(async (req,res) => {
+// @desc    Updates the user's exp
+// @route   PATCH /api/user/exp
+// @access  Private
+const updateExp = asyncHandler(async (req,res) => {
   try{
     const user = await User.findById(req.user.id);
     const userExp = user.exp + req.body.exp;
@@ -119,5 +122,5 @@ module.exports = {
   registerUser,
   loginUser,
   getUser,
-  increaseLevel
+  updateExp
 };
