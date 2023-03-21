@@ -58,7 +58,7 @@ export default function Dashboard() {
                             </div>
                         </div>
                     </div>
-                    {/* <div class="dashboard-left-bottom">
+                    {/* <div className="dashboard-left-bottom">
                         </div>      */}
                 </div>
                 <div className="dashboard-right pie-chart">
