@@ -11,6 +11,7 @@
     padding: 1em;
     height: auto;
     justify-content: center;
+    cursor: pointer;
 }
 
 .transaction-card {
