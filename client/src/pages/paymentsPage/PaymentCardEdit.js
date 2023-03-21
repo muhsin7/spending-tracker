@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FaCheck, FaTimes } from "react-icons/fa";
 import DatePicker from "react-datepicker";
 import Popup from "reactjs-popup";

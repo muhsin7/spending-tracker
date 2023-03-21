@@ -130,8 +130,6 @@ export default function CategoryPieChart(props) {
         <Legend layout="horizontal" verticalAlign="top" align="center" />
         <Pie
           data={categoryData}
-          cx="50%"
-          cy="50%"
           labelLine={false}
           label={renderCustomizedLabel}
           outerRadius={130}

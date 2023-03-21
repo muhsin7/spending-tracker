@@ -6,7 +6,7 @@ import { useUser } from "../../authentication/useUser";
 import AmountSpent from "./cards/AmountSpent";
 import CategoryPieChart from "./charts/CategoryPieChart";
 import DashboardChart from "./charts/DashboardChart";
-import DashboardLimits from "./llimits/DashboardLimits";
+import DashboardLimits from "./limits/DashboardLimits";
 import TransactionsPreview from "./transactions/TransactionsPreview";
 
 export default function Dashboard() {
@@ -53,13 +53,15 @@ export default function Dashboard() {
                     <div className="dashboard-row">
                         <AmountSpent payments={payments} />
                         <div className="chart-container">
-                            <DashboardChart payments={payments} />
+                            <div className="line-chart noselect dashboard-left">
+                                <DashboardChart payments={payments} />
+                            </div>
                         </div>
                     </div>
                     {/* <div class="dashboard-left-bottom">
                         </div>      */}
                 </div>
-                <div className="dashboard-right">
+                <div className="dashboard-right pie-chart">
                         <CategoryPieChart payments={payments}/>
                 </div>
                 <div className="dashboard-bottom-left">

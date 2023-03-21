@@ -16,6 +16,7 @@ import NotFound from "./pages/NotFound"
 import AddPayment from "./pages/AddPayment"
 import AddSpendingLimit from "./pages/AddSpendingLimit"
 import EditSpendingLimit from "./pages/EditSpendingLimit"
+import Achievements from "./pages/achievements/Achievements"
 
 function App() {
   const [isAuth, setAuth] = useAuth();
@@ -39,6 +40,7 @@ function App() {
               <Route path="/editSpendingLimit" element={<EditSpendingLimit/>} />
               <Route path="/payments" element={<PaymentsPage />} />
               <Route path="/categories" element={<CategoriesPage />} />
+              <Route path="/achievements" element={<Achievements />} />
             </Route>
             {/* REDIRECT TO DASHBOARD IF ALREADY LOGGED IN */}
             <Route element={<ProtectedRoute privateRoute={!isAuth} redirectPath="/dashboard" />}>

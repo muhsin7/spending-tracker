@@ -5,7 +5,13 @@
 .line-chart {
     /* flex-direction: column; */
     height: 36vh;
-    min-width: 30vw;
+    width: 100vh;
+    /* top: 50%; */
+    /* transform: translateY(20%);   */
+}
+
+.pie-chart {
+    width: 100%;
 }
 
 .checkbox-label {
@@ -13,6 +19,12 @@
     justify-content: center;
     justify-items: center;
 }
+
+.checkbox-label > input {
+    margin: 0 0.5em 0 0.5em;
+    width: 1.5em;
+}
+
 
 input[type="checkbox"] {
     accent-color: #00B57F;
