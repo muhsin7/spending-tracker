@@ -6,7 +6,7 @@ import { useUser } from "../../authentication/useUser";
 import AmountSpent from "./cards/AmountSpent";
 import CategoryPieChart from "./charts/CategoryPieChart";
 import DashboardChart from "./charts/DashboardChart";
-import DashboardLimits from "./llimits/DashboardLimits";
+import DashboardLimits from "./limits/DashboardLimits";
 import TransactionsPreview from "./transactions/TransactionsPreview";
 
 export default function Dashboard() {
