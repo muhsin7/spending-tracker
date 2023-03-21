@@ -2,6 +2,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useToken } from "../../../authentication/useToken";
 import axios from "axios";
 import { useEffect, useState } from "react";
+import PercentageBar from "../limits/PercentageBar";
+import ExpBar from "../../achievements/ExpBar";
 var md5 = require('md5');
 
 
@@ -45,6 +47,7 @@ export default function AccountCard() {
                     <div>{user.email}</div>
                 </div>
             </div>
+            <ExpBar completed={30} bgcolor="#00B57F" />
         </div>
     )
 }
