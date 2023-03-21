@@ -18,24 +18,29 @@ export default function LimitCard(props) {
                 break;
             case "WEEK":
                 const tempDay = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate(), 0);
-                dt = new Date(tempDay.setDate(dt.getDate() - tempDay + (tempDay === 0 ? -6:1)));
+                const day = tempDay.getDay();
+                dt = new Date(tempDay.setDate(dt.getDate() - day + (day === 0 ? -6:1)));
                 break;
             default:
                 dt = new Date(0);
                 // res = props.payments;
                 break;
         }
+        // console.log(`LIMIT TYPE ${props.limit.spendingLimit.duration.type}, GENERATED MIN DATE ${dt}`)
+
         if(dt.getTime() === 0) {
             res = props.payments;
         } else {
             const today = new Date().getTime();
-            for(const pay in props.payments) {
+            props.payments.forEach(pay => {
+                console.log(pay)
                 const paytime = Date.parse(pay.date);
                 if(paytime <= today && paytime >= dt.getTime()) {
+                    console.log("added");
                     res.push(pay);
                 }
-            }
-            // console.log(res);
+            });
+            console.log(res.length);
         }
         if(res) {
             return res.reduce((a, b) => a + (b.amount || 0), 0);
@@ -44,6 +49,10 @@ export default function LimitCard(props) {
             return 0;
         }
     }
+    
+    const completedAmount = () => {
+        return ((getPaymentSumOfLimitDuration()/props.limit.spendingLimit.amount)*100).toFixed(1)
+    }
 
     return (
         <div className="dashboard-container dashboard-limit-card">
@@ -51,9 +60,9 @@ export default function LimitCard(props) {
                 {props.limit.name}
             </div>
             <div className="limit-card-subtitle">
-                {`Spent ${getPaymentSumOfLimitDuration()} of £${props.limit.spendingLimit.amount} limit this ${props.limit.spendingLimit.duration.type.toLowerCase()}`}  {}
+                {`Spent £${getPaymentSumOfLimitDuration()} of £${props.limit.spendingLimit.amount} limit this ${props.limit.spendingLimit.duration.type.toLowerCase()}`}  {}
             </div>
-            <PercentageBar completed={80}/>
+            <PercentageBar completed={completedAmount()}/>
         </div>
     );
 }

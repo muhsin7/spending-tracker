@@ -21,7 +21,6 @@ export default function BudgetCard(props) {
         }).then(async (res) => {
           if(res.data) {
             if(res.data.length > 0) {
-                console.log(res.data[0]);
                 setLimit(res.data[0]);
                 setHasLimit(true);
             }
@@ -30,7 +29,6 @@ export default function BudgetCard(props) {
       }, []);
 
     const remaining = (lim) => {
-        console.log(lim);
         if(hasLimit) {
             return lim.amount - props.summary[lim.duration.type.toLowerCase()];
         } else {
