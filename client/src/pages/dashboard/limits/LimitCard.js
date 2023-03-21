@@ -33,14 +33,14 @@ export default function LimitCard(props) {
         } else {
             const today = new Date().getTime();
             props.payments.forEach(pay => {
-                console.log(pay)
+                // console.log(pay)
                 const paytime = Date.parse(pay.date);
                 if(paytime <= today && paytime >= dt.getTime()) {
-                    console.log("added");
+                    // console.log("added");
                     res.push(pay);
                 }
             });
-            console.log(res.length);
+            // console.log(res.length);
         }
         if(res) {
             return res.reduce((a, b) => a + (b.amount || 0), 0);

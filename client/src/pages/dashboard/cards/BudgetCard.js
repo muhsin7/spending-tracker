@@ -30,7 +30,7 @@ export default function BudgetCard(props) {
 
     const remaining = (lim) => {
         if(hasLimit) {
-            return lim.amount - props.summary[lim.duration.type.toLowerCase()];
+            return (lim.amount - props.summary[lim.duration.type.toLowerCase()]).toFixed(2);
         } else {
             return 0;
         }
@@ -52,7 +52,7 @@ export default function BudgetCard(props) {
                     hasLimit ? (
                     <>
                     {/* <div className={`dashboard-amount ${props.negative ? "error" : ""}`}>{props.negative ? "-" : ""}£42</div> */}
-                    <div className={`dashboard-amount`}>£{remaining(limit)}<sup className="warning-emoji">{remaining(limit) < 0 ? "⚠️" : "✅"}</sup></div>
+                    <div className={`dashboard-amount`}>£{limit ? remaining(limit) : 0}<sup className="warning-emoji">{remaining(limit) < 0 ? "⚠️" : "✅"}</sup></div>
                     <div className="dashboard-amount-description">
                         left to spend <b>{ limit.duration ? (limit.duration.type.toLowerCase() === "day" ? "today" : "this"+limit.duration.type.toLowerCase()) : "..." }</b>
                     </div>
