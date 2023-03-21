@@ -67,6 +67,11 @@ export default function Header(props) {
                 <div className="header-link">Reports</div>
               </li>
             </Link>
+            <Link to={"/achievements"}>
+              <li>
+                <div className="header-link">Achievements</div>
+              </li>
+            </Link>
             <li>
             <div className="header-link" onClick={toggleAccountPopup}>Account</div>
           </li>
