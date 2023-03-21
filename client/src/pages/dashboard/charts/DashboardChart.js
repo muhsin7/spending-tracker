@@ -66,36 +66,10 @@ const processData = ({data, cumulative=false, cumulateBy=dataValueToDate}) => {
 
 
 export default function DashboardChart(props) {
-    const categoryData = [{
-        "name": "Grocery",
-        "amount": 100,
-    },
-    {
-        "name": "Grocer2",
-        "amount": 200,
-    },
-    {
-        "name": "Grocery3",
-        "amount": 100,
-    },
-    {
-        "name": "Groc6ery",
-        "amount": 140,
-    },
-    {
-        "name": "Gro7cery",
-        "amount": 190,
-    },]
-
+  
     const [isCumulative, setIsCumulative] = useState(false);
     
     const [data, setData] = useState([]);
-
-    // const [dataByDate, setDataByDate] = useState([]);
-
-    // const [dataByMonth, setDataByMonth] = useState([]);
-
-    // const [data, setData] = useState(dummydata);
 
     const [dataByDate, setDataByDate] = useState(processData({data}));
 
@@ -122,7 +96,6 @@ export default function DashboardChart(props) {
 
     const renderLineChart = (
         <>
-        <div className="line-chart noselect dashboard-left">
             <ResponsiveContainer>
                 <LineChart data={dataByDate} margin={{ top: 5, right: 10, bottom: 5, left: 0 }}>
                     <Line type="monotone" dataKey="amount" strokeWidth={2.5} stroke="#00B57F  " />
@@ -143,7 +116,6 @@ export default function DashboardChart(props) {
                 <input type="checkbox" checked={isCumulative} onChange={toggleCumulative} />
                 <span>Cumulative data</span>
             </label>
-        </div>
         </>
     );
 

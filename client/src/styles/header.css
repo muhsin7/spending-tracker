@@ -7,12 +7,12 @@
 }
 
 .header {
+  background-color: #121818;
   display: flex;
   position: sticky;
   justify-content: space-between;
   align-items: center;
-  padding: 0 40px;
-  top: 20px;
+  padding: 20px 40px;
   /* position:fixed;   */
   z-index:1; /*Add this*/
   /* margin: 20px; */
