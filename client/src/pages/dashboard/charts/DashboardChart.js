@@ -9,7 +9,7 @@ function CustomTooltip({ payload, label, active }) {
         <div className="custom-tooltip">
           {/* <div className="tooltip-label">{`${dateStringFromUnixString(label)}`}</div> */}
           {/* <div className="intro">-£{payload[0].value}</div> */}
-          <div className="tooltip-label">{payload ? `-£${payload[0].value}` : "Error"}</div>
+          <div className="tooltip-label">{payload ? `-£${payload[0].value.toFixed(2)}` : "Error"}</div>
 
         </div>
       );
