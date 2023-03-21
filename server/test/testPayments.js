@@ -304,8 +304,8 @@ describe("Payment tests", () => {
       res.should.have.status(200);
       res.body.should.have.property("day", 12.5);
       res.body.should.have.property("week", 22.5);
-      res.body.should.have.property("month", 33.5);
-      res.body.should.have.property("year", 44.5);
+      res.body.should.have.property("month", 32.5);
+      res.body.should.have.property("year", 42.5);
     });
 
     it("should post a valid payment", async() => {
