@@ -1,16 +1,14 @@
 import { useState } from "react";
 
 export default function AchievementsSortBy(props) {
-  const [sortBy, setSortBy] = useState("Date (latest first)");
+  const [sortBy, setSortBy] = useState("Name (a -> z)");
   const SORT_BY_OPTIONS = [
-    "Category (a -> z)",
-    "Category (z -> a)",
-    "Title (a -> z)",
-    "Title (z -> a)",
-    "Price (lowest first)",
-    "Price (highest first)",
-    "Date (earliest first)",
-    "Date (latest first)",
+    "Name (a -> z)",
+    "Name (z -> a)",
+    "EXP (lowest first)",
+    "EXP (highest first)",
+    "Obtained (earliest first)",
+    "Obtained (latest first)",
   ];
 
   function ascendingCompare(A, B) {
@@ -27,54 +25,6 @@ export default function AchievementsSortBy(props) {
     } else {
       return A > B ? -1 : 1;
     }
-  }
-
-  function aCategoryFirst() {
-    props.setAchievements([
-      ...props.achievements.sort((a, b) =>
-        ascendingCompare(
-          props.categories.find((category) => category._id === a.categoryId)
-            .name,
-          props.categories.find((category) => category._id === b.categoryId)
-            .name
-        )
-      ),
-    ]);
-
-    props.setDefaultAchievements([
-      ...props.defaultAchievements.sort((a, b) =>
-        ascendingCompare(
-          props.categories.find((category) => category._id === a.categoryId)
-            .name,
-          props.categories.find((category) => category._id === b.categoryId)
-            .name
-        )
-      ),
-    ]);
-  }
-
-  function zCategoryFirst() {
-    props.setAchievements([
-      ...props.achievements.sort((a, b) =>
-        descendingCompare(
-          props.categories.find((category) => category._id === a.categoryId)
-            .name,
-          props.categories.find((category) => category._id === b.categoryId)
-            .name
-        )
-      ),
-    ]);
-
-    props.setDefaultAchievements([
-      ...props.defaultAchievements.sort((a, b) =>
-        descendingCompare(
-          props.categories.find((category) => category._id === a.categoryId)
-            .name,
-          props.categories.find((category) => category._id === b.categoryId)
-            .name
-        )
-      ),
-    ]);
   }
 
   function aTitleFirst() {
@@ -97,23 +47,23 @@ export default function AchievementsSortBy(props) {
     ]);
   }
 
-  function lowestDateFirst() {
+  function lowestExpFirst() {
     props.setAchievements([
-      ...props.achievements.sort((a, b) => ascendingCompare(a.amount, b.amount)),
+      ...props.achievements.sort((a, b) => ascendingCompare(a.exp, b.exp)),
     ]);
 
     props.setDefaultAchievements([
-      ...props.defaultAchievements.sort((a, b) => ascendingCompare(a.amount, b.amount)),
+      ...props.defaultAchievements.sort((a, b) => ascendingCompare(a.exp, b.exp)),
     ]);
   }
 
-  function highestDateFirst() {
+  function highestExpFirst() {
     props.setAchievements([
-      ...props.achievements.sort((a, b) => descendingCompare(a.amount, b.amount)),
+      ...props.achievements.sort((a, b) => descendingCompare(a.exp, b.exp)),
     ]);
 
     props.setDefaultAchievements([
-      ...props.defaultAchievements.sort((a, b) => descendingCompare(a.amount, b.amount)),
+      ...props.defaultAchievements.sort((a, b) => descendingCompare(a.exp, b.exp)),
     ]);
   }
 
@@ -160,28 +110,22 @@ export default function AchievementsSortBy(props) {
   function confirmSortBy(e) {
     setSortBy(e.target.value);
     switch (e.target.value) {
-      case "Category (a -> z)":
-        aCategoryFirst();
-        break;
-      case "Category (z -> a)":
-        zCategoryFirst();
-        break;
-      case "Title (a -> z)":
+      case "Name (a -> z)":
         aTitleFirst();
         break;
-      case "Title (z -> a)":
+      case "Name (z -> a)":
         zTitleFirst();
         break;
-      case "Price (lowest first)":
-        lowestDateFirst();
+      case "EXP (lowest first)":
+        lowestExpFirst();
         break;
-      case "Price (highest first)":
-        highestDateFirst();
+      case "EXP (highest first)":
+        highestExpFirst();
         break;
-      case "Date (earliest first)":
+      case "Obtained (earliest first)":
         earliestDateFirst();
         break;
-      case "Date (latest first)":
+      case "Obtained (latest first)":
         latestDateFirst();
         break;
       default:

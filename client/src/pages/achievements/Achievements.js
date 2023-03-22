@@ -20,8 +20,18 @@ export default function Achievements() {
         },
       })
       .then((res) => {
-        setAchievements(res.data);
-        setDefaultAchievements(res.data);
+        const DATA = res.data.sort((a, b) => {
+          const A = a.title;
+          const B = b.title;
+          if (A === B) {
+            return 0;
+          } else {
+            return A < B ? -1 : 1;
+          }
+        });
+
+        setAchievements(DATA);
+        setDefaultAchievements(DATA);
       });
   }, []);
 

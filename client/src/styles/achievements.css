@@ -4,6 +4,13 @@
   margin: 1%;
 }
 
+.achievements-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
 .achievements-header {
   font-size: 36px;
   padding: 1rem;
@@ -58,7 +65,7 @@
 
 .achievements-sort-by {
   padding: 0.2rem;
-  width: 135px;
+  width: 155px;
   color: black;
   background-color: lightslategray;
   border-radius: 12px;
@@ -80,13 +87,6 @@
   flex-flow: row wrap;
   align-items: flex-start;
   justify-content: center;
-}
-
-.achievements-top {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  margin-bottom: 0.5rem;
 }
 
 /* ACHIEVEMENTS CARD */
