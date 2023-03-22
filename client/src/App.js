@@ -23,7 +23,7 @@ function App() {
 
   return (
     <>
-      <BrowserRouter>
+    <BrowserRouter>
     <Header auth={[isAuth, setAuth]} />
       <div className="border"></div>
         <div className="container">
