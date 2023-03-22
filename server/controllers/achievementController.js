@@ -1,49 +1,48 @@
-const Achievement = require("../models/achievemetModel");
+const Achievement = require("../models/achievementModel");
+const AchievementSpec = require("../models/achievementSpecModel");
 const asyncHandler = require("express-async-handler");
+const {buildOwnedObject, buildUnownedObject} = require("../util/achievementFormatting");
+
 
 // get all
 const getAchievements = asyncHandler(async (req, res) => {
+  let selection = req.query.selection;
+
   const achievements = await Achievement.find({userId: req.user.id});
-  res.status(200).json(achievements);
+  let items = [];
+
+  if(selection == null || selection == "owned") {
+    for (let i = 0; i < achievements.length; i++) {
+      const item = await buildOwnedObject(achievements[i]);
+      items.push(item);
+    }
+  }
+
+  if (selection == null || selection == "unowned") {
+    const allAchievements = await AchievementSpec.find({});
+    for (let i = 0; i < allAchievements.length; i++) {
+      const item = buildUnownedObject(allAchievements[i], req.user.id);
+      if (achievements.some(achievement => {return achievement.achievementSpecId.equals(allAchievements[i]._id);})) continue;
+      
+      items.push(item);
+    }
+  }
+
+  res.status(200).json(items);
 });
 
 // get specific
 const getAchievement = asyncHandler(async (req, res) => {
   try {
     const {id} = req.params;
-    const achievement = await Achievement.findById({id: id, userId: req.user.id});
-    res.status(200).json(achievement);
+    const achievement = await Achievement.findOne({_id: id, userId: req.user.id});
+    res.status(200).json(await buildOwnedObject(achievement));
   } catch (error) {
     res.status(400).json({error: error.message});
   }
 });
-
-// post new
-const createAchievement = asyncHandler(async (req, res) => {
-  try {
-    const {name, description, goal, progress, completed} = req.body;
-    const achievement = await Achievement.create({name, description, goal, progress, completed, userId: req.user.id});
-    res.status(201).json(achievement);
-  } catch (error) {
-    res.status(400).json({error: error.message});
-  }
-});
-
-// update
-const updateAchievement = asyncHandler(async (req, res) => {
-  try {
-    const {id} = req.params;
-    const achievement = await Achievement.findOneAndUpdate({id: id, userId: req.user.id}, {$inc: {progress: 1}});
-
-    res.status(200).json(achievement);
-  } catch (error) {
-    res.status(400).json({error: error.message});
-  }
-}); 
 
 module.exports = {
   getAchievements,
-  getAchievement,
-  createAchievement,
-  updateAchievement
+  getAchievement
 };
