@@ -120,7 +120,7 @@ export default function Register() {
                 <button type='submit' className='btn'>
                   Create Account
                 </button>
-                <div class="login-signup-link">Already have an account? <Link to="/login">Log in</Link></div>
+                <div className="login-signup-link">Already have an account? <Link to="/login">Log in</Link></div>
             </form>
         </div>
       </section>

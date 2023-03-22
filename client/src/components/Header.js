@@ -12,16 +12,18 @@ export default function Header(props) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios
-      .get("/api/user/profile", {
-        headers: {
-          Authorization: "Bearer " + token,
-        },
-      })
-      .then((res) => {
-        console.log(res.data);
-        setUser(res.data);
-      });
+    if (isAuth) {
+      axios
+        .get("/api/user/profile", {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        })
+        .then((res) => {
+          console.log(res.data);
+          setUser(res.data);
+        });
+    }
   }, []);
 
   const onLogout = () => {

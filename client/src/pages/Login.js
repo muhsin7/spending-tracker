@@ -85,7 +85,7 @@ function Login() {
             <button type="submit" className="btn">
               Login
             </button>
-            <div class="login-signup-link">Don't have an account? <Link to="/register">Register here!</Link></div>
+            <div className="login-signup-link">Don't have an account? <Link to="/register">Register here!</Link></div>
           </form>
         </div>
       </section>
