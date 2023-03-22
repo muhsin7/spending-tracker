@@ -1,33 +1,8 @@
 const Achievement = require("../models/achievementModel");
 const AchievementSpec = require("../models/achievementSpecModel");
 const asyncHandler = require("express-async-handler");
+const {buildOwnedObject, buildUnownedObject} = require("../util/achievementFormatting");
 
-const buildOwnedObject = async(achievement) => {
-  const spec = await AchievementSpec.findById(achievement.achievementSpecId);
-  return {
-    title: spec.title,
-    description: spec.description,
-    owned: true,
-    type: spec.type,
-    exp: spec.exp,
-    date: achievement.date,
-    achievementId: achievement._id,
-    userId: achievement.userId
-  };
-};
-
-const buildUnownedObject = (spec) => {
-  return {
-    title: spec.title,
-    description: spec.description,
-    owned: false,
-    type: spec.type,
-    exp: spec.exp,
-    date: null,
-    achievementId: null,
-    userId: null
-  };
-};
 
 // get all
 const getAchievements = asyncHandler(async (req, res) => {

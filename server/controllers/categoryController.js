@@ -1,6 +1,7 @@
 const Category = require("../models/categoryModel");
 const SpendingLimit = require("../models/spendingLimitModel");
 const asyncHandler = require("express-async-handler");
+const {detectCategoryAchievements} = require("../util/categoryAchievementDetection");
 
 // get all
 const getCategories = asyncHandler(async (req, res) => {
@@ -42,7 +43,12 @@ const createCategory = asyncHandler(async (req, res) => {
   try {
     const {name} = req.body;
     const category = await Category.create({name, userId: req.user.id});
-    res.status(201).json(category);
+    const achievements = await detectCategoryAchievements(req);
+
+    let catObj = category.toObject();
+    catObj.achievements = achievements;
+
+    res.status(201).json(catObj);
   } catch (error) {
     res.status(400).json({error: error.message});
   }
