@@ -47,7 +47,7 @@ export default function Achievements() {
       <Level />
       <div className="achievements-top">
         <h1 className="achievements-header">Achievements</h1>
-        <span className="achievements-sort-filter">
+        <span>
             <AchievementsSortBy
               achievements={achievements}
               setAchievements={setAchievements}
