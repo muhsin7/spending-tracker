@@ -210,14 +210,14 @@ export default function AddSpendingLimit() {
             <input
               onClick={onSubmit}
               type="button"
-              className="btn btn-header btn-form-submit"
-              value="Edit spending limit"
+              className="btn-form-submit"
+              value="Edit"
             />
             <input
               onClick={onDelete}
               type="button"
-              className="btn btn-header btn-form-submit"
-              value="Delete spending limit"
+              className="btn-form-submit btn-danger"
+              value="Delete"
             />
           </form>
         </fieldset>
