@@ -37,7 +37,7 @@ export default function PaymentsFilterBy(props) {
                   props.categories
                     .find((category) => category._id === payment.categoryId)
                     .name.toLowerCase()
-                    .includes(e.target.value)
+                    .includes(e.target.value.toLowerCase())
                 )
               );
             }}
@@ -55,7 +55,9 @@ export default function PaymentsFilterBy(props) {
             onChange={(e) => {
               props.setPayments(
                 props.defaultPayments.filter((payment) =>
-                  payment.title.toLowerCase().includes(e.target.value)
+                  payment.title
+                    .toLowerCase()
+                    .includes(e.target.value.toLowerCase())
                 )
               );
             }}
@@ -73,7 +75,9 @@ export default function PaymentsFilterBy(props) {
             onChange={(e) => {
               props.setPayments(
                 props.defaultPayments.filter((payment) =>
-                  payment.description.toLowerCase().includes(e.target.value)
+                  payment.description
+                    .toLowerCase()
+                    .includes(e.target.value.toLowerCase())
                 )
               );
             }}
@@ -91,7 +95,12 @@ export default function PaymentsFilterBy(props) {
             onChange={(e) => {
               props.setPayments(
                 props.defaultPayments.filter((payment) =>
-                  ("-£" + (Math.round(payment.amount * 100) / 100).toFixed(2).toString()).includes(e.target.value)
+                  (
+                    "-£" +
+                    (Math.round(payment.amount * 100) / 100)
+                      .toFixed(2)
+                      .toString()
+                  ).includes(e.target.value)
                 )
               );
             }}
