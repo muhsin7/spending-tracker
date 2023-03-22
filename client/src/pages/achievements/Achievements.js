@@ -1,7 +1,26 @@
 import AchievementCard from "./AchievementCard";
 import Level from "./Level";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useToken } from "../../authentication/useToken";
 
 export default function Achievements() {
+  const [token, setToken] = useToken();
+  const [achievements, setAchievements] = useState([]);
+
+  // Gets all the user's achievements from the database
+  useEffect(() => {
+    axios
+      .get("/api/achievement", {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
+      .then((res) => {
+        setAchievements(res.data);
+      });
+  }, []);
+
   const ACHIEVEMENT_DUMMY = {
     title: "The best achievement of all time",
     description: "This may or may not be the best achievement of all time",
@@ -20,16 +39,16 @@ export default function Achievements() {
     isUnlocked: false,
   };
 
-  const ACHIEVEMENTS = [ACHIEVEMENT_DUMMY, ACHIEVEMENT_DUMMY2, ACHIEVEMENT_DUMMY3]
+  const ACHIEVEMENTS = [
+    ACHIEVEMENT_DUMMY,
+    ACHIEVEMENT_DUMMY2,
+    ACHIEVEMENT_DUMMY3,
+  ];
 
   const cards = [];
   ACHIEVEMENTS.forEach((e) => {
     cards.push(
-      <AchievementCard
-        isUnlocked={e.isUnlocked}
-        achievement={e}
-        key={e._id}
-      />
+      <AchievementCard isUnlocked={e.isUnlocked} achievement={e} key={e._id} />
     );
   });
 
