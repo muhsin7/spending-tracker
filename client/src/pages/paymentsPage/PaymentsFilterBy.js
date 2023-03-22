@@ -91,7 +91,7 @@ export default function PaymentsFilterBy(props) {
             onChange={(e) => {
               props.setPayments(
                 props.defaultPayments.filter((payment) =>
-                  ("-£" + payment.amount.toString()).includes(e.target.value)
+                  ("-£" + (Math.round(payment.amount * 100) / 100).toFixed(2).toString()).includes(e.target.value)
                 )
               );
             }}
