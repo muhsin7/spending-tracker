@@ -181,7 +181,7 @@ describe("Achievement tests", () => {
   describe("Category achievement tests", () => {
     let Category;
 
-    beforeEach(async() => {
+    before(async() => {
       Category = require("../models/categoryModel");
     });
 
@@ -266,6 +266,124 @@ describe("Achievement tests", () => {
         .set("Authorization", ("Bearer " + authToken));
       postRes.should.have.status(200);
       postRes.body.length.should.equal(2);
+    });
+  });
+
+  describe("Payment achievement tests", () => {
+    let Payment;
+    let Category;
+
+    before(async() => {
+      Payment = require("../models/paymentModel");
+      Category = require("../models/categoryModel");
+      
+      await Category.create({name: "Entertainment", userId: user._id});
+
+      await AchievementSpec.create({
+        title: "First payment",
+        description: "Create your first payment",
+        exp: 10,
+        requirements: {
+          noPayments: {
+            target: 1
+          }
+        }
+      });
+    });
+
+    afterEach(async() => {
+      await Achievement.deleteMany({});
+      await Payment.deleteMany({});
+    });
+
+    const genPayment = async(amount) => {
+      const category = await Category.findOne({name: "Entertainment"});
+      return {
+        title: "Console",
+        description: "A games console",
+        amount: amount,
+        categoryId: category._id,
+        userId: user._id
+      };
+    };
+
+    it("should detect an achievement", async() => {
+      const res = await chai.request(app)
+        .post("/api/payment/")
+        .send(await genPayment(300))
+        .set("Authorization", ("Bearer " + authToken));
+
+      res.body.should.have.property("achievements");
+      const achievement = res.body.achievements[0];
+      should.equal(achievement.title, "First payment");
+      should.equal(achievement.description, "Create your first payment");
+      should.equal(achievement.owned, true);
+      should.equal(achievement.exp, 10);
+    });
+
+    it("should detect an achievement that requires both conditions && detect simultaneosly", async() => {
+      await AchievementSpec.create({
+        title: "Big payment",
+        description: "Pay a lot of money",
+        exp: 10,
+        requirements: {
+          noPayments: {
+            target: 1,
+            boolOp: "AND"
+          },
+          largestPayment: {
+            target: 500,
+            boolOp: "AND"
+          }
+        }
+      });
+
+      const res = await chai.request(app)
+        .post("/api/payment/")
+        .send(await genPayment(700))
+        .set("Authorization", ("Bearer " + authToken));
+
+      res.should.have.status(201);
+      should.equal(res.body.achievements.length, 2);
+    });
+
+    it("should detect an achievement that requires one of two conditions", async() => {
+      await AchievementSpec.create({
+        title: "Another Big payment",
+        description: "Pay a lot of money",
+        exp: 10,
+        requirements: {
+          noPayments: {
+            target: 1,
+            boolOp: "AND"
+          },
+          largestPayment: {
+            target: 500,
+            boolOp: "OR"
+          }
+        }
+      });
+
+      const res = await chai.request(app)
+        .post("/api/payment/")
+        .send(await genPayment(200))
+        .set("Authorization", ("Bearer " + authToken));
+
+      res.should.have.status(201);
+      should.equal(res.body.achievements.length, 2);
+    });
+
+    it("should not create an achievement that has already been created", async() => {
+      await chai.request(app)
+        .post("/api/payment/")
+        .send(await genPayment(300))
+        .set("Authorization", ("Bearer " + authToken));
+
+      const res = await chai.request(app)
+        .post("/api/payment/")
+        .send(await genPayment(300))
+        .set("Authorization", ("Bearer " + authToken));
+      should.equal(res.body.achievements.length, 0);
     });
   });
 });
