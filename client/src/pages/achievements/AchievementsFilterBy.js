@@ -7,11 +7,11 @@ export default function AchievementsFilterBy(props) {
   const [date, setDate] = useState(null);
   const FILTER_BY_OPTIONS = [
     "",
-    "Category",
-    "Title",
-    "Description",
-    "Price",
-    "Date",
+    "Name",
+    "EXP",
+    "Locked",
+    "Unlocked",
+    "Unlocked date",
   ];
 
   function confirmFilterBy(e) {
@@ -24,20 +24,19 @@ export default function AchievementsFilterBy(props) {
         setFilterByInputCode([]);
         break;
 
-      case "Category":
+      case "Name":
         props.setAchievements(props.defaultAchievements);
         setDate(null);
         setFilterByInputCode([
           <input
             className="achievements-filter-by-input"
-            key="Category"
+            key="Name"
             onChange={(e) => {
               props.setAchievements(
-                props.defaultAchievements.filter((payment) =>
-                  props.categories
-                    .find((category) => category._id === payment.categoryId)
-                    .name.toLowerCase()
-                    .includes(e.target.value)
+                props.defaultAchievements.filter((achievement) =>
+                  achievement.title
+                    .toLowerCase()
+                    .includes(e.target.value.toLowerCase())
                 )
               );
             }}
@@ -45,17 +44,19 @@ export default function AchievementsFilterBy(props) {
         ]);
         break;
 
-      case "Title":
+      case "EXP":
         props.setAchievements(props.defaultAchievements);
         setDate(null);
         setFilterByInputCode([
           <input
             className="achievements-filter-by-input"
-            key="Title"
+            key="EXP"
             onChange={(e) => {
               props.setAchievements(
-                props.defaultAchievements.filter((payment) =>
-                  payment.title.toLowerCase().includes(e.target.value)
+                props.defaultAchievements.filter((achievement) =>
+                  (achievement.exp.toString() + " EXP")
+                    .toLowerCase()
+                    .includes(e.target.value.toLowerCase())
                 )
               );
             }}
@@ -63,40 +64,20 @@ export default function AchievementsFilterBy(props) {
         ]);
         break;
 
-      case "Description":
+      case "Locked":
         props.setAchievements(props.defaultAchievements);
         setDate(null);
-        setFilterByInputCode([
-          <input
-            className="achievements-filter-by-input"
-            key="Description"
-            onChange={(e) => {
-              props.setAchievements(
-                props.defaultAchievements.filter((payment) =>
-                  payment.description.toLowerCase().includes(e.target.value)
-                )
-              );
-            }}
-          />,
-        ]);
+        props.setAchievements(
+          props.defaultAchievements.filter((achievement) => !achievement.owned)
+        );
         break;
 
-      case "Price":
+      case "Unlocked":
         props.setAchievements(props.defaultAchievements);
         setDate(null);
-        setFilterByInputCode([
-          <input
-            className="achievements-filter-by-input"
-            key="Price"
-            onChange={(e) => {
-              props.setAchievements(
-                props.defaultAchievements.filter((payment) =>
-                  ("-£" + payment.amount.toString()).includes(e.target.value)
-                )
-              );
-            }}
-          />,
-        ]);
+        props.setAchievements(
+          props.defaultAchievements.filter((achievement) => achievement.owned)
+        );
         break;
 
       default:
@@ -121,7 +102,7 @@ export default function AchievementsFilterBy(props) {
         ))}
       </select>
       <div>
-        {filterBy !== "Date" ? (
+        {filterBy !== "Unlocked date" ? (
           filterByInputCode
         ) : (
           <DatePicker
@@ -141,8 +122,8 @@ export default function AchievementsFilterBy(props) {
               }
 
               props.setAchievements(
-                props.defaultAchievements.filter((payment) =>
-                  isSameDate(new Date(Date.parse(payment.date)), date)
+                props.defaultAchievements.filter((achievement) =>
+                  isSameDate(new Date(Date.parse(achievement.date)), date)
                 )
               );
             }}

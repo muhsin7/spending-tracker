@@ -7,8 +7,8 @@ export default function AchievementsSortBy(props) {
     "Name (z -> a)",
     "EXP (lowest first)",
     "EXP (highest first)",
-    "Obtained (earliest first)",
-    "Obtained (latest first)",
+    "Unlocked (earliest first)",
+    "Unlocked (latest first)",
   ];
 
   function ascendingCompare(A, B) {
@@ -33,7 +33,9 @@ export default function AchievementsSortBy(props) {
     ]);
 
     props.setDefaultAchievements([
-      ...props.defaultAchievements.sort((a, b) => ascendingCompare(a.title, b.title)),
+      ...props.defaultAchievements.sort((a, b) =>
+        ascendingCompare(a.title, b.title)
+      ),
     ]);
   }
 
@@ -41,9 +43,11 @@ export default function AchievementsSortBy(props) {
     props.setAchievements([
       ...props.achievements.sort((a, b) => descendingCompare(a.title, b.title)),
     ]);
-    
+
     props.setDefaultAchievements([
-      ...props.defaultAchievements.sort((a, b) => descendingCompare(a.title, b.title)),
+      ...props.defaultAchievements.sort((a, b) =>
+        descendingCompare(a.title, b.title)
+      ),
     ]);
   }
 
@@ -53,7 +57,9 @@ export default function AchievementsSortBy(props) {
     ]);
 
     props.setDefaultAchievements([
-      ...props.defaultAchievements.sort((a, b) => ascendingCompare(a.exp, b.exp)),
+      ...props.defaultAchievements.sort((a, b) =>
+        ascendingCompare(a.exp, b.exp)
+      ),
     ]);
   }
 
@@ -63,7 +69,9 @@ export default function AchievementsSortBy(props) {
     ]);
 
     props.setDefaultAchievements([
-      ...props.defaultAchievements.sort((a, b) => descendingCompare(a.exp, b.exp)),
+      ...props.defaultAchievements.sort((a, b) =>
+        descendingCompare(a.exp, b.exp)
+      ),
     ]);
   }
 
@@ -122,10 +130,10 @@ export default function AchievementsSortBy(props) {
       case "EXP (highest first)":
         highestExpFirst();
         break;
-      case "Obtained (earliest first)":
+      case "Unlocked (earliest first)":
         earliestDateFirst();
         break;
-      case "Obtained (latest first)":
+      case "Unlocked (latest first)":
         latestDateFirst();
         break;
       default:
