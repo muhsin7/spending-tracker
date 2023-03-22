@@ -1,7 +1,7 @@
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 
-export default function PaymentsPage(props) {
+export default function PaymentsFilterBy(props) {
   const [filterBy, setFilterBy] = useState("");
   const [filterByInputCode, setFilterByInputCode] = useState([]);
   const [date, setDate] = useState(null);

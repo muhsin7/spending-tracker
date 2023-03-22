@@ -6,7 +6,7 @@ import DatePicker from "react-datepicker";
 import Popup from "reactjs-popup";
 import { Buffer } from "buffer";
 
-export default function PaymentCard(props) {
+export default function PaymentCardEdit(props) {
   const TITLE = props.payment.title;
   const DATE = new Date(props.payment.date);
   const DESCRIPTION = props.payment.description;
