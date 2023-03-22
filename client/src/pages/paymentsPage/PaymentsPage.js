@@ -66,7 +66,6 @@ export default function PaymentsPage() {
             token={token}
           />
           <PaymentsFilterBy
-            payments={payments}
             defaultPayments={defaultPayments}
             setPayments={setPayments}
             categories={categories}

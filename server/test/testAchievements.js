@@ -221,8 +221,39 @@ describe("Achievement tests", () => {
 
       res.should.have.status(201);
       res.body.should.have.property("achievements");
+      should.equal(res.body.achievements.length, 2);
     });
 
     it("should not detect an achievement whenever requirements are not met");
+
+    it("should not create an achievement that has already been created", async() => {
+      const Category = require("../models/categoryModel");
+      await Category.create({name: "Entertainment", userId: user._id});
+      await chai.request(app)
+        .post("/api/category/")
+        .send({
+          name: "Food",
+          userId: user._id
+        })
+        .set("Authorization", ("Bearer " + authToken));
+
+      const res = await chai.request(app)
+        .post("/api/category/")
+        .send({
+          name: "Food",
+          userId: user._id
+        })
+        .set("Authorization", ("Bearer " + authToken));
+
+      res.should.have.status(201);
+      res.body.should.have.property("achievements");
+      should.equal(res.body.achievements.length, 0);
+
+      const postRes = await chai.request(app)
+        .get("/api/achievement/?selection=owned")
+        .set("Authorization", ("Bearer " + authToken));
+      postRes.should.have.status(200);
+      postRes.body.length.should.equal(2);
+    });
   });
 });
