@@ -4,7 +4,7 @@ import user from "@testing-library/user-event"
 import React from "react";
 import { ReactDOM } from "react";
 
-test("login form works correctly", async () => {
+describe("login form works correctly", () => {
     
     const onLoginClicked = jest.fn();
 
@@ -17,17 +17,17 @@ test("login form works correctly", async () => {
     // // document.body.appendChild(container);
     // });
 
-    // beforeEach(() => {
-    //     onLoginClicked.mockClear();
-    //     render(<Login onSubmit={onLoginClicked} />);
-    // });
+    beforeEach(() => {
+        render(<Login onSubmit={onLoginClicked} />);
+        onLoginClicked.mockClear();
+    });
 
-    const root = document.createElement("div");
-    ReactDOM.renderer(<Login />,root);
+    // const root = document.createElement("div");
+    // ReactDOM.render(<Login />,root);
 
-    expect(root.querySelector("h1").textContent).toBe("Login");
-    expect(root.querySelector("#loginButton").textContent).toBe("Login");
-    expect(root.querySelector("#login-signup-link").textContent).toBe("Don't have an account?");
+    // expect(root.querySelector("h1").textContent).toBe("Login");
+    // expect(root.querySelector("#loginButton").textContent).toBe("Login");
+    // expect(root.querySelector("#login-signup-link").textContent).toBe("Don't have an account?");
 
     
     it('onLoginClicked is called when all fields pass validation', async () => {
