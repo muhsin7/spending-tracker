@@ -5,14 +5,16 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useToken } from "../../authentication/useToken";
 import { Link, Navigate, useNavigate } from "react-router-dom";
+import { FaPlus } from "react-icons/fa";
 
 function CategoriesPage() {
   const [token, setToken] = useToken();
   const [categories, setCategories] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     axios
-      .get("/api/category", {
+      .get("/api/category/withSpendingLimit", {
         headers: {
           Authorization: "Bearer " + token,
         },
@@ -31,11 +33,20 @@ function CategoriesPage() {
   return (
     <div className="categoryPage">
       <h1>Categories</h1>
-      <Link to="/addCategory">
-        <button className="smallButton addCategoryButton">
-          Add a category
-        </button>
-      </Link>
+      <div
+        className="payments-add-payment"
+        onClick={() => navigate("/addCategory")}
+      >
+        <span>Click to add new category</span>
+        <FaPlus className="payments-plus-icon" />
+      </div>
+      <div
+        className="payments-add-payment"
+        onClick={() => navigate("/addSpendingLimit")}
+      >
+        <span>Click to add new spending limit</span>
+        <FaPlus className="payments-plus-icon" />
+      </div>
       <div className="categories-container">{rows}</div>
     </div>
   );

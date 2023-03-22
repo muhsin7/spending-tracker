@@ -1,18 +1,14 @@
 import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
   Tooltip,
   ResponsiveContainer,
   PieChart,
   Pie,
   Cell,
   Legend,
-  BarChart,
-  Bar,
 } from "recharts";
 import { useEffect, useState } from "react";
+import axios from "axios";
+import { useToken } from "../../../authentication/useToken";
 
 function CustomTooltip({ payload, label, active }) {
   if (active) {
@@ -31,28 +27,63 @@ function CustomTooltip({ payload, label, active }) {
 }
 
 export default function CategoryPieChart(props) {
-  const categoryData = [
-    {
-      name: "Grocery",
-      amount: 100,
-    },
-    {
-      name: "Grocer2",
-      amount: 200,
-    },
-    {
-      name: "Grocery3",
-      amount: 100,
-    },
-    {
-      name: "Groc6ery",
-      amount: 140,
-    },
-    {
-      name: "Gro7cery",
-      amount: 190,
-    },
-  ];
+  const [token, setToken] = useToken();
+  const [categoryData, setCategoryData] = useState([]);
+
+  const isSameMonthAsToday = (dateToCheck) => {
+    const today = new Date();
+    return (
+      dateToCheck.getMonth() === today.getMonth() &&
+      dateToCheck.getFullYear() === today.getFullYear()
+    );
+  };
+
+  const countStats = (categoryMetaData) => {
+    let res = [];
+    categoryMetaData.forEach((cat) => {
+      // console.log(cat);
+      let sum = 0;
+      props.payments.forEach((pay) => {
+        // Only considers payments in current month
+        if (isSameMonthAsToday(new Date(Date.parse(pay.date)))) {
+        // if(false) {
+          if (pay.categoryId === cat._id) {
+            sum += pay.amount;
+          }
+        }
+      });
+
+      // Excludes empty categories
+      if (sum !== 0) {
+        res.push({
+          name: cat.name,
+          amount: sum,
+        });
+      }
+    });
+
+    console.log(res);
+
+    return res;
+  };
+
+  // TODO: handle empty dataset
+  const placeholderData = [{ name: "No data", amount: 100 }];
+
+  useEffect(() => {
+    axios
+      .get("/api/category", {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
+      .then((res) => {
+        const processedData = countStats(res.data);
+        // console.log(processedData);
+        // processedData.map((val, index) => console.log(val));
+        setCategoryData(processedData);
+      });
+  }, [props.payments]);
 
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884d8"];
   // const COLORS = ["#f0e004", "#00C49F", "#FFBB28", "#FF8042", "#ccc"];
@@ -83,25 +114,46 @@ export default function CategoryPieChart(props) {
     );
   };
 
+
   const renderPieChart = (
     <ResponsiveContainer>
       <PieChart>
         <Legend layout="horizontal" verticalAlign="top" align="center" />
-        <Pie
-          data={categoryData}
-          cx="50%"
-          cy="50%"
-          labelLine={false}
-          label={renderCustomizedLabel}
-          outerRadius={130}
-          fill="#8884d8"
-          dataKey="amount"
-          innerRadius={60}
-        >
-          {categoryData.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-          ))}
-        </Pie>
+        {categoryData ? (
+          <Pie
+            data={categoryData}
+            labelLine={false}
+            label={renderCustomizedLabel}
+            outerRadius={130}
+            fill="#8884d8"
+            dataKey="amount"
+            innerRadius={60}
+          >
+            {categoryData.map((entry, index) => (
+              <Cell
+                key={`cell-${index}`}
+                fill={COLORS[index % COLORS.length]}
+              />
+            ))}
+          </Pie>
+        ) : (
+          <Pie
+            data={placeholderData}
+            labelLine={false}
+            label={renderCustomizedLabel}
+            outerRadius={130}
+            fill="#8884d8"
+            dataKey="amount"
+            innerRadius={60}
+          >
+            {placeholderData
+              ? placeholderData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill="#8884d8"/>
+                ))
+              : []}
+          </Pie>
+        )}
+        <Tooltip content={<CustomTooltip />} />
       </PieChart>
     </ResponsiveContainer>
   );

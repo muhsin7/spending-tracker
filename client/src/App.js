@@ -15,6 +15,8 @@ import { useAuth } from "./authentication/useAuth"
 import NotFound from "./pages/NotFound"
 import AddPayment from "./pages/AddPayment"
 import AddSpendingLimit from "./pages/AddSpendingLimit"
+import EditSpendingLimit from "./pages/EditSpendingLimit"
+import Achievements from "./pages/achievements/Achievements"
 
 function App() {
   const [isAuth, setAuth] = useAuth();
@@ -27,7 +29,6 @@ function App() {
         <div className="container">
           {/* <Background /> */}
           <Routes>
-            <Route path="/" element={<WelcomePage />} />
             {/* REDIRECT TO LOGIN PAGE IF NOT LOGGED IN */}
             <Route element={<ProtectedRoute privateRoute={isAuth} redirectPath="/login"/>}>
               <Route index path="/dashboard" element={<Dashboard />} />
@@ -36,11 +37,14 @@ function App() {
               <Route path="/addCategory" element={<AddCategory />} />
               <Route path="/addPayment" element={<AddPayment/>} />
               <Route path="/addSpendingLimit" element={<AddSpendingLimit/>} />
+              <Route path="/editSpendingLimit" element={<EditSpendingLimit/>} />
               <Route path="/payments" element={<PaymentsPage />} />
               <Route path="/categories" element={<CategoriesPage />} />
+              <Route path="/achievements" element={<Achievements />} />
             </Route>
             {/* REDIRECT TO DASHBOARD IF ALREADY LOGGED IN */}
             <Route element={<ProtectedRoute privateRoute={!isAuth} redirectPath="/dashboard" />}>
+              <Route path="/" element={<WelcomePage />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />
             </Route>

@@ -1,36 +1,60 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { useToken } from "../../../authentication/useToken";
 
 export default function BudgetCard(props) {
+    const [token, setToken] = useToken();
+    // const durations = ["day", "week", "month", "year"];
 
-    const durations = ["day", "week", "month", "year"];
-
-    const [dropdownDuration, setDropdownDuration] = useState(durations[0]);
+    // const [dropdownDuration, setDropdownDuration] = useState(durations[0]);
 
     const durationElements = [];
 
-    
-    durations.forEach(length => {
-        durationElements.push(<option value={length}>{length==="day" ? "today" : length}</option>)
-    });
+    const [limit, setLimit] = useState({});
+    const [hasLimit, setHasLimit] = useState(false);
 
-    function setOption(event) {
-        setDropdownDuration(event.target.value);
+    useEffect(() => {
+        axios.get("/api/limit/bycategory/1", {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }).then(async (res) => {
+          if(res.data) {
+            if(res.data.length > 0) {
+                setLimit(res.data[0]);
+                setHasLimit(true);
+            }
+          }
+        });
+      }, []);
+
+    const remaining = (lim) => {
+        if(hasLimit) {
+            return (lim.amount - props.summary[lim.duration.type.toLowerCase()]).toFixed(2);
+        } else {
+            return 0;
+        }
     }
+
+
+    
+    // durations.forEach(length => {
+    //     durationElements.push(<option value={length}>{length==="day" ? "today" : length}</option>)
+    // });
+
+    // function setOption(event) {
+    //     setDropdownDuration(event.target.value);
+    // }
 
     return (
             <div className="dashboard-money dashboard-container">
                 {
-                    props.hasBudget ? (
+                    hasLimit ? (
                     <>
                     {/* <div className={`dashboard-amount ${props.negative ? "error" : ""}`}>{props.negative ? "-" : ""}£42</div> */}
-                    <div className={`dashboard-amount`}>{props.negative ? "-" : ""}£42<sup className="warning-emoji">{props.negative ? "⚠️" : ""}</sup></div>
+                    <div className={`dashboard-amount`}>£{limit ? remaining(limit) : 0}<sup className="warning-emoji">{remaining(limit) < 0 ? "⚠️" : "✅"}</sup></div>
                     <div className="dashboard-amount-description">
-                        <form>
-                            <label for="duration">left to spend { dropdownDuration === "day" ? "" : "this" } </label>
-                            <select onChange={setOption} id="amount-duraton" name="duration" className="duration-selector">
-                                { durationElements }
-                            </select>
-                        </form>
+                        left to spend <b>{ limit.duration ? (limit.duration.type.toLowerCase() === "day" ? "today" : "this"+limit.duration.type.toLowerCase()) : "..." }</b>
                     </div>
                     </>
                     ) : (

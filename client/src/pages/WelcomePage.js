@@ -19,8 +19,8 @@ export default function WelcomePage() {
         <div className="row">
           <div className="column">
             <div className="welcome-text">
-              <h1 class="welcome-header">Save money for a change.</h1>
-              <h2 class="welcome-subtitle">
+              <h1 className="welcome-header">Save money for a change.</h1>
+              <h2 className="welcome-subtitle">
                 Manage your budget with ease and convenience.
               </h2>
               <button

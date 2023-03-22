@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { useToken } from "../authentication/useToken";
@@ -10,14 +10,8 @@ function Login() {
   const [token, setToken] = useToken();
   const [auth, setAuth] = useAuth();
   const [errorMessage, setErrorMessage] = useState("");
-  const [goToRegister, setGoToRegister] = React.useState(false);
   const [emailValue, setEmailValue] = useState("");
   const [passwordValue, setPasswordValue] = useState("");
-  const navigate = useNavigate();
-
-  if (goToRegister) {
-    return <Navigate to="/register" />;
-  }
 
   const handleValidation = () => {
     let formIsValid = true;
@@ -30,29 +24,38 @@ function Login() {
     return formIsValid;
   };
 
+  
+
   const onLoginClicked = async (e) => {
     e.preventDefault();
-    if (handleValidation) {
-      await axios.post("/api/user/login", {
-        email: emailValue,
-        password: passwordValue,
-      }).then((res) => {
-        console.log(res.status);
+    try{
+      if (handleValidation) {
+        const res = await axios.post("/api/user/login", {
+          email: emailValue,
+          password: passwordValue,
+        });
+  
+        console.log(res);
         const { token } = res.data;
         setToken(token);
         setAuth(true);
-        navigate("/dashboard");
-      });
+        window.location.reload(true);
+      }
     }
+    catch (err) {
+      setErrorMessage("Your credentials don't match our system!");
+    }
+    
   };
+  
+  
 
-
-  return (
+  return(
     <main className="registerPage">
         <Background />
       <section className="form">
         <h1 className="form-header">Login</h1>
-
+        {errorMessage && <div className="error-message">{errorMessage}</div>}
         <div className="fieldset">
           <form onSubmit={onLoginClicked}>
             <div className="form-group">

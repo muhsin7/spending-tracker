@@ -61,14 +61,12 @@
   width: 350px;
   height: 45px;
   text-indent: 10px;
-  border: 1px solid #e6e6e6;
+  border: 1px solid #867c6e;
+  font-family: 'Poppins', sans-serif;
   border-radius: 5px;
   margin-bottom: 10px;
   margin-top: 10px;
-}
-
-.inputFormInputBox input:focus, .inputFormInputBox select:focus {
-    background-color: rgb(147, 231, 147);
+  background-color: #181A1B;
 }
 
 .inputFormButton{
@@ -91,4 +89,24 @@
 
 .error-message {
     color: red;
+}
+
+.btn-form-submit {
+    margin: 20px 10px 20px 10px;
+    color: #fff;
+    font-weight: 900;
+    border-radius: 5px;
+    height: 50px; 
+    width: 90%;
+    background-color: var(--button-text-green);
+    transition: 300ms ease-in-out;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);    
+    border-radius: 8px; 
+    border-color: transparent;
+    height: 50px;
+    width: 150px;
+}
+
+.btn-danger {
+    background-color: #db2a2a;
 }

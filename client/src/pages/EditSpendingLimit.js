@@ -5,7 +5,7 @@ import { useToken } from "../authentication/useToken";
 import { useNavigate, useSearchParams } from "react-router-dom";
 
 export default function AddSpendingLimit() {
-  const [newCategories, setNewCategories] = useState([]);
+  const [category, setCategory] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
   const [token, setToken] = useToken();
   const [formValues, setFormValues] = useState({
@@ -15,6 +15,7 @@ export default function AddSpendingLimit() {
     categoryId: "",
   });
   const [searchParams, setSearchParams] = useSearchParams();
+  const [spendingLimit, setSpendingLimit] = useState("");
   const catID = searchParams.get("categoryID")
 
   const navigate = useNavigate();
@@ -36,25 +37,75 @@ export default function AddSpendingLimit() {
 
   // Gets all the user's categories from the database
   useEffect(() => {
-    const res = axios.get("/api/category/noSpendingLimit", {
+    const res = axios.get(`/api/category/${catID}`, {
       headers: {
         Authorization: "Bearer " + token,
       },
     }).then(async (res) => {
-      console.log(res.data);
-      let catList = res.data;
-      catList.push({_id: "1", name: "Global"}) //Global spending limit will have id value 1
-      setNewCategories(catList);
-
-      //If the add spending limit button was pressed from a specific category, default to that one.
-      if (catID) {
+      setCategory(res.data);
+      axios.get(`/api/limit/byCategory/${catID}`, {
+        headers: {
+          Authorization: "Bearer " + token,
+        }
+      }).then((res2) => {
+        const spendingLimit = res2.data[0];
+        setSpendingLimit(spendingLimit._id);
         setFormValues({
           ...formValues,
-          categoryId: catID
+          name: spendingLimit.name,
+          amount: spendingLimit.amount,
+          duration: spendingLimit.duration.type,
+          categoryId: spendingLimit.category
         });
+      });
+    })
+    .catch((err) => {
+      //If catID is 1, then they are trying to edit the global spending limit
+      if(catID !== "1") {
+        navigate("/categories");
+      }
+      else {
+        setCategory({
+          _id: "1",
+          name: "Global"
+        });
+        
+        axios.get(`/api/limit/byCategory/${catID}`, {
+          headers: {
+            Authorization: "Bearer " + token,
+          }
+        })
+          .then((res2) => {
+            console.log(res2);
+            const spendingLimit = res2.data[0];
+            setSpendingLimit(spendingLimit._id);
+            setFormValues({
+              ...formValues,
+              name: spendingLimit.name,
+              amount: spendingLimit.amount,
+              duration: spendingLimit.duration.type,
+              categoryId: "1"
+          });
+        })
+          .catch((err) => {
+            navigate("/categories");
+          });
       }
     });
   }, []);
+
+  const onDelete = async (e) => {
+    const response = await axios
+        .delete(`/api/limit/${spendingLimit}`, {
+          headers: {
+            Authorization: "Bearer " + token,
+          },
+        }
+      );
+
+      console.log(response);
+      if (response.status === 200) navigate("/categories");
+  }
 
   const onSubmit = async (e) => {
 
@@ -88,7 +139,7 @@ export default function AddSpendingLimit() {
       }
 
       const response = await axios
-        .post("/api/limit", req,  {
+        .patch(`/api/limit/${spendingLimit}`, req,  {
           headers: {
             Authorization: "Bearer " + token,
           },
@@ -96,7 +147,7 @@ export default function AddSpendingLimit() {
       );
 
       console.log(response);
-      if (response.status === 201) navigate("/categories");
+      if (response.status === 200) navigate("/categories");
 
     } catch (err) {
       console.log(err.response.data)
@@ -107,7 +158,7 @@ export default function AddSpendingLimit() {
   return (
     <div className="div-inputForm">
       <section className="inputForm">
-        <h2 className="inputFormTitle">Add Spending Limit</h2>
+        <h2 className="inputFormTitle">Edit Spending Limit</h2>
         {errorMessage && <div className="error-message">{errorMessage}</div>}
         <fieldset className="inputFormFields">
           <form onSubmit={onSubmit}>
@@ -151,18 +202,22 @@ export default function AddSpendingLimit() {
                 value={formValues["categoryId"]}
                 name="categoryId"
                 onChange={onFormChange}
+                disabled
               >
-                <option key="" value=""></option> 
-                {newCategories.map((option) => (
-                  <option key={option._id} value={option._id}>{option.name}</option>
-                ))}
+                <option key={category._id} value={category._id}>{category.name}</option>
               </select>
             </div>
             <input
               onClick={onSubmit}
               type="button"
-              className="btn btn-header"
-              value="Add spending limit"
+              className="btn-form-submit"
+              value="Edit"
+            />
+            <input
+              onClick={onDelete}
+              type="button"
+              className="btn-form-submit btn-danger"
+              value="Delete"
             />
           </form>
         </fieldset>

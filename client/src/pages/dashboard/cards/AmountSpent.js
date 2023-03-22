@@ -25,7 +25,7 @@ export default function AmountSpent() {
     return (
         <div className="dashboard-amount-cards">
             <AmountCard summary={summary}/>
-            <BudgetCard negative={true}  hasBudget={true} />
+            <BudgetCard summary={summary} />
         </div>
     )
 }
