@@ -39,9 +39,15 @@
     font-size: 90%;
     border-radius: 10px;
     margin-right: 10px;
+    margin-top: 5px;
     padding: 0 1em 0 1em
 }
 
 .smallButton{
     width: 25%;
+}
+
+.category-percentage {
+    background-color: #0b7c9e;
+    padding-bottom: 5px;
 }

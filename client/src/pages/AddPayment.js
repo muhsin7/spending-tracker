@@ -133,8 +133,8 @@ function AddPayment() {
             if (response.status === 201) navigate("/payments");
 
         } catch (err) {
-            console.log(err);
-            if(err.response.data.message) setErrorMessage(err.response.data.message);
+            if(err.response.data.error === "PayloadTooLargeError") setErrorMessage("File size is too large!");
+            else if(err.response.data.message) setErrorMessage(err.response.data.message);
             else if(err.response.data.error) setErrorMessage(err.response.data.error);
         }
     }
