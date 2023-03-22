@@ -91,7 +91,7 @@ const processData = ({data, cumulative=false, cumulateBy=dataValueToUnix}) => {
         const dateString = cumulateBy(value);
   
         if (!res[dateString]) {
-          res[dateString] = paymentObjects[dateString];
+          res[dateString] = paymentObjects[dateString] ? paymentObjects[dateString] : { date: dateString, amount: 0 };
           dataByDateInternal.push(res[dateString]);
         }
         // console.log("MAP OBJECT")
