@@ -18,14 +18,17 @@ import AddSpendingLimit from "./pages/AddSpendingLimit"
 import EditSpendingLimit from "./pages/EditSpendingLimit"
 import Achievements from "./pages/achievements/Achievements"
 import Reports from "./pages/reports/Reports"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const [isAuth, setAuth] = useAuth();
 
   return (
     <>
-      <BrowserRouter>
+    <BrowserRouter>
     <Header auth={[isAuth, setAuth]} />
+    <ToastContainer />
       <div className="border"></div>
         <div className="container">
           {/* <Background /> */}

@@ -1,16 +1,13 @@
 const express = require("express");
 const router = express.Router();
 
-const {getAchievements, getAchievement, createAchievement, updateAchievement} = require("../controllers/achievementController");
+const {getAchievements, getAchievement} = require("../controllers/achievementController");
 const { protect } = require("../middleware/authMiddleware");
-const { mustOwnValidAchievement, checkAchievementStatus } = require("../middleware/achievementMiddleware");
 
 router.route("/")
-  .get(protect, getAchievements)
-  .post(protect, createAchievement);
+  .get(protect, getAchievements);
 
 router.route("/:id")
-  .get(protect, mustOwnValidAchievement, checkAchievementStatus, getAchievement)
-  .patch(protect, mustOwnValidAchievement, updateAchievement);
+  .get(protect, getAchievement);
 
 module.exports = router;

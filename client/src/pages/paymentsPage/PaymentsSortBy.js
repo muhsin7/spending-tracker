@@ -97,7 +97,7 @@ export default function PaymentsSortBy(props) {
     ]);
   }
 
-  function lowestDateFirst() {
+  function lowestPriceFirst() {
     props.setPayments([
       ...props.payments.sort((a, b) => ascendingCompare(a.amount, b.amount)),
     ]);
@@ -107,7 +107,7 @@ export default function PaymentsSortBy(props) {
     ]);
   }
 
-  function highestDateFirst() {
+  function highestPriceFirst() {
     props.setPayments([
       ...props.payments.sort((a, b) => descendingCompare(a.amount, b.amount)),
     ]);
@@ -173,10 +173,10 @@ export default function PaymentsSortBy(props) {
         zTitleFirst();
         break;
       case "Price (lowest first)":
-        lowestDateFirst();
+        lowestPriceFirst();
         break;
       case "Price (highest first)":
-        highestDateFirst();
+        highestPriceFirst();
         break;
       case "Date (earliest first)":
         earliestDateFirst();
