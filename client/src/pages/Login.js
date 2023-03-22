@@ -86,9 +86,7 @@ function Login() {
             <button id="loginButton" type="submit" className="btn">
               Login
             </button>
-            <Router>
             <div className="login-signup-link">Don't have an account? <Link to="/register">Register here!</Link></div>
-            </Router>
           </form>
         </div>
       </section>
