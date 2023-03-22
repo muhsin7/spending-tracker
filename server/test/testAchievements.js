@@ -18,7 +18,6 @@ describe("Achievement tests", () => {
 
   let achievementSpec;
   let user;
-  let achievement;
   let authToken;
 
   before(async() => {
@@ -31,8 +30,8 @@ describe("Achievement tests", () => {
     };
 
     const ACHIEVEMENT_SPEC = {
-      title: "categoryAchievement",
-      description: "An achievement",
+      title: "First achievement",
+      description: "Create your first category",
       exp: 10,
       requirements: {
         noCategories: {
@@ -43,15 +42,26 @@ describe("Achievement tests", () => {
     
     achievementSpec = await AchievementSpec.create(ACHIEVEMENT_SPEC);
     user = await User.create(USER);
-    achievement = await Achievement.create({userId: user._id, achievementSpecId: achievementSpec._id});
     authToken = generateToken(user);
   });
 
+  
+
   after(async() => {
-    //await flushDB();
+    await flushDB();
   });
 
   describe("Achievement model tests", () => {
+    let achievement;
+
+    beforeEach(async() => {
+      achievement = await Achievement.create({userId: user._id, achievementSpecId: achievementSpec._id});
+    });
+
+    afterEach(async() => {
+      await Achievement.deleteMany({});
+    });
+
     it("should create a valid achievement", async() => {
       //beforeEach should have succeded
       achievement.should.exist;
@@ -84,20 +94,29 @@ describe("Achievement tests", () => {
 
   describe("Achievement api tests", () => {
     let unowned;
+    let achievement;
 
     before(async() => {
       const ACHIEVEMENT_SPEC = {
-        title: "Unowned",
-        description: "An achievement that belongs to no one",
+        title: "Second Achivement",
+        description: "Create two categories",
         exp: 10,
         requirements: {
           noCategories: {
-            target: 1
+            target: 2
           }
         }
       };
       
       unowned = await AchievementSpec.create(ACHIEVEMENT_SPEC);
+    });
+
+    beforeEach(async() => {
+      achievement = await Achievement.create({userId: user._id, achievementSpecId: achievementSpec._id});
+    });
+
+    afterEach(async() => {
+      await Achievement.deleteMany({});
     });
 
     it("should get achievements", async() => {
@@ -157,5 +176,53 @@ describe("Achievement tests", () => {
       obj.should.have.property("exp");
       obj.exp.should.be.equal(achievementSpec.exp);
     });
+  });
+
+  describe("Category achievement tests", () => {
+
+    beforeEach(async() => {
+      
+    });
+
+    afterEach(async() => {
+      await Achievement.deleteMany({});
+    });
+
+    it("should detect an achievement", async() => {
+      // achieve an achievement
+      const res = await chai.request(app)
+        .post("/api/category/")
+        .send({
+          name: "Food",
+          userId: user._id
+        })
+        .set("Authorization", ("Bearer " + authToken));
+
+      res.should.have.status(201);
+      res.body.should.have.property("achievements");
+
+      const achievement = res.body.achievements[0];
+      should.equal(achievement.title, "First achievement");
+      should.equal(achievement.description, "Create your first category");
+      should.equal(achievement.owned, true);
+      should.equal(achievement.exp, 10);
+    });
+
+    it("should detect multiple achievements simultaneously", async() => {
+      const Category = require("../models/categoryModel");
+      await Category.create({name: "Entertainment", userId: user._id});
+      const res = await chai.request(app)
+        .post("/api/category/")
+        .send({
+          name: "Food",
+          userId: user._id
+        })
+        .set("Authorization", ("Bearer " + authToken));
+
+      res.should.have.status(201);
+      res.body.should.have.property("achievements");
+    });
+
+    it("should not detect an achievement whenever requirements are not met");
   });
 });
