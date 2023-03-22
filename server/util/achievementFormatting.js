@@ -22,8 +22,8 @@ const buildUnownedObject = (spec) => {
     type: spec.type,
     exp: spec.exp,
     date: null,
-    achievementId: null,
-    userId: null
+    userId: null,
+    _id: null
   };
 };
 

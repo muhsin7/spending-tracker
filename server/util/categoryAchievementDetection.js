@@ -17,12 +17,16 @@ const detectCategoryAchievements = async(req) => {
   let achievements = [];
 
   for (let i = 0; i < specs.length; i++) {
-    const achievement =  await Achievement.create({
-      userId: req.user.id,
-      achievementSpecId: specs[i]._id
-    });
+    try {
+      const achievement =  await Achievement.create({
+        userId: req.user.id,
+        achievementSpecId: specs[i]._id
+      });
 
-    achievements.push(await buildOwnedObject(achievement));
+      achievements.push(await buildOwnedObject(achievement));
+    } catch {
+      // ignore
+    }
   }
 
   return achievements;

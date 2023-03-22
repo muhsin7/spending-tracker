@@ -22,4 +22,6 @@ const achievementModelSchema = mongoose.Schema(
   }
 );
 
+achievementModelSchema.index({userId: 1, achievementSpecId: 1}, {unique: true});
+
 module.exports = mongoose.model("Achievement", achievementModelSchema);
