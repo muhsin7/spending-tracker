@@ -15,11 +15,13 @@ if (env === "test")
 else
   dbURI = process.env.DB_URI;
 
-const corsOptions = {
-  origin: process.env.CORS_ORIGIN
-};
+// const corsOptions = {
+//   origin: process.env.CORS_ORIGIN
+// };
 
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
+
+app.use(cors());
 
 app.use(bodyParser.json());
 
