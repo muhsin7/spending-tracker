@@ -57,11 +57,6 @@ export default function CategoryCardEdit(props) {
             onChange={(e) => setNewTitle(e.target.value)}
           />
       </div>
-      <input
-            className="category-spending-limit"
-            // value={newSpendingLimit}
-            // onChange={(e) => setNewSpendingLimit(e.target.value)}
-       />
       <button className="category-card-button" onClick={handleConfirm}>Confirm</button>
       <button className="category-card-button" onClick={() => props.setEdit(false)}>Cancel</button>
     </div>

@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
 import TransactionCard from "./TransactionCard";
+import { useNavigate } from "react-router-dom";
 
 export default function TransactionsPreview(props) {
+    const navigate = useNavigate();
     const rows = [];
 
     props.payments.sort((a, b) => Date.parse(b.date) - Date.parse(a.date));
