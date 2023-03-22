@@ -109,8 +109,6 @@ achievementSpecSchema.pre("save", async function(next) {
   } else {
     throw new Error("Invalid achievement type");
   }
-
-  console.log("reached");
   next();
 });
 

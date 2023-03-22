@@ -10,13 +10,25 @@ const should = chai.should();
 
 const chaiHttp = require("chai-http");
 const app = require("../app");
+const { before } = require("mocha");
 
 chai.use(chaiHttp);
 
 describe("Achievement tests", () => {
 
-  beforeEach(async() => {
+  let achievementSpec;
+  let user;
+  let achievement;
+  let authToken;
+
+  before(async() => {
     await flushDB();
+    
+    const USER = {
+      name: "Jill",
+      email: "jill@example.com",
+      password: "123"
+    };
 
     const ACHIEVEMENT_SPEC = {
       title: "categoryAchievement",
@@ -28,103 +40,55 @@ describe("Achievement tests", () => {
         }
       }
     };
-
-    await AchievementSpec.create(ACHIEVEMENT_SPEC);
+    
+    achievementSpec = await AchievementSpec.create(ACHIEVEMENT_SPEC);
+    user = await User.create(USER);
+    achievement = await Achievement.create({userId: user._id, achievementSpecId: achievementSpec._id});
+    authToken = generateToken(user);
   });
 
-  describe("AchievementSpec model tests", () => {
-    it("should create a valid category achievement", async() => {
-      // category achievement created in beforeEach
-      const achievement = await AchievementSpec.findOne({title: "categoryAchievement"});
-      should.exist(achievement);
-      achievement.should.have.property("title").eql("categoryAchievement");
-      achievement.should.have.property("description").eql("An achievement");
-      achievement.should.have.property("exp");
-      achievement.should.have.property("type").eql("category");
+  after(async() => {
+    //await flushDB();
+  });
+
+  describe("Achievement model tests", () => {
+    it("should create a valid achievement", async() => {
+      //beforeEach should have succeded
+      achievement.should.exist;
+      achievement.should.have.property("userId");
+      achievement.should.have.property("achievementSpecId");
     });
 
-    it("should create a valid payment achievement", async() => {
-      const PAYMENT_ACHIEVEMENT = {
-        title: "paymentAchievement",
-        description: "An achievement",
-        exp: 10,
-        requirements: {
-          noPayments: {
-            target: 1
-          }
-        }
-      };
-      const achievement = await AchievementSpec.create(PAYMENT_ACHIEVEMENT);
-      should.exist(achievement);
-      achievement.should.have.property("title").eql("paymentAchievement");
-      achievement.should.have.property("description").eql("An achievement");
-      achievement.should.have.property("exp");
-      achievement.should.have.property("type").eql("payment");
-    });
-
-    it("should create a valid limit achievement", async() => {
-      const LIMIT_ACHIEVEMENT = {
-        title: "limitAchievement",
-        description: "An achievement",
-        exp: 10,
-        requirements: {
-          limitsSet: {
-            target: 1
-          }
-        }
-      };
-      const achievement = await AchievementSpec.create(LIMIT_ACHIEVEMENT);
-      should.exist(achievement);
-      achievement.should.have.property("title").eql("limitAchievement");
-      achievement.should.have.property("description").eql("An achievement");
-      achievement.should.have.property("exp");
-      achievement.should.have.property("type").eql("limit");
-    });
-    
-    it("should not create an ahcievement of an invalid type", async() => {
-      const INVALID_ACHIEVEMENT = {
-        title: "invalidAchievement",
-        description: "An invalid achievement",
-        exp: 10,
-        requirements: {
-          invalidField: {
-            target: 1
-          }
-        }
-      };
-      await AchievementSpec.create(INVALID_ACHIEVEMENT)
+    it("should require a user", async() => {
+      await Achievement.create({achievementSpecId: achievementSpec._id})
         .catch((error) => {
           should.exist(error);
-          error.should.have.property("name").eql("ValidationError")
+          error.should.have.property("name").eql("ValidationError");
         })
         .then((achievement) => {
-          should.not.exist(achievement, "The achievement should have been invalid")
+          should.not.exist(achievement, "Achivement should have been invalid");
         });
     });
 
-    it("should not allow fields to be changed", async() => {
-      // category achievement created in beforeEach
-      const achievement = await AchievementSpec.findOne({title: "categoryAchievement"});
-      achievement.title = "Should not be changed";
-
-      achievement.save()
+    it("should require an achievementSpec", async() => {
+      await Achievement.create({userId: user._id})
         .catch((error) => {
           should.exist(error);
-          error.should.have.property("name").eql("ValidationError")
+          error.should.have.property("name").eql("ValidationError");
         })
         .then((achievement) => {
-          should.exist(achievement);
-          achievement.should.have.property("title").eql("limitAchievement");
-          achievement.should.have.property("description").eql("An achievement");
-          achievement.should.have.property("exp");
-          achievement.should.have.property("type").eql("limit");
+          should.not.exist(achievement, "Achivement should have been invalid");
         });
     });
+  });
 
-    it("should have unique titles", async() => {
-      const REPEAT_ACHIEVEMENT = {
-        title: "categoryAchievement",
-        description: "An achievement",
+  describe("Achievement api tests", () => {
+    let unowned;
+
+    before(async() => {
+      const ACHIEVEMENT_SPEC = {
+        title: "Unowned",
+        description: "An achievement that belongs to no one",
         exp: 10,
         requirements: {
           noCategories: {
@@ -132,96 +96,66 @@ describe("Achievement tests", () => {
           }
         }
       };
-
-      await AchievementSpec.create(REPEAT_ACHIEVEMENT)
-        .catch((error) => {
-          should.exist(error);
-          error.should.have.property("name").eql("MongoServerError")
-        })
-        .then((achievement) => {
-          should.not.exist(achievement, "The achievement should have been invalid")
-        });
+      
+      unowned = await AchievementSpec.create(ACHIEVEMENT_SPEC);
     });
 
-    it("should require a title", async() => {
-      const NO_TITLE_ACHIEVEMENT = {
-        description: "An achievement",
-        exp: 10,
-        requirements: {
-          noCategories: {
-            target: 1
-          }
-        }
-      }
+    it("should get achievements", async() => {
+      const res = await chai.request(app)
+        .get("/api/achievement/")
+        .set("Authorization", ("Bearer " + authToken));
+      res.should.have.status(200);
+      res.body.length.should.equal(2);
 
-      await AchievementSpec.create(NO_TITLE_ACHIEVEMENT)
-        .catch((error) => {
-          should.exist(error);
-          error.should.have.property("name").eql("ValidationError")
-        })
-        .then((achievement) => {
-          should.not.exist(achievement, "The achievement should have been invalid")
-        });
+      should.exist(res.body[0], "Should have gotten an achievement");
+      const obj1 = res.body[0];
+      obj1.should.have.property("title").eql(achievementSpec.title);
+      obj1.should.have.property("description").eql(achievementSpec.description);
+      obj1.should.have.property("owned").eql(true);
+      obj1.should.have.property("type").eql(achievementSpec.type);
+      obj1.should.have.property("exp");
+      obj1.exp.should.be.equal(achievementSpec.exp);
+
+      should.exist(res.body[1], "Should have gotten achievements not achieved by the user");
+      const obj2 = res.body[1];
+      obj2.should.have.property("title").eql(unowned.title);
+      obj2.should.have.property("description").eql(unowned.description);
+      obj2.should.have.property("owned").eql(false);
+      obj2.should.have.property("type").eql(unowned.type);
+      obj2.should.have.property("exp");
+      obj2.exp.should.be.equal(unowned.exp);
     });
 
-    it("should require a description", async() => {
-      const NO_DESCRIPTION_ACHIEVEMENT = {
-        title: "noDescription",
-        exp: 10,
-        requirements: {
-          noCategories: {
-            target: 1
-          }
-        }
-      }
-
-      await AchievementSpec.create(NO_DESCRIPTION_ACHIEVEMENT)
-        .catch((error) => {
-          should.exist(error);
-          error.should.have.property("name").eql("ValidationError")
-        })
-        .then((achievement) => {
-          should.not.exist(achievement, "The achievement should have been invalid")
-        });
+    it("should only get owned achievements", async() => {
+      const res = await chai.request(app)
+        .get("/api/achievement/?selection=owned")
+        .set("Authorization", ("Bearer " + authToken));
+      res.should.have.status(200);
+      res.body.length.should.equal(1);
     });
 
-    it("should require an exp amount", async() => {
-      const NO_EXP_ACHIEVEMENT = { 
-        title: "noExp",
-        description: "An achievement",
-        requirements: {
-          noCategories: {
-            target: 1
-          }
-        }
-      }
+    it("should only get unowned achievements", async() => {
+      const res = await chai.request(app)
+        .get("/api/achievement/?selection=unowned")
+        .set("Authorization", ("Bearer " + authToken));
 
-      await AchievementSpec.create(NO_EXP_ACHIEVEMENT)
-        .catch((error) => {
-          should.exist(error);
-          error.should.have.property("name").eql("ValidationError")
-        })
-        .then((achievement) => {
-          should.not.exist(achievement, "The achievement should have been invalid")
-        });
+      res.should.have.status(200);
+      res.body.length.should.equal(1);
     });
 
-    it("should require a set of requirements", async() => {
-      const NO_REQUIREMENTS_ACHIEVEMENT = {
-        title: "categoryAchievement",
-        description: "An achievement",
-        exp: 10,
-      }
+    it("should get a specific achievement", async() => {
+      const res = await chai.request(app)
+        .get("/api/achievement/" + achievement._id)
+        .set("Authorization", ("Bearer " + authToken));
 
-      await AchievementSpec.create(NO_REQUIREMENTS_ACHIEVEMENT)
-        .catch((error) => {
-          should.exist(error);
-          error.should.have.property("name").eql("ValidationError")
-        })
-        .then((achievement) => {
-          should.not.exist(achievement, "The achievement should have been invalid")
-        });
+      const obj = res.body;
+
+      res.should.have.status(200);
+      obj.should.have.property("title").eql(achievementSpec.title);
+      obj.should.have.property("description").eql(achievementSpec.description);
+      obj.should.have.property("type").eql(achievementSpec.type);
+      obj.should.have.property("exp");
+      obj.exp.should.be.equal(achievementSpec.exp);
     });
-
   });
 });
