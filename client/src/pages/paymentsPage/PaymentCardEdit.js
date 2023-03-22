@@ -152,7 +152,7 @@ export default function PaymentCardEdit(props) {
             dateFormat="dd/MM/yyyy"
             onChange={(date) => setNewDate(date)}
           />
-          {DOES_IMAGE_EXIST && (
+          {newImageURL!=="" && (
             <Popup
               trigger={
                 <button className="payment-image-button">View image</button>
