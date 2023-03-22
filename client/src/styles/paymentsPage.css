@@ -1,4 +1,4 @@
-/* PAYMENT PAGE */
+/* PAYMENTS PAGE */
 
 .payments-page {
   margin: 1%;
@@ -144,7 +144,7 @@
 .payment-card-top {
   width: 100%;
   display: grid;
-  grid-template-columns: 90% 10%;
+  grid-template-columns: 80% 20%;
   justify-content: space-between;
   flex-flow: row wrap;
 }
