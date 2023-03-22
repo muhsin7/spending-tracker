@@ -1,0 +1,24 @@
+.reports-page {
+    margin: 1em;
+}
+
+.reports-buttons {
+    display: flex;
+}
+
+.report-btn {
+    margin-right: 1em;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    cursor: pointer;
+}
+.report-btn:last-child {
+    margin-right: 0;
+}
+
+.report-btn-selected {
+    border: 3px solid var(--secondary-yellow);
+    color: var(--secondary-yellow);
+}

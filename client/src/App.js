@@ -17,6 +17,7 @@ import AddPayment from "./pages/AddPayment"
 import AddSpendingLimit from "./pages/AddSpendingLimit"
 import EditSpendingLimit from "./pages/EditSpendingLimit"
 import Achievements from "./pages/achievements/Achievements"
+import Reports from "./pages/reports/Reports"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -44,6 +45,7 @@ function App() {
               <Route path="/payments" element={<PaymentsPage />} />
               <Route path="/categories" element={<CategoriesPage />} />
               <Route path="/achievements" element={<Achievements />} />
+              <Route path="/reports" element={<Reports />} />
             </Route>
             {/* REDIRECT TO DASHBOARD IF ALREADY LOGGED IN */}
             <Route element={<ProtectedRoute privateRoute={!isAuth} redirectPath="/dashboard" />}>

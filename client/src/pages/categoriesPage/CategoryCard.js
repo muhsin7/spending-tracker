@@ -146,8 +146,10 @@ function CategoryCard(props) {
             <div className="category-title">{TITLE}</div>
         </div>
         <div className="category-spending-limit">{SL_DISPLAY}</div>
+        <div className="category-edit-delete-div">
         <button className="category-card-button" onClick={handleCategoryEdit}>Edit</button>
         <button className="category-card-button" onClick={handleCategoryDelete}>Delete </button>
+        </div>
         {SL ? <button className="category-card-button" onClick={handleEditLimit}>Edit Spending Limit</button> :
         <button className="category-card-button" onClick={handleAddLimit}>Add Spending Limit</button> }
         {SL ? <PercentageBar completed={percentage}/> : undefined}
