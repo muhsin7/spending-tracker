@@ -179,13 +179,15 @@ describe("Achievement tests", () => {
   });
 
   describe("Category achievement tests", () => {
+    let Category;
 
     beforeEach(async() => {
-      
+      Category = require("../models/categoryModel");
     });
 
     afterEach(async() => {
       await Achievement.deleteMany({});
+      await Category.deleteMany({});
     });
 
     it("should detect an achievement", async() => {
@@ -209,7 +211,6 @@ describe("Achievement tests", () => {
     });
 
     it("should detect multiple achievements simultaneously", async() => {
-      const Category = require("../models/categoryModel");
       await Category.create({name: "Entertainment", userId: user._id});
       const res = await chai.request(app)
         .post("/api/category/")
@@ -224,10 +225,21 @@ describe("Achievement tests", () => {
       should.equal(res.body.achievements.length, 2);
     });
 
-    it("should not detect an achievement whenever requirements are not met");
+    it("should not detect an achievement whenever requirements are not met", async() => {
+      const res = await chai.request(app)
+        .post("/api/category/")
+        .send({
+          name: "Food",
+          userId: user._id
+        })
+        .set("Authorization", ("Bearer " + authToken));
+
+      res.should.have.status(201);
+      res.body.should.have.property("achievements");
+      should.equal(res.body.achievements.length, 1);
+    });
 
     it("should not create an achievement that has already been created", async() => {
-      const Category = require("../models/categoryModel");
       await Category.create({name: "Entertainment", userId: user._id});
       await chai.request(app)
         .post("/api/category/")
