@@ -1,9 +1,29 @@
 import ExpBar from "./ExpBar";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { useToken } from "../../authentication/useToken";
 
 export default function Level() {
-  const TOTAL_EXP = 880;
-  const CURRENT_LEVEL = Math.floor(TOTAL_EXP / 100);
-  const COMPLETED = TOTAL_EXP % 100;
+  const [token, setToken] = useToken();
+  const [user, setUser] = useState({});
+
+  useEffect(() => {
+    axios
+      .get("/api/user/profile", {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setUser(res.data);
+      });
+  }, []);
+
+  const TOTAL_EXP = user.exp;
+  const CURRENT_LEVEL = user.level;
+  const EXP_REQUIRED_TO_LEVEL_UP = 100;
+  const COMPLETED = TOTAL_EXP % EXP_REQUIRED_TO_LEVEL_UP;
   const EXP_BAR_COLOR = "#00b57f";
 
   return (

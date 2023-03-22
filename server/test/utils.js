@@ -3,6 +3,8 @@ const Category = require("../models/categoryModel");
 const Payment = require("../models/paymentModel");
 const User = require("../models/userModel");
 const SpendingLimit = require("../models/spendingLimitModel");
+const Achievement = require("../models/achievementModel");
+const AchievementSpec = require("../models/achievementSpecModel");
 const jwt = require("jsonwebtoken");
 
 const chai = require("chai");
@@ -13,6 +15,8 @@ const flushDB = async () => {
   await User.deleteMany({});
   await Payment.deleteMany({});
   await SpendingLimit.deleteMany({});
+  await Achievement.deleteMany({});
+  await AchievementSpec.deleteMany({});
 };
 
 const assertError = (res, code) => {

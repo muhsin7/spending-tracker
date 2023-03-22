@@ -15,7 +15,7 @@ const userSchema = mongoose.Schema(
         },
         message: props => `${props.value} is not a valid email address`
       },
-      maxLength:[254, "Email address is too long"],
+      maxLength: [254, "Email address is too long"],
       unique: true,
       required: [true, "Please add an email"]
     },
@@ -23,6 +23,14 @@ const userSchema = mongoose.Schema(
       type: String,
       required: [true, "Please add a password"] 
     },
+    exp: {
+      type: Number,
+      default: 0
+    },
+    level: {
+      type: Number,
+      default: 1
+    }
   },
   {
     timestamps: true,

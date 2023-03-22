@@ -20,7 +20,7 @@
   margin-inline: 0.5em;
   padding: 0.5em;
   border-radius: 12px;
-  width: 350px;
+  width: 250px;
   word-wrap: break-word;
 }
 
@@ -35,22 +35,22 @@
 }
 
 .achievement-title {
-  font-size: 26px;
+  font-size: 20px;
   font-weight: bold;
 }
 
 .achievement-description {
   margin-bottom: 0.5em;
-  font-size: 16px;
+  font-size: 12px;
 }
 
 .achievement-medal {
-  height: 200px;
+  height: 100px;
   object-fit: scale-down;
 }
 
 .achievement-disabled-medal {
-  height: 200px;
+  height: 100px;
   object-fit: scale-down;
   filter: grayscale(100%);
 }

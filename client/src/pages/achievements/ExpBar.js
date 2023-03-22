@@ -20,6 +20,7 @@ export default function ExpBar(props) {
   const labelStyles = {
     padding: 5,
     fontWeight: "bold",
+    whiteSpace: "nowrap",
   };
 
   return (
