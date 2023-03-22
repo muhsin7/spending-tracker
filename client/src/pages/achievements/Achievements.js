@@ -1,4 +1,6 @@
 import AchievementCard from "./AchievementCard";
+import AchievementsSortBy from "./AchievementsSortBy";
+import AchievementsFilterBy from "./AchievementsFilterBy";
 import Level from "./Level";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -7,6 +9,7 @@ import { useToken } from "../../authentication/useToken";
 export default function Achievements() {
   const [token, setToken] = useToken();
   const [achievements, setAchievements] = useState([]);
+  const [defaultAchievements, setDefaultAchievements] = useState([]);
 
   // Gets all the user's achievements from the database
   useEffect(() => {
@@ -17,8 +20,8 @@ export default function Achievements() {
         },
       })
       .then((res) => {
-        console.log(res.data);
         setAchievements(res.data);
+        setDefaultAchievements(res.data);
       });
   }, []);
 
@@ -32,7 +35,24 @@ export default function Achievements() {
   return (
     <div className="achievements-page">
       <Level />
-      <h1 className="achievements-header">Achievements</h1>
+      <div className="achievements-top">
+        <h1 className="achievements-header">Achievements</h1>
+        <span className="achievements-sort-filter">
+            <AchievementsSortBy
+              achievements={achievements}
+              setAchievements={setAchievements}
+              defaultAchievements={defaultAchievements}
+              setDefaultAchievements={setDefaultAchievements}
+              token={token}
+            />
+            <AchievementsFilterBy
+              achievements={achievements}
+              defaultAchievements={defaultAchievements}
+              setAchievements={setAchievements}
+              token={token}
+            />
+          </span>
+        </div>
       <div className="achievement-section">{cards}</div>
     </div>
   );
