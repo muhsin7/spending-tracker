@@ -17,6 +17,7 @@ import AddPayment from "./pages/AddPayment"
 import AddSpendingLimit from "./pages/AddSpendingLimit"
 import EditSpendingLimit from "./pages/EditSpendingLimit"
 import Achievements from "./pages/achievements/Achievements"
+import axios from "axios"
 
 function App() {
   const [isAuth, setAuth] = useAuth();
