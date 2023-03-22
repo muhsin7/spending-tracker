@@ -5,6 +5,7 @@ import axios from "axios";
 import { useToken } from "../authentication/useToken";
 import { Buffer } from "buffer";
 import Background from "./Background";
+import { ToastContainer, toast } from 'react-toastify';
 
 function AddPayment() {
     const navigate = useNavigate();
@@ -47,6 +48,10 @@ function AddPayment() {
         reader.readAsDataURL(file);
     }
 
+    function getCatNameByID(id) {
+        return newCategories.filter((cat) => cat._id === id)[0].name;
+    }
+
     function storeNewImage() {
         const file = document.querySelector("input[type=file]").files[0];
         const reader = new FileReader();
@@ -87,15 +92,101 @@ function AddPayment() {
     }
 
       // Gets all the user's categories from the database
-        useEffect(() => {
-            axios.get('/api/category', {
+    useEffect(() => {
+        axios.get('/api/category', {
+        headers: {
+            "Authorization": "Bearer " + token
+        }
+        }).then(async (res) => {
+            setNewCategories(res.data);
+        });
+    }, []);
+
+    const getSpendingLimitPercentage = async (catID) => {
+
+        const response = await axios.get(`/api/limit/byCategory/${catID}`, {
             headers: {
                 "Authorization": "Bearer " + token
             }
-            }).then(async (res) => {
-                setNewCategories(res.data);
+        });
+
+        const SL = response.data[0];
+        if (!SL) return 0;
+
+        const payments = await axios.get('/api/payment', {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        })
+          
+        console.log(payments);
+    
+        let res = [];
+    
+        let dt = new Date();
+        
+        switch(SL.duration.type) {
+            case "YEAR":
+                dt = new Date(dt.getFullYear(), 0, 1);
+                break;
+            case "MONTH":
+                dt = new Date(dt.getFullYear(), dt.getMonth(), 1);
+                break;
+            case "DAY":
+                dt = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate(), 0);
+                break;
+            case "WEEK":
+                const tempDay = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate(), 0);
+                const day = tempDay.getDay();
+                dt = new Date(tempDay.setDate(dt.getDate() - day + (day === 0 ? -6:1)));
+                break;
+            default:
+                dt = new Date(0);
+                break;
+        }
+    
+        if(dt.getTime() === 0) {
+            res = payments.data;
+        } else {
+            const today = new Date().getTime();
+            payments.data.forEach(pay => {
+                const paytime = Date.parse(pay.date);
+                if(paytime <= today && paytime >= dt.getTime()) {
+                    res.push(pay);
+                }
             });
-        }, []);
+        }
+        if(res) {
+            return ((res.reduce((a, b) => a + (b.amount || 0), 0) / SL.amount)*100).toFixed(1);
+        }
+        
+    }
+
+    const errorNotif = (text) => {
+        toast.error(text, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+        });
+    }
+    
+    const warnNotif = (text) => {
+        toast.warn(text, {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "colored",
+        });
+    }
 
     const onSubmit = async (e) => {
         //Check all values are filled in
@@ -130,7 +221,24 @@ function AddPayment() {
             })
 
             console.log(response);
-            if (response.status === 201) navigate("/payments");
+            
+            const globalPercentage = await getSpendingLimitPercentage("1");
+            const categoryPercentage = await getSpendingLimitPercentage(formValues["categoryId"]);
+
+            console.log(globalPercentage);
+            console.log(categoryPercentage);
+
+            if(globalPercentage > 80) {
+                if(globalPercentage > 100) errorNotif("You have exceeded your global spending limit!");
+                else warnNotif("You are close to exceeding your global spending limit!");
+            } 
+            if(categoryPercentage > 80) {
+                if(categoryPercentage > 100) errorNotif(`You have exceeded your spending limit for '${getCatNameByID(formValues["categoryId"])}!'`)
+                else warnNotif(`You are close to exceeding your spending limit for '${getCatNameByID(formValues["categoryId"])}!'`)
+            }
+             
+            if(response.status === 201) navigate("/payments");
+            
 
         } catch (err) {
             if(err.response.data.error === "PayloadTooLargeError") setErrorMessage("File size is too large!");
