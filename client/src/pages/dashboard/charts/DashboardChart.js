@@ -86,7 +86,7 @@ const processData = ({data, cumulative=false, cumulateBy=dataValueToUnix}) => {
   
     let total = 0;
     if (data !== undefined) {
-      data.sort((a, b) => ascendingCompare(new Date(Date.parse(a.date)), new Date(Date.parse(b.date))));
+    //   data.sort((a, b) => ascendingCompare(new Date(Date.parse(a.date)), new Date(Date.parse(b.date))));
       data.reduce(function(res, value) {
         const dateString = cumulateBy(value);
   
@@ -118,7 +118,10 @@ const processData = ({data, cumulative=false, cumulateBy=dataValueToUnix}) => {
     // const v = paymentObjects[new Date(now.getFullYear(), now.getMonth(), 1).getTime()];
     // console.log(v);
     // console.log(Object.values(paymentObjects));
-    
+    console.log("------------------------")
+    Object.values(paymentObjects).forEach((val, index) => {
+    console.log(`${new Date(Number(val.date)).toLocaleDateString()} => ${val.amount}`);
+    });
 
     return Object.values(paymentObjects);
   }

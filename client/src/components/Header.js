@@ -66,7 +66,7 @@ export default function Header(props) {
                   <div className="header-link">Limits</div>
                 </li>
               </Link>
-              <Link to={"/register"}>
+              <Link to={"/reports"}>
                 <li>
                   <div className="header-link">Reports</div>
                 </li>
