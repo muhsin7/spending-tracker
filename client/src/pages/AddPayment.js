@@ -158,6 +158,20 @@ function AddPayment() {
     }
   };
 
+  const achievementNotif = (text) => {
+    toast.info(text, {
+      position: "top-right",
+      autoClose: 5000,
+      toastStyle: "#1CFCB9",
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+  };
+
   const errorNotif = (text) => {
     toast.error(text, {
       position: "top-right",
@@ -259,7 +273,14 @@ function AddPayment() {
           );
       }
 
-      if (response.status === 201) navigate("/payments");
+      if (response.status === 201) {
+        if (response.data.achievements.length !== 0) {
+          response.data.achievements.forEach((achievement) =>
+            achievementNotif("New achievement unlocked!\n" + achievement.title)
+          );
+        }
+        navigate("/payments");
+      }
     } catch (err) {
       if (err.response.data.error === "PayloadTooLargeError")
         setErrorMessage("File size is too large!");
