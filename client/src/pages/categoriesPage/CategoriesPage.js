@@ -32,7 +32,7 @@ function CategoriesPage() {
 
   return (
     <div className="categoryPage">
-      <h1>Categories</h1>
+      <h1 className="category-header">Categories</h1>
       <div
         className="payments-add-payment"
         onClick={() => navigate("/addCategory")}
