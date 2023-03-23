@@ -12,19 +12,19 @@ const getLargestPayment = (payments) => {
 
 const checkRequirement = (requirement, value) => {
   if (requirement == undefined) return true;
-
-  if (requirement.boolOp == undefined || requirement.boolOp == "AND") {
-    return (requirement.target <= value);
-  } else if (requirement.boolOp == "OR") {
-    return true;
-  }
+  return (requirement.target <= value);
 };
 
 const checkAchieved = (spec, noPayments, largestPayment) => {
   // one condition is already met at this point
   const paymentsMet = checkRequirement(spec.requirements.noPayments, noPayments);
   const largestMet = checkRequirement(spec.requirements.largestPayment, largestPayment);
-  return paymentsMet && largestMet;
+
+  if (spec.requirements.boolOp == undefined || spec.requirements.boolOp == "AND") {
+    return paymentsMet && largestMet;
+  } else {
+    return paymentsMet || largestMet;
+  }
 };
 
 const filterAchievements = (specs, noPayments, largestPayment) => {
