@@ -9,6 +9,7 @@ const should = chai.should();
 
 chai.use(chaiHttp);
 
+console.lot("Github Actions test");
 console.log(process.env.CORS_ORIGIN);
 
 //TEST USER API
