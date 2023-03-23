@@ -14,6 +14,10 @@ jobs:
 
     runs-on: ubuntu-latest
 
+    defaults:
+      run:
+        working-directory: ./server
+
     strategy:
       matrix:
         node-version: [18.x]
@@ -27,7 +31,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
         cache-dependency-path: server/package-lock.json
+    - run: |
+          echo "${{ secrets.ENV_FILE }}" > .env
     - run: npm ci
-      working-directory: server
     - run: npm run test
-      working-directory: server
