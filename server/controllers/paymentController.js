@@ -55,7 +55,7 @@ const getPayment = asyncHandler(async (req, res) => {
     res.status(400).json({error: error.message});
   }
 });
-  
+
 // post new
 const createPayment = asyncHandler(async (req, res) => {
   try {
@@ -71,7 +71,7 @@ const createPayment = asyncHandler(async (req, res) => {
     res.status(400).json({error: error.message});
   }
 });
-  
+
 // delete
 const deletePayment = asyncHandler(async (req, res) => {
   try {
