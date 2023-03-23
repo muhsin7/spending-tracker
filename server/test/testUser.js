@@ -323,38 +323,6 @@ describe("User tests", () => {
     });
 
     it("should not provide a user with an expired token their profile"); 
-
-    it("should update exp", async () => {
-      const beforeUser = await chai.request(app)
-        .get("/api/user/profile/")
-        .set("Authorization", ("Bearer " + validToken)); 
-
-      const beforeExp = beforeUser.body.exp; 
-      const res = await chai.request(app)
-        .patch("/api/user/exp")
-        .send({exp: 1})
-        .set("Authorization", ("Bearer " + validToken));
-        
-      res.should.have.status(200);
-      res.body.should.be.a("object"); 
-      res.body.should.have.property("exp").eql(beforeExp + 1);
-    }); 
-
-    it("should update level when there is enough exp", async () => {
-      const beforeUser = await chai.request(app)
-        .get("/api/user/profile/")
-        .set("Authorization", ("Bearer " + validToken)); 
-
-      const beforeLevel = beforeUser.body.level; 
-      const res = await chai.request(app)
-        .patch("/api/user/exp")
-        .send({exp: 100})
-        .set("Authorization", ("Bearer " + validToken));
-
-      res.should.have.status(200);
-      res.body.should.be.a("object"); 
-      res.body.should.have.property("level").eql(beforeLevel + 1);
-    }); 
   });
   
 });
