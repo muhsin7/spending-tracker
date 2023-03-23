@@ -9,6 +9,8 @@ const should = chai.should();
 
 chai.use(chaiHttp);
 
+console.log(process.env.CORS_ORIGIN);
+
 //TEST USER API
 describe("User tests", () => {
   
