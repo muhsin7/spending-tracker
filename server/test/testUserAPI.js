@@ -10,7 +10,13 @@ const should = chai.should();
 chai.use(chaiHttp);
 
 console.log("Github Actions test");
-console.log(process.env.CORS_ORIGIN);
+if (process.env.DB_URI) {
+  console.log("There is a DB URI registered");
+}
+else {
+  console.log("There is no DB URI registered");
+}
+
 
 //TEST USER API
 describe("User tests", () => {
