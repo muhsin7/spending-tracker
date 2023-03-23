@@ -1,10 +1,9 @@
 import CategoryCard from "./CategoryCard";
-import CategoryCardEdit from "./CategoryCardEdit";
 import React from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useToken } from "../../authentication/useToken";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
 
 function CategoriesPage() {
@@ -27,7 +26,7 @@ function CategoriesPage() {
 
   const rows = [];
   categories.forEach((e) => {
-    rows.push(<CategoryCard category={e} key={e._id} token={token}/>);
+    rows.push(<CategoryCard category={e} key={e._id} token={token} />);
   });
 
   return (

@@ -289,6 +289,36 @@ describe("Achievement tests", () => {
           }
         }
       });
+
+      await AchievementSpec.create({
+        title: "Big payment",
+        description: "Pay a lot of money",
+        exp: 10,
+        requirements: {
+          noPayments: {
+            target: 1
+          },
+          largestPayment: {
+            target: 500
+          },
+          boolOp: "AND"
+        }
+      });
+
+      await AchievementSpec.create({
+        title: "Another Big payment",
+        description: "Pay a lot of money",
+        exp: 10,
+        requirements: {
+          noPayments: {
+            target: 98
+          },
+          largestPayment: {
+            target: 600
+          },
+          boolOp: "OR"
+        }
+      });
     });
 
     afterEach(async() => {
@@ -319,58 +349,40 @@ describe("Achievement tests", () => {
       should.equal(achievement.description, "Create your first payment");
       should.equal(achievement.owned, true);
       should.equal(achievement.exp, 10);
+      should.equal(res.body.achievements.length, 1);
     });
 
-    it("should detect an achievement that requires both conditions && detect simultaneosly", async() => {
-      await AchievementSpec.create({
-        title: "Big payment",
-        description: "Pay a lot of money",
-        exp: 10,
-        requirements: {
-          noPayments: {
-            target: 1,
-            boolOp: "AND"
-          },
-          largestPayment: {
-            target: 500,
-            boolOp: "AND"
-          }
-        }
-      });
-
-      const res = await chai.request(app)
-        .post("/api/payment/")
-        .send(await genPayment(700))
-        .set("Authorization", ("Bearer " + authToken));
-
-      res.should.have.status(201);
-      should.equal(res.body.achievements.length, 2);
-    });
-
-    it("should detect an achievement that requires one of two conditions", async() => {
-      await AchievementSpec.create({
-        title: "Another Big payment",
-        description: "Pay a lot of money",
-        exp: 10,
-        requirements: {
-          noPayments: {
-            target: 1,
-            boolOp: "AND"
-          },
-          largestPayment: {
-            target: 500,
-            boolOp: "OR"
-          }
-        }
-      });
-
+    it("should not get an achievement when ther requirements are not met", async() => {
       const res = await chai.request(app)
         .post("/api/payment/")
         .send(await genPayment(200))
         .set("Authorization", ("Bearer " + authToken));
 
       res.should.have.status(201);
+      res.body.should.have.property("achievements");
+      should.equal(res.body.achievements.length, 1); // should not get achievement 2 and 3
+    });
+
+    it("should detect an achievement that requires both conditions && detect simultaneosly", async() => {
+      const res = await chai.request(app)
+        .post("/api/payment/")
+        .send(await genPayment(500))
+        .set("Authorization", ("Bearer " + authToken));
+
+      res.should.have.status(201);
+      res.body.should.have.property("achievements");
       should.equal(res.body.achievements.length, 2);
+    });
+
+    it("should detect an achievement that requires one of two conditions", async() => {
+      const res = await chai.request(app)
+        .post("/api/payment/")
+        .send(await genPayment(800))
+        .set("Authorization", ("Bearer " + authToken));
+
+      res.should.have.status(201);
+      res.body.should.have.property("achievements");
+      should.equal(res.body.achievements.length, 3);
     });
 
     it("should not create an achievement that has already been created", async() => {
@@ -383,6 +395,8 @@ describe("Achievement tests", () => {
         .post("/api/payment/")
         .send(await genPayment(300))
         .set("Authorization", ("Bearer " + authToken));
+
+      res.body.should.have.property("achievements");
       should.equal(res.body.achievements.length, 0);
     });
   });

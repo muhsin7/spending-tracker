@@ -82,7 +82,7 @@ async function createRandomPayment(user) {
   const payment = {
     title: faker.commerce.product(),
     description: faker.commerce.productDescription(),
-    amount: rand(100) / 10,
+    amount: (rand(100) / 10) + 1, //Payment amount must be at least 1
     categoryId: category._id,
     userId: user._id,
     image: {

@@ -3,13 +3,14 @@ const mongoose = require("mongoose");
 /*
   Achievement requirements will be as follows:
 
-  target: {
-    type: Number
-  },
-  boolOp: {
-    type: String,
-    enum: ["AND", "OR"],
-    default: "AND"
+  requirement : {
+    req...: {
+      target: Number
+    },
+    boolOp: {
+      type: String,
+      enum ["AND", "OR"]
+    }
   }
 */
 
@@ -22,13 +23,6 @@ const checkIsPaymentAchievement = (object) => {
   return (object.noPayments != null 
     || object.largestPayment != null);
 };
-
-const checkIsLimitAchievement = (object) => {
-  return (object.limitsSet != null 
-    || object.limitsMetStreak != null
-    || object.limitsMet != null);
-};
-
 
 const achievementSpecSchema = mongoose.Schema({
   title: {
@@ -44,7 +38,7 @@ const achievementSpecSchema = mongoose.Schema({
   },
   type: {
     type: String,
-    enum: ["category, payment, limit"],
+    enum: ["category, payment"],
     immutable: true
   },
   exp: {
@@ -59,7 +53,7 @@ const achievementSpecSchema = mongoose.Schema({
     unique: true,
     validate: {
       validator: (value) => {
-        return checkIsCategoryAchievement(value) || checkIsPaymentAchievement(value) || checkIsLimitAchievement(value);
+        return checkIsCategoryAchievement(value) || checkIsPaymentAchievement(value);
       },
       message: "Invalid achievement requirements"
     }
@@ -72,12 +66,6 @@ achievementSpecSchema.pre("save", async function(next) {
 
   } else if (checkIsPaymentAchievement(this.requirements)) {
     this.type = "payment";
-
-  } else if (checkIsLimitAchievement(this.requirements)) {
-    this.type = "limit";
-
-  } else {
-    throw new Error("Invalid achievement type");
   }
   next();
 });
