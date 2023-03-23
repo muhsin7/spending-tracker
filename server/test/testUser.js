@@ -334,7 +334,7 @@ describe("User tests", () => {
         .patch("/api/user/exp")
         .send({exp: 1})
         .set("Authorization", ("Bearer " + validToken));
-      console.log(res.body)
+        
       res.should.have.status(200);
       res.body.should.be.a("object"); 
       res.body.should.have.property("exp").eql(beforeExp + 1);
@@ -350,7 +350,7 @@ describe("User tests", () => {
         .patch("/api/user/exp")
         .send({exp: 100})
         .set("Authorization", ("Bearer " + validToken));
-      console.log(res.body)
+
       res.should.have.status(200);
       res.body.should.be.a("object"); 
       res.body.should.have.property("level").eql(beforeLevel + 1);
