@@ -88,3 +88,27 @@
 .btn-danger {
   background-color: #db2a2a;
 }
+
+.Toastify__toast--info {
+  background: #00b57f !important;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif !important;
+  white-space: pre-line;
+}
+
+.Toastify__toast--warn {
+  background: #ffb036 !important;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif !important;
+  white-space: pre-line;
+}
+
+.Toastify__toast--error {
+  background: #ef0033 !important;
+  font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif !important;
+  white-space: pre-line;
+}
