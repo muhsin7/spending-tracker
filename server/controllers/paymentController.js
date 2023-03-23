@@ -54,7 +54,7 @@ const getPayment = asyncHandler(async (req, res) => {
     res.status(400).json({error: error.message});
   }
 });
-  
+
 // post new
 const createPayment = asyncHandler(async (req, res) => {
   try {
@@ -62,11 +62,10 @@ const createPayment = asyncHandler(async (req, res) => {
     const payment = await Payment.create({title, description, date, amount, image, categoryId, userId: req.user.id});
     res.status(201).json(payment);
   } catch (error) {
-    console.log(error);
     res.status(400).json({error: error.message});
   }
 });
-  
+
 // delete
 const deletePayment = asyncHandler(async (req, res) => {
   try {

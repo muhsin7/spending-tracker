@@ -343,6 +343,21 @@ describe("Payment tests", () => {
       payments.should.be.equal(initPayments); 
     });
 
+    it("should not allow the user to create a payment with a category that does not exist", async() => {
+      const initPayments = await Payment.countDocuments();
+      let payment = await genPayment();
+      payment.categoryId = "641c50aefbe4e1e266666666";
+
+      const res = await chai.request(app)
+        .post("/api/payment/")
+        .send(payment)
+        .set("Authorization", ("Bearer " + authToken));
+
+      const payments = await Payment.countDocuments();
+      assertError(res, 404);
+      payments.should.be.equal(initPayments); 
+    });
+
     it("should get a summary of payments", async() => {
       const today = new Date();
 
@@ -382,7 +397,7 @@ describe("Payment tests", () => {
       });
 
       const res = await chai.request(app)
-        .get("/api/payment/summary")
+        .get("/api/payment/summary/?days=500")
         .set("Authorization", ("Bearer " + authToken));
 
       should.exist(res.body);
@@ -391,6 +406,7 @@ describe("Payment tests", () => {
       res.body.should.have.property("week", 22.5);
       res.body.should.have.property("month", 32.5);
       res.body.should.have.property("year", 42.5);
+      res.body.should.have.property("custom", 42.5);
     });
 
     it("should post a valid payment", async() => {
