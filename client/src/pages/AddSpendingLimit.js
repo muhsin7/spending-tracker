@@ -129,6 +129,7 @@ export default function AddSpendingLimit() {
                 value={formValues["duration"]}
                 name="duration"
                 onChange={onFormChange}
+                data-testid="duration"
               >
                 <option key="" value=""></option>
                 {["YEAR", "MONTH", "DAY", "WEEK"].map((option) => (
