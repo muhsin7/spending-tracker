@@ -76,42 +76,51 @@ export default function AchievementsSortBy(props) {
   }
 
   function earliestDateFirst() {
+    // 8640000000000000 will create the largest date possible
     props.setAchievements([
-      ...props.achievements.sort((a, b) =>
-        ascendingCompare(
-          new Date(Date.parse(a.date)),
-          new Date(Date.parse(b.date))
-        )
-      ),
+      ...props.achievements.sort((a, b) => {
+        const A =
+          a.date !== null
+            ? new Date(Date.parse(a.date))
+            : new Date(8640000000000000);
+        const B =
+          b.date !== null
+            ? new Date(Date.parse(b.date))
+            : new Date(8640000000000000);
+        return ascendingCompare(A, B);
+      }),
     ]);
 
     props.setDefaultAchievements([
-      ...props.defaultAchievements.sort((a, b) =>
-        ascendingCompare(
-          new Date(Date.parse(a.date)),
-          new Date(Date.parse(b.date))
-        )
-      ),
+      ...props.defaultAchievements.sort((a, b) => {
+        const A =
+          a.date !== null
+            ? new Date(Date.parse(a.date))
+            : new Date(8640000000000000);
+        const B =
+          b.date !== null
+            ? new Date(Date.parse(b.date))
+            : new Date(8640000000000000);
+        return ascendingCompare(A, B);
+      }),
     ]);
   }
 
   function latestDateFirst() {
     props.setAchievements([
-      ...props.achievements.sort((a, b) =>
-        descendingCompare(
-          new Date(Date.parse(a.date)),
-          new Date(Date.parse(b.date))
-        )
-      ),
+      ...props.achievements.sort((a, b) => {
+        const A = a.date !== null ? new Date(Date.parse(a.date)) : new Date(0);
+        const B = b.date !== null ? new Date(Date.parse(b.date)) : new Date(0);
+        return descendingCompare(A, B);
+      }),
     ]);
 
     props.setDefaultAchievements([
-      ...props.defaultAchievements.sort((a, b) =>
-        descendingCompare(
-          new Date(Date.parse(a.date)),
-          new Date(Date.parse(b.date))
-        )
-      ),
+      ...props.defaultAchievements.sort((a, b) => {
+        const A = a.date !== null ? new Date(Date.parse(a.date)) : new Date(0);
+        const B = b.date !== null ? new Date(Date.parse(b.date)) : new Date(0);
+        return descendingCompare(A, B);
+      }),
     ]);
   }
 

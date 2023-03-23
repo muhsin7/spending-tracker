@@ -20,11 +20,7 @@ const checkIsCategoryAchievement = (object) => {
 
 const checkIsPaymentAchievement = (object) => {
   return (object.noPayments != null 
-    || object.largestPayment != null
-    || object.perYear != null
-    || object.perMonth != null
-    || object.perWeek != null
-    || object.perDay  != null);
+    || object.largestPayment != null);
 };
 
 const checkIsLimitAchievement = (object) => {
