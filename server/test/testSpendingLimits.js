@@ -267,7 +267,7 @@ describe("Spending Limit tests", () => {
 
       const spendingLimits = await SpendingLimit.countDocuments();
       spendingLimits.should.be.equal(initSpendingLimits + 1);
-      res.should.have.status(200);
+      res.should.have.status(201);
       res.should.have.property("body");
       res.body.should.have.property("name", "grocery limit");
       res.body.should.have.property("amount", 2);
