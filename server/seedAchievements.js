@@ -114,7 +114,6 @@ async function createPaymentAchievements() {
 }
 
 async function seed() {
-  await utils.flushDB();
   await createCategoryAchievements();
   await createPaymentAchievements();
   process.exit();
