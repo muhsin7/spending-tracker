@@ -346,7 +346,6 @@ describe("Category tests", () => {
         .get("/api/category/noSpendingLimit")
         .set("Authorization", ("Bearer " + authToken));
       
-      console.log(res.body);
       res.should.have.status(200);
       res.should.have.property("body");
       should.exist(res.body, "Should have gotten an array of categories");

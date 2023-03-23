@@ -278,8 +278,6 @@ describe("Spending Limit tests", () => {
       const res = await chai.request(app)
         .get("/api/limit/" + spendingLimit._id)
         .set("Authorization", ("Bearer " + authToken));
-      
-      console.log(res.body);
 
       res.should.have.status(200);
       res.should.have.property("body");
