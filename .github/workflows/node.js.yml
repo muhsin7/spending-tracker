@@ -35,7 +35,7 @@ jobs:
     - run: touch .env
     - run: ls -a
     - run: |
-        echo "${{ secrets.ENV_FILE }}" .env
+        echo "${{ secrets.ENV_FILE }}" > .env
     - run: cat .env
     - run: npm ci
     - run: npm run test
