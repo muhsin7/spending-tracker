@@ -31,10 +31,8 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
         cache-dependency-path: server/package-lock.json
-    - name: 'Create env file'
     - run: touch .env
-    - 
-      run: |
+    - run: |
         echo "${{ secrets.ENV_FILE }}" > .env
     - run: ls
     - run: npm ci
