@@ -66,6 +66,34 @@ describe("Category tests", () => {
         });      
     });
 
+    it("should require a name of at least 3 characters", async() => {
+      await Category.create({
+        name: "Fo",
+        userId: user._id
+      })
+        .catch((error) => {
+          should.exist(error);
+          error.should.have.property("name").eql("ValidationError");
+        })
+        .then((category) => {
+          should.not.exist(category, "The category should have been invalid");
+        });      
+    });
+
+    it("should require a name less than 61 characters", async() => {
+      await Category.create({
+        name: "A".repeat(61),
+        userId: user._id
+      })
+        .catch((error) => {
+          should.exist(error);
+          error.should.have.property("name").eql("ValidationError");
+        })
+        .then((category) => {
+          should.not.exist(category, "The category should have been invalid");
+        });      
+    });
+
     it("should require a user", async() => {
       await Category.create({
         name: "Food"
