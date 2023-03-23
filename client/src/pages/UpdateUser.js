@@ -31,24 +31,18 @@ export default function UpdateUser() {
     if (nameValue !== user.name) data.name = nameValue;
     if (passwordValue !== "") data.password = passwordValue;
 
-    if (data === {}) return;
+    if (Object.keys(data).length === 0) navigate("/dashboard");
 
     try {
-      const response = await axios.patch(
-        "/api/user",
-        {
-          name: nameValue,
+      const response = await axios.patch("/api/user", data, {
+        headers: {
+          Authorization: "Bearer " + token,
         },
-        {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
-      );
+      });
 
       console.log(response);
 
-      if (response.status === 201) navigate("/dashboard");
+      if (response.status === 200) navigate("/dashboard");
     } catch (err) {
       console.log(err.response.data);
       setErrorMessage(err.response.data.error);
