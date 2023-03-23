@@ -4,7 +4,6 @@ import axios from "axios";
 import { useToken } from "../authentication/useToken";
 import { useAuth } from "../authentication/useAuth";
 import Background from "./Background";
-import {BrowserRouter as Router} from 'react-router-dom';
 
 function Login() {
   const [token, setToken] = useToken();
@@ -24,35 +23,29 @@ function Login() {
     return formIsValid;
   };
 
-  
-
   const onLoginClicked = async (e) => {
     e.preventDefault();
-    try{
+    try {
       if (handleValidation) {
         const res = await axios.post("/api/user/login", {
           email: emailValue,
           password: passwordValue,
         });
-  
+
         console.log(res);
         const { token } = res.data;
         setToken(token);
         setAuth(true);
         window.location.reload(true);
       }
-    }
-    catch (err) {
+    } catch (err) {
       setErrorMessage("Your credentials don't match our system!");
     }
-    
   };
-  
-  
 
-  return(
+  return (
     <main className="registerPage">
-        <Background />
+      <Background />
       <section className="form">
         <h1 className="form-header">Login</h1>
         {errorMessage && <div className="error-message">{errorMessage}</div>}
@@ -85,7 +78,9 @@ function Login() {
             <button id="loginButton" type="submit" className="btn">
               Login
             </button>
-            <div className="login-signup-link">Don't have an account? <Link to="/register">Register here!</Link></div>
+            <div className="login-signup-link">
+              Don't have an account? <Link to="/register">Register here!</Link>
+            </div>
           </form>
         </div>
       </section>
