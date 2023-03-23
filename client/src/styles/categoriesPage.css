@@ -58,6 +58,14 @@
   margin-left: 2.5px;
 }
 
+.category-confirm-button {
+  margin-right: 2.5px;
+}
+
+.category-cancel-button {
+  margin-left: 2.5px;
+}
+
 .category-spending-limit-button {
   margin-top: 5px;
   margin-bottom: 10px;
@@ -67,4 +75,21 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
+}
+
+.category-edit-buttons {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.category-edit-input {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: black;
+  background-color: darkgrey;
+  border-radius: 12px;
+  border: none;
+  padding: 0.2em;
+  margin-bottom: 5px;
 }
