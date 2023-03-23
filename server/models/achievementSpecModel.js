@@ -3,13 +3,14 @@ const mongoose = require("mongoose");
 /*
   Achievement requirements will be as follows:
 
-  target: {
-    type: Number
-  },
-  boolOp: {
-    type: String,
-    enum: ["AND", "OR"],
-    default: "AND"
+  requirement : {
+    req...: {
+      target: Number
+    },
+    boolOp: {
+      type: String,
+      enum ["AND", "OR"]
+    }
   }
 */
 

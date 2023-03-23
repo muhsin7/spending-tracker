@@ -1,8 +1,15 @@
 const AchievementSpec = require("./models/achievementSpecModel");
+const User = require("./models/userModel");
 const utils = require("./test/utils");
+
+const {detectCategoryAchievements} = require("./util/categoryAchievementDetection");
+const {detectPaymentAchievements} = require("./util/paymentAchievementDetection");
 
 const app = require("./app");
 
+/**
+ * Create category achievements in DB
+ */
 async function createCategoryAchievements() {
   const firstCategory = {
     title: "Your first category",
@@ -34,7 +41,7 @@ async function createCategoryAchievements() {
 
     const spec = {
       title: (num + " categories"),
-      description: ("Create" + num + " categories"),
+      description: ("Create " + num + " categories"),
       exp: 2*num,
       requirements: {
         noCategories: {
@@ -46,6 +53,9 @@ async function createCategoryAchievements() {
   }
 }
 
+/**
+ * Create payment achievements in DB
+ */
 async function createPaymentAchievements() {
   const firstPayment = {
     title: "Your first payment",
@@ -84,7 +94,7 @@ async function createPaymentAchievements() {
   await AchievementSpec.create(wysi);
   await AchievementSpec.create(impossible);
 
-  for (let i = 1; i < 11; i++) {
+  for (let i = 1; i < 21; i++) {
     const num = i*10;
 
     const noAchievement = {
@@ -99,7 +109,7 @@ async function createPaymentAchievements() {
     };
 
     const largestPayment = {
-      title: (num + " spent"),
+      title: ("Spend " + num),
       description: ("spend " + num + "  in one go"),
       exp: num,
       requirements: {
@@ -113,9 +123,28 @@ async function createPaymentAchievements() {
   }
 }
 
+/**
+ * Add unlocked achievements to existing users
+ */
+async function detectAchievements() {
+  const users = await User.find({});
+
+  for (let i = 0; i < users.length; i++) {
+    const mockReq = {
+      user: {
+        id: users[i]._id
+      }
+    };
+
+    await detectCategoryAchievements(mockReq);
+    await detectPaymentAchievements(mockReq);
+  }
+}
+
 async function seed() {
   await createCategoryAchievements();
   await createPaymentAchievements();
+  await detectAchievements();
   process.exit();
 }
 
