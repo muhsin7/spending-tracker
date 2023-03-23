@@ -1,5 +1,6 @@
 const Payment = require("../models/paymentModel");
 const asyncHandler = require("express-async-handler");
+const {detectPaymentAchievements} = require("../util/paymentAchievementDetection");
 
 // get all
 const getPayments = asyncHandler(async (req, res) => {
@@ -52,7 +53,12 @@ const createPayment = asyncHandler(async (req, res) => {
   try {
     const {title, description, date, amount, image, categoryId} = req.body;
     const payment = await Payment.create({title, description, date, amount, image, categoryId, userId: req.user.id});
-    res.status(201).json(payment);
+    const achievements = await detectPaymentAchievements(req);
+
+    let payObj = payment.toObject();
+    payObj.achievements = achievements;
+
+    res.status(201).json(payObj);
   } catch (error) {
     console.log(error);
     res.status(400).json({error: error.message});

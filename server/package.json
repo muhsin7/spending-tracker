@@ -9,7 +9,8 @@
     "start": "node app.js",
     "concStart": "concurrently \"npm run start\" \"cd ../client && npm start\"",
     "dev": "nodemon app.js",
-    "seed": "node seed.js"
+    "seed": "node seed.js",
+    "seedAchievements": "node seedAchievements.js"
   },
   "author": "All Good",
   "license": "ISC",
