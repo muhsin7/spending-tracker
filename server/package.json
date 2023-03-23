@@ -4,7 +4,7 @@
   "description": "\"Node.js backend for spending tracker application\"",
   "main": "app.js",
   "scripts": {
-    "test": "cross-env NODE_ENV=test mocha --exit",
+    "test": "cross-env NODE_ENV=test TSET_DB_URI=mongodb+srv://AllGoodAdmin:G0P1jDT3qVzdLX5f@cluster0.ml5zgb3.mongodb.net/?retryWrites=true&w=majority mocha --exit",
     "test-single": "cross-env mocha --exit",
     "start": "node app.js",
     "dev": "nodemon app.js"
