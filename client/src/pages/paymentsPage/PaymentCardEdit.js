@@ -5,6 +5,7 @@ import { FaCheck, FaTimes } from "react-icons/fa";
 import DatePicker from "react-datepicker";
 import Popup from "reactjs-popup";
 import { Buffer } from "buffer";
+import { toast } from "react-toastify";
 
 export default function PaymentCardEdit(props) {
   const TITLE = props.payment.title;
@@ -41,6 +42,7 @@ export default function PaymentCardEdit(props) {
     );
   }
 
+
   function isChanged() {
     // Assume that checks for newPrice and PRICE being valid numbers have already been done
     return (
@@ -53,9 +55,22 @@ export default function PaymentCardEdit(props) {
     );
   }
 
+  const errorNotif = (text) => {
+    toast.error(text, {
+      position: "top-right",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    });
+  };
+
   async function handleConfirm() {
     if (!newPrice.match(/^\d+(.\d+)?$/)) {
-      alert("The price entered isn't a valid number!");
+      errorNotif("The price entered isn't a valid number!");
       return;
     }
 
@@ -83,12 +98,18 @@ export default function PaymentCardEdit(props) {
           newImageURL.indexOf(";")
         ),
       };
-
-    await axios.patch("/api/payment/" + props.payment._id, data, {
-      headers: {
-        Authorization: "Bearer " + props.token,
-      },
-    });
+    
+    try {
+      const res = await axios.patch("/api/payment/" + props.payment._id, data, {
+        headers: {
+          Authorization: "Bearer " + props.token,
+        },
+      });
+    }
+    catch (err) {
+      errorNotif("The file you uploaded was too large!");
+      return;
+    }
 
     window.location.reload();
   }
