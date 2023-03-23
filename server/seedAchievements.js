@@ -1,8 +1,15 @@
 const AchievementSpec = require("./models/achievementSpecModel");
+const User = require("./models/userModel");
 const utils = require("./test/utils");
+
+const {detectCategoryAchievements} = require("./util/categoryAchievementDetection");
+const {detectPaymentAchievements} = require("./util/paymentAchievementDetection");
 
 const app = require("./app");
 
+/**
+ * Create category achievements in DB
+ */
 async function createCategoryAchievements() {
   const firstCategory = {
     title: "Your first category",
@@ -46,6 +53,9 @@ async function createCategoryAchievements() {
   }
 }
 
+/**
+ * Create payment achievements in DB
+ */
 async function createPaymentAchievements() {
   const firstPayment = {
     title: "Your first payment",
@@ -113,9 +123,28 @@ async function createPaymentAchievements() {
   }
 }
 
+/**
+ * Add unlocked achievements to existing users
+ */
+async function detectAchievements() {
+  const users = await User.find({});
+
+  for (let i = 0; i < users.length; i++) {
+    const mockReq = {
+      user: {
+        id: users[i]._id
+      }
+    };
+
+    await detectCategoryAchievements(mockReq);
+    await detectPaymentAchievements(mockReq);
+  }
+}
+
 async function seed() {
   await createCategoryAchievements();
   await createPaymentAchievements();
+  await detectAchievements();
   process.exit();
 }
 
