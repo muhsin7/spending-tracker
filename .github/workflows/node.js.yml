@@ -30,10 +30,10 @@ jobs:
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-        cache-dependency-path: server/package-lock.json
+        cache-dependency-path: server/package-lock.json 
     - run: touch .env
     - run: |
-        echo "${{ secrets.ENV_FILE }}" > .env
+        echo "${{ secrets.ENV_FILE }}" >> .env
     - run: ls
     - run: npm ci
     - run: npm run test
