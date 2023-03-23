@@ -82,7 +82,41 @@ describe("Payment tests", () => {
         })
         .then((payment) => {
           should.not.exist(payment, "The payment should have been invalid");
-        });      
+        });
+    });
+
+    it("should require a title of at least 3 characters", async() => {
+      await Payment.create({
+        title: "aa",
+        description: "A 1kg bag of carrots",
+        amount: 2,
+        categoryId: category._id,
+        userId: user._id
+      })
+        .catch((error) => {
+          should.exist(error);
+          error.should.have.property("name").eql("ValidationError");
+        })
+        .then((payment) => {
+          should.not.exist(payment, "The payment should have been invalid");
+        });
+    });
+
+    it("should require a title less than 61 characters", async() => {
+      await Payment.create({
+        title: "a".repeat(61),
+        description: "A 1kg bag of carrots",
+        amount: 2,
+        categoryId: category._id,
+        userId: user._id
+      })
+        .catch((error) => {
+          should.exist(error);
+          error.should.have.property("name").eql("ValidationError");
+        })
+        .then((payment) => {
+          should.not.exist(payment, "The payment should have been invalid");
+        });
     });
 
     it("should require a description", async() => {
@@ -101,10 +135,61 @@ describe("Payment tests", () => {
         }); 
     });
 
+    it("should require a description of at least 3 characters", async() => {
+      await Payment.create({
+        title: "Carrots",
+        description: "AA",
+        amount: 2.6,
+        categoryId: category._id,
+        userId: user._id
+      })
+        .catch((error) => {
+          should.exist(error);
+          error.should.have.property("name").eql("ValidationError");
+        })
+        .then((payment) => {
+          should.not.exist(payment, "The payment should have been invalid");
+        }); 
+    });
+
+    it("should require a description less than 301 characters", async() => {
+      await Payment.create({
+        title: "Carrots",
+        description: "A".repeat(301),
+        amount: 2,
+        categoryId: category._id,
+        userId: user._id
+      })
+        .catch((error) => {
+          should.exist(error);
+          error.should.have.property("name").eql("ValidationError");
+        })
+        .then((payment) => {
+          should.not.exist(payment, "The payment should have been invalid");
+        }); 
+    });
+
     it("should require an amount", async() => {
       await Payment.create({
         title: "Carrots",
         description: "A 1kg bag of carrots",
+        categoryId: category._id,
+        userId: user._id
+      })
+        .catch((error) => {
+          should.exist(error);
+          error.should.have.property("name").eql("ValidationError");
+        })
+        .then((payment) => {
+          should.not.exist(payment, "The payment should have been invalid");
+        }); 
+    });
+
+    it("should require an amount to be a positive number", async() => {
+      await Payment.create({
+        title: "Carrots",
+        description: "A 1kg bag of carrots",
+        amount: -19,
         categoryId: category._id,
         userId: user._id
       })
@@ -258,7 +343,71 @@ describe("Payment tests", () => {
       payments.should.be.equal(initPayments); 
     });
 
-    it("should get a summary of payments");
+    it("should not allow the user to create a payment with a category that does not exist", async() => {
+      const initPayments = await Payment.countDocuments();
+      let payment = await genPayment();
+      payment.categoryId = "641c50aefbe4e1e266666666";
+
+      const res = await chai.request(app)
+        .post("/api/payment/")
+        .send(payment)
+        .set("Authorization", ("Bearer " + authToken));
+
+      const payments = await Payment.countDocuments();
+      assertError(res, 404);
+      payments.should.be.equal(initPayments); 
+    });
+
+    it("should get a summary of payments", async() => {
+      const today = new Date();
+
+      await Payment.create({ // today
+        title: "Carrots",
+        description: "A 1kg bag of carrots",
+        amount: 10,
+        categoryId: category._id,
+        userId: user._id
+      });
+
+      await Payment.create({ // within last week
+        title: "Carrots",
+        description: "A 1kg bag of carrots",
+        amount: 10,
+        date: new Date(today.getFullYear(), today.getMonth(), Math.max(1, today.getDate() - 6)), // within week not before
+        categoryId: category._id,
+        userId: user._id
+      });
+
+      await Payment.create({ // within last month
+        title: "Carrots",
+        description: "A 1kg bag of carrots",
+        amount: 10,
+        date: new Date(today.getFullYear(), today.getMonth(), Math.max(1, today.getDate() - 8)),
+        categoryId: category._id,
+        userId: user._id
+      });
+
+      await Payment.create({ // within last year
+        title: "Carrots",
+        description: "A 1kg bag of carrots",
+        amount: 10,
+        date: new Date(today.getFullYear(), Math.max(1, today.getMonth() - 1), today.getDate()),
+        categoryId: category._id,
+        userId: user._id
+      });
+
+      const res = await chai.request(app)
+        .get("/api/payment/summary/?days=500")
+        .set("Authorization", ("Bearer " + authToken));
+
+      should.exist(res.body);
+      res.should.have.status(200);
+      res.body.should.have.property("day", 12.5);
+      res.body.should.have.property("week", 22.5);
+      res.body.should.have.property("month", 32.5);
+      res.body.should.have.property("year", 42.5);
+      res.body.should.have.property("custom", 42.5);
+    });
 
     it("should post a valid payment", async() => {
       const initPayments = await Payment.countDocuments();
