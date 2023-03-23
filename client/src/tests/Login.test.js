@@ -67,7 +67,6 @@
 
 
 
-
 import { render, screen, fireEvent } from "@testing-library/react";
 import axios from "axios";
 import Login from "../pages/Login";
@@ -76,12 +75,20 @@ import { BrowserRouter  } from 'react-router-dom';
 jest.mock("axios");
 
 describe("Login component", () => {
+  let emailInput;
+  let passwordInput;
+  let loginButton;
+
   beforeEach(() => {
     render(
       <BrowserRouter initialEntries={['/']}>
         <Login />
       </BrowserRouter>
     );
+
+    emailInput = screen.getByPlaceholderText("Email");
+    passwordInput = screen.getByPlaceholderText("Password");
+    loginButton = screen.getByRole("button", { name: "Login" });
   });
 
   afterEach(() => {
@@ -89,9 +96,6 @@ describe("Login component", () => {
   });
 
   it("renders the login form", () => {
-    const emailInput = screen.getByPlaceholderText("Email");
-    const passwordInput = screen.getByPlaceholderText("Password");
-    const loginButton = screen.getByRole("button", { name: "Login" });
 
     expect(emailInput).toBeInTheDocument();
     expect(passwordInput).toBeInTheDocument();
@@ -100,10 +104,6 @@ describe("Login component", () => {
 
   it("displays error message when login fails", async () => {
     axios.post.mockRejectedValue(new Error("login failed"));
-
-    const emailInput = screen.getByPlaceholderText("Email");
-    const passwordInput = screen.getByPlaceholderText("Password");
-    const loginButton = screen.getByRole("button", { name: "Login" });
 
     fireEvent.change(emailInput, { target: { value: "test@example.com" } });
     fireEvent.change(passwordInput, { target: { value: "password123" } });
