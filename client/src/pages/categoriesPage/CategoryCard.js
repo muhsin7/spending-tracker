@@ -1,4 +1,3 @@
-import React from "react";
 import "reactjs-popup/dist/index.css";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";

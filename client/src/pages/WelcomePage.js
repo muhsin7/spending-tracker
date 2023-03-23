@@ -1,12 +1,12 @@
-import React from "react";
 import { Navigate, useNavigate } from "react-router-dom";
+import { useState } from "react"
 import "../styles/welcomePage.css";
 import graphic from "../images/graphic2.png";
 import Background from "./Background";
 
 export default function WelcomePage() {
   const navigate = useNavigate();
-  const [goToLogin, setGoToLogin] = React.useState(false);
+  const [goToLogin, setGoToLogin] = useState(false);
 
   if (goToLogin) {
     return <Navigate to="/login" />;
