@@ -75,8 +75,35 @@ const loginUser = asyncHandler(async (req, res) => {
   throw new Error("Invalid credentials");
 });
 
+// @desc    Edit user data
+// @route   PATCH /api/user/
+// @access  Private
+const editUser = asyncHandler(async(req, res) => {
+  const { name, password } = req.body;
+  const currentUser = await User.findOne({_id: req.user.id});
+
+  let salt;
+  let hashedPassword = currentUser.password;
+
+  if (password) {
+    salt = await bcrypt.genSalt(10);
+    hashedPassword = await bcrypt.hash(password, salt);
+  }
+  
+
+  const user = await User.findOneAndUpdate({_id: req.user.id}, {name: name, password: hashedPassword});
+
+  res
+    .status(200)
+    .json({
+      _id: user._id,
+      name: user.name
+    });
+
+});
+
 // @desc    Get existing user data
-// @route   POST /api/user/profile
+// @route   GET /api/user/profile
 // @access  Private
 const getUser = asyncHandler(async (req, res) => {
   const { _id, name, email, exp, level } = await User.findById(req.user.id);
@@ -107,7 +134,7 @@ const updateExp = asyncHandler(async (req,res) => {
   } catch (error) {
     res.status(400).json({error: error.message});
   }
-})
+});
 
 
 
@@ -122,5 +149,6 @@ module.exports = {
   registerUser,
   loginUser,
   getUser,
+  editUser,
   updateExp
 };
