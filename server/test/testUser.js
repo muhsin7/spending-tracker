@@ -262,8 +262,6 @@ describe("User tests", () => {
       
       utils.assertError(res, 401);
     });
-
-    it("should not provide a user with an expired token their profile");
   });
   
 });
