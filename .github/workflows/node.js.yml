@@ -34,6 +34,7 @@ jobs:
     - run: touch .env
     - run: |
         echo "${{ secrets.ENV_FILE }}" >> .env
-    - run: ls
+    - run: ls -a
+    - run: ls -a ${{ github.workspace }}
     - run: npm ci
     - run: npm run test
