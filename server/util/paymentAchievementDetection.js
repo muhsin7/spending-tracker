@@ -43,15 +43,7 @@ const findAchievments = async(req) => {
   const noPayments = payments.length;
   const largestPayment = getLargestPayment(payments);
 
-  const spec1 = await AchievementSpec.find({"requirements.noPayments.target": {$lte: noPayments}});
-  const spec2 = await AchievementSpec.find({"requirements.largestPayment.target": {$lte: largestPayment}});
-
-  const specs = spec1.concat(spec2).reduce((acc, doc) => {
-    if (!acc.some(item => item._id.equals(doc._id))) {
-      acc.push(doc);
-    }
-    return acc;
-  }, []);
+  const specs = await AchievementSpec.find({type: "payment"});
 
   return filterAchievements(specs, noPayments, largestPayment);
 };
