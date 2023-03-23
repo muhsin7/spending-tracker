@@ -32,6 +32,8 @@ jobs:
         cache: 'npm'
         cache-dependency-path: server/package-lock.json
     - name: 'Create env file'
+    - run: touch .env
+    - 
       run: |
         echo "${{ secrets.ENV_FILE }}" > .env
     - run: ls
