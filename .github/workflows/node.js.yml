@@ -33,13 +33,6 @@ jobs:
         cache-dependency-path: server/package-lock.json
     - name: 'Create env file'
       run: |
-        touch .env
-        echo PORT=${{ secrets.PORT }}>> .env
-        echo DB_URI=${{ secrets.DB_URI }}>> .env
-        echo TEST_DB_URI=${{ secrets.TEST_DB_URI }}>> .env
-        echo CORS_ORIGIN=${{ secrets.CORS_ORIGIN }}>> .env
-        echo JWT_SECRET=${{ secrets.JWT_SECRET }}>> .env
-        echo JWT_VALID_FOR=${{ secrets.JWT_VALID_FOR }}>> .env
-        cat .env
+        echo "${{ secrets.ENV_FILE }}" > .env
     - run: npm ci
     - run: npm run test
