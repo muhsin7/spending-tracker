@@ -10,7 +10,7 @@ const should = chai.should();
 chai.use(chaiHttp);
 console.log(process.env);
 
-if (process.env.DB_URI) {
+if (process.env.TEST_DB_URI) {
   console.log("There is a DB URI registered");
 }
 else {
