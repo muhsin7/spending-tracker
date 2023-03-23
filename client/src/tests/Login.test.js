@@ -67,16 +67,21 @@
 
 
 
-import React from "react";
+
 import { render, screen, fireEvent } from "@testing-library/react";
 import axios from "axios";
 import Login from "../pages/Login";
+import { BrowserRouter  } from 'react-router-dom';
 
 jest.mock("axios");
 
 describe("Login component", () => {
   beforeEach(() => {
-    render(<Login />);
+    render(
+      <BrowserRouter initialEntries={['/']}>
+        <Login />
+      </BrowserRouter>
+    );
   });
 
   afterEach(() => {

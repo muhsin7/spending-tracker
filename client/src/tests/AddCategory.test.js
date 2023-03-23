@@ -1,4 +1,3 @@
-import React from 'react';
 import { render, screen, fireEvent, act } from '@testing-library/react';
 import axios from 'axios';
 import { useToken } from '../authentication/useToken';
