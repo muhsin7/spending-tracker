@@ -24,7 +24,7 @@ const detectCategoryAchievements = async(req) => {
         achievementSpecId: specs[i]._id
       });
       
-      await updateExp({user: req.user, exp: specs[i].exp})
+      await updateExp({user: req.user, exp: specs[i].exp});
 
       achievements.push(await buildOwnedObject(achievement));
     } catch {
