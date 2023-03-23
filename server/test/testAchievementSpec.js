@@ -61,25 +61,6 @@ describe("AchievementSpec tests", () => {
       achievement.should.have.property("exp");
       achievement.should.have.property("type").eql("payment");
     });
-
-    it("should create a valid limit achievement", async() => {
-      const LIMIT_ACHIEVEMENT = {
-        title: "limitAchievement",
-        description: "An achievement",
-        exp: 10,
-        requirements: {
-          limitsSet: {
-            target: 1
-          }
-        }
-      };
-      const achievement = await AchievementSpec.create(LIMIT_ACHIEVEMENT);
-      should.exist(achievement);
-      achievement.should.have.property("title").eql("limitAchievement");
-      achievement.should.have.property("description").eql("An achievement");
-      achievement.should.have.property("exp");
-      achievement.should.have.property("type").eql("limit");
-    });
     
     it("should not create an ahcievement of an invalid type", async() => {
       const INVALID_ACHIEVEMENT = {

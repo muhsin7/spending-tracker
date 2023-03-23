@@ -2,6 +2,7 @@ const Category = require("../models/categoryModel");
 const AchievementSpec = require("../models/achievementSpecModel");
 const Achievement = require("../models/achievementModel");
 const {buildOwnedObject} = require("./achievementFormatting");
+const { updateExp } = require("./levelsUtil");
 
 const findAchievments = async(req) => {
   const noCategories = await Category.countDocuments({userId: req.user.id});
@@ -22,6 +23,8 @@ const detectCategoryAchievements = async(req) => {
         userId: req.user.id,
         achievementSpecId: specs[i]._id
       });
+      
+      await updateExp({user: req.user, exp: specs[i].exp});
 
       achievements.push(await buildOwnedObject(achievement));
     } catch {

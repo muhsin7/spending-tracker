@@ -2,6 +2,7 @@ const Payment = require("../models/paymentModel");
 const Achievement = require("../models/achievementModel");
 const AchievementSpec = require("../models/achievementSpecModel");
 const {buildOwnedObject} = require("./achievementFormatting");
+const { updateExp } = require("./levelsUtil");
 
 const getLargestPayment = (payments) => {
   const largestPaymentObj = payments.reduce((prev, current) => {
@@ -12,19 +13,19 @@ const getLargestPayment = (payments) => {
 
 const checkRequirement = (requirement, value) => {
   if (requirement == undefined) return true;
-
-  if (requirement.boolOp == undefined || requirement.boolOp == "AND") {
-    return (requirement.target <= value);
-  } else if (requirement.boolOp == "OR") {
-    return true;
-  }
+  return (requirement.target <= value);
 };
 
 const checkAchieved = (spec, noPayments, largestPayment) => {
   // one condition is already met at this point
   const paymentsMet = checkRequirement(spec.requirements.noPayments, noPayments);
   const largestMet = checkRequirement(spec.requirements.largestPayment, largestPayment);
-  return paymentsMet && largestMet;
+
+  if (spec.requirements.boolOp == undefined || spec.requirements.boolOp == "AND") {
+    return paymentsMet && largestMet;
+  } else {
+    return paymentsMet || largestMet;
+  }
 };
 
 const filterAchievements = (specs, noPayments, largestPayment) => {
@@ -58,6 +59,8 @@ const detectPaymentAchievements = async(req) => {
         userId: req.user.id,
         achievementSpecId: specs[i]._id
       });
+
+      await updateExp({user: req.user, exp: specs[i].exp});
 
       achievements.push(await buildOwnedObject(achievement));
     } catch {
