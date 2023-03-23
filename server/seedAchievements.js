@@ -34,7 +34,7 @@ async function createCategoryAchievements() {
 
     const spec = {
       title: (num + " categories"),
-      description: ("Create" + num + " categories"),
+      description: ("Create " + num + " categories"),
       exp: 2*num,
       requirements: {
         noCategories: {
