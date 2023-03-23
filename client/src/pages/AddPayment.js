@@ -320,6 +320,7 @@ function AddPayment() {
                 value={formValues["description"]}
                 placeholder="Payment description"
                 onChange={onFormChange}
+                required
               />
             </div>
             <div className="inputFormInputBox">
@@ -331,12 +332,14 @@ function AddPayment() {
                 value={formValues["amount"]}
                 placeholder="Amount"
                 onChange={onFormChange}
+                required
               />
             </div>
             <div className="inputFormInputBox">
               <select
                 value={formValues["categoryId"]}
                 name="categoryId"
+                id="categoryId"
                 onChange={onFormChange}
               >
                 <option key="" value=""></option>
@@ -361,6 +364,7 @@ function AddPayment() {
             <div className="inputFormInputBox">
               <input
                 className="payment-image-button"
+                id ="image"
                 type="file"
                 accept="image/*"
                 onChange={storeNewImage}
@@ -371,6 +375,7 @@ function AddPayment() {
               type="button"
               className="btn btn-header"
               value="Add payment"
+              id="addPaymentButton"
             />
           </form>
         </fieldset>

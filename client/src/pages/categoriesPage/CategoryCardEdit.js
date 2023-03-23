@@ -53,11 +53,12 @@ export default function CategoryCardEdit(props) {
       <div className="category-info">
       <input
             className="category-title"
+            id="category-card-edit-title"
             value={newTitle}
             onChange={(e) => setNewTitle(e.target.value)}
           />
       </div>
-      <button className="category-card-button" onClick={handleConfirm}>Confirm</button>
+      <button className="category-card-button" id ="confirmNewTitle" onClick={handleConfirm}>Confirm</button>
       <button className="category-card-button" onClick={() => props.setEdit(false)}>Cancel</button>
     </div>
   );
