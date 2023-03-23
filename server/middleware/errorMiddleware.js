@@ -7,8 +7,7 @@ function errorLogger(err, req, res, next) {
 // eslint-disable-next-line no-unused-vars
 function errorHandler(err, req, res, next) {
   res.header("Content-Type", "application/json");
-
-  const status = res.statusCode || 500;
+  const status = res.statusCode === 200 ? 500 : res.statusCode;
   res
     .status(status)
     .json({ error: err.name, message: err.message, status: status, stacktrace: err.stack });

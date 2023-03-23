@@ -1,0 +1,58 @@
+.chart-container {
+    /* display: flex; */
+}
+
+.line-chart {
+    /* flex-direction: column; */
+    height: 40vh;
+    width: 90vh;
+    /* top: 50%; */
+    /* transform: translateY(20%);   */
+}
+
+.pie-chart {
+    width: 100%;
+    height: 50vh;
+    display: flex;
+    flex-direction: column;
+    /* margin: 1em; */
+}
+
+.checkbox-label {
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+}
+
+.checkbox-label > input {
+    margin: 0 0.5em 0 0.5em;
+    width: 1.5em;
+}
+
+
+input[type="checkbox"] {
+    accent-color: #00B57F;
+}
+
+.custom-tooltip {
+    background-color: white;
+    border-color: grey;
+    border-width: 1px;
+    padding: 0.5em 1em 0.5em 1em;
+    border-radius: 4px;
+}
+
+.tooltip-label {
+    font-weight:bolder;
+    color: #121212;
+}
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Old versions of Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome, Edge, Opera and Firefox */
+  }

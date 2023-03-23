@@ -1,0 +1,122 @@
+.dashboard {
+    width: 100%;
+    /* margin: 5%; */
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 30px;
+}
+
+.dashboard-header {
+    /* grid-row: 1; */
+    grid-column-start: 1;
+    grid-column-end: 13;
+    width: 100%;
+    padding: 1em;
+}
+
+.dashboard-header > h1 {
+    font-size: 2.5em;
+}
+
+.dashboard-header > h3 {
+    font-size: 1.3em;
+    font-weight: 100;
+}
+
+.dashboard-left {
+    display: flex;
+    flex-direction: column;
+    grid-column-start: 1;
+    grid-column-end: 8;
+}
+
+.dashboard-row {
+    flex-direction: row;
+    display: flex;
+}
+
+.dashboard-right {
+    display: flex;
+    grid-column-start: 9;
+    grid-column-end: 13;
+}
+
+.dashboard-bottom-left {
+    display: flex;
+    flex-direction: column;
+    grid-column-start: 1;
+    grid-column-end: 5;
+}
+
+.dashboard-bottom-middle {
+    display: flex;
+    flex-direction: column;
+    grid-column-start: 5;
+    grid-column-end: 9;
+}
+
+.dashboard-left-bottom {
+    grid-row-start: 2;
+    grid-column-start: 1;
+    grid-column-end: 3;
+}
+
+.dashboard-money {
+    width: 100%;
+    /* min-width: 40%;
+    max-width: fit-content; */
+    /* align-items: stretch;
+    align-self: stretch; */
+    margin-bottom: 1em;
+}
+
+.dashboard-container {
+    background-color: #121212;
+    color: #121212;
+    border: 2px solid #35312c ;
+    /* background-color: #121212;
+    color: white; */
+
+    padding: 1rem;
+    border-radius: 16px;
+}
+
+.dashboard-amount {
+    font-size: 2em;
+}
+
+.warning-emoji {
+    font-size: 0.5em;
+}
+
+.duration-selector {
+    background-color: #00B57F;
+    border: none;
+    color: white;
+    font: inherit;
+    font-size: 90%;
+    border-radius: 8px;
+}
+
+.dashboard-amount-cards {
+    /* display: flex; */
+    flex-direction: column;
+    /* align-items: stretch;
+    justify-items: stretch; */
+    margin: 1em 1.5em;
+}
+
+.dashboard-amount-cards > * {
+    /* display: block; */
+    margin-left: 1.5em;
+  }
+
+.error {
+color: var(--error-red) !important;
+border-color: var(--error-red) !important;
+}

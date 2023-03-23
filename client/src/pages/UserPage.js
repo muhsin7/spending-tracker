@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useToken } from "../Authentication/useToken";
+import { useToken } from "../authentication/useToken";
 
 export default function UserPage() {
   const [token, setToken] = useToken();

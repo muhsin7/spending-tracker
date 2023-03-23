@@ -1,0 +1,133 @@
+/* ACHIEVEMENTS PAGE */
+
+.achievements-page {
+  margin: 1%;
+}
+
+.achievements-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.achievements-header {
+  font-size: 36px;
+  padding: 1rem;
+}
+
+.achievements-filter-by-section {
+  background-color: #222828;
+  display: inline-flex;
+  border-radius: 16px;
+  padding: 1rem;
+  margin-right: 0.5rem;
+  float: right;
+}
+
+.achievements-filter-by-text {
+  padding: 0.2rem;
+  margin-right: 0.2rem;
+}
+
+.achievements-filter-by {
+  padding: 0.2rem;
+  width: 105px;
+  margin-right: 0.5rem;
+  color: black;
+  background-color: lightslategray;
+  border-radius: 12px;
+  border: none;
+}
+
+.achievements-filter-by-input {
+  width: 180px;
+  height: 28px;
+  padding: 0.2rem;
+  color: black;
+  background-color: lightslategray;
+  border-radius: 12px;
+  border: none;
+}
+
+.achievements-sort-by-section {
+  background-color: #222828;
+  display: inline-flex;
+  border-radius: 16px;
+  padding: 1rem;
+  float: right;
+}
+
+.achievements-sort-by-text {
+  padding: 0.2rem;
+  margin-right: 0.2rem;
+}
+
+.achievements-sort-by {
+  padding: 0.2rem;
+  width: 155px;
+  color: black;
+  background-color: lightslategray;
+  border-radius: 12px;
+  border: none;
+}
+
+.achievements-sort-by option:nth-child(2n + 1),
+.achievements-filter-by option:nth-child(2n + 1) {
+  background-color: darkgrey;
+}
+
+.achievements-sort-by option:nth-child(2n + 0),
+.achievements-filter-by option:nth-child(2n + 0) {
+  background-color: grey;
+}
+
+.achievement-section {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+/* ACHIEVEMENTS CARD */
+
+.achievement-card {
+  background-color: #222828;
+  margin-bottom: 1em;
+  margin-inline: 0.5em;
+  padding: 0.5em;
+  border-radius: 12px;
+  width: 250px;
+  word-wrap: break-word;
+}
+
+.achievement-card:hover {
+  background-color: #272d2d;
+}
+
+.achievement-info {
+  margin-bottom: 0.5em;
+  display: flex;
+  flex-direction: column;
+}
+
+.achievement-title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.achievement-description {
+  margin-bottom: 0.5em;
+  font-size: 12px;
+}
+
+.achievement-medal {
+  height: 100px;
+  object-fit: scale-down;
+}
+
+.achievement-disabled-medal {
+  height: 100px;
+  object-fit: scale-down;
+  filter: grayscale(100%);
+}

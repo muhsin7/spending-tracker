@@ -5,6 +5,12 @@ const Payment = require("../models/paymentModel");
 const mustOwnValidCategory = asyncHandler(async(req, res, next) => {
   const {categoryId} = req.body;
   const userId = req.user.id;
+
+  if (categoryId === "") {
+    res.status(400);
+    throw new Error("You must choose a category!");
+  }
+
   const category = await Category.findOne({_id:categoryId});
 
   if (category == undefined) {

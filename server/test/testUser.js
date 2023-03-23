@@ -147,6 +147,65 @@ describe("User tests", () => {
         });
     });
 
+    it("should not require exp", async () => {
+      await User.create({
+        name: "John",
+        password: "123",
+        email: "john@example.com"
+      })
+        .catch((error) => {
+          should.not.exist(error, "The user should have been valid");
+        })
+        .then((user) => {
+          should.exist(user);
+          user.should.have.property("exp");
+        });
+    });
+
+    it("should set exp to the default value", async() => {
+      await User.create({
+        name: "John",
+        password: "123",
+        email: "john@example.com"
+      })
+        .catch((error) => {
+          should.not.exist(error, "The user should have been valid");
+        })
+        .then((user) => {
+          should.exist(user);
+          user.should.have.property("exp").eql(0);
+        });
+    });
+
+    it("should not require level", async () => {
+      await User.create({
+        name: "John",
+        password: "123",
+        email: "john@example.com"
+      })
+        .catch((error) => {
+          should.not.exist(error, "The user should have been valid");
+        })
+        .then((user) => {
+          should.exist(user);
+          user.should.have.property("level");
+        });
+    });
+
+    it("should set level to the default value", async() => {
+      await User.create({
+        name: "John",
+        password: "123",
+        email: "john@example.com"
+      })
+        .catch((error) => {
+          should.not.exist(error, "The user should have been valid");
+        })
+        .then((user) => {
+          should.exist(user);
+          user.should.have.property("level").eql(1);
+        });
+    });
   });
 
   describe("API tests", () => {
@@ -262,6 +321,40 @@ describe("User tests", () => {
       
       utils.assertError(res, 401);
     });
+
+    it("should not provide a user with an expired token their profile"); 
+
+    it("should update exp", async () => {
+      const beforeUser = await chai.request(app)
+        .get("/api/user/profile/")
+        .set("Authorization", ("Bearer " + validToken)); 
+
+      const beforeExp = beforeUser.body.exp; 
+      const res = await chai.request(app)
+        .patch("/api/user/exp")
+        .send({exp: 1})
+        .set("Authorization", ("Bearer " + validToken));
+      console.log(res.body)
+      res.should.have.status(200);
+      res.body.should.be.a("object"); 
+      res.body.should.have.property("exp").eql(beforeExp + 1);
+    }); 
+
+    it("should update level when there is enough exp", async () => {
+      const beforeUser = await chai.request(app)
+        .get("/api/user/profile/")
+        .set("Authorization", ("Bearer " + validToken)); 
+
+      const beforeLevel = beforeUser.body.level; 
+      const res = await chai.request(app)
+        .patch("/api/user/exp")
+        .send({exp: 100})
+        .set("Authorization", ("Bearer " + validToken));
+      console.log(res.body)
+      res.should.have.status(200);
+      res.body.should.be.a("object"); 
+      res.body.should.have.property("level").eql(beforeLevel + 1);
+    }); 
   });
   
 });

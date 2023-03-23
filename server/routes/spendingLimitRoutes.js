@@ -7,7 +7,8 @@ const {
   getSpendingLimit,
   createSpendingLimit,
   deleteSpendingLimit,
-  updateSpendingLimit
+  updateSpendingLimit,
+  getSpendingLimitByCategory
 } = require("../controllers/spendingLimitController");
 const { protect } = require("../middleware/authMiddleware");
 const { mustOwnValidCategory, mustOwnValidSpendingLimit } = require("../middleware/spendingLimitMiddleware");
@@ -15,6 +16,9 @@ const { mustOwnValidCategory, mustOwnValidSpendingLimit } = require("../middlewa
 router.route("/")
   .get(protect, getAllSpendingLimits)
   .post(protect, mustOwnValidCategory, createSpendingLimit);
+
+router.route("/byCategory/:categoryId")
+  .get(protect, getSpendingLimitByCategory);
 
 router.route("/:id")
   .get(protect, mustOwnValidSpendingLimit, getSpendingLimit)
