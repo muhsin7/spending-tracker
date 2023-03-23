@@ -354,8 +354,8 @@ describe("Achievement tests", () => {
         exp: 10,
         requirements: {
           noPayments: {
-            target: 1,
-            boolOp: "AND"
+            target: 98,
+            boolOp: "OR"
           },
           largestPayment: {
             target: 500,
@@ -366,11 +366,11 @@ describe("Achievement tests", () => {
 
       const res = await chai.request(app)
         .post("/api/payment/")
-        .send(await genPayment(200))
+        .send(await genPayment(700))
         .set("Authorization", ("Bearer " + authToken));
 
       res.should.have.status(201);
-      should.equal(res.body.achievements.length, 2);
+      should.equal(res.body.achievements.length, 3);
     });
 
     it("should not create an achievement that has already been created", async() => {
