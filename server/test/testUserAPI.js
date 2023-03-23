@@ -8,8 +8,8 @@ const app = require("../app.js");
 const should = chai.should();
 
 chai.use(chaiHttp);
+console.log(process.env);
 
-console.log("Github Actions test");
 if (process.env.DB_URI) {
   console.log("There is a DB URI registered");
 }
