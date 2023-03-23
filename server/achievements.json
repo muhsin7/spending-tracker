@@ -1,0 +1,101 @@
+[
+  {
+    "title": "First category",
+    "description": "Add your first category",
+    "exp": 10,
+    "requirements": {
+      "noCategories": {
+        "target": 1
+      }
+    }
+  },
+  {
+    "title": "First payment",
+    "description": "Add your first payment",
+    "exp": 10,
+    "requirements": {
+      "noPayments": {
+        "target": 1
+      }
+    }
+  },
+  {
+    "title": "Grouper",
+    "description": "Add 10 categories",
+    "exp": 20,
+    "requirements": {
+      "noCategories": {
+        "target": 10
+      }
+    }
+  },
+  {
+    "title": "Grouper",
+    "description": "Add 10 categories",
+    "exp": 20,
+    "requirements": {
+      "noCategories": {
+        "target": 10
+      }
+    }
+  },
+  {
+    "title": "Seperator",
+    "description": "Add 50 categories",
+    "exp": 35,
+    "requirements": {
+      "noCategories": {
+        "target": 50
+      }
+    }
+  },
+  {
+    "title": "Grouper",
+    "description": "Add 10 categories",
+    "exp": 20,
+    "requirements": {
+      "noCategories": {
+        "target": 10
+      }
+    }
+  },
+  {
+    "title": "Increasing wealth",
+    "description": "Add 50 payments",
+    "exp": 35,
+    "requirements": {
+      "noPayments": {
+        "target": 50
+      }
+    }
+  },
+  {
+    "title": "Rich",
+    "description": "Add 100 payments",
+    "exp": 75,
+    "requirements": {
+      "noPayments": {
+        "target": 100
+      }
+    }
+  },
+  {
+    "title": "The meaning of life, the universe, and everything",
+    "description": "42",
+    "exp": 42,
+    "requirements": {
+      "noPayments": {
+        "target": 42,
+        "boolOp": "OR"
+      },
+      "noCategories": {
+        "target": 42,
+        "boolOp": "OR"
+      },
+      "paymentsInCategory": {
+        "target": 42,
+        "boolOp": "OR"
+      }
+    }
+  }
+]

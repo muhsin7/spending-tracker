@@ -15,15 +15,20 @@ import { useAuth } from "./authentication/useAuth"
 import NotFound from "./pages/NotFound"
 import AddPayment from "./pages/AddPayment"
 import AddSpendingLimit from "./pages/AddSpendingLimit"
+import EditSpendingLimit from "./pages/EditSpendingLimit"
 import Achievements from "./pages/achievements/Achievements"
+import Reports from "./pages/reports/Reports"
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
   const [isAuth, setAuth] = useAuth();
 
   return (
     <>
-      <BrowserRouter>
+    <BrowserRouter>
     <Header auth={[isAuth, setAuth]} />
+    <ToastContainer />
       <div className="border"></div>
         <div className="container">
           {/* <Background /> */}
@@ -36,9 +41,11 @@ function App() {
               <Route path="/addCategory" element={<AddCategory />} />
               <Route path="/addPayment" element={<AddPayment/>} />
               <Route path="/addSpendingLimit" element={<AddSpendingLimit/>} />
+              <Route path="/editSpendingLimit" element={<EditSpendingLimit/>} />
               <Route path="/payments" element={<PaymentsPage />} />
               <Route path="/categories" element={<CategoriesPage />} />
               <Route path="/achievements" element={<Achievements />} />
+              <Route path="/reports" element={<Reports />} />
             </Route>
             {/* REDIRECT TO DASHBOARD IF ALREADY LOGGED IN */}
             <Route element={<ProtectedRoute privateRoute={!isAuth} redirectPath="/dashboard" />}>

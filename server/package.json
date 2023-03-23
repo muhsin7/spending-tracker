@@ -11,7 +11,8 @@
     "concStartDev": "concurrently \"nodemon app.js\" \"cd ../client && npm start\"",
     "dev": "nodemon app.js",
     "seed": "node seed.js",
-    "coverage": "nyc mocha"
+    "coverage": "nyc mocha",
+    "seedAchievements": "node seedAchievements.js"
   },
   "author": "All Good",
   "license": "ISC",

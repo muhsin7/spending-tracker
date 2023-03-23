@@ -1,26 +1,17 @@
 import React from "react";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Buffer } from "buffer";
 
 export default function CategoryCardEdit(props) {
-  const ID = props.category._id;
   const TITLE = props.category.name;
-  // const SPENDINGLIMIT = props.category.spendingLimit
- 
   const [newTitle, setNewTitle] = useState(TITLE);
-  // const [newSpendingLimit, setNewSpendingLimit] = useState(SPENDINGLIMIT);
 
-    useEffect(() => {
-        console.log(newTitle)
-    }, [newTitle]);
+  useEffect(() => {
+    console.log(newTitle);
+  }, [newTitle]);
 
   function isChanged() {
-    return (
-      newTitle !== TITLE 
-      // ||
-      // newSpendingLimit !== SPENDINGLIMIT
-    );
+    return newTitle !== TITLE;
   }
 
   async function handleConfirm() {
@@ -30,11 +21,10 @@ export default function CategoryCardEdit(props) {
     }
 
     let data = {
-        id: props.category._id,
-        name: newTitle,
-        // spendingLimit: newSpendingLimit
-      }
-     await axios
+      id: props.category._id,
+      name: newTitle,
+    };
+    await axios
       .patch("/api/category/" + props.category._id, data, {
         headers: {
           Authorization: "Bearer " + props.token,
@@ -47,24 +37,31 @@ export default function CategoryCardEdit(props) {
     window.location.reload();
   }
 
-
-  return ( 
+  return (
     <div className="category-card">
       <div className="category-info">
-      <input
-            className="category-title"
-            value={newTitle}
-            onChange={(e) => setNewTitle(e.target.value)}
-          />
+        <input
+          className="category-edit-input"
+          id="category-card-edit-title"
+          value={newTitle}
+          onChange={(e) => setNewTitle(e.target.value)}
+        />
       </div>
-      <input
-            className="category-spending-limit"
-            // value={newSpendingLimit}
-            // onChange={(e) => setNewSpendingLimit(e.target.value)}
-       />
-      <button className="category-card-button" onClick={handleConfirm}>Confirm</button>
-      <button className="category-card-button" onClick={() => props.setEdit(false)}>Cancel</button>
+      <div className="category-edit-buttons">
+        <button
+          className="category-card-button category-confirm-button"
+          id="confirmNewTitle"
+          onClick={handleConfirm}
+        >
+          Confirm
+        </button>
+        <button
+          className="category-card-button category-cancel-button"
+          onClick={() => props.setEdit(false)}
+        >
+          Cancel
+        </button>
+      </div>
     </div>
   );
-
 }

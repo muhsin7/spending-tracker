@@ -56,20 +56,22 @@ export default function PaymentsPage() {
       <div className="payments-top">
         <h1 className="payments-header">Payments</h1>
 
-        <PaymentsSortBy
-          payments={payments}
-          setPayments={setPayments}
-          setDefaultPayments={setDefaultPayments}
-          categories={categories}
-          token={token}
-        />
-        <PaymentsFilterBy
-          payments={payments}
-          defaultPayments={defaultPayments}
-          setPayments={setPayments}
-          categories={categories}
-          token={token}
-        />
+        <span>
+          <PaymentsSortBy
+            payments={payments}
+            setPayments={setPayments}
+            defaultPayments={defaultPayments}
+            setDefaultPayments={setDefaultPayments}
+            categories={categories}
+            token={token}
+          />
+          <PaymentsFilterBy
+            defaultPayments={defaultPayments}
+            setPayments={setPayments}
+            categories={categories}
+            token={token}
+          />
+        </span>
       </div>
 
       <div

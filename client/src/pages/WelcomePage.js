@@ -1,12 +1,12 @@
-import React from "react";
 import { Navigate, useNavigate } from "react-router-dom";
+import { useState } from "react"
 import "../styles/welcomePage.css";
 import graphic from "../images/graphic2.png";
 import Background from "./Background";
 
 export default function WelcomePage() {
   const navigate = useNavigate();
-  const [goToLogin, setGoToLogin] = React.useState(false);
+  const [goToLogin, setGoToLogin] = useState(false);
 
   if (goToLogin) {
     return <Navigate to="/login" />;
@@ -19,8 +19,8 @@ export default function WelcomePage() {
         <div className="row">
           <div className="column">
             <div className="welcome-text">
-              <h1 class="welcome-header">Save money for a change.</h1>
-              <h2 class="welcome-subtitle">
+              <h1 className="welcome-header">Save money for a change.</h1>
+              <h2 className="welcome-subtitle">
                 Manage your budget with ease and convenience.
               </h2>
               <button

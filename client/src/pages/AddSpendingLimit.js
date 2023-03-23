@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import axios from "axios";
 import { useToken } from "../authentication/useToken";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 export default function AddSpendingLimit() {
   const [newCategories, setNewCategories] = useState([]);
@@ -14,6 +14,8 @@ export default function AddSpendingLimit() {
     duration: "",
     categoryId: "",
   });
+  const [searchParams, setSearchParams] = useSearchParams();
+  const catID = searchParams.get("categoryID")
 
   const navigate = useNavigate();
 
@@ -34,7 +36,7 @@ export default function AddSpendingLimit() {
 
   // Gets all the user's categories from the database
   useEffect(() => {
-    axios.get("/api/category/noSpendingLimit", {
+    const res = axios.get("/api/category/noSpendingLimit", {
       headers: {
         Authorization: "Bearer " + token,
       },
@@ -42,7 +44,15 @@ export default function AddSpendingLimit() {
       console.log(res.data);
       let catList = res.data;
       catList.push({_id: "1", name: "Global"}) //Global spending limit will have id value 1
-      await setNewCategories(catList);
+      setNewCategories(catList);
+
+      //If the add spending limit button was pressed from a specific category, default to that one.
+      if (catID) {
+        setFormValues({
+          ...formValues,
+          categoryId: catID
+        });
+      }
     });
   }, []);
 

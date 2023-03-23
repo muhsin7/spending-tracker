@@ -1,7 +1,7 @@
 import { useState } from "react";
 import DatePicker from "react-datepicker";
 
-export default function PaymentsPage(props) {
+export default function PaymentsFilterBy(props) {
   const [filterBy, setFilterBy] = useState("");
   const [filterByInputCode, setFilterByInputCode] = useState([]);
   const [date, setDate] = useState(null);
@@ -37,7 +37,7 @@ export default function PaymentsPage(props) {
                   props.categories
                     .find((category) => category._id === payment.categoryId)
                     .name.toLowerCase()
-                    .includes(e.target.value)
+                    .includes(e.target.value.toLowerCase())
                 )
               );
             }}
@@ -55,7 +55,9 @@ export default function PaymentsPage(props) {
             onChange={(e) => {
               props.setPayments(
                 props.defaultPayments.filter((payment) =>
-                  payment.title.toLowerCase().includes(e.target.value)
+                  payment.title
+                    .toLowerCase()
+                    .includes(e.target.value.toLowerCase())
                 )
               );
             }}
@@ -73,7 +75,9 @@ export default function PaymentsPage(props) {
             onChange={(e) => {
               props.setPayments(
                 props.defaultPayments.filter((payment) =>
-                  payment.description.toLowerCase().includes(e.target.value)
+                  payment.description
+                    .toLowerCase()
+                    .includes(e.target.value.toLowerCase())
                 )
               );
             }}
@@ -91,7 +95,12 @@ export default function PaymentsPage(props) {
             onChange={(e) => {
               props.setPayments(
                 props.defaultPayments.filter((payment) =>
-                  ("-£" + payment.amount.toString()).includes(e.target.value)
+                  (
+                    "-£" +
+                    (Math.round(payment.amount * 100) / 100)
+                      .toFixed(2)
+                      .toString()
+                  ).includes(e.target.value)
                 )
               );
             }}

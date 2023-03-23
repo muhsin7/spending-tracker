@@ -1,10 +1,10 @@
-import React from "react";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { useToken } from "../authentication/useToken";
 import { useAuth } from "../authentication/useAuth";
 import Background from "./Background";
+import {BrowserRouter as Router} from 'react-router-dom';
 
 function Login() {
   const [token, setToken] = useToken();
@@ -82,10 +82,10 @@ function Login() {
                 required
               />
             </div>
-            <button type="submit" className="btn">
+            <button id="loginButton" type="submit" className="btn">
               Login
             </button>
-            <div class="login-signup-link">Don't have an account? <Link to="/register">Register here!</Link></div>
+            <div className="login-signup-link">Don't have an account? <Link to="/register">Register here!</Link></div>
           </form>
         </div>
       </section>

@@ -1,24 +1,26 @@
-export default function AchievementCardProgress(props) {
-  const { bgcolor, completed } = props;
+const PercentageBar = (props) => {
+  const { completed } = props;
+  const percentage = completed > 100 ? 100 : completed;
 
   const containerStyles = {
-    height: 30,
+    height: 23,
     width: "100%",
     backgroundColor: "#1e1e1e",
     borderRadius: 50,
+    marginTop: 5,
   };
 
   const fillerStyles = {
     height: "100%",
-    width: `${completed}%`,
-    backgroundColor: bgcolor,
+    width: `${percentage}%`,
+    backgroundColor: percentage < 100 ? "#ffb036" : "#ef0033",
     borderRadius: "inherit",
     textAlign: "right",
-    padding: 3,
   };
 
   const labelStyles = {
     padding: 5,
+    // color: '#121212',
     fontWeight: "bold",
   };
 
@@ -29,4 +31,6 @@ export default function AchievementCardProgress(props) {
       </div>
     </div>
   );
-}
+};
+
+export default PercentageBar;

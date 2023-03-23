@@ -6,11 +6,22 @@
     align-items: center;
 } 
 
+.preview-container {
+    margin: 1em 0 1em 0;
+}
+
 .all-payments {
     display: flex;
     padding: 1em;
     height: auto;
     justify-content: center;
+    height: 50px;
+    width: 100% !important;
+}
+
+a {
+    text-decoration: none;
+    cursor: pointer;
 }
 
 .transaction-card {

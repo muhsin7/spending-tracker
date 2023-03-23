@@ -28,10 +28,9 @@ export default function DashboardLimits(props) {
 
     const getPaymentsOfId = (id) => {
         let res = [];
-        // console.log(props.payments);
-        for(const e of data) {
+        for(const e of props.payments) {
             if(e.categoryId === id) res.push(e);
-            // console.log(e.categoryId + " " + res.length);
+            // console.log(e.categoryId + " vs " + id + "=>" + res.length);
         }
         return res;
     }

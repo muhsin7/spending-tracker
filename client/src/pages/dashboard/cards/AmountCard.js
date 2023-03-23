@@ -28,7 +28,7 @@ export default function AmountCard(props) {
 
     return (
             <div className="dashboard-money dashboard-container">
-                    <div className="dashboard-amount">£{amount}</div>
+                    <div className="dashboard-amount">£{amount ? amount.toFixed(2) : 0}</div>
                 <div className="dashboard-amount-description">
                     <form>
                         <label for="duration">spent { dropdownDuration === "day" ? "" : "this" } </label>

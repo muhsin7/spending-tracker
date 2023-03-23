@@ -40,11 +40,33 @@ export default function PaymentsSortBy(props) {
         )
       ),
     ]);
+
+    props.setDefaultPayments([
+      ...props.defaultPayments.sort((a, b) =>
+        ascendingCompare(
+          props.categories.find((category) => category._id === a.categoryId)
+            .name,
+          props.categories.find((category) => category._id === b.categoryId)
+            .name
+        )
+      ),
+    ]);
   }
 
   function zCategoryFirst() {
     props.setPayments([
       ...props.payments.sort((a, b) =>
+        descendingCompare(
+          props.categories.find((category) => category._id === a.categoryId)
+            .name,
+          props.categories.find((category) => category._id === b.categoryId)
+            .name
+        )
+      ),
+    ]);
+
+    props.setDefaultPayments([
+      ...props.defaultPayments.sort((a, b) =>
         descendingCompare(
           props.categories.find((category) => category._id === a.categoryId)
             .name,
@@ -59,23 +81,39 @@ export default function PaymentsSortBy(props) {
     props.setPayments([
       ...props.payments.sort((a, b) => ascendingCompare(a.title, b.title)),
     ]);
+
+    props.setDefaultPayments([
+      ...props.defaultPayments.sort((a, b) => ascendingCompare(a.title, b.title)),
+    ]);
   }
 
   function zTitleFirst() {
     props.setPayments([
       ...props.payments.sort((a, b) => descendingCompare(a.title, b.title)),
     ]);
-  }
-
-  function lowestDateFirst() {
-    props.setPayments([
-      ...props.payments.sort((a, b) => ascendingCompare(a.amount, b.amount)),
+    
+    props.setDefaultPayments([
+      ...props.defaultPayments.sort((a, b) => descendingCompare(a.title, b.title)),
     ]);
   }
 
-  function highestDateFirst() {
+  function lowestPriceFirst() {
+    props.setPayments([
+      ...props.payments.sort((a, b) => ascendingCompare(a.amount, b.amount)),
+    ]);
+
+    props.setDefaultPayments([
+      ...props.defaultPayments.sort((a, b) => ascendingCompare(a.amount, b.amount)),
+    ]);
+  }
+
+  function highestPriceFirst() {
     props.setPayments([
       ...props.payments.sort((a, b) => descendingCompare(a.amount, b.amount)),
+    ]);
+
+    props.setDefaultPayments([
+      ...props.defaultPayments.sort((a, b) => descendingCompare(a.amount, b.amount)),
     ]);
   }
 
@@ -88,11 +126,29 @@ export default function PaymentsSortBy(props) {
         )
       ),
     ]);
+
+    props.setDefaultPayments([
+      ...props.defaultPayments.sort((a, b) =>
+        ascendingCompare(
+          new Date(Date.parse(a.date)),
+          new Date(Date.parse(b.date))
+        )
+      ),
+    ]);
   }
 
   function latestDateFirst() {
     props.setPayments([
       ...props.payments.sort((a, b) =>
+        descendingCompare(
+          new Date(Date.parse(a.date)),
+          new Date(Date.parse(b.date))
+        )
+      ),
+    ]);
+
+    props.setDefaultPayments([
+      ...props.defaultPayments.sort((a, b) =>
         descendingCompare(
           new Date(Date.parse(a.date)),
           new Date(Date.parse(b.date))
@@ -117,10 +173,10 @@ export default function PaymentsSortBy(props) {
         zTitleFirst();
         break;
       case "Price (lowest first)":
-        lowestDateFirst();
+        lowestPriceFirst();
         break;
       case "Price (highest first)":
-        highestDateFirst();
+        highestPriceFirst();
         break;
       case "Date (earliest first)":
         earliestDateFirst();
@@ -132,7 +188,6 @@ export default function PaymentsSortBy(props) {
         console.log("ERROR");
         break;
     }
-    props.setDefaultPayments(props.payments);
   }
 
   return (

@@ -21,17 +21,7 @@ export default function Register() {
     const { name, email, password, password2 } = formData
     const navigate = useNavigate();
 
-  //   const onLoginClicked = async () => {
-  //     const response = await axios.post('/api/user/login', {
-  //         email: emailValue,
-  //         password: passwordValue,
-  //     });
 
-  //     const {token} = response.data;
-  //     setToken(token);
-
-  //     navigate('/user');
-  // }
 
     const onChange = (e) => {
     setFormData((prevState) => ({
@@ -117,10 +107,10 @@ export default function Register() {
                   required
                 />
               </div>
-                <button type='submit' className='btn'>
+                <button type='submit' className='btn' id="createAccountButton">
                   Create Account
                 </button>
-                <div class="login-signup-link">Already have an account? <Link to="/login">Log in</Link></div>
+                <div className="login-signup-link">Already have an account? <Link to="/login">Log in</Link></div>
             </form>
         </div>
       </section>

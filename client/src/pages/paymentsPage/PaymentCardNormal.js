@@ -3,7 +3,7 @@ import Popup from "reactjs-popup";
 import { FaEdit, FaTrash } from "react-icons/fa";
 import { confirmAlert } from "react-confirm-alert";
 
-export default function PaymentCard(props) {
+export default function PaymentCardNormal(props) {
   const TITLE = props.payment.title;
   const DATE_STRING = new Date(props.payment.date).toLocaleString();
   const DESCRIPTION = props.payment.description;
