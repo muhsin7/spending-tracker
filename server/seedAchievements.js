@@ -84,7 +84,7 @@ async function createPaymentAchievements() {
   await AchievementSpec.create(wysi);
   await AchievementSpec.create(impossible);
 
-  for (let i = 1; i < 11; i++) {
+  for (let i = 1; i < 21; i++) {
     const num = i*10;
 
     const noAchievement = {
@@ -99,7 +99,7 @@ async function createPaymentAchievements() {
     };
 
     const largestPayment = {
-      title: (num + " spent"),
+      title: ("Spend " + num),
       description: ("spend " + num + "  in one go"),
       exp: num,
       requirements: {
