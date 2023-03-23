@@ -20,15 +20,12 @@ export default function Header(props) {
           },
         })
         .then((res) => {
-          console.log(res.data);
           setUser(res.data);
         });
     }
   }, []);
 
   const onLogout = () => {
-    // window.alert("Logout")
-    // localStorage.removeItem('token');
     setToken("");
     setAuth(false);
     localStorage.clear();

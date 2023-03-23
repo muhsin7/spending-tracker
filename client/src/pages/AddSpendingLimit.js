@@ -3,6 +3,8 @@ import { useState } from "react";
 import axios from "axios";
 import { useToken } from "../authentication/useToken";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import Background from "./Background";
+
 
 export default function AddSpendingLimit() {
   const [newCategories, setNewCategories] = useState([]);
@@ -106,6 +108,7 @@ export default function AddSpendingLimit() {
 
   return (
     <div className="div-inputForm">
+      <Background />
       <section className="inputForm">
         <h2 className="inputFormTitle">Add Spending Limit</h2>
         {errorMessage && <div className="error-message">{errorMessage}</div>}

@@ -13,7 +13,6 @@ export default function DashboardLimits(props) {
             "Authorization": "Bearer " + token
         }
         }).then((res) => {
-        // console.log(filterData(res.data));
         setData(res.data);
         });
     }, []);
@@ -21,16 +20,10 @@ export default function DashboardLimits(props) {
     const filterData = (catSLdata) => {
         return catSLdata.filter((val) => val.spendingLimit !== undefined);
     } 
-
-    // useEffect(() => {
-    //     console.log(filterData(data));
-    // }, [data]);
-
     const getPaymentsOfId = (id) => {
         let res = [];
         for(const e of props.payments) {
             if(e.categoryId === id) res.push(e);
-            // console.log(e.categoryId + " vs " + id + "=>" + res.length);
         }
         return res;
     }

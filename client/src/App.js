@@ -20,6 +20,7 @@ import Achievements from "./pages/achievements/Achievements"
 import Reports from "./pages/reports/Reports"
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Footer from "./components/Footer"
 
 function App() {
   const [isAuth, setAuth] = useAuth();
@@ -57,6 +58,7 @@ function App() {
             <Route path='*' element={<NotFound />}/>
           </Routes>
         </div>
+        {/* <Footer /> */}
       </BrowserRouter>
     </>
   );

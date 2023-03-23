@@ -39,8 +39,7 @@ ul{
 }
 
 .container {
-  /* z-index: 1; */
-  /* overflow: hidden; */
+  padding-bottom: 4em;
 }
 
 /* .border {

@@ -38,6 +38,8 @@ export default function Dashboard() {
         }
         }).then((res) => {
         // console.log(res.data);
+        console.log(res.data);
+        // res.data.sort((a, b) => Date.parse(a.date) - Date.parse(b.date));
         setPayments(res.data);
         });
     }, []);

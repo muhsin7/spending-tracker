@@ -39,6 +39,7 @@ export default function CategoryPieChart(props) {
   };
 
   const countStats = (categoryMetaData) => {
+    console.log(categoryMetaData);
     let res = [];
     categoryMetaData.forEach((cat) => {
       // console.log(cat);
