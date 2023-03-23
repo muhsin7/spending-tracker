@@ -82,7 +82,41 @@ describe("Payment tests", () => {
         })
         .then((payment) => {
           should.not.exist(payment, "The payment should have been invalid");
-        });      
+        });
+    });
+
+    it("should require a title of at least 3 characters", async() => {
+      await Payment.create({
+        title: "aa",
+        description: "A 1kg bag of carrots",
+        amount: 2,
+        categoryId: category._id,
+        userId: user._id
+      })
+        .catch((error) => {
+          should.exist(error);
+          error.should.have.property("name").eql("ValidationError");
+        })
+        .then((payment) => {
+          should.not.exist(payment, "The payment should have been invalid");
+        });
+    });
+
+    it("should require a title less than 61 characters", async() => {
+      await Payment.create({
+        title: "a".repeat(61),
+        description: "A 1kg bag of carrots",
+        amount: 2,
+        categoryId: category._id,
+        userId: user._id
+      })
+        .catch((error) => {
+          should.exist(error);
+          error.should.have.property("name").eql("ValidationError");
+        })
+        .then((payment) => {
+          should.not.exist(payment, "The payment should have been invalid");
+        });
     });
 
     it("should require a description", async() => {
@@ -101,10 +135,61 @@ describe("Payment tests", () => {
         }); 
     });
 
+    it("should require a description of at least 3 characters", async() => {
+      await Payment.create({
+        title: "Carrots",
+        description: "AA",
+        amount: 2.6,
+        categoryId: category._id,
+        userId: user._id
+      })
+        .catch((error) => {
+          should.exist(error);
+          error.should.have.property("name").eql("ValidationError");
+        })
+        .then((payment) => {
+          should.not.exist(payment, "The payment should have been invalid");
+        }); 
+    });
+
+    it("should require a description less than 301 characters", async() => {
+      await Payment.create({
+        title: "Carrots",
+        description: "A".repeat(301),
+        amount: 2,
+        categoryId: category._id,
+        userId: user._id
+      })
+        .catch((error) => {
+          should.exist(error);
+          error.should.have.property("name").eql("ValidationError");
+        })
+        .then((payment) => {
+          should.not.exist(payment, "The payment should have been invalid");
+        }); 
+    });
+
     it("should require an amount", async() => {
       await Payment.create({
         title: "Carrots",
         description: "A 1kg bag of carrots",
+        categoryId: category._id,
+        userId: user._id
+      })
+        .catch((error) => {
+          should.exist(error);
+          error.should.have.property("name").eql("ValidationError");
+        })
+        .then((payment) => {
+          should.not.exist(payment, "The payment should have been invalid");
+        }); 
+    });
+
+    it("should require an amount to be a positive number", async() => {
+      await Payment.create({
+        title: "Carrots",
+        description: "A 1kg bag of carrots",
+        amount: -19,
         categoryId: category._id,
         userId: user._id
       })
