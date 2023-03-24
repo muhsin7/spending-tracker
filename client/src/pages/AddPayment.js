@@ -114,7 +114,14 @@ function AddPayment() {
 
     console.log(payments);
 
-    const filteredPayments = payments.data.filter((payment) => payment.categoryId === formValues["categoryId"]);
+    let filteredPayments;
+
+    if (catID === "1"){
+      filteredPayments = payments.data;
+    }
+    else {
+      filteredPayments = payments.data.filter((payment) => payment.categoryId === catID);
+    }
 
     let res = [];
 
