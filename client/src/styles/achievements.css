@@ -35,7 +35,7 @@
   width: 105px;
   margin-right: 0.5rem;
   color: black;
-  background-color: lightslategray;
+  background-color: #00b57f;
   border-radius: 12px;
   border: none;
 }
@@ -67,19 +67,9 @@
   padding: 0.2rem;
   width: 155px;
   color: black;
-  background-color: lightslategray;
+  background-color: #00b57f;
   border-radius: 12px;
   border: none;
-}
-
-.achievements-sort-by option:nth-child(2n + 1),
-.achievements-filter-by option:nth-child(2n + 1) {
-  background-color: darkgrey;
-}
-
-.achievements-sort-by option:nth-child(2n + 0),
-.achievements-filter-by option:nth-child(2n + 0) {
-  background-color: grey;
 }
 
 .achievement-section {
