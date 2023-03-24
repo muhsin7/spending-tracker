@@ -73,7 +73,7 @@ function AddCategory() {
               <input
                 value={categoryValue}
                 onChange={(e) => setCategoryValue(e.target.value)}
-                placeholder="Name of the category:"
+                placeholder="Name of the category"
                 required
               />
             </div>

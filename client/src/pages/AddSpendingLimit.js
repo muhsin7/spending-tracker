@@ -10,7 +10,7 @@ export default function AddSpendingLimit() {
   const [token, setToken] = useToken();
   const [formValues, setFormValues] = useState({
     name: "",
-    amount: 0,
+    amount: NaN,
     duration: "",
     categoryId: "",
   });
@@ -138,10 +138,13 @@ export default function AddSpendingLimit() {
               <select
                 value={formValues["duration"]}
                 name="duration"
+                className={
+                  formValues["duration"] === "" ? "form-select" : ""
+                }
                 onChange={onFormChange}
                 data-testid="duration"
               >
-                <option key="" value=""></option>
+                <option key="" value="" className="form-select">Select a time frame...</option>
                 {["YEAR", "MONTH", "DAY", "WEEK"].map((option) => (
                   <option key={option} value={option}>{option}</option>
                 ))}
@@ -151,9 +154,12 @@ export default function AddSpendingLimit() {
               <select
                 value={formValues["categoryId"]}
                 name="categoryId"
+                className={
+                  formValues["categoryId"] === "" ? "form-select" : ""
+                }
                 onChange={onFormChange}
               >
-                <option key="" value=""></option> 
+                <option key="" value="" className="form-select">Select a category/global...</option> 
                 {newCategories.map((option) => (
                   <option key={option._id} value={option._id}>{option.name}</option>
                 ))}

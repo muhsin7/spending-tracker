@@ -347,11 +347,11 @@ function AddPayment() {
                 name="categoryId"
                 id="categoryId"
                 className={
-                  formValues["categoryId"] === "" ? "form-select-category" : ""
+                  formValues["categoryId"] === "" ? "form-select" : ""
                 }
                 onChange={onFormChange}
               >
-                <option key="" value="" className="form-select-category">
+                <option key="" value="" className="form-select">
                   Select a category...
                 </option>
                 {newCategories.map((option) => (
@@ -364,7 +364,7 @@ function AddPayment() {
             <div className="inputFormInputBox">
               <input
                 type="date"
-                className={(isDateChosen) ? "form-control" : "form-control form-select-category"}
+                className={(isDateChosen) ? "form-control" : "form-control form-select"}
                 id="date"
                 name="date"
                 value={formValues["date"]}
