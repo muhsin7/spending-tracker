@@ -41,7 +41,7 @@ describe("Add Spending Limit Component", () => {
         expect(spendingLimitName).toBeInTheDocument();
 
         expect(amount).toBeInTheDocument();
-        expect(amount).toHaveValue(0);
+        expect(amount).toHaveValue(null);
 
         //change event on duration select
         expect(durationSelect).toBeInTheDocument();
