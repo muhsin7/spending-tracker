@@ -117,25 +117,6 @@ const getUser = asyncHandler(async (req, res) => {
   });
 });
 
-// @desc    Updates the user's exp
-// @route   PATCH /api/user/exp
-// @access  Private
-const updateExp = asyncHandler(async (req,res) => {
-  try{
-    const user = await User.findById(req.user.id);
-    const userExp = user.exp + req.body.exp;
-    const userLevel = Math.floor(userExp / 100) + 1;
-
-    user.exp = userExp;
-    user.level = userLevel;
-
-    await user.save(); 
-    res.status(200).json(user);
-  } catch (error) {
-    res.status(400).json({error: error.message});
-  }
-});
-
 
 
 // Generate JWT
@@ -149,6 +130,5 @@ module.exports = {
   registerUser,
   loginUser,
   getUser,
-  editUser,
-  updateExp
+  editUser
 };
