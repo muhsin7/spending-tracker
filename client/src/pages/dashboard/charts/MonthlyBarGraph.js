@@ -8,15 +8,11 @@ import {
   YAxis,
 } from "recharts";
 import { useEffect, useState } from "react";
-import axios from "axios";
-import { useToken } from "../../../authentication/useToken";
 
 function CustomTooltip({ payload, label, active }) {
   if (active) {
     return (
       <div className="custom-tooltip">
-        {/* <div className="tooltip-label">{`${dateStringFromUnixString(label)}`}</div> */}
-        {/* <div className="intro">-£{payload[0].value}</div> */}
         <div className="tooltip-label">
           {payload ? `-£${payload[0].value.toFixed(2)}` : "Error"}
         </div>
@@ -26,13 +22,6 @@ function CustomTooltip({ payload, label, active }) {
 
   return null;
 }
-
-const dataValueToMonth = (value) => {
-  let onlyDate = new Date(Date.parse(value.date));
-  onlyDate.setUTCHours(0, 0, 0, 0);
-  const dateString = onlyDate.setUTCDate(1).toString();
-  return dateString;
-};
 
 function processData({
   payments,
@@ -61,20 +50,11 @@ function processData({
 }
 
 export default function MonthlyBarGraph(props) {
-  const [token, setToken] = useToken();
   const [dataByMonth, setDataByMonth] = useState([]);
 
-  const isSameMonthAsToday = (dateToCheck) => {
-    const today = new Date();
-    return (
-      dateToCheck.getMonth() === today.getMonth() &&
-      dateToCheck.getFullYear() === today.getFullYear()
-    );
-  };
-
   useEffect(() => {
-    console.log(dataByMonth)
-  }, [dataByMonth])
+    console.log(dataByMonth);
+  }, [dataByMonth]);
 
   useEffect(() => {
     setDataByMonth(
@@ -86,25 +66,26 @@ export default function MonthlyBarGraph(props) {
     );
   }, [props.end, props.payments, props.start]);
 
-  const renderBarChart = dataByMonth.length > 0 ? (<ResponsiveContainer>
-      <BarChart width={730} height={400} data={dataByMonth}>
-        <Bar
-          dataKey="amount"
-          // nameKey="date"
-          // label={()}
-        >
-          {dataByMonth.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill="#00B57F" />
-          ))}
-        </Bar>
-        <XAxis dataKey="date" />
-        <YAxis />
-        <Tooltip
-          content={<CustomTooltip />}
-          cursor={{ fill: "rgba(0, 0, 0, 0.0)" }}
-        />
-      </BarChart>
-    </ResponsiveContainer>) : (<div className='empty-container'>No data to display line chart</div>);
+  const renderBarChart =
+    dataByMonth.length > 0 ? (
+      <ResponsiveContainer>
+        <BarChart width={730} height={400} data={dataByMonth}>
+          <Bar dataKey="amount">
+            {dataByMonth.map((entry, index) => (
+              <Cell key={`cell-${index}`} fill="#00B57F" />
+            ))}
+          </Bar>
+          <XAxis dataKey="date" />
+          <YAxis />
+          <Tooltip
+            content={<CustomTooltip />}
+            cursor={{ fill: "rgba(0, 0, 0, 0.0)" }}
+          />
+        </BarChart>
+      </ResponsiveContainer>
+    ) : (
+      <div className="empty-container">No data to display line chart</div>
+    );
 
   return renderBarChart;
 }

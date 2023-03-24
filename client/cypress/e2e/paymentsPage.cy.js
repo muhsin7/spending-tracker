@@ -7,8 +7,7 @@ describe("Payments page tests", () => {
   it("displays correct details of a payment", () => {
     cy.addPaymentCommand("Example Payment Title", "Example Payment Description", "50", 'Groceries', "2023-03-23");
     cy.visit('/payments')
-    cy.get(".payment-category").should("contain", "Example Payment Title");
-    cy.get(".payment-title").should("contain", "Example Payment Description");
+    cy.get(".payment-title").should("contain", "Example Payment Title");
     cy.get(".payment-amount").should("contain", "50");
     cy.get(".payment-description").should("contain", "2023-03-23");
   });
