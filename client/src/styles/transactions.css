@@ -5,6 +5,10 @@
   align-items: center;
 }
 
+.all-payments-btn {
+  width: 100% !important;
+}
+
 .preview-container {
   margin: 1em 0 1em 0;
 }

@@ -37,6 +37,11 @@ export default function Dashboard() {
       });
   }, []);
 
+  const getMonthStart = () => {
+    const dt = new Date();
+    return new Date(dt.getFullYear(), dt.getMonth(), 1);
+  }
+
   return (
     <div className="dashboard dashboard-grid">
       <div className="dashboard-header">
@@ -51,7 +56,7 @@ export default function Dashboard() {
           <AmountSpent payments={payments} />
           <div className="chart-container">
             <div className="line-chart noselect dashboard-left">
-              <DashboardChart payments={payments} />
+              <DashboardChart payments={payments} start={getMonthStart()} />
             </div>
           </div>
         </div>
@@ -67,7 +72,7 @@ export default function Dashboard() {
       </div>
       <div className="dashboard-right pie-chart">
         <h2>Category Data</h2>
-        <CategoryPieChart payments={payments} />
+        <CategoryPieChart payments={payments} start={getMonthStart()} />
       </div>
     </div>
   );

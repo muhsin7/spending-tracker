@@ -1,7 +1,7 @@
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend, BarChart, Bar, Label } from 'recharts';
 import { useEffect, useState } from 'react';
 
-const dateStringFromUnixString = (unixTimeString) => new Date(Number(unixTimeString)).toLocaleDateString();
+const dateStringFromUnixString = (unixTimeString) => new Date(Number(unixTimeString)).toDateString();
 
 function CustomTooltip({ payload, label, active }) {
     if (active) {
@@ -42,15 +42,18 @@ const dataValueToMonth = (value) => {
 function processData({payments, startDate=new Date(0), endDate=new Date()}) {
   const groups = {};
     if(payments) {
+      let total = 0;
       payments.forEach((payment) => {
         const paymentDate = new Date(payment.date);
         if (paymentDate >= startDate && paymentDate <= endDate)
         {
-          const date = new Date(payment.date).toDateString();
+          const date = Date.parse(new Date(payment.date).toDateString());
+          // const date = new Date(payment.date).toDateString();
         if (!groups[date]) {
-          groups[date] = 0;
+          groups[date] = total + payment.amount;
+          total += payment.amount;
         }
-        groups[date] += payment.amount;
+        // groups[date] += payment.amount;
         }
       });
       return Object.entries(groups).map(([date, amount]) => ({
@@ -105,7 +108,7 @@ export default function DashboardChart(props) {
                         dataKey="date"
                         domain={["auto", "auto"]}
                         height={40}
-                        // tickFormatter={unixTimeString => dateStringFromUnixString(unixTimeString)}
+                        tickFormatter={unixTimeString => dateStringFromUnixString(unixTimeString)}
                         // tickFormatter={unixTime=> new Date(Number(unixTime)).getDate()}
                     >
                             <Label style={{
@@ -113,7 +116,8 @@ export default function DashboardChart(props) {
                             // fontSize: "130%",
                             fill: "white",
                             }}
-                        value={todayMonthName()} offset={0} position="insideBottom" />
+                            value={"(Cumulative payments since start date)"} offset={0} position="insideBottom" />
+                        {/* // value={(props.start && props.end) ? `${props.start.toDateString()} to ${props.end.toDateString()}` : ""} offset={0} position="insideBottom" /> */}
                     </XAxis>
                     <Label
                         style={{
@@ -128,10 +132,10 @@ export default function DashboardChart(props) {
                     <Tooltip />
                 </LineChart>
             </ResponsiveContainer>
-            <label className="checkbox-label">
+            {/* <label className="checkbox-label">
                 <input type="checkbox" checked={isCumulative} onChange={toggleCumulative} />
                 <span>Cumulative data</span>
-            </label>
+            </label> */}
         </>
     );
     

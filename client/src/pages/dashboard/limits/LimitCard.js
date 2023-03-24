@@ -32,41 +32,38 @@ export default function LimitCard(props) {
         break;
     }
 
-    if (dt.getTime() === 0) {
-      res = props.payments;
-    } else {
-      const today = new Date().getTime();
-      props.payments.forEach((pay) => {
-        const paytime = Date.parse(pay.date);
-        if (paytime <= today && paytime >= dt.getTime()) {
-          res.push(pay);
+        if(dt.getTime() === 0) {
+            res = props.payments;
+        } else {
+            const today = new Date().getTime();
+            props.payments.forEach(pay => {
+                const paytime = Date.parse(pay.date);
+                if(paytime <= today && paytime >= dt.getTime()) {
+                    res.push(pay);
+                }
+            });
         }
-      });
+        if(res) {
+            return res.reduce((a, b) => a + (b.amount || 0), 0);
+        }
+        else {
+            return 0;
+        }
     }
-    if (res) {
-      return res.reduce((a, b) => a + (b.amount || 0), 0);
-    } else {
-      return 0;
+    
+    const completedAmount = () => {
+        return ((getPaymentSumOfLimitDuration()/props.limit.spendingLimit.amount)*100).toFixed(1)
     }
-  };
 
-  const completedAmount = () => {
     return (
-      (getPaymentSumOfLimitDuration() / props.limit.spendingLimit.amount) *
-      100
-    ).toFixed(1);
-  };
-
-  return (
-    <div className="dashboard-container dashboard-limit-card">
-      <div className="limit-card-title">{props.limit.name}</div>
-      <div className="limit-card-subtitle">
-        {`Spent £${getPaymentSumOfLimitDuration().toFixed(2)} of £${
-          props.limit.spendingLimit.amount
-        } limit this ${props.limit.spendingLimit.duration.type.toLowerCase()}`}{" "}
-        {}
-      </div>
-      <PercentageBar completed={completedAmount()} />
-    </div>
-  );
+        <div className="dashboard-container dashboard-limit-card">
+            <div className="limit-card-title">
+                {props.limit.name}
+            </div>
+            <div className="limit-card-subtitle">
+                {`Spent £${getPaymentSumOfLimitDuration()} of £${props.limit.spendingLimit.amount ? props.limit.spendingLimit.amount.toFixed(1) : 0} limit this ${props.limit.spendingLimit.duration.type.toLowerCase()}`}  {}
+            </div>
+            <PercentageBar completed={completedAmount()}/>
+        </div>
+    );
 }
