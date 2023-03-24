@@ -34,6 +34,16 @@ const achievementSpecSchema = mongoose.Schema({
     immutable: true,
   },
   requirements: {
+    /*
+    requitements:
+      requirement: {
+        target: Number
+      },
+      boolOp: {
+        type: String,
+        enum ["AND", "OR"]
+      }
+    */
     type: mongoose.Schema.Types.Mixed,
     required: true,
     immutable: true,
