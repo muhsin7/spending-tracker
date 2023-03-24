@@ -1,118 +1,113 @@
 .reports-page {
-    margin: 1em;
-    height: 100%;
+  margin: 1em;
+  height: 100%;
 }
 
 .reports-buttons {
-    display: flex;
+  display: flex;
 }
 
 .report-btn {
-    margin-right: 1em;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    cursor: pointer;
+  margin-right: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  cursor: pointer;
 }
 .report-btn:last-child {
-    margin-right: 0;
+  margin-right: 0;
 }
 
 .report-btn-selected {
-    border: 3px solid var(--secondary-yellow);
-    color: var(--secondary-yellow);
+  border: 3px solid var(--secondary-yellow);
+  color: var(--secondary-yellow);
 }
 
 .report-date-pickers {
-    display: flex;
-    justify-content: center;
-    flex-direction: row;   
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
 }
 
 .date-picker-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .reports-page > h3 {
-    font-weight: lighter;
+  font-weight: lighter;
 }
 
 .report-charts {
-    display: grid;
-    height: 50vh;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    grid-template-rows: repeat(2, 1fr);
-    /* padding: 0 2em 0 2em; */
+  display: grid;
+  height: 50vh;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-rows: repeat(2, 1fr);
 }
 
 .report-line-chart {
-    /* height: 50vh; */
-    /* width: 40vw; */
-    padding: 2em;
-    display: flex;
-    flex-direction: column;
-    grid-column-start: 5;
-    grid-column-end: 12;
-    grid-row: 1;
+  padding: 2em;
+  display: flex;
+  flex-direction: column;
+  grid-column-start: 5;
+  grid-column-end: 12;
+  grid-row: 1;
 }
 
 .report-pie-chart {
-    margin: 2em;
-    height: 50vh;
-    /* width: 30vw; */
-    grid-column-start: 1;
-    grid-column-end: 5;
-    grid-row: 1;
-    display: flex;
+  margin: 2em;
+  height: 50vh;
+  grid-column-start: 1;
+  grid-column-end: 5;
+  grid-row: 1;
+  display: flex;
 }
 
 .report-bar-chart {
-    height: 30vh;
-    /* width: 40vw; */
-    grid-column-start: 1;
-    grid-column-end: 6;
-    /* grid-row: 1; */
-    grid-row: 2;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  height: 30vh;
+  grid-column-start: 1;
+  grid-column-end: 6;
+  grid-row: 2;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .report-stats {
-    grid-row: 2;
-    grid-column-start: 6;
-    grid-column-end: 13;
-    margin: 2em;
-    display: flex;
+  grid-row: 2;
+  grid-column-start: 6;
+  grid-column-end: 13;
+  margin: 2em;
+  display: flex;
 }
 
 .report-stat-card {
-    background-color: #222828;
-    padding: 1em;
-    border-radius: 12px;
-    margin: 0 1em 0 1em;
+  background-color: #222828;
+  padding: 1em;
+  border-radius: 12px;
+  margin: 0 1em 0 1em;
 }
 
 .stat-small {
-    width: 25%;
+  width: 25%;
 }
 
 .stat-medium {
-    width: 50%;
+  width: 50%;
 }
 
 .stat-title {
-    font-size: 1.5em;
+  font-size: 1.5em;
 }
 
 .stat-amount {
-    font-size: 2em;
+  font-size: 2em;
 }
 
-.report-date input, .report-date select{
-    padding: 2em;
+.report-date input,
+.report-date select {
+  padding: 2em;
 }

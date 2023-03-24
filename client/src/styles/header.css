@@ -12,11 +12,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 20px 40px;
-  /* position:fixed;   */
-  z-index:1; /*Add this*/
-  /* margin: 20px; */
-  /* border-bottom: 2px solid var(--button-text-green); */
-  /* margin-bottom: 60px; */
+  z-index: 1;
 }
 
 .header ul {
@@ -30,8 +26,7 @@
   align-items: center;
 }
 
-.logo{
-  /* max-width: 50px; */
+.logo {
   height: fit-content;
 }
 
@@ -43,21 +38,19 @@
   cursor: pointer;
 }
 
-
 .logo-text::after {
-  content:"";
+  content: "";
   background-image: url(../images/logo.png);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  width: 80px; 
+  width: 80px;
   height: 80px;
   position: absolute;
-  transform: translate(14px,-10px);
+  transform: translate(14px, -10px);
 }
 
 .btn-header {
-  /* padding: 2em; */
   height: 50px;
   width: 150px;
 }
@@ -86,9 +79,8 @@
   margin-left: 1.5em;
 }
 
-
 /* Popup section */
-.popup{
+.popup {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -112,11 +104,11 @@
   z-index: 1;
 }
 
-.overlay{
-  background: rgba(0, 0, 0,0.7);
+.overlay {
+  background: rgba(0, 0, 0, 0.7);
 }
 
-.popup h2{
+.popup h2 {
   padding: 40px 0 20px 0;
   margin-bottom: 120px;
   font-size: 50px;
@@ -125,7 +117,7 @@
   color: #000;
 }
 
-.popup ul li{
+.popup ul li {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -134,11 +126,11 @@
   font-weight: 500;
 }
 
-.popup ul li h3{
+.popup ul li h3 {
   color: #000;
 }
 
-.popup ul li .box{
+.popup ul li .box {
   border: 2px solid var(--button-text-green);
   width: 500px;
   height: 50px;
