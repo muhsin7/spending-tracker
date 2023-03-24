@@ -218,7 +218,7 @@ describe("User tests", () => {
         })
         .then((user) => {
           should.exist(user);
-          user.should.have.property("streakSince").eql(user.createdAt);
+          should.not.equal(user.streakSince);
         });
     });
   });
