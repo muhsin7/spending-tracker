@@ -95,12 +95,21 @@
 }
 
 .duration-selector {
-    background-color: #00B57F;
+    background-color: lightslategray;
     border: none;
     color: white;
     font: inherit;
     font-size: 90%;
     border-radius: 8px;
+    padding: 0.2em;
+}
+
+.duration-selector option:nth-child(2n + 1) {
+  background-color: darkgrey;
+}
+
+.duration-selector option:nth-child(2n + 0) {
+  background-color: grey;
 }
 
 .dashboard-amount-cards {
