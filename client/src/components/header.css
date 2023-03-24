@@ -1,0 +1,36 @@
+.header-container {
+  width: 100vw;
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 20px;
+  text-align: center;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  border-bottom: 2px solid var(--button-text-green);
+  margin-bottom: 60px;
+}
+
+.header ul {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.header ul li a {
+  display: flex;
+  align-items: center;
+}
+
+.logo{
+  max-width: 50px;
+}
+
+.btn-header {
+  height: 50px;
+  width: 150px;
+}
