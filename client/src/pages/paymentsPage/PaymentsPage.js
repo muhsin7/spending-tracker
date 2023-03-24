@@ -74,14 +74,23 @@ export default function PaymentsPage() {
         </span>
       </div>
 
-      <div
-        className="payments-add-payment"
-        onClick={() => navigate("/addPayment")}
-      >
-        <span>Click to add new payment</span>
-        <FaPlus className="payments-plus-icon" />
-      </div>
+      <span className="payments-redirect-section">
+        <div
+          className="payments-add-payment payments-add-payment-1"
+          onClick={() => navigate("/addCategory")}
+        >
+          <span>Click to add new category</span>
+          <FaPlus className="payments-plus-icon" />
+        </div>
 
+        <div
+          className="payments-add-payment payments-add-payment-2"
+          onClick={() => navigate("/addPayment")}
+        >
+          <span>Click to add new payment</span>
+          <FaPlus className="payments-plus-icon" />
+        </div>
+      </span>
       <PaymentsHistory
         payments={payments}
         setPayments={setPayments}

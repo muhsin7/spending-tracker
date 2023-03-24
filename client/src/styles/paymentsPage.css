@@ -78,16 +78,30 @@
 }
 
 .payments-add-payment {
+  width: 50%;
   margin-bottom: 0.5rem;
   background-color: #181e1e;
   border-radius: 16px;
   padding: 1rem;
 }
 
+.payments-add-payment-1 {
+  margin-right: 0.2em;
+}
+
+.payments-add-payment-2 {
+  margin-left: 0.2em;
+}
+
 .payments-add-payment:hover {
   background-color: #222828;
   color: beige;
   cursor: pointer;
+}
+
+.payments-redirect-section {
+  display: flex;
+  margin-bottom: 0.2em;
 }
 
 .payments-plus-icon {
