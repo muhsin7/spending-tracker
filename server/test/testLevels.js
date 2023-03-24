@@ -15,7 +15,6 @@ const { updateExp } = require("../util/levelsUtil");
 
 // TEST LEVELS AND EXP
 describe("Level tests", () => {
-
   //Flush test database and create mock user
   after(async () => {await utils.flushDB();});
 

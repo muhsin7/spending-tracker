@@ -17,7 +17,7 @@ const spendingLimitSchema = mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    ref: "User"
+    ref: "User",
   },
   amount: {
     type: Number,
@@ -30,8 +30,8 @@ const spendingLimitSchema = mongoose.Schema({
   category: {
     required: false,
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Category"
-  }
+    ref: "Category",
+  },
 });
 
 module.exports = mongoose.model("SpendingLimit", spendingLimitSchema);

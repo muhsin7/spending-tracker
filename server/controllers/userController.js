@@ -104,7 +104,9 @@ const editUser = asyncHandler(async (req, res) => {
 // @route   GET /api/user/profile
 // @access  Private
 const getUser = asyncHandler(async (req, res) => {
-  const { _id, name, email, exp, level } = await User.findById(req.user.id);
+  const { _id, name, email, exp, level, streakSince } = await User.findById(
+    req.user.id
+  );
 
   res.status(200).json({
     id: _id,
@@ -112,6 +114,7 @@ const getUser = asyncHandler(async (req, res) => {
     email,
     exp,
     level,
+    streakSince,
   });
 });
 
