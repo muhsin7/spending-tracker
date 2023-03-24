@@ -2,7 +2,7 @@
 const express = require("express");
 const router = express.Router();
 
-const {getCategories, getCategory, createCategory, deleteCategory, updateCategory, getNoSpendingLimitCategory, getCategoriesWithSpendingLimits} = require("../controllers/categoryController");
+const { getCategories, getCategory, createCategory, deleteCategory, updateCategory, getNoSpendingLimitCategory, getCategoriesWithSpendingLimits } = require("../controllers/categoryController");
 const { protect } = require("../middleware/authMiddleware");
 const { mustOwnValidCategory } = require("../middleware/categoryMiddleware");
 

@@ -56,3 +56,15 @@ input[type="checkbox"] {
               user-select: none; /* Non-prefixed version, currently
                                     supported by Chrome, Edge, Opera and Firefox */
   }
+
+  .empty-container {
+    background-color: #222828;
+    height: 100%;
+    width: 100%;
+    border-radius: 12px; 
+    font-size: 2em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }

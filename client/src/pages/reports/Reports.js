@@ -1,5 +1,4 @@
 import axios from "axios";
-import { array } from "prop-types";
 import { useEffect, useState } from "react";
 import { useToken } from "../../authentication/useToken";
 import CategoryPieChart from "../dashboard/charts/CategoryPieChart";
@@ -33,7 +32,6 @@ export default function Reports() {
         },
       })
       .then((res) => {
-        // console.log(res.data);
         setData(res.data);
       });
   }, []);
@@ -47,7 +45,7 @@ export default function Reports() {
       });
       setBiggestPayment(biggest);
     }
-  }, [data])
+  }, [data, start, end])
 
   const onDurationSelect = (dur) => {
     setDuration(dur);
@@ -124,7 +122,7 @@ export default function Reports() {
           }
         });
 
-        if(res) {
+        if(res.length > 0) {
           const maxCat = res.reduce((prev, curr) => {
             return prev.amount > curr.amount ? prev : curr;
           });
@@ -185,13 +183,13 @@ export default function Reports() {
 
       <div className="report-charts">
         <div className="report-pie-chart">
-          <CategoryPieChart payments={data} />
+          <CategoryPieChart payments={data} start={start} end={end}/>
         </div>
         <div className="report-bar-chart">
-          <MonthlyBarGraph payments={data} />
+          <MonthlyBarGraph payments={data} start={start} end={end}/>
         </div>
         <div className="report-line-chart">
-          <DashboardChart payments={data} />
+          <DashboardChart payments={data} start={start} end={end}/>
         </div>
         <div className="report-stats">
           <div className="report-stat-card stat-small">
@@ -200,7 +198,7 @@ export default function Reports() {
                 <div className="stat-title">
                   You spent the most on <b>{categoryStat.name}</b>
                 </div>
-                <div className="stat-amount">£{categoryStat.amount}</div>
+                <div className="stat-amount">£{categoryStat.amount ? categoryStat.amount.toFixed(2) : 0}</div>
               </>
             ) : (
               <div className="stat-title">
@@ -214,7 +212,7 @@ export default function Reports() {
                 <div className="stat-title">
                 Your biggest purchase was on <b>{new Date(Date.parse(biggestPayment.date)).toLocaleDateString()}</b> on <b>{biggestPayment.title}</b>
                 </div>
-                <div className="stat-amount">£{biggestPayment.amount}</div>
+                <div className="stat-amount">£{biggestPayment.amount ? biggestPayment.amount.toFixed(2) : 0}</div>
               </>
             ) : (
               <div className="stat-title">

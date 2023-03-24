@@ -21,11 +21,11 @@ describe("Register Page Tests", () => {
 
   it("form should submit succesfully if filled with correct values", () => {
     cy.get("#name").type("Test User");
-    cy.get("#email").type("testuser99@example.com");
+    cy.get("#email").type("testuser75@example.com");
     cy.get("#password").type("password");
     cy.get("#password2").type("password");
     cy.get("#createAccountButton").click();
-    cy.url().should("include", "/login");
+    cy.url().should("include", "/dashboard");
   });
 
   it('should redirect to the login page when the "Login" link is clicked', () => {

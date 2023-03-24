@@ -17,7 +17,7 @@ function CustomTooltip({ payload, label, active }) {
         {/* <div className="tooltip-label">{`${dateStringFromUnixString(label)}`}</div> */}
         {/* <div className="intro">-£{payload[0].value}</div> */}
         <div className="tooltip-label">
-          {payload ? `-£${payload[0].value}` : "Error"}
+          {payload ? `-£${payload[0].value ? payload[0].value.toFixed(2) : 0}` : "Error"}
         </div>
       </div>
     );
@@ -44,20 +44,15 @@ export default function CategoryPieChart(props) {
     startDate = new Date(0),
     endDate = new Date(),
   }) => {
-    console.log(categoryMetaData);
     let res = [];
     categoryMetaData.forEach((cat) => {
-      // console.log(cat);
       let sum = 0;
       props.payments.forEach((pay) => {
         const paymentDate = new Date(pay.date);
         if (paymentDate >= startDate && paymentDate <= endDate) {
-          // Only considers payments in current month
-          // if (isSameMonthAsToday(new Date(Date.parse(pay.date)))) {
-            // if(false) {
-            if (pay.categoryId === cat._id) {
-              sum += pay.amount;
-            }
+          if (pay.categoryId === cat._id) {
+            sum += pay.amount;
+          }
           // }
         }
       });
@@ -70,8 +65,6 @@ export default function CategoryPieChart(props) {
         });
       }
     });
-
-    console.log(res);
 
     return res;
   };
@@ -136,7 +129,8 @@ export default function CategoryPieChart(props) {
     );
   };
 
-  const renderPieChart = (
+  const renderPieChart = 
+      categoryData.length > 0 ? (
     <ResponsiveContainer>
       <PieChart>
         <Legend layout="horizontal" verticalAlign="top" align="center" />
@@ -176,8 +170,8 @@ export default function CategoryPieChart(props) {
         )}
         <Tooltip content={<CustomTooltip />} />
       </PieChart>
-    </ResponsiveContainer>
-  );
+    </ResponsiveContainer>) : (<div className='empty-container'>No data to display pie chart</div>)
+  ;
 
   return renderPieChart;
 }

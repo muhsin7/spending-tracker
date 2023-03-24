@@ -304,6 +304,7 @@ describe("User tests", () => {
       res.body.should.have.property("email").eql(defaultUser.email);
       res.body.should.have.property("token");
     });
+
     it("should not login a user with the incorrect credentials", async () => {
       let invalidUser = {
         email: "jill@example.com",
@@ -316,6 +317,7 @@ describe("User tests", () => {
       
       utils.assertError(res, 401);
     });
+
     it("should not login a user with a malformed request", async () => {
       let invalidUser = {
         password: "1234"
@@ -327,6 +329,7 @@ describe("User tests", () => {
       
       utils.assertError(res, 401);
     });
+
     it("should provide an authorised user with their own profile", async () => {
       const res = await chai.request(app)
         .get("/api/user/profile/")
@@ -338,12 +341,14 @@ describe("User tests", () => {
       res.body.should.have.property("name").eql(defaultUser.name);
       res.body.should.have.property("email").eql(defaultUser.email);
     });
+
     it("should not provide a user without a bearer token a profile", async() =>  {
       const res = await chai.request(app)
         .get("/api/user/profile/");
       
       utils.assertError(res, 401);
     });
+
     it("should not allow a user with an invalid bearer token a profile", async () => {
       const res = await chai.request(app)
         .get("/api/user/profile/")
@@ -363,7 +368,6 @@ describe("User tests", () => {
         .send(changedDetails)
         .set("Authorization", ("Bearer " + validToken));
 
-      console.log(res.body);
       res.should.have.status(200);
       res.body.should.be.a("object");
       res.body.should.have.property("name").eql(defaultUser.name);
@@ -386,5 +390,4 @@ describe("User tests", () => {
       res2.body.should.have.property("token");
     }); 
   });
-  
 });

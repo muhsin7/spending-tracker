@@ -1,7 +1,7 @@
 import React from "react";
 import Background from "./Background";
 
-function NotFound() {
+export default function NotFound() {
   return (
     <main className="not-found-page registerPage">
       <Background />
@@ -11,5 +11,3 @@ function NotFound() {
     </main>
   );
 }
-
-export default NotFound;

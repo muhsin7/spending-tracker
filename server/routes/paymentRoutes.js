@@ -4,9 +4,7 @@ const router = express.Router();
 
 const {getPayments, getSummary, getPayment, createPayment, deletePayment, updatePayment} = require("../controllers/paymentController");
 const { protect } = require("../middleware/authMiddleware");
-const {mustOwnValidCategory, mustOwnValidPayment} = require("../middleware/paymentMiddleware");
-
-// /api/payment
+const { mustOwnValidCategory, mustOwnValidPayment } = require("../middleware/paymentMiddleware");
 
 router.route("/")
   .get(protect, getPayments)

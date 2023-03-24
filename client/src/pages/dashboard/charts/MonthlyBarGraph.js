@@ -27,33 +27,38 @@ function CustomTooltip({ payload, label, active }) {
   return null;
 }
 
-
 const dataValueToMonth = (value) => {
   let onlyDate = new Date(Date.parse(value.date));
   onlyDate.setUTCHours(0, 0, 0, 0);
   const dateString = onlyDate.setUTCDate(1).toString();
   return dateString;
-}
+};
 
-function processData({payments, startDate=new Date(0), endDate=new Date()}) {
+function processData({
+  payments,
+  startDate = new Date(0),
+  endDate = new Date(),
+}) {
   const groupedPayments = {};
-  payments.forEach(payment => {
+  payments.forEach((payment) => {
     const paymentDate = new Date(payment.date);
     if (paymentDate >= startDate && paymentDate <= endDate) {
-      const month = paymentDate.toLocaleString('default', { month: 'long', year: 'numeric' });
+      const month = paymentDate.toLocaleString("default", {
+        month: "long",
+        year: "numeric",
+      });
       if (groupedPayments[month]) {
         groupedPayments[month].amount += payment.amount;
       } else {
         groupedPayments[month] = {
           date: month,
-          amount: payment.amount
+          amount: payment.amount,
         };
       }
     }
   });
   return Object.values(groupedPayments);
 }
-
 
 export default function MonthlyBarGraph(props) {
   const [token, setToken] = useToken();
@@ -67,29 +72,39 @@ export default function MonthlyBarGraph(props) {
     );
   };
 
-  useEffect(() =>
-      {
-        setDataByMonth(processData({payments: props.payments, startDate: props.start, endDate: props.end}));
-      }, [props.end, props.payments, props.start]);
+  useEffect(() => {
+    console.log(dataByMonth)
+  }, [dataByMonth])
 
-  const renderBarChart = (
-          <ResponsiveContainer>
-            <BarChart width={730} height={400} data={dataByMonth}>
-                <Bar
-                    dataKey="amount"
-                    // nameKey="date"
-                    // label={()}
-                    >
-                        {dataByMonth.map((entry, index) => (
-                            <Cell key={`cell-${index}`} fill="#00B57F" />
-                        ))}
-                </Bar>
-                <XAxis dataKey="date" />
-                <YAxis />
-                <Tooltip content={<CustomTooltip />} cursor={{fill: 'rgba(0, 0, 0, 0.0)'}} />
-            </BarChart>
-            </ResponsiveContainer>
+  useEffect(() => {
+    setDataByMonth(
+      processData({
+        payments: props.payments,
+        startDate: props.start,
+        endDate: props.end,
+      })
     );
+  }, [props.end, props.payments, props.start]);
+
+  const renderBarChart = dataByMonth.length > 0 ? (<ResponsiveContainer>
+      <BarChart width={730} height={400} data={dataByMonth}>
+        <Bar
+          dataKey="amount"
+          // nameKey="date"
+          // label={()}
+        >
+          {dataByMonth.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill="#00B57F" />
+          ))}
+        </Bar>
+        <XAxis dataKey="date" />
+        <YAxis />
+        <Tooltip
+          content={<CustomTooltip />}
+          cursor={{ fill: "rgba(0, 0, 0, 0.0)" }}
+        />
+      </BarChart>
+    </ResponsiveContainer>) : (<div className='empty-container'>No data to display line chart</div>);
 
   return renderBarChart;
 }
