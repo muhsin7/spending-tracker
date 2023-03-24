@@ -40,7 +40,7 @@ export default function Dashboard() {
   const getMonthStart = () => {
     const dt = new Date();
     return new Date(dt.getFullYear(), dt.getMonth(), 1);
-  }
+  };
 
   return (
     <div className="dashboard dashboard-grid">
