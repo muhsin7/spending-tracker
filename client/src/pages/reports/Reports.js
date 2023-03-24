@@ -1,7 +1,6 @@
 import axios from "axios";
 import { array } from "prop-types";
 import { useEffect, useState } from "react";
-import ReactDatePicker from "react-datepicker";
 import { useToken } from "../../authentication/useToken";
 import CategoryPieChart from "../dashboard/charts/CategoryPieChart";
 import DashboardChart from "../dashboard/charts/DashboardChart";
@@ -177,7 +176,6 @@ export default function Reports() {
                   onChange={(date) => setEnd(date)}
                 />
               </div>
-              
             </div>
           </div>
         </div>

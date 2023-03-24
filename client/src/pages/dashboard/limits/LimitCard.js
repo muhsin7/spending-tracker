@@ -1,30 +1,36 @@
 import PercentageBar from "./PercentageBar";
 
 export default function LimitCard(props) {
-
-    const getPaymentSumOfLimitDuration = () => {
-        let res = [];
-        let dt = new Date();
-        switch(props.limit.spendingLimit.duration.type) {
-            case "YEAR":
-                dt = new Date(dt.getFullYear(), 0, 1);
-                break;
-            case "MONTH":
-                dt = new Date(dt.getFullYear(), dt.getMonth(), 1);
-                break;
-            case "DAY":
-                dt = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate(), 0);
-                break;
-            case "WEEK":
-                const tempDay = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate(), 0);
-                const day = tempDay.getDay();
-                dt = new Date(tempDay.setDate(dt.getDate() - day + (day === 0 ? -6:1)));
-                break;
-            default:
-                dt = new Date(0);
-                // res = props.payments;
-                break;
-        }
+  const getPaymentSumOfLimitDuration = () => {
+    let res = [];
+    let dt = new Date();
+    switch (props.limit.spendingLimit.duration.type) {
+      case "YEAR":
+        dt = new Date(dt.getFullYear(), 0, 1);
+        break;
+      case "MONTH":
+        dt = new Date(dt.getFullYear(), dt.getMonth(), 1);
+        break;
+      case "DAY":
+        dt = new Date(dt.getFullYear(), dt.getMonth(), dt.getDate(), 0);
+        break;
+      case "WEEK":
+        const tempDay = new Date(
+          dt.getFullYear(),
+          dt.getMonth(),
+          dt.getDate(),
+          0
+        );
+        const day = tempDay.getDay();
+        dt = new Date(
+          tempDay.setDate(dt.getDate() - day + (day === 0 ? -6 : 1))
+        );
+        break;
+      default:
+        dt = new Date(0);
+        // res = props.payments;
+        break;
+    }
 
         if(dt.getTime() === 0) {
             res = props.payments;
@@ -38,7 +44,7 @@ export default function LimitCard(props) {
             });
         }
         if(res) {
-            return res.reduce((a, b) => a + (b.amount || 0), 0).toFixed(1);
+            return res.reduce((a, b) => a + (b.amount || 0), 0);
         }
         else {
             return 0;

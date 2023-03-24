@@ -15,7 +15,7 @@ export default function AddSpendingLimit() {
   });
   const [searchParams, setSearchParams] = useSearchParams();
   const [spendingLimit, setSpendingLimit] = useState("");
-  const catID = searchParams.get("categoryID")
+  const catID = searchParams.get("categoryID");
 
   const navigate = useNavigate();
 
@@ -36,46 +36,21 @@ export default function AddSpendingLimit() {
 
   // Gets all the user's categories from the database
   useEffect(() => {
-    const res = axios.get(`/api/category/${catID}`, {
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-    }).then(async (res) => {
-      setCategory(res.data);
-      axios.get(`/api/limit/byCategory/${catID}`, {
+    const res = axios
+      .get(`/api/category/${catID}`, {
         headers: {
           Authorization: "Bearer " + token,
-        }
-      }).then((res2) => {
-        const spendingLimit = res2.data[0];
-        setSpendingLimit(spendingLimit._id);
-        setFormValues({
-          ...formValues,
-          name: spendingLimit.name,
-          amount: spendingLimit.amount,
-          duration: spendingLimit.duration.type,
-          categoryId: spendingLimit.category
-        });
-      });
-    })
-    .catch((err) => {
-      //If catID is 1, then they are trying to edit the global spending limit
-      if(catID !== "1") {
-        navigate("/categories");
-      }
-      else {
-        setCategory({
-          _id: "1",
-          name: "Global"
-        });
-        
-        axios.get(`/api/limit/byCategory/${catID}`, {
-          headers: {
-            Authorization: "Bearer " + token,
-          }
-        })
+        },
+      })
+      .then(async (res) => {
+        setCategory(res.data);
+        axios
+          .get(`/api/limit/byCategory/${catID}`, {
+            headers: {
+              Authorization: "Bearer " + token,
+            },
+          })
           .then((res2) => {
-            console.log(res2);
             const spendingLimit = res2.data[0];
             setSpendingLimit(spendingLimit._id);
             setFormValues({
@@ -83,31 +58,57 @@ export default function AddSpendingLimit() {
               name: spendingLimit.name,
               amount: spendingLimit.amount,
               duration: spendingLimit.duration.type,
-              categoryId: "1"
+              categoryId: spendingLimit.category,
+            });
           });
-        })
-          .catch((err) => {
-            navigate("/categories");
+      })
+      .catch((err) => {
+        //If catID is 1, then they are trying to edit the global spending limit
+        if (catID !== "1") {
+          navigate("/categories");
+        } else {
+          setCategory({
+            _id: "1",
+            name: "Global",
           });
-      }
-    });
+
+          axios
+            .get(`/api/limit/byCategory/${catID}`, {
+              headers: {
+                Authorization: "Bearer " + token,
+              },
+            })
+            .then((res2) => {
+              console.log(res2);
+              const spendingLimit = res2.data[0];
+              setSpendingLimit(spendingLimit._id);
+              setFormValues({
+                ...formValues,
+                name: spendingLimit.name,
+                amount: spendingLimit.amount,
+                duration: spendingLimit.duration.type,
+                categoryId: "1",
+              });
+            })
+            .catch((err) => {
+              navigate("/categories");
+            });
+        }
+      });
   }, []);
 
   const onDelete = async (e) => {
-    const response = await axios
-        .delete(`/api/limit/${spendingLimit}`, {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
-      );
+    const response = await axios.delete(`/api/limit/${spendingLimit}`, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
 
-      console.log(response);
-      if (response.status === 200) navigate("/categories");
-  }
+    console.log(response);
+    if (response.status === 200) navigate("/categories");
+  };
 
   const onSubmit = async (e) => {
-
     //Check all values are filled in
     for (let name in formValues) {
       console.log(name);
@@ -117,13 +118,13 @@ export default function AddSpendingLimit() {
         return;
       }
     }
-  
+
     try {
       const BASE_REQ = {
         name: formValues["name"],
         amount: formValues["amount"],
         duration: {
-          type: formValues["duration"]
+          type: formValues["duration"],
         },
       };
 
@@ -131,25 +132,21 @@ export default function AddSpendingLimit() {
 
       //Set global spending limit if chosen
       if (formValues["categoryId"] === "1") {
-        req = BASE_REQ
-      }
-      else {
-        req = {...BASE_REQ, category: formValues["categoryId"]}
+        req = BASE_REQ;
+      } else {
+        req = { ...BASE_REQ, category: formValues["categoryId"] };
       }
 
-      const response = await axios
-        .patch(`/api/limit/${spendingLimit}`, req,  {
-          headers: {
-            Authorization: "Bearer " + token,
-          },
-        }
-      );
+      const response = await axios.patch(`/api/limit/${spendingLimit}`, req, {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      });
 
       console.log(response);
       if (response.status === 200) navigate("/categories");
-
     } catch (err) {
-      console.log(err.response.data)
+      console.log(err.response.data);
       setErrorMessage(err.response.data.error);
     }
   };
@@ -192,7 +189,9 @@ export default function AddSpendingLimit() {
               >
                 <option key="" value=""></option>
                 {["YEAR", "MONTH", "WEEK", "DAY"].map((option) => (
-                  <option key={option} value={option}>{option}</option>
+                  <option key={option} value={option}>
+                    {option}
+                  </option>
                 ))}
               </select>
             </div>
@@ -203,7 +202,9 @@ export default function AddSpendingLimit() {
                 onChange={onFormChange}
                 disabled
               >
-                <option key={category._id} value={category._id}>{category.name}</option>
+                <option key={category._id} value={category._id}>
+                  {category.name}
+                </option>
               </select>
             </div>
             <input

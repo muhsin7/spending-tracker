@@ -37,9 +37,7 @@ export default function Achievements() {
 
   const cards = [];
   achievements.forEach((e) => {
-    cards.push(
-      <AchievementCard achievement={e} key={e.title} />
-    );
+    cards.push(<AchievementCard achievement={e} key={e.title} />);
   });
 
   return (
@@ -48,21 +46,21 @@ export default function Achievements() {
       <div className="achievements-top">
         <h1 className="achievements-header">Achievements</h1>
         <span>
-            <AchievementsSortBy
-              achievements={achievements}
-              setAchievements={setAchievements}
-              defaultAchievements={defaultAchievements}
-              setDefaultAchievements={setDefaultAchievements}
-              token={token}
-            />
-            <AchievementsFilterBy
-              achievements={achievements}
-              defaultAchievements={defaultAchievements}
-              setAchievements={setAchievements}
-              token={token}
-            />
-          </span>
-        </div>
+          <AchievementsSortBy
+            achievements={achievements}
+            setAchievements={setAchievements}
+            defaultAchievements={defaultAchievements}
+            setDefaultAchievements={setDefaultAchievements}
+            token={token}
+          />
+          <AchievementsFilterBy
+            achievements={achievements}
+            defaultAchievements={defaultAchievements}
+            setAchievements={setAchievements}
+            token={token}
+          />
+        </span>
+      </div>
       <div className="achievement-section">{cards}</div>
     </div>
   );

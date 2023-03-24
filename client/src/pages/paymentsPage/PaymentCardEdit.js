@@ -49,7 +49,6 @@ export default function PaymentCardEdit(props) {
     );
   }
 
-
   function isChanged() {
     // Assume that checks for newPrice and PRICE being valid numbers have already been done
     return (
@@ -105,15 +104,14 @@ export default function PaymentCardEdit(props) {
           newImageURL.indexOf(";")
         ),
       };
-    
+
     try {
       const res = await axios.patch("/api/payment/" + props.payment._id, data, {
         headers: {
           Authorization: "Bearer " + props.token,
         },
       });
-    }
-    catch (err) {
+    } catch (err) {
       errorNotif("The file you uploaded was too large!");
       return;
     }
@@ -180,7 +178,7 @@ export default function PaymentCardEdit(props) {
             dateFormat="dd/MM/yyyy"
             onChange={(date) => setNewDate(date)}
           />
-          {newImageURL!=="" && (
+          {newImageURL !== "" && (
             <Popup
               trigger={
                 <button className="payment-image-button">View image</button>
