@@ -148,7 +148,7 @@ export default function AddSpendingLimit() {
                 data-testid="duration"
               >
                 <option key="" value="" className="form-select">Select a time frame...</option>
-                {["YEAR", "MONTH", "DAY", "WEEK"].map((option) => (
+                {["YEAR", "MONTH", "WEEK", "DAY"].map((option) => (
                   <option key={option} value={option}>{option}</option>
                 ))}
               </select>

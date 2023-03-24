@@ -101,7 +101,7 @@ async function createRandomSpendingLimits(user) {
 
   categories.forEach(async (category) => {
     const duration = {
-      type: faker.helpers.arrayElement(["YEAR", "MONTH", "DAY", "WEEK"])
+      type: faker.helpers.arrayElement(["YEAR", "MONTH", "WEEK", "DAY"])
     };
   
     const spendingLimit = {
@@ -120,7 +120,7 @@ async function createRandomSpendingLimits(user) {
 
 async function createRandomOverallSpendingLinit(user) {
   const duration = {
-    type: faker.helpers.arrayElement(["YEAR", "MONTH", "DAY", "WEEK"])
+    type: faker.helpers.arrayElement(["YEAR", "MONTH", "WEEK", "DAY"])
   };
 
   const spendingLimit = {

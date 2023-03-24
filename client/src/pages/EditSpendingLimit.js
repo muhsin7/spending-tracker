@@ -191,7 +191,7 @@ export default function AddSpendingLimit() {
                 onChange={onFormChange}
               >
                 <option key="" value=""></option>
-                {["YEAR", "MONTH", "DAY", "WEEK"].map((option) => (
+                {["YEAR", "MONTH", "WEEK", "DAY"].map((option) => (
                   <option key={option} value={option}>{option}</option>
                 ))}
               </select>
