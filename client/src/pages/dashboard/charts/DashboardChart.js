@@ -123,7 +123,7 @@ export default function DashboardChart(props) {
 
     const renderLineChart = (
         <>
-            {data === [] ?
+            {dataByDate.length > 0 ?
             (<ResponsiveContainer>
                 <LineChart data={dataByDate} margin={{ top: 5, right: 10, bottom: 5, left: 0 }}>
                     <Line type="monotone" dataKey="amount" strokeWidth={2.5} stroke="#00B57F  " />
