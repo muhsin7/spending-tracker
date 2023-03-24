@@ -60,7 +60,7 @@ export default function LimitCard(props) {
                 {props.limit.name}
             </div>
             <div className="limit-card-subtitle">
-                {`Spent £${getPaymentSumOfLimitDuration()} of £${props.limit.spendingLimit.amount} limit this ${props.limit.spendingLimit.duration.type.toLowerCase()}`}  {}
+                {`Spent £${getPaymentSumOfLimitDuration().toFixed(2)} of £${props.limit.spendingLimit.amount} limit this ${props.limit.spendingLimit.duration.type.toLowerCase()}`}  {}
             </div>
             <PercentageBar completed={completedAmount()}/>
         </div>
