@@ -9,6 +9,7 @@ export default function AchievementsFilterBy(props) {
     "",
     "Name",
     "EXP",
+    "Description",
     "Locked",
     "Unlocked",
     "Unlocked date",
@@ -55,6 +56,26 @@ export default function AchievementsFilterBy(props) {
               props.setAchievements(
                 props.defaultAchievements.filter((achievement) =>
                   (achievement.exp.toString() + " EXP")
+                    .toLowerCase()
+                    .includes(e.target.value.toLowerCase())
+                )
+              );
+            }}
+          />,
+        ]);
+        break;
+
+      case "Description":
+        props.setAchievements(props.defaultAchievements);
+        setDate(null);
+        setFilterByInputCode([
+          <input
+            className="achievements-filter-by-input"
+            key="Description"
+            onChange={(e) => {
+              props.setAchievements(
+                props.defaultAchievements.filter((achievement) =>
+                  achievement.description
                     .toLowerCase()
                     .includes(e.target.value.toLowerCase())
                 )
