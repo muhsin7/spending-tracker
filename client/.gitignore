@@ -8,8 +8,6 @@
 # testing
 /coverage
 
-/client/instrumented/*
-
 # production
 /build
 
