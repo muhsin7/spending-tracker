@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useToken } from "../../../authentication/useToken";
+import { Link } from "react-router-dom";
 
 export default function BudgetCard(props) {
     const [token, setToken] = useToken();
@@ -58,7 +59,7 @@ export default function BudgetCard(props) {
                     </div>
                     </>
                     ) : (
-                        <div>Add a budget here</div>
+                        <Link to="/addSpendingLimit?categoryID=1"><div>Add a budget here</div></Link>
                     )
                 }
                 
