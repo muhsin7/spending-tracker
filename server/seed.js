@@ -50,9 +50,16 @@ async function createDefaultModels() {
   };
 
   const user = await createUser(DEFAULT_USER, DEFAULT_PASSWORD);
+
+  const DEFAULT_CATEGORY = {
+    name: "Groceries",
+    userId: user._id
+  };
   
-  for(let i = 0; i < 4; ++i) await createRandomCategory(user);
-  for(let i = 0; i < 7; ++i) await createRandomPayment(user);
+  await Category.create(DEFAULT_CATEGORY);
+
+  for(let i = 0; i < 6; ++i) await createRandomCategory(user);
+  for(let i = 0; i < 25; ++i) await createRandomPayment(user);
   await createRandomSpendingLimits(user);
   await createRandomOverallSpendingLinit(user);
 }
@@ -89,7 +96,7 @@ async function createRandomPayment(user) {
       data: image,
       contentType: "image/jpeg"
     },
-    date: faker.date.recent(7)
+    date: faker.date.recent(365)
   };
 
   return await Payment.create(payment);
