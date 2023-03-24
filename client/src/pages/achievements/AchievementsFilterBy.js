@@ -67,6 +67,7 @@ export default function AchievementsFilterBy(props) {
       case "Locked":
         props.setAchievements(props.defaultAchievements);
         setDate(null);
+        setFilterByInputCode([]);
         props.setAchievements(
           props.defaultAchievements.filter((achievement) => !achievement.owned)
         );
@@ -75,6 +76,7 @@ export default function AchievementsFilterBy(props) {
       case "Unlocked":
         props.setAchievements(props.defaultAchievements);
         setDate(null);
+        setFilterByInputCode([]);
         props.setAchievements(
           props.defaultAchievements.filter((achievement) => achievement.owned)
         );
