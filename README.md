@@ -66,7 +66,7 @@ npm run seed
 ### Seed achievements
 ```bash
 cd server
-npm run seed
+npm run seedAchievements
 ```
 
 ### Server
