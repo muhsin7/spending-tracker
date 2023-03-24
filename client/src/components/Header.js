@@ -61,11 +61,6 @@ export default function Header(props) {
                   <div className="header-link">Categories</div>
                 </li>
               </Link>
-              <Link to={"/register"}>
-                <li>
-                  <div className="header-link">Limits</div>
-                </li>
-              </Link>
               <Link to={"/reports"}>
                 <li>
                   <div className="header-link">Reports</div>
@@ -76,11 +71,6 @@ export default function Header(props) {
                   <div className="header-link">Achievements</div>
                 </li>
               </Link>
-              <li>
-                <div className="header-link" onClick={toggleAccountPopup}>
-                  Account
-                </div>
-              </li>
               <li>
                 <button
                   className="btn btn-header btn-ghost error"
@@ -113,28 +103,6 @@ export default function Header(props) {
           )}
         </ul>
       </header>
-
-      {popup && (
-        <>
-          <div className="overlay" onClick={toggleAccountPopup}></div>
-          <div className="popup">
-            <h2>Account details</h2>
-            <ul>
-              <li>
-                <h3>Name: </h3>
-                <div className="box">{user.name}</div>
-              </li>
-              <li>
-                <h3>Email: </h3> <div className="box">{user.email}</div>
-              </li>
-            </ul>
-
-            <button className="btn close-btn" onClick={toggleAccountPopup}>
-              CLOSE
-            </button>
-          </div>
-        </>
-      )}
     </>
   );
 }
