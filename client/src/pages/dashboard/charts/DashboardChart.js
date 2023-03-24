@@ -39,15 +39,19 @@ const dataValueToMonth = (value) => {
     return dateString;
 }
 
-function processData({payments}) {
-    const groups = {};
+function processData({payments, startDate=new Date(0), endDate=new Date()}) {
+  const groups = {};
     if(payments) {
       payments.forEach((payment) => {
-        const date = new Date(payment.date).toDateString();
+        const paymentDate = new Date(payment.date);
+        if (paymentDate >= startDate && paymentDate <= endDate)
+        {
+          const date = new Date(payment.date).toDateString();
         if (!groups[date]) {
           groups[date] = 0;
         }
         groups[date] += payment.amount;
+        }
       });
       return Object.entries(groups).map(([date, amount]) => ({
         date,
@@ -56,58 +60,6 @@ function processData({payments}) {
     }
   }
 
-// const processData = ({data, cumulative=false, cumulateBy=dataValueToUnix}) => {
-//     const now = new Date();
-//     const lastMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-//     const datesInMonth = [];
-//     const dataByDateInternal = [];
-  
-//     // generate array of dates in last month
-//     while (lastMonth.getMonth() === now.getMonth() && lastMonth.getDate() <= now.getDate()) {
-//       datesInMonth.push(new Date(lastMonth).getTime());
-//       lastMonth.setDate(lastMonth.getDate() + 1);
-//     }
-  
-//     // console.log(datesInMonth)
-
-//     // create payment objects for dates without payment data
-//     const paymentObjects = {};
-//     datesInMonth.forEach(date => {
-//       paymentObjects[date] = { date: date, amount: 0 };
-//     });
-  
-//     let total = 0;
-//     if (data !== undefined) {
-//     //   data.sort((a, b) => ascendingCompare(new Date(Date.parse(a.date)), new Date(Date.parse(b.date))));
-//       data.reduce(function(res, value) {
-//         const dateString = cumulateBy(value);
-  
-//         if (!res[dateString]) {
-//           res[dateString] = paymentObjects[dateString] ? paymentObjects[dateString] : { date: dateString, amount: 0 };
-//           dataByDateInternal.push(res[dateString]);
-//         }
-        
-//         if(cumulative) {
-//             total += value.amount;
-//             res[dateString].amount = total;
-//         } else {
-//             res[dateString].amount += value.amount;
-//         }
-//         return res;
-//     }, paymentObjects);
-// }
-
-//     // calculate cumulative amount if required
-//     if (cumulative) {
-//         let total = 0;
-//         dataByDateInternal.forEach(payment => {
-//             payment.amount += total;
-//             total = payment.amount;
-//         });
-//     }
-
-//     return Object.values(paymentObjects);
-//   }
 
 export default function DashboardChart(props) {
   
@@ -128,9 +80,9 @@ export default function DashboardChart(props) {
             event.persist();
             setIsCumulative(event.target.checked);
             if(event.target.checked) {
-                setDataByDate(processData({data, cumulative: true}));
+                setDataByDate(processData({data, startDate: props.start, endDate: props.end, cumulative: true}));
             } else {
-                setDataByDate(processData({data, cumulative: false}));
+                setDataByDate(processData({data, startDate: props.start, endDate: props.end, cumulative: false}));
             }
     } 
     

@@ -93,7 +93,8 @@ export default function Reports() {
           </div>
         ))}
       </div>
-      {selectedClass("custom") ? (
+      {
+      selectedClass("custom") ? (
         <div className="date-picker-container">
           <h3>Select custom duration</h3>
           <div className="report-date-pickers">
@@ -110,9 +111,6 @@ export default function Reports() {
                   onChange={(date) => setEnd(date)}
                 />
               </div>
-            </div>
-            <div>
-              <span>Start date</span>{" "}
               <div className="inputFormInputBox report-date">
                 <input
                   type="date"
@@ -124,9 +122,9 @@ export default function Reports() {
                   onChange={(date) => setStart(date)}
                 />
               </div>
-            </div>
-          </div>
-        </div>
+              </div>   
+              </div>  
+              </div>       
       ) : (
         []
       )}

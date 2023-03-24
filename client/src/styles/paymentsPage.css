@@ -188,7 +188,7 @@ select.payment-category {
 .payment-amount {
   text-align: right;
   font-size: 1.3em;
-  color: red;
+  color: var(--error-red);
   padding: 0.2em;
 }
 
@@ -257,7 +257,8 @@ select.payment-category {
 }
 
 .payment-image-button {
-  background-color: limegreen;
+  font-family: "Poppins", sans-serif;
+  background-color: #00955f;
   color: black;
   border: none;
   border-radius: 6px;
@@ -271,6 +272,7 @@ select.payment-category {
   background-color: #00955f;
   color: beige;
   cursor: pointer;
+  font-weight: bold;
 }
 
 .payment-image {
