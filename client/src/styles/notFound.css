@@ -1,0 +1,7 @@
+.not-found-page {
+  flex-direction: column;
+}
+
+.not-found-page > h1 {
+  font-size: 4em;
+}

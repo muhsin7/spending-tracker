@@ -1,0 +1,26 @@
+.account-card {
+  margin: 0 2em 0 2em;
+}
+
+.account-pfp {
+  margin-right: 1em;
+}
+
+.account-pfp > img {
+  border-radius: 50%;
+}
+
+.account-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.account-info {
+  display: flex;
+  flex-direction: row;
+}
+
+.account-achievements-number {
+  margin: 1em;
+}

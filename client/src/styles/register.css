@@ -1,0 +1,68 @@
+.registerPage {
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  z-index: 1;
+}
+
+.fieldset {
+  border-radius: 10px;
+  padding: 2em 2em 2em 2em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.form-group input {
+  width: 350px;
+  width: 350px;
+  height: 45px;
+  text-indent: 10px;
+  border: 1px solid #867c6e;
+  font-family: "Poppins", sans-serif;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  background-color: #181a1b;
+}
+
+.login-signup-link > a {
+  color: #00b57f;
+}
+
+input:focus {
+  border: 2px solid #00b57f;
+}
+
+.btn {
+  margin: 20px 0 20px 0;
+  color: #fff;
+  font-weight: 900;
+  border-radius: 5px;
+  height: 50px;
+  width: 90%;
+  background-color: var(--button-text-green);
+  transition: 300ms ease-in-out;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 8px;
+  border-color: transparent;
+}
+
+.btn:hover {
+  border-radius: 30px;
+}
+
+.form-header {
+  margin: 1em 0 1em 0;
+  font-size: 2.5rem;
+  font-weight: 750;
+}

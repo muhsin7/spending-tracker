@@ -1,16 +1,16 @@
 function errorLogger(err, req, res, next) {
   console.log( `error: ${err.message}`);
+  console.log( `error: ${err.stack}` );
   next(err);
 }
 
 // eslint-disable-next-line no-unused-vars
 function errorHandler(err, req, res, next) {
   res.header("Content-Type", "application/json");
-
-  const status = res.statusCode || 500;
+  const status = res.statusCode === 200 ? 500 : res.statusCode;
   res
     .status(status)
-    .json({ error: err.name, message: err.message, status: status });
+    .json({ error: err.name, message: err.message, status: status, stacktrace: err.stack });
 }
 
 // eslint-disable-next-line no-unused-vars

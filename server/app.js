@@ -29,6 +29,12 @@ app.use("/api/user", require("./routes/userRoutes"));
 
 app.use("/api/category", require("./routes/categoryRoutes"));
 
+app.use("/api/payment", require("./routes/paymentRoutes"));
+
+app.use("/api/limit", require("./routes/spendingLimitRoutes"));
+
+app.use("/api/achievement", require("./routes/achievementRoutes"));
+
 app.get("/", (req, res, next) => {
   console.log(req.path,req.method);
   next();

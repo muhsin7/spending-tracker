@@ -1,0 +1,289 @@
+/* PAYMENTS PAGE */
+
+.payments-page {
+  margin: 1%;
+}
+
+.payments-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+
+.payments-header {
+  display: inline-flex;
+  font-size: 36px;
+  padding: 1rem;
+}
+
+.payments-filter-by-section {
+  background-color: #222828;
+  display: inline-flex;
+  border-radius: 16px;
+  padding: 1rem;
+  margin-right: 0.5rem;
+  float: right;
+}
+
+.payments-filter-by-text {
+  padding: 0.2rem;
+  margin-right: 0.2rem;
+}
+
+.payments-filter-by {
+  width: 100px;
+  background-color: #00b57f;
+  border: none;
+  color: white;
+  font: inherit;
+  font-size: 75%;
+  border-radius: 8px;
+  margin-right: 0.5rem;
+  padding: 0.2em;
+}
+
+.payments-filter-by-input {
+  width: 180px;
+  height: 28px;
+  padding: 0.2rem;
+  color: black;
+  background-color: lightslategray;
+  border-radius: 12px;
+  border: none;
+}
+
+.payments-sort-by-section {
+  background-color: #222828;
+  display: inline-flex;
+  border-radius: 16px;
+  padding: 1rem;
+  float: right;
+}
+
+.payments-sort-by-text {
+  padding: 0.2rem;
+  margin-right: 0.2rem;
+}
+
+.payments-sort-by {
+  width: 135px;
+  background-color: #00b57f;
+  border: none;
+  color: white;
+  font: inherit;
+  font-size: 75%;
+  border-radius: 8px;
+  padding: 0.2em;
+}
+
+.payments-add-payment {
+  width: 50%;
+  margin-bottom: 0.5rem;
+  background-color: #181e1e;
+  border-radius: 16px;
+  padding: 1rem;
+}
+
+.payments-add-payment-1 {
+  margin-right: 0.2em;
+}
+
+.payments-add-payment-2 {
+  margin-left: 0.2em;
+}
+
+.payments-add-payment:hover {
+  background-color: #222828;
+  color: beige;
+  cursor: pointer;
+}
+
+.payments-redirect-section {
+  display: flex;
+}
+
+.payments-plus-icon {
+  float: right;
+  font-size: 24px;
+}
+
+.payments-container {
+  background-color: #181e1e;
+  color: black;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 16px;
+}
+
+/* PAYMENT CARD */
+
+.payment-card {
+  background-color: #222828;
+  margin-bottom: 0.5em;
+  padding: 0.5em;
+  border-radius: 12px;
+  width: 100%;
+  word-wrap: break-word;
+  display: grid;
+  grid-template-columns: 10% 90%;
+  justify-content: space-between;
+  flex-flow: row wrap;
+}
+
+.payment-card:hover {
+  background-color: #272d2d;
+  color: beige;
+}
+
+.payment-card:last-child {
+  margin-bottom: 0;
+}
+
+.payment-category {
+  padding: 0.2rem;
+  text-decoration: underline;
+}
+
+.payment-card-top {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 80% 20%;
+  justify-content: space-between;
+  flex-flow: row wrap;
+}
+
+.payment-card-middle {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 95% 5%;
+  justify-content: space-between;
+  flex-flow: row wrap;
+}
+
+.payment-card-bottom {
+  width: 100%;
+  display: block;
+}
+
+.payment-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.payment-title {
+  font-size: 1.5em;
+  font-weight: bolder;
+  padding: 0.2em;
+}
+
+input.payment-title,
+input.payment-amount,
+input.payment-description,
+input.payment-date,
+select.payment-category {
+  color: black;
+  background-color: darkgrey;
+  border-radius: 12px;
+  border: none;
+  margin: 0.1em;
+}
+
+.payment-amount {
+  text-align: right;
+  font-size: 1.3em;
+  color: var(--error-red);
+  padding: 0.2em;
+}
+
+.payment-description {
+  font-style: italic;
+  padding: 0.2em;
+}
+
+.payment-edit-delete-icons {
+  display: block;
+}
+
+.payment-edit-icon {
+  fill: orange;
+  border: none;
+  border-radius: 6px;
+  float: right;
+}
+
+.payment-edit-icon:hover {
+  fill: orangered;
+  cursor: pointer;
+}
+
+.payment-delete-icon {
+  fill: crimson;
+  border: none;
+  border-radius: 6px;
+  float: right;
+}
+
+.payment-delete-icon:hover {
+  fill: darkred;
+  cursor: pointer;
+}
+
+.payment-confirm-icon {
+  fill: forestgreen;
+  border: none;
+  border-radius: 6px;
+  float: right;
+}
+
+.payment-confirm-icon:hover {
+  fill: darkgreen;
+  cursor: pointer;
+}
+
+.payment-cancel-icon {
+  fill: crimson;
+  border: none;
+  border-radius: 6px;
+  float: right;
+}
+
+.payment-cancel-icon:hover {
+  fill: darkred;
+  cursor: pointer;
+}
+
+.payment-date {
+  font-weight: bolder;
+  width: 180px;
+  height: 28px;
+  padding: 0.2rem;
+}
+
+.payment-image-button {
+  font-family: "Poppins", sans-serif;
+  background-color: #00955f;
+  color: black;
+  border: none;
+  border-radius: 6px;
+  padding: 4px;
+  margin-inline: 3px;
+  margin-inline-end: 0;
+  float: right;
+}
+
+.payment-image-button:hover {
+  background-color: #00955f;
+  color: beige;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.payment-image {
+  object-fit: scale-down;
+  width: 100%;
+  height: 100%;
+}

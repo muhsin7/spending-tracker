@@ -1,0 +1,23 @@
+.dashboard-limit-card {
+  border: 2px solid #35312c;
+  background-color: #121212;
+  margin: 1em 0 1em 0;
+}
+
+.limit-card-title {
+  font-weight: bold;
+}
+
+.dashboard-edit-global-limit {
+  margin-inline: auto;
+  padding-left: 1em;
+  min-width: 150px;
+}
+
+.dashboard-edit-profile-details {
+  margin-inline: 10px;
+  text-align: center;
+  width: auto;
+  height: 30px;
+  padding-top: 3px;
+}

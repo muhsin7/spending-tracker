@@ -1,0 +1,67 @@
+.loginTitle {
+  text-align: center;
+  width: 100%;
+}
+
+.loginErrorMessage {
+  color: black;
+}
+
+.div-login {
+  width: 300px;
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  margin: 0 auto;
+  border: 1px solid #dbdbdb;
+  border-radius: 5px;
+  padding: 20px;
+  margin-top: 15vh;
+  background-color: white;
+}
+
+.inputBoxLogin {
+  width: 95%;
+  border: 1px solid #dbdbdb;
+  padding: 5px;
+  margin: 3px;
+  border-radius: 5px;
+  background-color: #fafafa;
+  box-shadow: none;
+}
+
+#logInButton {
+  width: 95%;
+  margin: 10px;
+  background-color: dodgerblue;
+  padding: 7px;
+  font-weight: 600;
+  border: none;
+  color: white;
+  border-radius: 5px;
+}
+
+#loginRegisterButton {
+  border: none;
+  background: none;
+  color: black;
+  text-decoration: underline;
+  padding: 5px;
+  width: 95%;
+  margin: 10px;
+  padding-bottom: 10px;
+  border-radius: 7px;
+  text-align: center;
+}
+
+#forgotPassword {
+  border: none;
+  background: none;
+  color: blue;
+  width: 100%;
+  text-align: right;
+  text-decoration: underline;
+  padding-bottom: 15px;
+  font-size: 13px;
+}
