@@ -29,6 +29,8 @@ function CategoryCard(props) {
 
     console.log(payments);
 
+    const filteredPayments = payments.data.filter((payment) => payment.categoryId === ID);
+
     let res = [];
 
     let dt = new Date();
@@ -60,16 +62,17 @@ function CategoryCard(props) {
     }
 
     if (dt.getTime() === 0) {
-      res = payments.data;
+      res = filteredPayments;
     } else {
       const today = new Date().getTime();
-      payments.data.forEach((pay) => {
+      filteredPayments.forEach((pay) => {
         const paytime = Date.parse(pay.date);
         if (paytime <= today && paytime >= dt.getTime()) {
           res.push(pay);
         }
       });
     }
+    
     if (res) {
       const TOTAL_SPENT = res.reduce((a, b) => a + (b.amount || 0), 0);
       setTotalSpent(TOTAL_SPENT.toFixed(2));
