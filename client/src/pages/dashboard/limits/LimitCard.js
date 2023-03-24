@@ -28,7 +28,6 @@ export default function LimitCard(props) {
         break;
       default:
         dt = new Date(0);
-        // res = props.payments;
         break;
     }
 
