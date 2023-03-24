@@ -53,7 +53,7 @@ export default function BudgetCard(props) {
               {limit.duration
                 ? limit.duration.type.toLowerCase() === "day"
                   ? "today"
-                  : "this" + limit.duration.type.toLowerCase()
+                  : "this " + limit.duration.type.toLowerCase()
                 : "..."}
             </b>
           </div>

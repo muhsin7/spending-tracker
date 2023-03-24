@@ -10,13 +10,15 @@
 }
 
 .dashboard-edit-global-limit {
+  margin-inline: auto;
   padding-left: 1em;
-  width: 150px;
+  min-width: 150px;
 }
 
 .dashboard-edit-profile-details {
+  margin-inline: auto;
   text-align: center;
-  width: 100%;
+  width: 175px;
   height: 30px;
   padding-top: 3px;
 }
