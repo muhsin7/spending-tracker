@@ -247,12 +247,27 @@ describe("User tests", () => {
     it("should not register a user that does not conform to the model", async () => {
       let noEmailUser = {
         name: "John",
-        password: "123"
+        password: "123",
+        email: "johnfakeemail"
       };
 
       const res = await chai.request(app)
         .post("/api/user/")
         .send(noEmailUser);
+      
+      utils.assertError(res, 400);
+    });
+
+    it("should not register a user that has a duplicate email", async () => {
+      let dupeEmailUser = {
+        email: "jill@example.com",
+        name: "John",
+        password: "123"
+      };
+
+      const res = await chai.request(app)
+        .post("/api/user/")
+        .send(dupeEmailUser);
       
       utils.assertError(res, 400);
     });
@@ -322,7 +337,39 @@ describe("User tests", () => {
       utils.assertError(res, 401);
     });
 
-    it("should not provide a user with an expired token their profile"); 
+    it("should edit user's details", async () => {
+      let changedDetails = {
+        name: "Jack",
+        password: "NewPassword"
+      };
+
+      const res = await chai.request(app)
+        .patch("/api/user/")
+        .send(changedDetails)
+        .set("Authorization", ("Bearer " + validToken));
+
+      console.log(res.body);
+      res.should.have.status(200);
+      res.body.should.be.a("object");
+      res.body.should.have.property("name").eql(defaultUser.name);
+      
+      //Try logging in with new detials
+      let validUser = {
+        email: defaultUser.email,
+        password: changedDetails.password
+      };
+
+      const res2 = await chai.request(app)
+        .post("/api/user/login/")
+        .send(validUser);
+      
+      res2.should.have.status(200);
+      res2.body.should.be.a("object");
+      res2.body.should.have.property("_id");
+      res2.body.should.have.property("name").eql(changedDetails.name);
+      res2.body.should.have.property("email").eql(defaultUser.email);
+      res2.body.should.have.property("token");
+    }); 
   });
   
 });

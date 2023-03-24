@@ -273,6 +273,22 @@ describe("Spending Limit tests", () => {
       res.body.should.have.property("duration");
     });
 
+    it("should not allow multiple limits per category", async() => {
+      const initSpendingLimits = await SpendingLimit.countDocuments();
+      const newSpendingLimit = await genSpendingLimit();
+
+      const res = await chai.request(app)
+        .post("/api/limit/")
+        .send(newSpendingLimit)
+        .set("Authorization", ("Bearer " + authToken));
+
+      const spendingLimits = await SpendingLimit.countDocuments();
+      spendingLimits.should.be.equal(initSpendingLimits);
+      res.should.have.status(400);
+      res.should.have.property("body");
+      res.body.should.have.property("error");
+    });
+
 
     it("should get a specific spending limit", async() => {
       const res = await chai.request(app)
@@ -285,6 +301,47 @@ describe("Spending Limit tests", () => {
       res.body[0].should.have.property("name", spendingLimit.name);
       res.body[0].should.have.property("duration");
       res.body[0].should.have.property("amount", spendingLimit.amount);
+    });
+
+    it("should get a specific spending limit by the category id", async() => {
+      const res = await chai.request(app)
+        .get("/api/limit/byCategory/" + spendingLimit.category)
+        .set("Authorization", ("Bearer " + authToken));
+
+      res.should.have.status(200);
+      res.should.have.property("body");
+      should.exist(res.body, "Should have gotten a spending limit");
+      res.body[0].should.have.property("name", spendingLimit.name);
+      res.body[0].should.have.property("duration");
+      res.body[0].should.have.property("amount", spendingLimit.amount);
+    });
+
+    it("should get global spending limit", async() => {
+      const initSpendingLimits = await SpendingLimit.countDocuments();
+
+      //Create global spending limit
+      const newSpendingLimit = await genSpendingLimit();
+      newSpendingLimit.name = "Global limit";
+      newSpendingLimit.category = undefined;
+
+      const res = await chai.request(app)
+        .post("/api/limit/")
+        .send(newSpendingLimit)
+        .set("Authorization", ("Bearer " + authToken));
+
+      const spendingLimits = await SpendingLimit.countDocuments();
+      spendingLimits.should.be.equal(initSpendingLimits + 1);
+
+      const res2 = await chai.request(app)
+        .get("/api/limit/byCategory/1")
+        .set("Authorization", ("Bearer " + authToken));
+
+      res2.should.have.status(200);
+      res2.should.have.property("body");
+      should.exist(res.body, "Should have gotten a spending limit");
+      res2.body[0].should.have.property("name", newSpendingLimit.name);
+      res2.body[0].should.have.property("duration");
+      res2.body[0].should.have.property("amount", newSpendingLimit.amount);
     });
 
     it("should prevent the user from getting a spending limit of a different user", async() => {
