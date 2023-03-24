@@ -14,7 +14,7 @@ function AddPayment() {
   const [formValues, setFormValues] = useState({
     title: "",
     description: "",
-    amount: 0,
+    amount: NaN,
     image: "",
     date: new Date(),
     categoryId: "",
@@ -341,7 +341,7 @@ function AddPayment() {
                 id="categoryId"
                 onChange={onFormChange}
               >
-                <option key="" value=""></option>
+                <option key="" value="">Select a category...</option>
                 {newCategories.map((option) => (
                   <option key={option._id} value={option._id}>
                     {option.name}
@@ -362,8 +362,8 @@ function AddPayment() {
             </div>
             <div className="inputFormInputBox">
               <input
-                className="payment-image-button"
-                id ="image"
+                className="form-control form-file-upload"
+                id="image"
                 type="file"
                 accept="image/*"
                 onChange={storeNewImage}

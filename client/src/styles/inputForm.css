@@ -47,6 +47,10 @@
   background-color: #181a1b;
 }
 
+.form-file-upload {
+  padding: 10px;
+}
+
 .inputFormButton {
   margin-top: 50px;
   color: #fff;
