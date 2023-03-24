@@ -5,7 +5,6 @@ import { useToken } from "../../../authentication/useToken";
 
 export default function BudgetCard(props) {
   const [token, setToken] = useToken();
-  const durationElements = [];
 
   const [limit, setLimit] = useState({});
   const [hasLimit, setHasLimit] = useState(false);

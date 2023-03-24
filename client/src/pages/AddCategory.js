@@ -4,7 +4,7 @@ import axios from "axios";
 import { useToken } from "../authentication/useToken";
 import { toast } from "react-toastify";
 
-function AddCategory() {
+export default function AddCategory() {
   const [errorMessage, setErrorMessage] = useState("");
   const [token, setToken] = useToken();
   const [categoryValue, setCategoryValue] = useState("");
@@ -88,5 +88,3 @@ function AddCategory() {
     </div>
   );
 }
-
-export default AddCategory;
