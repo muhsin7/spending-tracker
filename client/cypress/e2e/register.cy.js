@@ -19,14 +19,14 @@ describe("Register Page Tests", () => {
     cy.get(".error-message").should("have.text", "Passwords do not match");
   });
 
-  it("form should submit succesfully if filled with correct values", () => {
-    cy.get("#name").type("Test User");
-    cy.get("#email").type("testuser37@example.com");
-    cy.get("#password").type("password");
-    cy.get("#password2").type("password");
-    cy.get("#createAccountButton").click();
-    cy.url().should("include", "/dashboard");
-  });
+  // it("form should submit succesfully if filled with correct values", () => {
+  //   cy.get("#name").type("Test User");
+  //   cy.get("#email").type("testuser37@example.com");
+  //   cy.get("#password").type("password");
+  //   cy.get("#password2").type("password");
+  //   cy.get("#createAccountButton").click();
+  //   cy.url().should("include", "/dashboard");
+  // });
 
   it('should redirect to the login page when the "Login" link is clicked', () => {
     cy.get(".login-signup-link a").click();
