@@ -83,7 +83,9 @@ export default function PaymentsSortBy(props) {
     ]);
 
     props.setDefaultPayments([
-      ...props.defaultPayments.sort((a, b) => ascendingCompare(a.title, b.title)),
+      ...props.defaultPayments.sort((a, b) =>
+        ascendingCompare(a.title, b.title)
+      ),
     ]);
   }
 
@@ -91,9 +93,11 @@ export default function PaymentsSortBy(props) {
     props.setPayments([
       ...props.payments.sort((a, b) => descendingCompare(a.title, b.title)),
     ]);
-    
+
     props.setDefaultPayments([
-      ...props.defaultPayments.sort((a, b) => descendingCompare(a.title, b.title)),
+      ...props.defaultPayments.sort((a, b) =>
+        descendingCompare(a.title, b.title)
+      ),
     ]);
   }
 
@@ -103,7 +107,9 @@ export default function PaymentsSortBy(props) {
     ]);
 
     props.setDefaultPayments([
-      ...props.defaultPayments.sort((a, b) => ascendingCompare(a.amount, b.amount)),
+      ...props.defaultPayments.sort((a, b) =>
+        ascendingCompare(a.amount, b.amount)
+      ),
     ]);
   }
 
@@ -113,7 +119,9 @@ export default function PaymentsSortBy(props) {
     ]);
 
     props.setDefaultPayments([
-      ...props.defaultPayments.sort((a, b) => descendingCompare(a.amount, b.amount)),
+      ...props.defaultPayments.sort((a, b) =>
+        descendingCompare(a.amount, b.amount)
+      ),
     ]);
   }
 

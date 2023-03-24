@@ -20,7 +20,6 @@ const PercentageBar = (props) => {
 
   const labelStyles = {
     padding: 5,
-    // color: '#121212',
     fontWeight: "bold",
   };
 

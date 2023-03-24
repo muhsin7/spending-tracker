@@ -81,7 +81,7 @@ function AddPayment() {
   const selectDate = async (event) => {
     setDateChosen(true);
     onFormChange(event);
-  }
+  };
 
   // Gets all the user's categories from the database
   useEffect(() => {
@@ -98,17 +98,15 @@ function AddPayment() {
 
   const resetUserStreak = async () => {
     const request = {
-      streakSince: Date.now
-    }
+      streakSince: Date.now,
+    };
 
-    await axios.patch("/api/user", 
-      request, {
-        headers: {
-          Authorization: "Bearer " + token,
-        }
-      }
-    );
-  }
+    await axios.patch("/api/user", request, {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    });
+  };
 
   const getSpendingLimitPercentage = async (catID) => {
     const response = await axios.get(`/api/limit/byCategory/${catID}`, {
@@ -130,11 +128,12 @@ function AddPayment() {
 
     let filteredPayments;
 
-    if (catID === "1"){
+    if (catID === "1") {
       filteredPayments = payments.data;
-    }
-    else {
-      filteredPayments = payments.data.filter((payment) => payment.categoryId === catID);
+    } else {
+      filteredPayments = payments.data.filter(
+        (payment) => payment.categoryId === catID
+      );
     }
 
     let res = [];
@@ -285,8 +284,7 @@ function AddPayment() {
         if (globalPercentage > 100) {
           errorNotif("You have exceeded your global spending limit!");
           resetUserStreak();
-        }
-        else
+        } else
           warnNotif("You are close to exceeding your global spending limit!");
       }
       if (categoryPercentage > 80) {
@@ -297,14 +295,12 @@ function AddPayment() {
             )}!'`
           );
           resetUserStreak();
-        }
-        else 
+        } else
           warnNotif(
             `You are close to exceeding your spending limit for '${getCatNameByID(
               formValues["categoryId"]
             )}!'`
           );
-        
       }
 
       if (response.status === 201) {
@@ -375,9 +371,7 @@ function AddPayment() {
                 value={formValues["categoryId"]}
                 name="categoryId"
                 id="categoryId"
-                className={
-                  formValues["categoryId"] === "" ? "form-select" : ""
-                }
+                className={formValues["categoryId"] === "" ? "form-select" : ""}
                 onChange={onFormChange}
               >
                 <option key="" value="" className="form-select">
@@ -393,7 +387,9 @@ function AddPayment() {
             <div className="inputFormInputBox">
               <input
                 type="date"
-                className={(isDateChosen) ? "form-control" : "form-control form-select"}
+                className={
+                  isDateChosen ? "form-control" : "form-control form-select"
+                }
                 id="date"
                 name="date"
                 value={formValues["date"]}

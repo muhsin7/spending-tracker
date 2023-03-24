@@ -1,11 +1,10 @@
-import { Navigate, useNavigate } from "react-router-dom";
-import { useState } from "react"
+import { Navigate } from "react-router-dom";
+import { useState } from "react";
 import "../styles/welcomePage.css";
 import graphic from "../images/graphic2.png";
 import Background from "./Background";
 
 export default function WelcomePage() {
-  const navigate = useNavigate();
   const [goToLogin, setGoToLogin] = useState(false);
 
   if (goToLogin) {
@@ -14,7 +13,7 @@ export default function WelcomePage() {
 
   return (
     <main className="welcomePage">
-    <Background />
+      <Background />
       <div>
         <div className="row">
           <div className="column">
@@ -33,9 +32,7 @@ export default function WelcomePage() {
                 Get Started
               </button>
             </div>
-            <div className="row">
-              
-            </div>
+            <div className="row"></div>
           </div>
           <div className="column welcome-graphic">
             <img src={graphic} alt="Home page graphic" />

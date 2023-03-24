@@ -1,6 +1,5 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import ReactDatePicker from "react-datepicker";
 import { useToken } from "../../authentication/useToken";
 import CategoryPieChart from "../dashboard/charts/CategoryPieChart";
 import DashboardChart from "../dashboard/charts/DashboardChart";
@@ -93,8 +92,7 @@ export default function Reports() {
           </div>
         ))}
       </div>
-      {
-      selectedClass("custom") ? (
+      {selectedClass("custom") ? (
         <div className="date-picker-container">
           <h3>Select custom duration</h3>
           <div className="report-date-pickers">
@@ -122,9 +120,9 @@ export default function Reports() {
                   onChange={(date) => setStart(date)}
                 />
               </div>
-              </div>   
-              </div>  
-              </div>       
+            </div>
+          </div>
+        </div>
       ) : (
         []
       )}
@@ -140,14 +138,18 @@ export default function Reports() {
           <DashboardChart payments={data} />
         </div>
         <div className="report-stats">
-            <div className="report-stat-card stat-small">
-                <div className="stat-title">You spent the most on <b>Food</b></div>
-                <div className="stat-amount">£200</div>
+          <div className="report-stat-card stat-small">
+            <div className="stat-title">
+              You spent the most on <b>Food</b>
             </div>
-            <div className="report-stat-card stat-medium">
-                <div className="stat-title">Your biggest purchase was on <b>12th Jan 2023</b> on <b>Tesco</b></div>
-                <div className="stat-amount">£3.40</div>
+            <div className="stat-amount">£200</div>
+          </div>
+          <div className="report-stat-card stat-medium">
+            <div className="stat-title">
+              Your biggest purchase was on <b>12th Jan 2023</b> on <b>Tesco</b>
             </div>
+            <div className="stat-amount">£3.40</div>
+          </div>
         </div>
       </div>
     </div>

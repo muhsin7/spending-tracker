@@ -29,7 +29,9 @@ function CategoryCard(props) {
 
     console.log(payments);
 
-    const filteredPayments = payments.data.filter((payment) => payment.categoryId === ID);
+    const filteredPayments = payments.data.filter(
+      (payment) => payment.categoryId === ID
+    );
 
     let res = [];
 
@@ -72,7 +74,7 @@ function CategoryCard(props) {
         }
       });
     }
-    
+
     if (res) {
       const TOTAL_SPENT = res.reduce((a, b) => a + (b.amount || 0), 0);
       setTotalSpent(TOTAL_SPENT.toFixed(2));

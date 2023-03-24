@@ -15,12 +15,12 @@ export default function PaymentCardNormal(props) {
     (category) => category._id === CATEGORY_ID
   );
 
-  function _arrayBufferToBase64( buffer ) {
-    var binary = '';
-    var bytes = new Uint8Array( buffer );
+  function _arrayBufferToBase64(buffer) {
+    var binary = "";
+    var bytes = new Uint8Array(buffer);
     var len = bytes.byteLength;
     for (var i = 0; i < len; i++) {
-        binary += String.fromCharCode( bytes[ i ] );
+      binary += String.fromCharCode(bytes[i]);
     }
     return binary;
   }
@@ -30,7 +30,7 @@ export default function PaymentCardNormal(props) {
 
   if (DOES_IMAGE_EXIST) {
     const IMAGE = props.payment.image;
-    const base64 =_arrayBufferToBase64(IMAGE.data.data);
+    const base64 = _arrayBufferToBase64(IMAGE.data.data);
     imageURL = `data:${IMAGE.contentType};base64,${base64}`;
   }
 
@@ -52,7 +52,9 @@ export default function PaymentCardNormal(props) {
 
   return (
     <div className="payment-card">
-      <span className="payment-category">{CATEGORY_NAME ? CATEGORY_NAME.name : "..."}</span>
+      <span className="payment-category">
+        {CATEGORY_NAME ? CATEGORY_NAME.name : "..."}
+      </span>
 
       <div className="payment-info">
         <div className="payment-card-top">
