@@ -1,4 +1,4 @@
-const PercentageBar = (props) => {
+export default function PercentageBar (props) {
   const { completed } = props;
   const percentage = completed > 100 ? 100 : completed;
 
@@ -31,5 +31,3 @@ const PercentageBar = (props) => {
     </div>
   );
 };
-
-export default PercentageBar;

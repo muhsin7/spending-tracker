@@ -6,7 +6,7 @@ import { Buffer } from "buffer";
 import Background from "./Background";
 import { toast } from "react-toastify";
 
-function AddPayment() {
+export default function AddPayment() {
   const navigate = useNavigate();
   const [newCategories, setNewCategories] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
@@ -410,5 +410,3 @@ function AddPayment() {
     </div>
   );
 }
-
-export default AddPayment;

@@ -1,5 +1,4 @@
 import axios from "axios";
-import { array } from "prop-types";
 import { useEffect, useState } from "react";
 import { useToken } from "../../authentication/useToken";
 import CategoryPieChart from "../dashboard/charts/CategoryPieChart";
