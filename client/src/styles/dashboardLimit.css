@@ -13,3 +13,10 @@
   padding-left: 1em;
   width: 150px;
 }
+
+.dashboard-edit-profile-details {
+  text-align: center;
+  width: 100%;
+  height: 30px;
+  padding-top: 3px;
+}
