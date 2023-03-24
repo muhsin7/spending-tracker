@@ -1,8 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import { useToken } from "../../authentication/useToken";
-import { useUser } from "../../authentication/useUser";
 import AccountCard from "./cards/AccountCard";
 import AmountSpent from "./cards/AmountSpent";
 import CategoryPieChart from "./charts/CategoryPieChart";

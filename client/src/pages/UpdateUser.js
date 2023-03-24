@@ -2,6 +2,33 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useToken } from "../authentication/useToken";
+var md5 = require("md5");
+
+function get_gravatar_image_url(
+  email,
+  size,
+  default_image,
+  allowed_rating,
+  force_default
+) {
+  email = typeof email !== "undefined" ? email : "john.doe@example.com";
+  size = size >= 1 && size <= 2048 ? size : 70;
+  default_image = typeof default_image !== "undefined" ? default_image : "mm";
+  allowed_rating = typeof allowed_rating !== "undefined" ? allowed_rating : "g";
+  force_default = force_default === true ? "y" : "n";
+
+  return (
+    "https://secure.gravatar.com/avatar/" +
+    md5(email.toLowerCase().trim()) +
+    "?size=" +
+    size +
+    "&default=" +
+    encodeURIComponent(default_image) +
+    "&rating=" +
+    allowed_rating +
+    (force_default === "y" ? "&forcedefault=" + force_default : "")
+  );
+}
 
 export default function UpdateUser() {
   const [errorMessage, setErrorMessage] = useState("");
@@ -60,6 +87,20 @@ export default function UpdateUser() {
         <fieldset className="inputFormFields">
           <form>
             <div className="inputFormInputBox">
+              <a
+                href={"https://secure.gravatar.com/"}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="account-pfp"
+              >
+                <img
+                  src={get_gravatar_image_url(user.email)}
+                  alt="User gravatar"
+                />
+              </a>
+              <span className="account-change-pfp-text">
+                Click profile picture to change
+              </span>
               <input
                 value={nameValue}
                 onChange={(e) => setNameValue(e.target.value)}
