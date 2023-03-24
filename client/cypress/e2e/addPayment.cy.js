@@ -24,7 +24,6 @@ describe("AddPayment Tests", () => {
   });
 
   it("should submit the form successfully with valid data", () => {
-    // cy.addCategoryCommand('New Category13')
     cy.visit('/addPayment');
     cy.get('#title').type("Example Title");
     cy.get('#description').type("Example Description");

@@ -5,7 +5,7 @@ describe("AddCategory Tests", () => {
 
   it("should add a new category succesfully", () => {
     cy.visit("/addCategory");
-    cy.get("input").type("New category");
+    cy.get("input").type("Placeholder category");
     cy.get("#addCategoryButton").click();
     cy.url().should("include", "/categories");
     cy.contains(/New category/i);
