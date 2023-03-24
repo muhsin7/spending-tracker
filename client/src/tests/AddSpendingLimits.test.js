@@ -1,4 +1,4 @@
-import AddSpendingLimit from "./AddSpendingLimit";
+import AddSpendingLimit from "../pages/AddSpendingLimit";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { BrowserRouter  } from 'react-router-dom';
 // import axios from "axios";
@@ -41,7 +41,7 @@ describe("Add Spending Limit Component", () => {
         expect(spendingLimitName).toBeInTheDocument();
 
         expect(amount).toBeInTheDocument();
-        expect(amount).toHaveValue(0);
+        expect(amount).toHaveValue(null);
 
         //change event on duration select
         expect(durationSelect).toBeInTheDocument();

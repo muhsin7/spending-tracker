@@ -1,4 +1,4 @@
-import Header from "./Header";
+import Header from "../components/Header";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { BrowserRouter } from 'react-router-dom';
 

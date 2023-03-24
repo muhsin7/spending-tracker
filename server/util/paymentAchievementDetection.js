@@ -40,6 +40,7 @@ const filterAchievements = (specs, noPayments, largestPayment) => {
 
 const findAchievments = async(req) => {
   const payments = await Payment.find({userId: req.user.id});
+  if (payments.length == 0) return [];
 
   const noPayments = payments.length;
   const largestPayment = getLargestPayment(payments);

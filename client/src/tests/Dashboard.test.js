@@ -1,4 +1,4 @@
-import Dashboard from "./Dashboard";
+import Dashboard from "../pages/dashboard/Dashboard";
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from 'react-router-dom';
 
@@ -23,7 +23,7 @@ import { BrowserRouter } from 'react-router-dom';
     })
     it("renders AmountSpent that renders Amountcard and BudgetCard", () => {
         expect(screen.getByText(/spent/i)).toBeInTheDocument();
-        expect(screen.getByText(/Add a budget here/i)).toBeInTheDocument();
+        expect(screen.getByText(/Add global spending limit/i)).toBeInTheDocument();
     })
     it("renders DashboardChart", () => {
         expect(screen.getByText(/Cumulative data/i)).toBeInTheDocument();

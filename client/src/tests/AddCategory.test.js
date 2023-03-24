@@ -19,7 +19,7 @@ describe("AddCategory page tests", () => {
   it("Checks if form renders correctly", () => {
     expect(screen.getByText("Add Category")).toBeInTheDocument();
     expect(
-      screen.getByPlaceholderText("Name of the category:")
+      screen.getByPlaceholderText("Name of the category")
     ).toBeInTheDocument();
     expect(screen.getByText("Add")).toBeInTheDocument();
   });

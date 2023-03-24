@@ -1,4 +1,4 @@
-import UpdateUser from "./UpdateUser";
+import UpdateUser from "../pages/UpdateUser";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { BrowserRouter } from 'react-router-dom';
 
@@ -18,8 +18,8 @@ describe('Update User component', () => {
 
   it("renders the page correctly", () => {
     expect(screen.getByRole("heading", { name:"Edit Profile Details" })).toBeInTheDocument(); 
-    expect(screen.getByPlaceholderText("Name:"));
-    expect(screen.getByPlaceholderText("Enter a new password, otherwise leave blank:"));
+    expect(screen.getByPlaceholderText("Name"));
+    expect(screen.getByPlaceholderText("Enter a new password, otherwise leave blank"));
     expect(screen.getByRole("button", { name:"Confirm" })).toBeInTheDocument();
   })
 

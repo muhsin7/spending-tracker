@@ -6,12 +6,21 @@ import { BrowserRouter } from "react-router-dom";
 jest.mock("axios");
 
 describe("Login Page tests", () => {
+  let emailInput;
+  let passwordInput;
+  let loginButton;
+  
   beforeEach(() => {
+
     render(
       <BrowserRouter>
         <Login />
       </BrowserRouter>
     );
+
+    emailInput = screen.getByPlaceholderText("Email");
+    passwordInput = screen.getByPlaceholderText("Password");
+    loginButton = screen.getByRole("button", { name: "Login" });
   });
 
   afterEach(() => {
@@ -19,10 +28,6 @@ describe("Login Page tests", () => {
   });
 
   it("Checks if login page renders correctly", () => {
-    const emailInput = screen.getByPlaceholderText("Email");
-    const passwordInput = screen.getByPlaceholderText("Password");
-    const loginButton = screen.getByRole("button", { name: "Login" });
-
     expect(emailInput).toBeInTheDocument();
     expect(passwordInput).toBeInTheDocument();
     expect(loginButton).toBeInTheDocument();
