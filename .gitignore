@@ -250,3 +250,6 @@ $RECYCLE.BIN/
 # End of https://www.toptal.com/developers/gitignore/api/macos,windows,linux,visualstudiocode,node,react
 # Local Netlify folder
 .netlify
+
+/client/instrumented/*
+*.mp4

@@ -21,7 +21,7 @@ describe('Register Page', () => {
 
   it('should submit the form successfully when all fields are filled correctly', () => {
     cy.get('#name').type('Test User');
-    cy.get('#email').type('testuser29@example.com');
+    cy.get('#email').type('testuser99@example.com');
     cy.get('#password').type('password');
     cy.get('#password2').type('password');
     cy.get('#createAccountButton').click();
