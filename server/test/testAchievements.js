@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 const Achievement = require("../models/achievementModel");
 const AchievementSpec = require("../models/achievementSpecModel");
 const User = require("../models/userModel");
+const Category = require("../models/categoryModel");
+const Payment = require("../models/paymentModel");
 
 const { flushDB, assertError, generateToken } = require("./utils");
 
@@ -18,6 +20,17 @@ describe("Achievement tests", () => {
   let achievementSpec;
   let user;
   let authToken;
+
+  const genPayment = async (amount) => {
+    const category = await Category.findOne({ name: "Entertainment" });
+    return {
+      title: "Console",
+      description: "A games console",
+      amount: amount,
+      categoryId: category._id,
+      userId: user._id,
+    };
+  };
 
   before(async () => {
     await flushDB();
@@ -189,12 +202,6 @@ describe("Achievement tests", () => {
   });
 
   describe("Category achievement tests", () => {
-    let Category;
-
-    before(async () => {
-      Category = require("../models/categoryModel");
-    });
-
     afterEach(async () => {
       await Achievement.deleteMany({});
       await Category.deleteMany({});
@@ -286,13 +293,7 @@ describe("Achievement tests", () => {
   });
 
   describe("Payment achievement tests", () => {
-    let Payment;
-    let Category;
-
     before(async () => {
-      Payment = require("../models/paymentModel");
-      Category = require("../models/categoryModel");
-
       await Category.create({ name: "Entertainment", userId: user._id });
 
       await AchievementSpec.create({
@@ -341,17 +342,6 @@ describe("Achievement tests", () => {
       await Achievement.deleteMany({});
       await Payment.deleteMany({});
     });
-
-    const genPayment = async (amount) => {
-      const category = await Category.findOne({ name: "Entertainment" });
-      return {
-        title: "Console",
-        description: "A games console",
-        amount: amount,
-        categoryId: category._id,
-        userId: user._id,
-      };
-    };
 
     it("should detect an achievement", async () => {
       const res = await chai
@@ -425,6 +415,8 @@ describe("Achievement tests", () => {
 
   describe("Streak achievement tests", () => {
     before(async () => {
+      await AchievementSpec.deleteMany({});
+
       await AchievementSpec.create({
         title: "10 days",
         description: "Stay under all payment limits for 10 days in a row",
@@ -454,10 +446,8 @@ describe("Achievement tests", () => {
       await user.save();
     });
 
-    
-
     const setDaysBack = async (days) => {
-      const date = new Date(user.streakSince - (days * (24*60*60*1000)));
+      const date = new Date(user.streakSince - days * (24 * 60 * 60 * 1000));
       user.streakSince = date;
       await user.save();
     };
@@ -466,8 +456,8 @@ describe("Achievement tests", () => {
       setDaysBack(10);
       const res = await chai
         .request(app)
-        .patch("/api/user/")
-        .send({})
+        .post("/api/payment/")
+        .send(await genPayment(300))
         .set("Authorization", "Bearer " + authToken);
 
       should.equal(res.body.achievements.length, 1);
@@ -478,8 +468,8 @@ describe("Achievement tests", () => {
       setDaysBack(20);
       const res = await chai
         .request(app)
-        .patch("/api/user/")
-        .send({})
+        .post("/api/payment/")
+        .send(await genPayment(300))
         .set("Authorization", "Bearer " + authToken);
 
       should.equal(res.body.achievements.length, 2);
@@ -491,8 +481,8 @@ describe("Achievement tests", () => {
       setDaysBack(5);
       const res = await chai
         .request(app)
-        .patch("/api/user/")
-        .send({})
+        .post("/api/payment/")
+        .send(await genPayment(300))
         .set("Authorization", "Bearer " + authToken);
 
       should.equal(res.body.achievements.length, 0);
@@ -502,14 +492,14 @@ describe("Achievement tests", () => {
       setDaysBack(20);
       await chai
         .request(app)
-        .patch("/api/user/")
-        .send({})
+        .post("/api/payment/")
+        .send(await genPayment(300))
         .set("Authorization", "Bearer " + authToken);
 
       const res = await chai
         .request(app)
-        .patch("/api/user/")
-        .send({})
+        .post("/api/payment/")
+        .send(await genPayment(300))
         .set("Authorization", "Bearer " + authToken);
 
       should.equal(res.body.achievements.length, 0);

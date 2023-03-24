@@ -8,7 +8,9 @@ const {
 const {
   detectPaymentAchievements,
 } = require("./util/paymentAchievementDetection");
-const { detectStreakAchievements } = require("./util/streakAchievementDetection");
+const {
+  detectStreakAchievements,
+} = require("./util/streakAchievementDetection");
 
 const app = require("./app");
 
@@ -73,7 +75,7 @@ const streakMap = new Map([
   [20, "20/20"],
   [30, "Kings and Queens"],
   [40, "I Am... All of Me"],
-  [50, "50% Alice'n'Dead"],
+  [50, "50% Alive'n'Dead"],
   [60, "60th Summer of Love"],
   [70, "Ultra Instinct"],
   [80, "Sagashi Mono"],
@@ -249,7 +251,7 @@ async function createPaymentAchievements() {
 }
 
 async function createStreakAchievements() {
-  streakMap.forEach(async function(value, key) {
+  streakMap.forEach(async function (value, key) {
     const spec = {
       title: value,
       description: "Hold a streak for " + key + " days",
@@ -288,7 +290,7 @@ async function seed() {
   await Achievement.deleteMany({});
 
   // assume the user has just broken their streak & ignore streakSince
-  await User.updateMany({}, { $set: { exp: 0 }});
+  await User.updateMany({}, { $set: { exp: 0 } });
 
   await createCategoryAchievements();
   await createPaymentAchievements();

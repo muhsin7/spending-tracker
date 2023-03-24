@@ -3,10 +3,6 @@ const bcrypt = require("bcrypt");
 const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
 
-const {
-  detectStreakAchievements,
-} = require("../util/streakAchievementDetection");
-
 // @desc    Register new user
 // @route   POST /api/user
 // @access  Public
@@ -97,12 +93,10 @@ const editUser = asyncHandler(async (req, res) => {
     { name: name, password: hashedPassword, streakSince: streakSince }
   );
 
-  const achievements = await detectStreakAchievements(req);
-
   res.status(200).json({
     _id: user._id,
     name: user.name,
-    achievements: achievements,
+    streakSince: user.streakSince,
   });
 });
 
