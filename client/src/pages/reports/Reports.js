@@ -145,7 +145,7 @@ export default function Reports() {
                 <div className="stat-amount">£200</div>
             </div>
             <div className="report-stat-card stat-medium">
-                <div className="stat-title">Your biggest purcase was on <b>12th Jan 2023</b> on <b>Tesco</b></div>
+                <div className="stat-title">Your biggest purchase was on <b>12th Jan 2023</b> on <b>Tesco</b></div>
                 <div className="stat-amount">£3.40</div>
             </div>
         </div>
