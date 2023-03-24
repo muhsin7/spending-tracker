@@ -1,7 +1,6 @@
 describe("CategoryCard Tests", () => {
   beforeEach(() => {
     cy.loginCommand("johndoe@example.com", "123");
-    cy.addCategoryCommand("New Category");
     cy.visit("/categories");
   });
 

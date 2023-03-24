@@ -252,3 +252,6 @@ $RECYCLE.BIN/
 .netlify
 *.mp4
 client/instrumented/*
+client/cypress/screenshots/addPayment.cy.js/AddPayment Tests -- should submit the form successfully with valid data (failed).png
+client/cypress/screenshots/addSpendingLimit.cy.js/AddSpendingLimit Tests -- should display existing categories in dropdown box (failed).png
+client/cypress/screenshots/paymentsPage.cy.js/Payments page tests -- displays correct details of a payment (failed).png

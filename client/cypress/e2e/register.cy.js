@@ -21,7 +21,7 @@ describe("Register Page Tests", () => {
 
   it("form should submit succesfully if filled with correct values", () => {
     cy.get("#name").type("Test User");
-    cy.get("#email").type("testuser75@example.com");
+    cy.get("#email").type("testuser37@example.com");
     cy.get("#password").type("password");
     cy.get("#password2").type("password");
     cy.get("#createAccountButton").click();

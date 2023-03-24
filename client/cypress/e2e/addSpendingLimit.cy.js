@@ -17,7 +17,7 @@ describe("AddSpendingLimit Tests", () => {
   
     it("should display existing categories in dropdown box", () => {
       cy.visit("/addSpendingLimit");
-      cy.get('[name="categoryId"]').select("GroceriesNew Category Title");
+      cy.get('[name="categoryId"]').select("Groceries");
     });
   
   });
