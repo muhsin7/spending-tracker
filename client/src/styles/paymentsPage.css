@@ -32,13 +32,15 @@
 }
 
 .payments-filter-by {
-  padding: 0.2rem;
   width: 100px;
-  margin-right: 0.5rem;
-  color: black;
-  background-color: lightslategray;
-  border-radius: 12px;
+  background-color: #00b57f;
   border: none;
+  color: white;
+  font: inherit;
+  font-size: 75%;
+  border-radius: 8px;
+  margin-right: 0.5rem;
+  padding: 0.2em;
 }
 
 .payments-filter-by-input {
@@ -65,22 +67,14 @@
 }
 
 .payments-sort-by {
-  padding: 0.2rem;
   width: 135px;
-  color: black;
-  background-color: lightslategray;
-  border-radius: 12px;
+  background-color: #00b57f;
   border: none;
-}
-
-.payments-sort-by option:nth-child(2n + 1),
-.payments-filter-by option:nth-child(2n + 1) {
-  background-color: darkgrey;
-}
-
-.payments-sort-by option:nth-child(2n + 0),
-.payments-filter-by option:nth-child(2n + 0) {
-  background-color: grey;
+  color: white;
+  font: inherit;
+  font-size: 75%;
+  border-radius: 8px;
+  padding: 0.2em;
 }
 
 .payments-add-payment {
