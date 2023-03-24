@@ -153,6 +153,18 @@ export default function Reports() {
           <h3>Select custom duration</h3>
           <div className="report-date-pickers">
             <div>
+            <span>Start date</span>
+              <div className="inputFormInputBox report-date">
+                <input
+                  type="date"
+                  className="form-control"
+                  id="date"
+                  name="date"
+                  selected={start}
+                  placeholder="Date"
+                  onChange={(date) => setStart(date)}
+                />
+              </div>
               <span>End date</span>
               <div className="inputFormInputBox report-date">
                 <input
@@ -165,17 +177,7 @@ export default function Reports() {
                   onChange={(date) => setEnd(date)}
                 />
               </div>
-              <div className="inputFormInputBox report-date">
-                <input
-                  type="date"
-                  className="form-control"
-                  id="date"
-                  name="date"
-                  selected={start}
-                  placeholder="Date"
-                  onChange={(date) => setStart(date)}
-                />
-              </div>
+              
             </div>
           </div>
         </div>

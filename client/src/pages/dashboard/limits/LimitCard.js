@@ -38,7 +38,7 @@ export default function LimitCard(props) {
             });
         }
         if(res) {
-            return res.reduce((a, b) => a + (b.amount || 0), 0);
+            return res.reduce((a, b) => a + (b.amount || 0), 0).toFixed(1);
         }
         else {
             return 0;
@@ -55,7 +55,7 @@ export default function LimitCard(props) {
                 {props.limit.name}
             </div>
             <div className="limit-card-subtitle">
-                {`Spent £${getPaymentSumOfLimitDuration()} of £${props.limit.spendingLimit.amount} limit this ${props.limit.spendingLimit.duration.type.toLowerCase()}`}  {}
+                {`Spent £${getPaymentSumOfLimitDuration()} of £${props.limit.spendingLimit.amount ? props.limit.spendingLimit.amount.toFixed(1) : 0} limit this ${props.limit.spendingLimit.duration.type.toLowerCase()}`}  {}
             </div>
             <PercentageBar completed={completedAmount()}/>
         </div>

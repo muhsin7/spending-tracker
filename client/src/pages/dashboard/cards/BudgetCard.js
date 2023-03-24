@@ -54,7 +54,7 @@ export default function BudgetCard(props) {
                     {/* <div className={`dashboard-amount ${props.negative ? "error" : ""}`}>{props.negative ? "-" : ""}£42</div> */}
                     <div className={`dashboard-amount`}>£{limit ? remaining(limit) : 0}<sup className="warning-emoji">{remaining(limit) < 0 ? "⚠️" : "✅"}</sup></div>
                     <div className="dashboard-amount-description">
-                        left to spend <b>{ limit.duration ? (limit.duration.type.toLowerCase() === "day" ? "today" : "this"+limit.duration.type.toLowerCase()) : "..." }</b>
+                        left to spend <b>{ limit.duration ? (limit.duration.type.toLowerCase() === "day" ? "today" : "this "+limit.duration.type.toLowerCase()) : "..." }</b>
                     </div>
                     </>
                     ) : (

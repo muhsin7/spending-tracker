@@ -16,10 +16,10 @@ export default function TransactionsPreview(props) {
         <div className="transaction-section">
             <h2>Transactions</h2>
             <div className="dashboard-container preview-container">
-                <div className="dashboard-transactions ">
+                <div className="dashboard-transactions">
                     {rows.splice(0, 5)}
                 </div>
-                <Link to="/payments"><div className="all-payments btn">All Payments</div></Link>
+                <Link to="/payments"><div className="all-payments-btn btn report-btn">All Payments</div></Link>
             </div>
         </div>
     )
