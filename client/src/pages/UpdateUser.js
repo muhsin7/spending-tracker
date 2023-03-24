@@ -31,7 +31,10 @@ export default function UpdateUser() {
     if (nameValue !== user.name) data.name = nameValue;
     if (passwordValue !== "") data.password = passwordValue;
 
-    if (Object.keys(data).length === 0) navigate("/dashboard");
+    if (Object.keys(data).length === 0) {
+      navigate("/dashboard");
+      return;
+    }
 
     try {
       const response = await axios.patch("/api/user", data, {
