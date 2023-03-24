@@ -50,6 +50,10 @@
   background-color: #20d59f;
 }
 
+.category-percentage {
+    background-color: #0b7c9e;
+    padding-bottom: 5px;
+}
 .category-edit-button {
   margin-right: 2.5px;
 }
@@ -92,4 +96,23 @@
   border: none;
   padding: 0.2em;
   margin-bottom: 5px;
+}
+.category-percentage {
+    background-color: #0b7c9e;
+    padding-bottom: 5px;
+}
+
+.react-confirm-alert-overlay {
+    background-color: rgba(0,0,0,0.5) !important;
+}
+
+.react-confirm-alert-body div, .react-confirm-alert-body h1, button {
+    font-family: "Poppins", sans-serif !important;
+    color: #121212;
+}
+
+
+.react-confirm-alert-body button {
+    background-color: #00B57F !important;
+
 }
