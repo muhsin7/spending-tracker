@@ -1,4 +1,4 @@
-import UpdateUser from "./UpdateUser";
+import UpdateUser from "../pages/UpdateUser";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { BrowserRouter } from 'react-router-dom';
 

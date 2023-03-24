@@ -1,4 +1,4 @@
-import Dashboard from "./Dashboard";
+import Dashboard from "../pages/dashboard/Dashboard";
 import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from 'react-router-dom';
 

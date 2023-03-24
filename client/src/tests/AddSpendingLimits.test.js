@@ -1,4 +1,4 @@
-import AddSpendingLimit from "./AddSpendingLimit";
+import AddSpendingLimit from "../pages/AddSpendingLimit";
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { BrowserRouter  } from 'react-router-dom';
 // import axios from "axios";
