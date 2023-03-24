@@ -3,6 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useToken } from "../authentication/useToken";
 import { toast } from "react-toastify";
+import  Background from "./Background"
 
 export default function AddCategory() {
   const [errorMessage, setErrorMessage] = useState("");
@@ -62,6 +63,7 @@ export default function AddCategory() {
 
   return (
     <div className="div-inputForm">
+      <Background />
       <section className="inputForm">
         <h2 className="inputFormTitle">Add Category</h2>
         {errorMessage && <div className="error-message">{errorMessage}</div>}
