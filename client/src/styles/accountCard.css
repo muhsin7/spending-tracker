@@ -1,23 +1,26 @@
 .account-card {
-    height: 100%;
-    margin: 0 2em 0 2em;
+  margin: 0 2em 0 2em;
 }
 
 .account-pfp {
-    margin-right: 1em;
+  margin-right: 1em;
 }
 
 .account-pfp > img {
-    border-radius: 50%;
+  border-radius: 50%;
 }
 
 .account-details {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .account-info {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
+}
+
+.account-achievements-number {
+  margin: 1em;
 }

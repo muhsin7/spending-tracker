@@ -2,7 +2,7 @@ import { useToken } from "../../../authentication/useToken";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useEffect, useState } from "react";
-import ExpBar from "../../achievements/ExpBar";
+import Level from "../../achievements/Level";
 var md5 = require("md5");
 
 function get_gravatar_image_url(
@@ -34,6 +34,7 @@ function get_gravatar_image_url(
 export default function AccountCard() {
   const [user, setUser] = useState({});
   const [token, setToken] = useToken();
+  const [achievements, setAchievements] = useState([]);
 
   useEffect(() => {
     axios
@@ -48,6 +49,19 @@ export default function AccountCard() {
       });
   }, []);
 
+  useEffect(() => {
+    axios
+      .get("/api/achievement", {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
+      .then((res) => {
+        console.log(res.data);
+        setAchievements(res.data);
+      });
+  }, []);
+
   return (
     <div className="dashboard-container account-card">
       <div className="account-info">
@@ -59,7 +73,11 @@ export default function AccountCard() {
           <div>{user.email}</div>
         </div>
       </div>
-      <ExpBar completed={30} bgcolor="#00B57F" />
+      <Level />
+      <span className="account-achievements-number">
+        {achievements.filter((achievement) => achievement.owned).length} /{" "}
+        {achievements.length} achievements unlocked
+      </span>
       <Link to="/user/update">
         <div className="btn dashboard-edit-profile-details">
           Edit profile details
