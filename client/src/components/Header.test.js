@@ -79,10 +79,6 @@ describe('Header Component (User logged in)', () => {
   it("achievementsText redirects to /achievements", () => {
     testClick("achievements");
   })
-  // it("accountText opens a popup with user details", () => {
-  //   fireEvent.click(accountText);
-  //   expect(screen.getByText("Account details"))
-  // })
 
   it('Log out button removes user details from localStorage and redirects user', () => {
     localStorage.setItem("exampleKey", "exampleValue")
