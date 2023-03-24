@@ -1,0 +1,95 @@
+.categoryPage {
+  margin: 1%;
+}
+
+.category-header {
+  font-size: 36px;
+  padding: 1rem;
+}
+
+.categories-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.category-card {
+  margin: 2rem 2rem 2rem 0;
+  padding: 1.5rem;
+  width: 250px;
+  box-shadow: 0 0 28px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  border-radius: 12px;
+}
+
+.category-card:hover {
+  transform: scale(1.05, 1.05);
+}
+
+.category-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.category-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+}
+
+.category-card-button {
+  background-color: #00b57f;
+  width: 100%;
+  border: none;
+  color: white;
+  font: inherit;
+  font-size: 90%;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.category-card-button:hover {
+  background-color: #20d59f;
+}
+
+.category-edit-button {
+  margin-right: 2.5px;
+}
+
+.category-delete-button {
+  margin-left: 2.5px;
+}
+
+.category-confirm-button {
+  margin-right: 2.5px;
+}
+
+.category-cancel-button {
+  margin-left: 2.5px;
+}
+
+.category-spending-limit-button {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+
+.category-edit-delete-div {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.category-edit-buttons {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.category-edit-input {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: black;
+  background-color: darkgrey;
+  border-radius: 12px;
+  border: none;
+  padding: 0.2em;
+  margin-bottom: 5px;
+}

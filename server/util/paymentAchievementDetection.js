@@ -2,6 +2,7 @@ const Payment = require("../models/paymentModel");
 const Achievement = require("../models/achievementModel");
 const AchievementSpec = require("../models/achievementSpecModel");
 const {buildOwnedObject} = require("./achievementFormatting");
+const { updateExp } = require("./levelsUtil");
 
 const getLargestPayment = (payments) => {
   const largestPaymentObj = payments.reduce((prev, current) => {
@@ -58,6 +59,8 @@ const detectPaymentAchievements = async(req) => {
         userId: req.user.id,
         achievementSpecId: specs[i]._id
       });
+
+      await updateExp({user: req.user, exp: specs[i].exp});
 
       achievements.push(await buildOwnedObject(achievement));
     } catch {

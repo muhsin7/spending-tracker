@@ -7,31 +7,39 @@ const getPayments = asyncHandler(async (req, res) => {
   const payments = await Payment.find({userId: req.user.id});
   res.status(200).json(payments);
 });
+
+const summarise = (payments) => {
+  let sum = 0;
+  for (let i = 0; i < payments.length; i++) {
+    sum = sum + payments[i].amount;
+  }
+  return sum;
+};
   
 // summary
 const getSummary = asyncHandler(async (req, res) => {
   let days = req.query.days;
   const dt = new Date();
 
-  const lastDay = await Payment.countDocuments({userId: req.user.id, date: {$gt: new Date(dt.getFullYear(), dt.getMonth(), dt.getDate(), 0)}});
+  const lastDay = await Payment.find({userId: req.user.id, date: {$gt: new Date(dt.getFullYear(), dt.getMonth(), dt.getDate(), 0)}});
   let weekCuttOff = new Date();
   weekCuttOff.setDate(weekCuttOff.getDate() - 7);
-  const lastWeek = await Payment.countDocuments({userId: req.user.id, date: {$gt: weekCuttOff}});
-  const lastMonth = await Payment.countDocuments({userId: req.user.id, date: {$gt: new Date(dt.getFullYear(), dt.getMonth(), 1)}});
-  const lastYear = await Payment.countDocuments({userId: req.user.id, date: {$gt: new Date(dt.getFullYear(), 0, 1)}});
+  const lastWeek = await Payment.find({userId: req.user.id, date: {$gt: weekCuttOff}});
+  const lastMonth = await Payment.find({userId: req.user.id, date: {$gt: new Date(dt.getFullYear(), dt.getMonth(), 1)}});
+  const lastYear = await Payment.find({userId: req.user.id, date: {$gt: new Date(dt.getFullYear(), 0, 1)}});
 
   let json = {
-    year: lastYear,
-    month: lastMonth,
-    week: lastWeek,
-    day: lastDay
+    year: summarise(lastYear),
+    month: summarise(lastMonth),
+    week: summarise(lastWeek),
+    day: summarise(lastDay)
   };
 
   if (days !== undefined) {
     let customCutOff = new Date();
     customCutOff.setDate(customCutOff.getDate() - days);
-    const lastCustom = await Payment.countDocuments({userId: req.user.id, date: {$gt: customCutOff}});
-    json.custom = lastCustom;
+    const lastCustom = await Payment.find({userId: req.user.id, date: {$gt: customCutOff}});
+    json.custom = summarise(lastCustom);
   }
 
   res.status(200).json(json);
@@ -47,11 +55,12 @@ const getPayment = asyncHandler(async (req, res) => {
     res.status(400).json({error: error.message});
   }
 });
-  
+
 // post new
 const createPayment = asyncHandler(async (req, res) => {
   try {
     const {title, description, date, amount, image, categoryId} = req.body;
+
     const payment = await Payment.create({title, description, date, amount, image, categoryId, userId: req.user.id});
     const achievements = await detectPaymentAchievements(req);
 
@@ -60,11 +69,10 @@ const createPayment = asyncHandler(async (req, res) => {
 
     res.status(201).json(payObj);
   } catch (error) {
-    console.log(error);
     res.status(400).json({error: error.message});
   }
 });
-  
+
 // delete
 const deletePayment = asyncHandler(async (req, res) => {
   try {
