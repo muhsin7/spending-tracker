@@ -24,7 +24,7 @@ describe("CategoryCard Tests", () => {
     cy.url().should("include", "/categories");
   });
 
-  it("clicking add spending limit button redirects to add spedning limit page", () => {
+  it("clicking add spending limit button redirects to add spending limit page", () => {
     cy.get(".category-card .category-card-button").contains("Add Spending Limit").click();
     cy.url().should("include", "/addSpendingLimit");
   });
