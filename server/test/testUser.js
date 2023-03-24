@@ -368,7 +368,6 @@ describe("User tests", () => {
         .send(changedDetails)
         .set("Authorization", ("Bearer " + validToken));
 
-      console.log(res.body);
       res.should.have.status(200);
       res.body.should.be.a("object");
       res.body.should.have.property("name").eql(defaultUser.name);

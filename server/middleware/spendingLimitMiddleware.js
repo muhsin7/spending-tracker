@@ -6,11 +6,9 @@ const mustOwnValidCategory = asyncHandler(async (req, res, next) => {
   const { category } = req.body;
   const userId = req.user.id;
   const categoryObj = await Category.findOne({ _id: category });
-  console.log(category);
 
   //If category is undefined in the request, user is trying to set a global spending limit
   if (category == undefined) {
-    console.log("ok");
     return next();
   }
 
