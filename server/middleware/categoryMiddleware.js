@@ -1,10 +1,10 @@
 const asyncHandler = require("express-async-handler");
 const Category = require("../models/categoryModel");
 
-const mustOwnValidCategory = asyncHandler(async(req, res, next) => {
-  const {id} = req.params;
+const mustOwnValidCategory = asyncHandler(async (req, res, next) => {
+  const { id } = req.params;
   const userId = req.user.id;
-  const category = await Category.findOne({_id: id});
+  const category = await Category.findOne({ _id: id });
 
   if (category == undefined) {
     res.status(404);
@@ -18,4 +18,4 @@ const mustOwnValidCategory = asyncHandler(async(req, res, next) => {
   next();
 });
 
-module.exports = {mustOwnValidCategory};
+module.exports = { mustOwnValidCategory };
