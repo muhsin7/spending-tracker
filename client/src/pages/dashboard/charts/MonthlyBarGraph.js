@@ -82,8 +82,7 @@ export default function MonthlyBarGraph(props) {
     );
   }, [props.end, props.payments, props.start]);
 
-  const renderBarChart = (
-    <ResponsiveContainer>
+  const renderBarChart = dataByMonth === [] ? (<ResponsiveContainer>
       <BarChart width={730} height={400} data={dataByMonth}>
         <Bar
           dataKey="amount"
@@ -101,8 +100,7 @@ export default function MonthlyBarGraph(props) {
           cursor={{ fill: "rgba(0, 0, 0, 0.0)" }}
         />
       </BarChart>
-    </ResponsiveContainer>
-  );
+    </ResponsiveContainer>) : (<div className='empty-container'>No data to display line chart</div>);
 
   return renderBarChart;
 }

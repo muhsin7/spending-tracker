@@ -17,7 +17,7 @@ function CustomTooltip({ payload, label, active }) {
         {/* <div className="tooltip-label">{`${dateStringFromUnixString(label)}`}</div> */}
         {/* <div className="intro">-£{payload[0].value}</div> */}
         <div className="tooltip-label">
-          {payload ? `-£${payload[0].value}` : "Error"}
+          {payload ? `-£${payload[0].value ? payload[0].value.toFixed(2) : 0}` : "Error"}
         </div>
       </div>
     );
@@ -129,7 +129,8 @@ export default function CategoryPieChart(props) {
     );
   };
 
-  const renderPieChart = (
+  const renderPieChart = 
+      categoryData === [] ? (
     <ResponsiveContainer>
       <PieChart>
         <Legend layout="horizontal" verticalAlign="top" align="center" />
@@ -169,8 +170,8 @@ export default function CategoryPieChart(props) {
         )}
         <Tooltip content={<CustomTooltip />} />
       </PieChart>
-    </ResponsiveContainer>
-  );
+    </ResponsiveContainer>) : (<div className='empty-container'>No data to display pie chart</div>)
+  ;
 
   return renderPieChart;
 }
