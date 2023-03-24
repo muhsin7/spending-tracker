@@ -114,6 +114,8 @@ function AddPayment() {
 
     console.log(payments);
 
+    const filteredPayments = payments.data.filter((payment) => payment.categoryId === formValues["categoryId"]);
+
     let res = [];
 
     let dt = new Date();
@@ -146,10 +148,10 @@ function AddPayment() {
     }
 
     if (dt.getTime() === 0) {
-      res = payments.data;
+      res = filteredPayments;
     } else {
       const today = new Date().getTime();
-      payments.data.forEach((pay) => {
+      filteredPayments.forEach((pay) => {
         const paytime = Date.parse(pay.date);
         if (paytime <= today && paytime >= dt.getTime()) {
           res.push(pay);
@@ -288,6 +290,7 @@ function AddPayment() {
         navigate("/payments");
       }
     } catch (err) {
+      console.log(err);
       if (err.response.data.error === "PayloadTooLargeError")
         setErrorMessage("File size is too large!");
       else if (err.response.data.message)

@@ -46,7 +46,7 @@ export default function Register() {
           setToken(token);
           setAuth(true);
     
-          navigate('/user');
+          window.location.reload(true);
         }
     }
 
