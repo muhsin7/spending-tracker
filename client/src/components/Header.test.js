@@ -45,7 +45,6 @@ describe('Header Component (User not logged in)', () => {
 
 describe('Header Component (User logged in)', () => {
   let logOutButton;
-  let accountText;
 
   beforeEach(() => {
     render(
@@ -53,7 +52,6 @@ describe('Header Component (User logged in)', () => {
         (<Header auth={[true, jest.fn()]}/>)
       </BrowserRouter>
     )
-    accountText = screen.getByText("Account")
     logOutButton = screen.getByRole("button", { name: "Log out" });
   })
 
@@ -64,9 +62,8 @@ describe('Header Component (User logged in)', () => {
   it('renders header options for user and log out button', () => {
     expect(screen.getByText("Payments")).toBeInTheDocument();
     expect(screen.getByText("Categories")).toBeInTheDocument();
-    expect(screen.getByText("Limits")).toBeInTheDocument();
     expect(screen.getByText("Reports")).toBeInTheDocument();
-    expect(accountText).toBeInTheDocument();
+    expect(screen.getByText("Achievements")).toBeInTheDocument();
     expect(logOutButton).toBeInTheDocument();
   });
 
@@ -76,19 +73,16 @@ describe('Header Component (User logged in)', () => {
   it("categoriesText redirects to /categories", () => {
     testClick("categories");
   })
-  // it("limitsText redirects to / limits", () => {
-  //   testClick("limits");
-  // })
-  // it("reportsText redirects to /reports", () => {
-  //   testClick("reports");
-  // })
-  // it("achievementsText redirects to /achievements", () => {
-  //   testClick("achievements");
-  // })
-  it("accountText opens a popup with user details", () => {
-    fireEvent.click(accountText);
-    expect(screen.getByText("Account details"))
+  it("reportsText redirects to /reports", () => {
+    testClick("reports");
   })
+  it("achievementsText redirects to /achievements", () => {
+    testClick("achievements");
+  })
+  // it("accountText opens a popup with user details", () => {
+  //   fireEvent.click(accountText);
+  //   expect(screen.getByText("Account details"))
+  // })
 
   it('Log out button removes user details from localStorage and redirects user', () => {
     localStorage.setItem("exampleKey", "exampleValue")
