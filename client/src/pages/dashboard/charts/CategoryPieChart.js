@@ -44,20 +44,15 @@ export default function CategoryPieChart(props) {
     startDate = new Date(0),
     endDate = new Date(),
   }) => {
-    console.log(categoryMetaData);
     let res = [];
     categoryMetaData.forEach((cat) => {
-      // console.log(cat);
       let sum = 0;
       props.payments.forEach((pay) => {
         const paymentDate = new Date(pay.date);
         if (paymentDate >= startDate && paymentDate <= endDate) {
-          // Only considers payments in current month
-          // if (isSameMonthAsToday(new Date(Date.parse(pay.date)))) {
-            // if(false) {
-            if (pay.categoryId === cat._id) {
-              sum += pay.amount;
-            }
+          if (pay.categoryId === cat._id) {
+            sum += pay.amount;
+          }
           // }
         }
       });
@@ -70,8 +65,6 @@ export default function CategoryPieChart(props) {
         });
       }
     });
-
-    console.log(res);
 
     return res;
   };

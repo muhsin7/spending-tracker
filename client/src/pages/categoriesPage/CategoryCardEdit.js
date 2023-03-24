@@ -1,14 +1,10 @@
 import React from "react";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 export default function CategoryCardEdit(props) {
   const TITLE = props.category.name;
   const [newTitle, setNewTitle] = useState(TITLE);
-
-  useEffect(() => {
-    console.log(newTitle);
-  }, [newTitle]);
 
   function isChanged() {
     return newTitle !== TITLE;
@@ -29,9 +25,6 @@ export default function CategoryCardEdit(props) {
         headers: {
           Authorization: "Bearer " + props.token,
         },
-      })
-      .then((res) => {
-        console.log(res.data);
       });
 
     window.location.reload();

@@ -16,7 +16,6 @@ export default function AmountSpent() {
         },
       })
       .then((res) => {
-        // console.log(res.data);
         setSummary(res.data);
       });
   }, []);

@@ -33,8 +33,6 @@ function AddPayment() {
 
   const [isDateChosen, setDateChosen] = useState(false);
 
-  useEffect(() => console.log(token), [token]);
-
   function getCatNameByID(id) {
     return newCategories.filter((cat) => cat._id === id)[0].name;
   }
@@ -75,7 +73,6 @@ function AddPayment() {
       ...formValues,
       [name]: value,
     });
-    console.log(formValues);
   };
 
   const selectDate = async (event) => {
@@ -123,8 +120,6 @@ function AddPayment() {
         Authorization: "Bearer " + token,
       },
     });
-
-    console.log(payments);
 
     let filteredPayments;
 
@@ -270,15 +265,10 @@ function AddPayment() {
         }
       );
 
-      console.log(response);
-
       const globalPercentage = await getSpendingLimitPercentage("1");
       const categoryPercentage = await getSpendingLimitPercentage(
         formValues["categoryId"]
       );
-
-      console.log(globalPercentage);
-      console.log(categoryPercentage);
 
       if (globalPercentage > 80) {
         if (globalPercentage > 100) {

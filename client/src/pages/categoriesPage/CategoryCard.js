@@ -27,8 +27,6 @@ function CategoryCard(props) {
       },
     });
 
-    console.log(payments);
-
     const filteredPayments = payments.data.filter(
       (payment) => payment.categoryId === ID
     );

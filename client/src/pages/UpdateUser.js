@@ -70,8 +70,6 @@ export default function UpdateUser() {
         },
       });
 
-      console.log(response);
-
       if (response.status === 200) navigate("/dashboard");
     } catch (err) {
       console.log(err.response.data);

@@ -32,7 +32,6 @@ function Login() {
           password: passwordValue,
         });
 
-        console.log(res);
         const { token } = res.data;
         setToken(token);
         setAuth(true);

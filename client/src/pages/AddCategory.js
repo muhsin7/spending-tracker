@@ -46,8 +46,6 @@ function AddCategory() {
         }
       );
 
-      console.log(response);
-
       if (response.status === 201) {
         if (response.data.achievements.length !== 0) {
           response.data.achievements.forEach((achievement) =>
