@@ -77,7 +77,7 @@ function AddCategory() {
                 required
               />
             </div>
-            <button className="inputFormButton" onClick={onSubmit}>
+            <button id = "addCategoryButton" className="inputFormButton" onClick={onSubmit}>
               Add
             </button>
           </form>
