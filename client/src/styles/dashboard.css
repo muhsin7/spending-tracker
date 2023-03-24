@@ -101,6 +101,7 @@
     font: inherit;
     font-size: 90%;
     border-radius: 8px;
+    padding: 0.2em;
 }
 
 .dashboard-amount-cards {

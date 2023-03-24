@@ -73,11 +73,11 @@ function AddCategory() {
               <input
                 value={categoryValue}
                 onChange={(e) => setCategoryValue(e.target.value)}
-                placeholder="Name of the category:"
+                placeholder="Name of the category"
                 required
               />
             </div>
-            <button className="inputFormButton" onClick={onSubmit}>
+            <button id = "addCategoryButton" className="inputFormButton" onClick={onSubmit}>
               Add
             </button>
           </form>

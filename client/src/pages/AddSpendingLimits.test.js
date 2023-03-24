@@ -47,7 +47,7 @@ describe("Add Spending Limit Component", () => {
         expect(durationSelect).toBeInTheDocument();
         fireEvent.change(durationSelect, { target: { value: 'MONTH' } });
         expect(durationSelect.value).toBe('MONTH');
-        //"YEAR", "MONTH", "DAY", "WEEK", ""
+        //"YEAR", "MONTH", "WEEK", "DAY", ""
         expect(durationSelect.length).toBe(5);
       
         //change event on category select

@@ -31,6 +31,8 @@ function AddPayment() {
 
   const [newImageURL, setNewImageURL] = useState("");
 
+  const [isDateChosen, setDateChosen] = useState(false);
+
   useEffect(() => console.log(token), [token]);
 
   function getCatNameByID(id) {
@@ -75,6 +77,11 @@ function AddPayment() {
     });
     console.log(formValues);
   };
+
+  const selectDate = async (event) => {
+    setDateChosen(true);
+    onFormChange(event);
+  }
 
   // Gets all the user's categories from the database
   useEffect(() => {
@@ -339,9 +346,14 @@ function AddPayment() {
                 value={formValues["categoryId"]}
                 name="categoryId"
                 id="categoryId"
+                className={
+                  formValues["categoryId"] === "" ? "form-select" : ""
+                }
                 onChange={onFormChange}
               >
-                <option key="" value="">Select a category...</option>
+                <option key="" value="" className="form-select">
+                  Select a category...
+                </option>
                 {newCategories.map((option) => (
                   <option key={option._id} value={option._id}>
                     {option.name}
@@ -352,12 +364,12 @@ function AddPayment() {
             <div className="inputFormInputBox">
               <input
                 type="date"
-                className="form-control"
+                className={(isDateChosen) ? "form-control" : "form-control form-select"}
                 id="date"
                 name="date"
                 value={formValues["date"]}
                 placeholder="Date"
-                onChange={onFormChange}
+                onChange={selectDate}
               />
             </div>
             <div className="inputFormInputBox">

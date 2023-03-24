@@ -29,6 +29,7 @@ function CustomTooltip({ payload, label, active }) {
 export default function CategoryPieChart(props) {
   const [token, setToken] = useToken();
   const [categoryData, setCategoryData] = useState([]);
+  const [categoryIdMap, setCategoryIdMap] = useState([]);
 
   const isSameMonthAsToday = (dateToCheck) => {
     const today = new Date();
@@ -38,17 +39,25 @@ export default function CategoryPieChart(props) {
     );
   };
 
-  const countStats = (categoryMetaData) => {
+  const countStats = ({
+    categoryMetaData,
+    startDate = new Date(0),
+    endDate = new Date(),
+  }) => {
+    console.log(categoryMetaData);
     let res = [];
     categoryMetaData.forEach((cat) => {
       // console.log(cat);
       let sum = 0;
       props.payments.forEach((pay) => {
-        // Only considers payments in current month
-        if (isSameMonthAsToday(new Date(Date.parse(pay.date)))) {
-        // if(false) {
-          if (pay.categoryId === cat._id) {
-            sum += pay.amount;
+        const paymentDate = new Date(pay.date);
+        if (paymentDate >= startDate && paymentDate <= endDate) {
+          // Only considers payments in current month
+          if (isSameMonthAsToday(new Date(Date.parse(pay.date)))) {
+            // if(false) {
+            if (pay.categoryId === cat._id) {
+              sum += pay.amount;
+            }
           }
         }
       });
@@ -78,12 +87,25 @@ export default function CategoryPieChart(props) {
         },
       })
       .then((res) => {
-        const processedData = countStats(res.data);
-        // console.log(processedData);
-        // processedData.map((val, index) => console.log(val));
+        const processedData = countStats({
+          categoryMetaData: res.data,
+          startDate: props.start,
+          endDate: props.end,
+        });
         setCategoryData(processedData);
       });
-  }, [props.payments]);
+  }, [props.payments, props.start, props.end]);
+
+  useEffect(() => {
+    if (categoryIdMap) {
+      const processedData = countStats({
+        categoryMetaData: categoryIdMap,
+        startDate: props.start,
+        endDate: props.end,
+      });
+      setCategoryData(processedData);
+    }
+  }, [props.payments, props.start, props.end, categoryIdMap]);
 
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#8884d8"];
   // const COLORS = ["#f0e004", "#00C49F", "#FFBB28", "#FF8042", "#ccc"];
@@ -113,7 +135,6 @@ export default function CategoryPieChart(props) {
       </text>
     );
   };
-
 
   const renderPieChart = (
     <ResponsiveContainer>
@@ -148,7 +169,7 @@ export default function CategoryPieChart(props) {
           >
             {placeholderData
               ? placeholderData.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill="#8884d8"/>
+                  <Cell key={`cell-${index}`} fill="#8884d8" />
                 ))
               : []}
           </Pie>

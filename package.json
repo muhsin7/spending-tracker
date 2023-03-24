@@ -1,0 +1,19 @@
+{
+  "name": "allgood-spending-tracker",
+  "version": "1.0.0",
+  "description": "Package encapsulating commands to install dependencies and run both the frontend and backend of the project",
+  "scripts": {
+    "installAll": "cd client & npm i & cd ../server & npm i & cd ..",
+    "start": "cd server & npm run concStart"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/muhsin7/spending-tracker.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/muhsin7/spending-tracker/issues"
+  },
+  "homepage": "https://github.com/muhsin7/spending-tracker#readme"
+}

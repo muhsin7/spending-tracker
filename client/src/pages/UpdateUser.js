@@ -31,7 +31,10 @@ export default function UpdateUser() {
     if (nameValue !== user.name) data.name = nameValue;
     if (passwordValue !== "") data.password = passwordValue;
 
-    if (Object.keys(data).length === 0) navigate("/dashboard");
+    if (Object.keys(data).length === 0) {
+      navigate("/dashboard");
+      return;
+    }
 
     try {
       const response = await axios.patch("/api/user", data, {
@@ -60,14 +63,14 @@ export default function UpdateUser() {
               <input
                 value={nameValue}
                 onChange={(e) => setNameValue(e.target.value)}
-                placeholder="Name:"
+                placeholder="Name"
                 required
               />
               <input
                 type="password"
                 value={passwordValue}
                 onChange={(e) => setPasswordValue(e.target.value)}
-                placeholder="Enter a new password, otherwise leave blank:"
+                placeholder="Enter a new password, otherwise leave blank"
                 required
               />
             </div>

@@ -3,7 +3,6 @@ import PercentageBar from "./PercentageBar";
 export default function LimitCard(props) {
 
     const getPaymentSumOfLimitDuration = () => {
-        // console.log(props.payments);
         let res = [];
         let dt = new Date();
         switch(props.limit.spendingLimit.duration.type) {
@@ -26,21 +25,17 @@ export default function LimitCard(props) {
                 // res = props.payments;
                 break;
         }
-        // console.log(`LIMIT TYPE ${props.limit.spendingLimit.duration.type}, GENERATED MIN DATE ${dt}`)
 
         if(dt.getTime() === 0) {
             res = props.payments;
         } else {
             const today = new Date().getTime();
             props.payments.forEach(pay => {
-                // console.log(pay)
                 const paytime = Date.parse(pay.date);
                 if(paytime <= today && paytime >= dt.getTime()) {
-                    // console.log("added");
                     res.push(pay);
                 }
             });
-            // console.log(res.length);
         }
         if(res) {
             return res.reduce((a, b) => a + (b.amount || 0), 0);

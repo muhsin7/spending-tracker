@@ -3,6 +3,8 @@ import { useState } from "react";
 import axios from "axios";
 import { useToken } from "../authentication/useToken";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import Background from "./Background";
+
 
 export default function AddSpendingLimit() {
   const [newCategories, setNewCategories] = useState([]);
@@ -10,7 +12,7 @@ export default function AddSpendingLimit() {
   const [token, setToken] = useToken();
   const [formValues, setFormValues] = useState({
     name: "",
-    amount: 0,
+    amount: NaN,
     duration: "",
     categoryId: "",
   });
@@ -106,6 +108,7 @@ export default function AddSpendingLimit() {
 
   return (
     <div className="div-inputForm">
+      <Background />
       <section className="inputForm">
         <h2 className="inputFormTitle">Add Spending Limit</h2>
         {errorMessage && <div className="error-message">{errorMessage}</div>}
@@ -138,11 +141,14 @@ export default function AddSpendingLimit() {
               <select
                 value={formValues["duration"]}
                 name="duration"
+                className={
+                  formValues["duration"] === "" ? "form-select" : ""
+                }
                 onChange={onFormChange}
                 data-testid="duration"
               >
-                <option key="" value=""></option>
-                {["YEAR", "MONTH", "DAY", "WEEK"].map((option) => (
+                <option key="" value="" className="form-select">Select a time frame...</option>
+                {["YEAR", "MONTH", "WEEK", "DAY"].map((option) => (
                   <option key={option} value={option}>{option}</option>
                 ))}
               </select>
@@ -151,9 +157,12 @@ export default function AddSpendingLimit() {
               <select
                 value={formValues["categoryId"]}
                 name="categoryId"
+                className={
+                  formValues["categoryId"] === "" ? "form-select" : ""
+                }
                 onChange={onFormChange}
               >
-                <option key="" value=""></option> 
+                <option key="" value="" className="form-select">Select a category/global...</option> 
                 {newCategories.map((option) => (
                   <option key={option._id} value={option._id}>{option.name}</option>
                 ))}

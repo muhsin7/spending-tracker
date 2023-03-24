@@ -39,92 +39,27 @@ const dataValueToMonth = (value) => {
     return dateString;
 }
 
-// const processData = ({data, cumulative=false, cumulateBy=dataValueToDate}) => {
-//     let dataByDateInternal = [];
-//     let total = 0;
-//     if(data !== undefined) {
-//       data.sort((a, b) => ascendingCompare(new Date(Date.parse(a.date)), new Date(Date.parse(b.date))));
-//       data.reduce(function(res, value) {
-//         let dateString=cumulateBy(value);
-
-//         if (!res[dateString]) {
-//             res[dateString] = {
-//                 date: dateString,
-//                 amount: cumulative ? total : 0
-//             };
-//             dataByDateInternal.push(res[dateString]);
-//         }
-//         res[dateString].amount += value.amount;
-//         total += value.amount
-//         return res;
-//     }, {});
-//     }
-
-
-//     return dataByDateInternal;
-// }
-
-const processData = ({data, cumulative=false, cumulateBy=dataValueToUnix}) => {
-    const now = new Date();
-    const lastMonth = new Date(now.getFullYear(), now.getMonth(), 1);
-    const datesInMonth = [];
-    const dataByDateInternal = [];
-  
-    // generate array of dates in last month
-    while (lastMonth.getMonth() === now.getMonth() && lastMonth.getDate() <= now.getDate()) {
-      datesInMonth.push(new Date(lastMonth).getTime());
-      lastMonth.setDate(lastMonth.getDate() + 1);
-    }
-  
-    // console.log(datesInMonth)
-
-    // create payment objects for dates without payment data
-    const paymentObjects = {};
-    datesInMonth.forEach(date => {
-      paymentObjects[date] = { date: date, amount: 0 };
-    });
-  
-    let total = 0;
-    if (data !== undefined) {
-    //   data.sort((a, b) => ascendingCompare(new Date(Date.parse(a.date)), new Date(Date.parse(b.date))));
-      data.reduce(function(res, value) {
-        const dateString = cumulateBy(value);
-  
-        if (!res[dateString]) {
-          res[dateString] = paymentObjects[dateString] ? paymentObjects[dateString] : { date: dateString, amount: 0 };
-          dataByDateInternal.push(res[dateString]);
+function processData({payments, startDate=new Date(0), endDate=new Date()}) {
+  const groups = {};
+    if(payments) {
+      payments.forEach((payment) => {
+        const paymentDate = new Date(payment.date);
+        if (paymentDate >= startDate && paymentDate <= endDate)
+        {
+          const date = new Date(payment.date).toDateString();
+        if (!groups[date]) {
+          groups[date] = 0;
         }
-        // console.log("MAP OBJECT")
-        // console.log(res)
-        
-        if(cumulative) {
-            total += value.amount;
-            res[dateString].amount = total;
-        } else {
-            res[dateString].amount += value.amount;
+        groups[date] += payment.amount;
         }
-        return res;
-    }, paymentObjects);
-}
-
-    // calculate cumulative amount if required
-    if (cumulative) {
-        let total = 0;
-        dataByDateInternal.forEach(payment => {
-            payment.amount += total;
-            total = payment.amount;
-        });
+      });
+      return Object.entries(groups).map(([date, amount]) => ({
+        date,
+        amount,
+      }));
     }
-    // const v = paymentObjects[new Date(now.getFullYear(), now.getMonth(), 1).getTime()];
-    // console.log(v);
-    // console.log(Object.values(paymentObjects));
-    console.log("------------------------")
-    Object.values(paymentObjects).forEach((val, index) => {
-    console.log(`${new Date(Number(val.date)).toLocaleDateString()} => ${val.amount}`);
-    });
-
-    return Object.values(paymentObjects);
   }
+
 
 export default function DashboardChart(props) {
   
@@ -132,9 +67,7 @@ export default function DashboardChart(props) {
     
     const [data, setData] = useState([]);
 
-    const [dataByDate, setDataByDate] = useState(processData({data}));
-
-    const [dataByMonth, setDataByMonth] = useState(processData({data: data, cumulative: false, dataValueToMonth}));
+    const [dataByDate, setDataByDate] = useState(processData({payments: data}));
 
     const todayMonthName = () => {
         const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -147,17 +80,16 @@ export default function DashboardChart(props) {
             event.persist();
             setIsCumulative(event.target.checked);
             if(event.target.checked) {
-                setDataByDate(processData({data, cumulative: true}));
+                setDataByDate(processData({data, startDate: props.start, endDate: props.end, cumulative: true}));
             } else {
-                setDataByDate(processData({data, cumulative: false}));
+                setDataByDate(processData({data, startDate: props.start, endDate: props.end, cumulative: false}));
             }
     } 
     
     useEffect(() =>
       {
         setData(props.payments);
-        setDataByDate(processData({data}));
-        setDataByMonth(processData({data: data, cumulative: false, dataValueToMonth}));
+        setDataByDate(processData({payments: data}));
       }, [props.payments]);
 
 
@@ -174,7 +106,7 @@ export default function DashboardChart(props) {
                         domain={["auto", "auto"]}
                         height={40}
                         // tickFormatter={unixTimeString => dateStringFromUnixString(unixTimeString)}
-                        tickFormatter={unixTime=> new Date(Number(unixTime)).getDate()}
+                        // tickFormatter={unixTime=> new Date(Number(unixTime)).getDate()}
                     >
                             <Label style={{
                             textAnchor: "middle",
@@ -202,33 +134,6 @@ export default function DashboardChart(props) {
             </label>
         </>
     );
-
-
-    // const renderBarChart = (
-    //     <div className="line-chart noselect dashboard-right">
-    //         <ResponsiveContainer width={900} height="90%">
-    //         <BarChart width={730} height={400} data={dataByMonth}>
-    //             <Bar
-    //                 dataKey="amount"
-    //                 // nameKey="date"
-    //                 // label={()}
-    //                 >
-    //                     {data.map((entry, index) => (
-    //                         <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-    //                     ))}
-    //             </Bar>
-    //             <XAxis tickFormatter={unixTimeString => {
-    //                 const monthNames = ["January", "February", "March", "April", "May", "June",
-    //                 "July", "August", "September", "October", "November", "December"
-    //               ];
-    //               return monthNames[unixTimeString];
-    //             }} />
-    //             <YAxis />
-    //             <Tooltip />
-    //         </BarChart>
-    //         </ResponsiveContainer>
-    //     </div>
-    // );
     
 
     return renderLineChart;

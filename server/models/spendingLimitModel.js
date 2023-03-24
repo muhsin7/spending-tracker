@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const durationSchema = mongoose.Schema({
   type: {
     type: String,
-    enum: ["YEAR", "MONTH", "DAY", "WEEK"],
+    enum: ["YEAR", "MONTH", "WEEK", "DAY"],
     required: true,
   },
 });
