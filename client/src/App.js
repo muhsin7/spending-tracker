@@ -4,7 +4,6 @@ import Login from "./pages/Login"
 import Register from "./pages/Register"
 import Dashboard from "./pages/dashboard/Dashboard"
 import UpdateUser from "./pages/UpdateUser"
-import UserPage from "./pages/UserPage"
 import PaymentsPage from "./pages/paymentsPage/PaymentsPage"
 import WelcomePage from "./pages/WelcomePage"
 import CategoriesPage from "./pages/categoriesPage/CategoriesPage"
@@ -18,7 +17,7 @@ import AddSpendingLimit from "./pages/AddSpendingLimit"
 import EditSpendingLimit from "./pages/EditSpendingLimit"
 import Achievements from "./pages/achievements/Achievements"
 import Reports from "./pages/reports/Reports"
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
@@ -36,7 +35,6 @@ function App() {
             {/* REDIRECT TO LOGIN PAGE IF NOT LOGGED IN */}
             <Route element={<ProtectedRoute privateRoute={isAuth} redirectPath="/login"/>}>
               <Route index path="/dashboard" element={<Dashboard />} />
-              <Route path="/user" element={<UserPage />} />
               <Route path="/user/update" element={<UpdateUser />} />
               <Route path="/addCategory" element={<AddCategory />} />
               <Route path="/addPayment" element={<AddPayment/>} />
