@@ -130,7 +130,7 @@ export default function CategoryPieChart(props) {
   };
 
   const renderPieChart = 
-      categoryData === [] ? (
+      categoryData.length > 0 ? (
     <ResponsiveContainer>
       <PieChart>
         <Legend layout="horizontal" verticalAlign="top" align="center" />

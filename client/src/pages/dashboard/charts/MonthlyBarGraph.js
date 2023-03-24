@@ -73,6 +73,10 @@ export default function MonthlyBarGraph(props) {
   };
 
   useEffect(() => {
+    console.log(dataByMonth)
+  }, [dataByMonth])
+
+  useEffect(() => {
     setDataByMonth(
       processData({
         payments: props.payments,
@@ -82,7 +86,7 @@ export default function MonthlyBarGraph(props) {
     );
   }, [props.end, props.payments, props.start]);
 
-  const renderBarChart = dataByMonth === [] ? (<ResponsiveContainer>
+  const renderBarChart = dataByMonth.length > 0 ? (<ResponsiveContainer>
       <BarChart width={730} height={400} data={dataByMonth}>
         <Bar
           dataKey="amount"
