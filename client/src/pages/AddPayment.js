@@ -96,6 +96,20 @@ function AddPayment() {
       });
   }, []);
 
+  const resetUserStreak = async () => {
+    const request = {
+      streakSince: Date.now
+    }
+
+    await axios.patch("/api/user", 
+      request, {
+        headers: {
+          Authorization: "Bearer " + token,
+        }
+      }
+    );
+  }
+
   const getSpendingLimitPercentage = async (catID) => {
     const response = await axios.get(`/api/limit/byCategory/${catID}`, {
       headers: {
@@ -268,24 +282,29 @@ function AddPayment() {
       console.log(categoryPercentage);
 
       if (globalPercentage > 80) {
-        if (globalPercentage > 100)
+        if (globalPercentage > 100) {
           errorNotif("You have exceeded your global spending limit!");
+          resetUserStreak();
+        }
         else
           warnNotif("You are close to exceeding your global spending limit!");
       }
       if (categoryPercentage > 80) {
-        if (categoryPercentage > 100)
+        if (categoryPercentage > 100) {
           errorNotif(
             `You have exceeded your spending limit for '${getCatNameByID(
               formValues["categoryId"]
             )}!'`
           );
-        else
+          resetUserStreak();
+        }
+        else 
           warnNotif(
             `You are close to exceeding your spending limit for '${getCatNameByID(
               formValues["categoryId"]
             )}!'`
           );
+        
       }
 
       if (response.status === 201) {
