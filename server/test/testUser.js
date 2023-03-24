@@ -206,6 +206,21 @@ describe("User tests", () => {
           user.should.have.property("level").eql(1);
         });
     });
+    
+    it("should set initial streak since to account creation date", async() => {
+      await User.create({
+        name: "John",
+        password: "123",
+        email: "john@example.com"
+      })
+        .catch((error) => {
+          should.not.exist(error, "The user should have been valid");
+        })
+        .then((user) => {
+          should.exist(user);
+          should.not.equal(user.streakSince);
+        });
+    });
   });
 
   describe("API tests", () => {
