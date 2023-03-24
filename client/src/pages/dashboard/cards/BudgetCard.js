@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import { useToken } from "../../../authentication/useToken";
 
 export default function BudgetCard(props) {
@@ -56,6 +57,7 @@ export default function BudgetCard(props) {
                     <div className="dashboard-amount-description">
                         left to spend <b>{ limit.duration ? (limit.duration.type.toLowerCase() === "day" ? "today" : "this"+limit.duration.type.toLowerCase()) : "..." }</b>
                     </div>
+                    <Link to="/editSpendingLimit/?categoryID=1"><div className="btn dashboard-edit-global-limit">Edit global spending limit</div></Link>
                     </>
                     ) : (
                         <div>Add a budget here</div>
