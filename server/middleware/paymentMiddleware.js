@@ -2,8 +2,8 @@ const asyncHandler = require("express-async-handler");
 const Category = require("../models/categoryModel");
 const Payment = require("../models/paymentModel");
 
-const mustOwnValidCategory = asyncHandler(async(req, res, next) => {
-  const {categoryId} = req.body;
+const mustOwnValidCategory = asyncHandler(async (req, res, next) => {
+  const { categoryId } = req.body;
   const userId = req.user.id;
 
   if (categoryId === "") {
@@ -11,7 +11,7 @@ const mustOwnValidCategory = asyncHandler(async(req, res, next) => {
     throw new Error("You must choose a category!");
   }
 
-  const category = await Category.findOne({_id:categoryId});
+  const category = await Category.findOne({ _id: categoryId });
 
   if (category == undefined) {
     res.status(404);
@@ -25,11 +25,11 @@ const mustOwnValidCategory = asyncHandler(async(req, res, next) => {
   next();
 });
 
-const mustOwnValidPayment = asyncHandler(async(req, res, next) => {
+const mustOwnValidPayment = asyncHandler(async (req, res, next) => {
   const userId = req.user.id;
-  const {id} = req.params;
-  
-  const payment = await Payment.findOne({_id: id});
+  const { id } = req.params;
+
+  const payment = await Payment.findOne({ _id: id });
 
   if (payment == undefined) {
     res.status(404);
@@ -43,4 +43,4 @@ const mustOwnValidPayment = asyncHandler(async(req, res, next) => {
   next();
 });
 
-module.exports = {mustOwnValidCategory, mustOwnValidPayment};
+module.exports = { mustOwnValidCategory, mustOwnValidPayment };

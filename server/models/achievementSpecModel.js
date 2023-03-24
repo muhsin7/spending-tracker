@@ -1,19 +1,5 @@
 const mongoose = require("mongoose");
 
-/*
-  Achievement requirements will be as follows:
-
-  requirement : {
-    req...: {
-      target: Number
-    },
-    boolOp: {
-      type: String,
-      enum ["AND", "OR"]
-    }
-  }
-*/
-
 const checkIsCategoryAchievement = (object) => {
   return object.noCategories != null;
 };
@@ -48,6 +34,16 @@ const achievementSpecSchema = mongoose.Schema({
     immutable: true,
   },
   requirements: {
+    /*
+    requitements:
+      requirement: {
+        target: Number
+      },
+      boolOp: {
+        type: String,
+        enum ["AND", "OR"]
+      }
+    */
     type: mongoose.Schema.Types.Mixed,
     required: true,
     immutable: true,

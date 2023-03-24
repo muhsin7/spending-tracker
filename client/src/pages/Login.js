@@ -5,7 +5,7 @@ import { useToken } from "../authentication/useToken";
 import { useAuth } from "../authentication/useAuth";
 import Background from "./Background";
 
-function Login() {
+export default function Login() {
   const [token, setToken] = useToken();
   const [auth, setAuth] = useAuth();
   const [errorMessage, setErrorMessage] = useState("");
@@ -32,7 +32,6 @@ function Login() {
           password: passwordValue,
         });
 
-        console.log(res);
         const { token } = res.data;
         setToken(token);
         setAuth(true);
@@ -87,5 +86,3 @@ function Login() {
     </main>
   );
 }
-
-export default Login;

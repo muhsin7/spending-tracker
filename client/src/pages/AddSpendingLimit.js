@@ -20,8 +20,6 @@ export default function AddSpendingLimit() {
 
   const navigate = useNavigate();
 
-  useEffect(() => console.log(token), [token]);
-
   const onFormChange = async (event) => {
     event.preventDefault();
     const target = event.target;
@@ -32,7 +30,6 @@ export default function AddSpendingLimit() {
       ...formValues,
       [name]: value,
     });
-    console.log(formValues);
   };
 
   // Gets all the user's categories from the database
@@ -44,7 +41,6 @@ export default function AddSpendingLimit() {
         },
       })
       .then(async (res) => {
-        console.log(res.data);
         let catList = res.data;
         catList.push({ _id: "1", name: "Global" }); //Global spending limit will have id value 1
         setNewCategories(catList);
@@ -62,9 +58,7 @@ export default function AddSpendingLimit() {
   const onSubmit = async (e) => {
     //Check all values are filled in
     for (let name in formValues) {
-      console.log(name);
       if (formValues[name] === "" || formValues[name] === 0) {
-        console.log("fail");
         setErrorMessage(`Value '${name}' is required!`);
         return;
       }

@@ -15,7 +15,6 @@ export default function Level() {
         },
       })
       .then((res) => {
-        console.log(res.data);
         setUser(res.data);
       });
   }, []);

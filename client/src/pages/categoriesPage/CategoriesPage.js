@@ -6,7 +6,7 @@ import { useToken } from "../../authentication/useToken";
 import { useNavigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
 
-function CategoriesPage() {
+export default function CategoriesPage() {
   const [token, setToken] = useToken();
   const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
@@ -19,7 +19,6 @@ function CategoriesPage() {
         },
       })
       .then((res) => {
-        console.log(res.data);
         setCategories(res.data);
       });
   }, []);
@@ -52,5 +51,3 @@ function CategoriesPage() {
     </div>
   );
 }
-
-export default CategoriesPage;

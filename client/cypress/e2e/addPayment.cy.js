@@ -23,21 +23,19 @@ describe("AddPayment Tests", () => {
     cy.contains(/value 'title' is required!/i);
   });
 
-  // it("should submit the form successfully with valid data", () => {
-  //   // Fill the form with valid data
-  //   cy.addCategoryCommand('New Category')
-  //   cy.visit('/addPayment');
-  //   cy.get('#title').type("New Payment Title");
-  //   cy.get('#description').type("New Payment Description");
-  //   cy.get('#amount').type("50");
-  //   cy.get('select').select('New Category').should('have.value', '456')
-  //   cy.get('#date').type("2023-03-23");
+  it("should submit the form successfully with valid data", () => {
+    // cy.addCategoryCommand('New Category13')
+    cy.visit('/addPayment');
+    cy.get('#title').type("Example Title");
+    cy.get('#description').type("Example Description");
+    cy.get('#amount').type("50");
+    cy.get('select').select('Groceries')
+    cy.get('#date').type("2023-03-23");
 
-  //   // Submit the form and check that the payment is added successfully
-  //   cy.get('#addPaymentButton').click();
-  //   cy.url().should("include", "/payments");
-  //   cy.contains("New Payment Title");
-  //   cy.contains("New Payment Description");
-  //   cy.contains("50");
-  //   });
+    cy.get('#addPaymentButton').click();
+    cy.url().should("include", "/payments");
+    cy.contains("Example Title");
+    cy.contains("Example Description");
+    cy.contains("50");
+    });
 });

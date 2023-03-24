@@ -19,8 +19,6 @@ export default function AddSpendingLimit() {
 
   const navigate = useNavigate();
 
-  useEffect(() => console.log(token), [token]);
-
   const onFormChange = async (event) => {
     event.preventDefault();
     const target = event.target;
@@ -31,7 +29,6 @@ export default function AddSpendingLimit() {
       ...formValues,
       [name]: value,
     });
-    console.log(formValues);
   };
 
   // Gets all the user's categories from the database
@@ -79,7 +76,6 @@ export default function AddSpendingLimit() {
               },
             })
             .then((res2) => {
-              console.log(res2);
               const spendingLimit = res2.data[0];
               setSpendingLimit(spendingLimit._id);
               setFormValues({
@@ -104,16 +100,13 @@ export default function AddSpendingLimit() {
       },
     });
 
-    console.log(response);
     if (response.status === 200) navigate("/categories");
   };
 
   const onSubmit = async (e) => {
     //Check all values are filled in
     for (let name in formValues) {
-      console.log(name);
       if (formValues[name] === "" || formValues[name] === 0) {
-        console.log("fail");
         setErrorMessage(`Value '${name}' is required!`);
         return;
       }
@@ -143,7 +136,6 @@ export default function AddSpendingLimit() {
         },
       });
 
-      console.log(response);
       if (response.status === 200) navigate("/categories");
     } catch (err) {
       console.log(err.response.data);

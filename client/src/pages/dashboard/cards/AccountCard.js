@@ -44,7 +44,6 @@ export default function AccountCard() {
         },
       })
       .then((res) => {
-        console.log(res.data);
         setUser(res.data);
       });
   }, []);
@@ -57,7 +56,6 @@ export default function AccountCard() {
         },
       })
       .then((res) => {
-        console.log(res.data);
         setAchievements(res.data);
       });
   }, []);

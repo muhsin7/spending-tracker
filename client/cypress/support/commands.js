@@ -20,3 +20,14 @@ Cypress.Commands.add('addCategoryCommand', (categoryName) => {
   
     cy.url().should("include", "/categories");
 })
+
+Cypress.Commands.add('addPaymentCommand', (title, description, amount, select, date) => {
+    
+    cy.visit('/addPayment');
+  
+    cy.get('#title').type(title);
+    cy.get('#description').type(description);
+    cy.get('#amount').type(amount);
+    cy.get('select').select(select)
+    cy.get('#date').type(date);
+})

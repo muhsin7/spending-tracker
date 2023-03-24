@@ -7,7 +7,7 @@ import CategoryCardEdit from "./CategoryCardEdit";
 import { useEffect, useState } from "react";
 import PercentageBar from "../dashboard/limits/PercentageBar";
 
-function CategoryCard(props) {
+export default function CategoryCard(props) {
   const ID = props.category._id;
   const TITLE = props.category.name;
   const SL = props.category.spendingLimit;
@@ -26,8 +26,6 @@ function CategoryCard(props) {
         Authorization: "Bearer " + token,
       },
     });
-
-    console.log(payments);
 
     const filteredPayments = payments.data.filter(
       (payment) => payment.categoryId === ID
@@ -189,5 +187,3 @@ function CategoryCard(props) {
     />
   );
 }
-
-export default CategoryCard;
