@@ -65,9 +65,7 @@ function processData({payments, startDate=new Date(0), endDate=new Date()}) {
 
 
 export default function DashboardChart(props) {
-  
-    const [isCumulative, setIsCumulative] = useState(false);
-    
+      
     const [data, setData] = useState([]);
 
     const [dataByDate, setDataByDate] = useState(processData({payments: data}));
@@ -79,21 +77,13 @@ export default function DashboardChart(props) {
         return `${months[monthIndex]}  ${today.getFullYear()}`;
     }
 
-    const toggleCumulative = (event) => {
-            event.persist();
-            setIsCumulative(event.target.checked);
-            if(event.target.checked) {
-                setDataByDate(processData({data, startDate: props.start, endDate: props.end, cumulative: true}));
-            } else {
-                setDataByDate(processData({data, startDate: props.start, endDate: props.end, cumulative: false}));
-            }
-    } 
-    
     useEffect(() =>
       {
         setData(props.payments);
-        setDataByDate(processData({payments: data}));
-      }, [props.payments]);
+        const newData = processData({payments: props.payments, startDate: props.start, endDate: props.end});
+        console.log(newData);
+        setDataByDate(newData);
+      }, [props.payments, props.start, props.end]);
 
 
     const renderLineChart = (
@@ -132,10 +122,6 @@ export default function DashboardChart(props) {
                     <Tooltip />
                 </LineChart>
             </ResponsiveContainer>
-            {/* <label className="checkbox-label">
-                <input type="checkbox" checked={isCumulative} onChange={toggleCumulative} />
-                <span>Cumulative data</span>
-            </label> */}
         </>
     );
     
