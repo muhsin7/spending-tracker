@@ -8,16 +8,16 @@ const User = require("../models/userModel");
 // @access  Public
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
-  if(!name || !email || !password) {
+  if (!name || !email || !password) {
     res.status(400);
     throw new Error("Please enter all fields");
   }
 
-  const userExists = await User.findOne({email});
+  const userExists = await User.findOne({ email });
 
   // Handle already existing user
-  
-  if(userExists) {
+
+  if (userExists) {
     res.status(400);
     throw new Error("User already exists");
   }
@@ -26,27 +26,24 @@ const registerUser = asyncHandler(async (req, res) => {
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
 
-  try{
+  try {
     const user = await User.create({
       name,
       email,
-      password: hashedPassword
+      password: hashedPassword,
     });
-    
+
     res.status(201).json({
       _id: user.id,
       name: user.name,
       email: user.email,
-      token: generateToken(user.id)
-
+      token: generateToken(user.id),
     });
-  }
-  //Catch validation error if form data is invalid
-  catch(error) {
+  } catch (error) {
+    //Catch validation error if form data is invalid
     res.status(400);
     throw error;
   }
-  
 });
 
 // @desc    Log in existing user
@@ -55,22 +52,23 @@ const registerUser = asyncHandler(async (req, res) => {
 const loginUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
-  const user = await User.findOne({email});
-  
-  if(user) {
+  const user = await User.findOne({ email });
+
+  if (user) {
     const validPassword = await bcrypt.compare(password, user.password);
-    if(validPassword) {
-      res.json({
-        _id: user.id,
-        name: user.name,
-        email: user.email,
-        token: generateToken(user._id)
-      })
+    if (validPassword) {
+      res
+        .json({
+          _id: user.id,
+          name: user.name,
+          email: user.email,
+          token: generateToken(user._id),
+        })
         .status(200);
       return;
     }
   }
-  
+
   res.status(401);
   throw new Error("Invalid credentials");
 });
@@ -78,9 +76,9 @@ const loginUser = asyncHandler(async (req, res) => {
 // @desc    Edit user data
 // @route   PATCH /api/user/
 // @access  Private
-const editUser = asyncHandler(async(req, res) => {
-  const { name, password } = req.body;
-  const currentUser = await User.findOne({_id: req.user.id});
+const editUser = asyncHandler(async (req, res) => {
+  const { name, password, streakSince } = req.body;
+  const currentUser = await User.findOne({ _id: req.user.id });
 
   let salt;
   let hashedPassword = currentUser.password;
@@ -89,17 +87,17 @@ const editUser = asyncHandler(async(req, res) => {
     salt = await bcrypt.genSalt(10);
     hashedPassword = await bcrypt.hash(password, salt);
   }
-  
 
-  const user = await User.findOneAndUpdate({_id: req.user.id}, {name: name, password: hashedPassword});
+  const user = await User.findOneAndUpdate(
+    { _id: req.user.id },
+    { name: name, password: hashedPassword, streakSince: streakSince }
+  );
 
-  res
-    .status(200)
-    .json({
-      _id: user._id,
-      name: user.name
-    });
-
+  res.status(200).json({
+    _id: user._id,
+    name: user.name,
+    streakSince: user.streakSince,
+  });
 });
 
 // @desc    Get existing user data
@@ -112,17 +110,15 @@ const getUser = asyncHandler(async (req, res) => {
     id: _id,
     name,
     email,
-    exp, 
-    level
+    exp,
+    level,
   });
 });
-
-
 
 // Generate JWT
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_VALID_FOR
+    expiresIn: process.env.JWT_VALID_FOR,
   });
 };
 
@@ -130,5 +126,5 @@ module.exports = {
   registerUser,
   loginUser,
   getUser,
-  editUser
+  editUser,
 };

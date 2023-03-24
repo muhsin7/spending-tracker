@@ -15,13 +15,15 @@ const mongoose = require("mongoose");
 */
 
 const checkIsCategoryAchievement = (object) => {
-  return (object.noCategories != null 
-    || object.paymentsInCategory != null);
+  return object.noCategories != null;
 };
 
 const checkIsPaymentAchievement = (object) => {
-  return (object.noPayments != null 
-    || object.largestPayment != null);
+  return object.noPayments != null || object.largestPayment != null;
+};
+
+const checkIsStreakAchievement = (object) => {
+  return object.underLimitStreak != null;
 };
 
 const achievementSpecSchema = mongoose.Schema({
@@ -29,22 +31,21 @@ const achievementSpecSchema = mongoose.Schema({
     type: String,
     required: true,
     immutable: true,
-    unique: true
+    unique: true,
   },
   description: {
     type: String,
     required: true,
-    immutable: true
+    immutable: true,
   },
   type: {
     type: String,
-    enum: ["category, payment"],
-    immutable: true
+    immutable: true,
   },
   exp: {
     type: Number,
     required: true,
-    immutable: true
+    immutable: true,
   },
   requirements: {
     type: mongoose.Schema.Types.Mixed,
@@ -53,19 +54,24 @@ const achievementSpecSchema = mongoose.Schema({
     unique: true,
     validate: {
       validator: (value) => {
-        return checkIsCategoryAchievement(value) || checkIsPaymentAchievement(value);
+        return (
+          checkIsCategoryAchievement(value) ||
+          checkIsPaymentAchievement(value) ||
+          checkIsStreakAchievement(value)
+        );
       },
-      message: "Invalid achievement requirements"
-    }
-  }
+      message: "Invalid achievement requirements",
+    },
+  },
 });
 
-achievementSpecSchema.pre("save", async function(next) {
+achievementSpecSchema.pre("save", async function (next) {
   if (checkIsCategoryAchievement(this.requirements)) {
     this.type = "category";
-
   } else if (checkIsPaymentAchievement(this.requirements)) {
     this.type = "payment";
+  } else if (checkIsStreakAchievement(this.requirements)) {
+    this.type = "streak";
   }
   next();
 });

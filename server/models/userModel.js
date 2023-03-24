@@ -4,33 +4,38 @@ const userSchema = mongoose.Schema(
   {
     name: {
       type: String,
-      maxLength: [20, "Name must be 20 characters or below"], 
-      required: [true, "Please add a username"]
+      maxLength: [20, "Name must be 20 characters or below"],
+      required: [true, "Please add a username"],
     },
     email: {
       type: String,
       validate: {
-        validator: function(v) {
+        validator: function (v) {
           return /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g.test(v);
         },
-        message: props => `${props.value} is not a valid email address`
+        message: (props) => `${props.value} is not a valid email address`,
       },
       maxLength: [254, "Email address is too long"],
       unique: true,
-      required: [true, "Please add an email"]
+      required: [true, "Please add an email"],
     },
     password: {
       type: String,
-      required: [true, "Please add a password"] 
+      required: [true, "Please add a password"],
     },
     exp: {
       type: Number,
-      default: 0
+      default: 0,
     },
     level: {
       type: Number,
-      default: 1
-    }
+      default: 1,
+    },
+    streakSince: {
+      type: Date,
+      default: Date.now,
+      required: true,
+    },
   },
   {
     timestamps: true,
