@@ -7,13 +7,16 @@ const {
   detectStreakAchievements,
 } = require("../util/streakAchievementDetection");
 
-// get all
+// @desc Get all payments belonging to the logged in user
+// @route GET /api/payment
+// @access private
 const getPayments = asyncHandler(async (req, res) => {
   const payments = await Payment.find({ userId: req.user.id });
   res.status(200).json(payments);
 });
 
-const summarise = (payments) => {
+// Get the total value of a set of payments
+const getTotal = (payments) => {
   let sum = 0;
   for (let i = 0; i < payments.length; i++) {
     sum = sum + payments[i].amount;
@@ -21,11 +24,14 @@ const summarise = (payments) => {
   return sum;
 };
 
-// summary
+// @desc Get a summary of a users payments in YTD, MTD and WTD
+// @route GET /api/payment/summary/?days=
+// @access private
 const getSummary = asyncHandler(async (req, res) => {
   let days = req.query.days;
   const dt = new Date();
 
+  // get timeframes
   const lastDay = await Payment.find({
     userId: req.user.id,
     date: { $gt: new Date(dt.getFullYear(), dt.getMonth(), dt.getDate(), 0) },
@@ -45,13 +51,15 @@ const getSummary = asyncHandler(async (req, res) => {
     date: { $gt: new Date(dt.getFullYear(), 0, 1) },
   });
 
-  let json = {
-    year: summarise(lastYear),
-    month: summarise(lastMonth),
-    week: summarise(lastWeek),
-    day: summarise(lastDay),
+  // make object
+  let object = {
+    year: getTotal(lastYear),
+    month: getTotal(lastMonth),
+    week: getTotal(lastWeek),
+    day: getTotal(lastDay),
   };
 
+  // if custom timeframe is provided
   if (days !== undefined) {
     let customCutOff = new Date();
     customCutOff.setDate(customCutOff.getDate() - days);
@@ -59,13 +67,15 @@ const getSummary = asyncHandler(async (req, res) => {
       userId: req.user.id,
       date: { $gt: customCutOff },
     });
-    json.custom = summarise(lastCustom);
+    object.custom = getTotal(lastCustom);
   }
 
-  res.status(200).json(json);
+  res.status(200).json(object);
 });
 
-// get specific
+// @desc Get payment by paymentId
+// @route GET /api/payment/:id
+// @access private
 const getPayment = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
@@ -76,7 +86,9 @@ const getPayment = asyncHandler(async (req, res) => {
   }
 });
 
-// post new
+// @desc Create a new payment
+// @route POST /api/payment
+// @access private
 const createPayment = asyncHandler(async (req, res) => {
   try {
     const { title, description, date, amount, image, categoryId } = req.body;
@@ -91,6 +103,7 @@ const createPayment = asyncHandler(async (req, res) => {
       userId: req.user.id,
     });
 
+    // detect achievements if any
     let achievements = [];
     const paymentAchievements = await detectPaymentAchievements(req);
     const streakAchievements = await detectStreakAchievements(req);
@@ -105,7 +118,9 @@ const createPayment = asyncHandler(async (req, res) => {
   }
 });
 
-// delete
+// @desc delete a payment by paymentId
+// @route DELETE /api/payment/:id
+// @access private
 const deletePayment = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
@@ -119,7 +134,9 @@ const deletePayment = asyncHandler(async (req, res) => {
   }
 });
 
-// update
+// @desc update a payment by paymentId
+// @route PATCH /api/payment/:id
+// @access private
 const updatePayment = asyncHandler(async (req, res) => {
   try {
     const { id } = req.params;
