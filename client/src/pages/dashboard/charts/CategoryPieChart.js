@@ -53,12 +53,12 @@ export default function CategoryPieChart(props) {
         const paymentDate = new Date(pay.date);
         if (paymentDate >= startDate && paymentDate <= endDate) {
           // Only considers payments in current month
-          if (isSameMonthAsToday(new Date(Date.parse(pay.date)))) {
+          // if (isSameMonthAsToday(new Date(Date.parse(pay.date)))) {
             // if(false) {
             if (pay.categoryId === cat._id) {
               sum += pay.amount;
             }
-          }
+          // }
         }
       });
 

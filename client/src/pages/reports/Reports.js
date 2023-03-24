@@ -1,4 +1,5 @@
 import axios from "axios";
+import { array } from "prop-types";
 import { useEffect, useState } from "react";
 import ReactDatePicker from "react-datepicker";
 import { useToken } from "../../authentication/useToken";
@@ -9,7 +10,7 @@ import MonthlyBarGraph from "../dashboard/charts/MonthlyBarGraph";
 export default function Reports() {
   const [token, setToken] = useToken();
 
-  const [start, setStart] = useState(new Date());
+  const [start, setStart] = useState(new Date(0));
   const [end, setEnd] = useState(new Date());
   const [duration, setDuration] = useState("");
 
@@ -37,6 +38,17 @@ export default function Reports() {
         setData(res.data);
       });
   }, []);
+
+
+  const [biggestPayment, setBiggestPayment] = useState({});
+  useEffect(() => {
+    if(data.length > 0) {
+      const biggest = data.reduce((prev, curr) => {
+        return prev.amount > curr.amount ? prev : curr;
+      });
+      setBiggestPayment(biggest);
+    }
+  }, [data])
 
   const onDurationSelect = (dur) => {
     setDuration(dur);
@@ -79,6 +91,49 @@ export default function Reports() {
     return isSelected ? "report-btn-selected" : "";
   };
 
+  const [categoryStat, setCategoryStat] = useState({});
+  // const getBiggestCategory = (payments) =>  {
+  //   if(payments)
+  // }
+  useEffect(() => {
+    axios
+      .get("/api/category", {
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+      })
+      .then((categoryMetaData) => {
+        let res = [];
+        const catData = categoryMetaData.data;
+        catData.forEach((cat) => {
+          let sum = 0;
+          data.forEach((pay) => {
+            const paymentDate = new Date(pay.date);
+            if (paymentDate >= start && paymentDate <= end) {
+              if (pay.categoryId === cat._id) {
+                sum += pay.amount;
+              }
+            }
+          });
+
+          // Excludes empty categories
+          if (sum !== 0) {
+            res.push({
+              name: cat.name,
+              amount: sum,
+            });
+          }
+        });
+
+        if(res) {
+          const maxCat = res.reduce((prev, curr) => {
+            return prev.amount > curr.amount ? prev : curr;
+          });
+          setCategoryStat(maxCat);
+        }
+      });
+  }, [data, start, end]);
+
   return (
     <div className="reports-page">
       <h1>Reports</h1>
@@ -93,12 +148,23 @@ export default function Reports() {
           </div>
         ))}
       </div>
-      {
-      selectedClass("custom") ? (
+      {selectedClass("custom") ? (
         <div className="date-picker-container">
           <h3>Select custom duration</h3>
           <div className="report-date-pickers">
             <div>
+            <span>Start date</span>
+              <div className="inputFormInputBox report-date">
+                <input
+                  type="date"
+                  className="form-control"
+                  id="date"
+                  name="date"
+                  selected={start}
+                  placeholder="Date"
+                  onChange={(date) => setStart(date)}
+                />
+              </div>
               <span>End date</span>
               <div className="inputFormInputBox report-date">
                 <input
@@ -111,20 +177,10 @@ export default function Reports() {
                   onChange={(date) => setEnd(date)}
                 />
               </div>
-              <div className="inputFormInputBox report-date">
-                <input
-                  type="date"
-                  className="form-control"
-                  id="date"
-                  name="date"
-                  selected={start}
-                  placeholder="Date"
-                  onChange={(date) => setStart(date)}
-                />
-              </div>
-              </div>   
-              </div>  
-              </div>       
+              
+            </div>
+          </div>
+        </div>
       ) : (
         []
       )}
@@ -140,14 +196,34 @@ export default function Reports() {
           <DashboardChart payments={data} />
         </div>
         <div className="report-stats">
-            <div className="report-stat-card stat-small">
-                <div className="stat-title">You spent the most on <b>Food</b></div>
-                <div className="stat-amount">£200</div>
-            </div>
-            <div className="report-stat-card stat-medium">
-                <div className="stat-title">Your biggest purchase was on <b>12th Jan 2023</b> on <b>Tesco</b></div>
-                <div className="stat-amount">£3.40</div>
-            </div>
+          <div className="report-stat-card stat-small">
+            {categoryStat ? (
+              <>
+                <div className="stat-title">
+                  You spent the most on <b>{categoryStat.name}</b>
+                </div>
+                <div className="stat-amount">£{categoryStat.amount}</div>
+              </>
+            ) : (
+              <div className="stat-title">
+                Not enough data to determine the most spent category
+              </div>
+            )}
+          </div>
+          <div className="report-stat-card stat-medium">
+          {biggestPayment ? (
+              <>
+                <div className="stat-title">
+                Your biggest purcase was on <b>{new Date(Date.parse(biggestPayment.date)).toLocaleDateString()}</b> on <b>{biggestPayment.title}</b>
+                </div>
+                <div className="stat-amount">£{biggestPayment.amount}</div>
+              </>
+            ) : (
+              <div className="stat-title">
+                Not enough data to determine the most spent category
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
