@@ -1,7 +1,6 @@
 import Register from "../pages/Register";
 import { fireEvent, render, screen } from "@testing-library/react";
 import { BrowserRouter } from 'react-router-dom';
-import { findRenderedComponentWithType } from "react-dom/test-utils";
 
 describe('Header Component (User not logged in)', () => {
   let nameInput;
@@ -10,9 +9,15 @@ describe('Header Component (User not logged in)', () => {
   let password2Input;
   let registerButton;
 
+  const fillInputs = () => {
+    fireEvent.change(nameInput, { target: { value: "John Doe" } });
+    fireEvent.change(emailInput, { target: { value: "johndoe@example.com" } });
+    fireEvent.change(passwordInput, { target: { value: "password123" } });
+  }
+
   beforeEach(() => {
     render(
-      <BrowserRouter>
+      <BrowserRouter initialEntries={['/register']}>
         <Register />
       </BrowserRouter>
     )
@@ -37,13 +42,19 @@ describe('Header Component (User not logged in)', () => {
   })
 
   it("displays error message when password and password2 inputs don't match", async () => {
-    fireEvent.change(nameInput, { target: { value: "John Doe" } });
-    fireEvent.change(emailInput, { target: { value: "johndoe@example.com" } });
-    fireEvent.change(passwordInput, { target: { value: "password123" } });
+    fillInputs();
     fireEvent.change(password2Input, { target: { value: "password" } });
     fireEvent.click(registerButton);
 
     const err = await screen.findByText("Passwords do not match");
     expect(err).toBeInTheDocument();
+  })
+
+  it("redirects to / on successful register", async () => {
+    fillInputs();
+    fireEvent.change(password2Input, { target: { value: "password123" } });
+    fireEvent.click(registerButton);
+
+    await expect(window.location.pathname).toBe("/");
   })
 });

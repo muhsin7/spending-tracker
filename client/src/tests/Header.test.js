@@ -5,7 +5,7 @@ import { BrowserRouter } from 'react-router-dom';
 const testClick = (text) => {
   let button = screen.getByText(text.charAt(0).toUpperCase() + text.slice(1))
   fireEvent.click(button);
-  expect(window.location.pathname).toBe(`/${text}`)
+  expect(window.location.pathname).toBe(`/${text}`);
 }
 
 describe('Header Component (User not logged in)', () => {
@@ -33,7 +33,7 @@ describe('Header Component (User not logged in)', () => {
 
   it('Sign Up button redirects to /register', () => {
     fireEvent.click(registerButton);
-    expect(window.location.pathname).toBe("/register")
+    expect(window.location.pathname).toBe("/register");
   })
 
   it('Login button redirects to /login', () => {

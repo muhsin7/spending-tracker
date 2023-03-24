@@ -287,6 +287,7 @@ function AddPayment() {
         } else
           warnNotif("You are close to exceeding your global spending limit!");
       }
+      
       if (categoryPercentage > 80) {
         if (categoryPercentage > 100) {
           errorNotif(

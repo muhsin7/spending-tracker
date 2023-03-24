@@ -18,11 +18,19 @@ export default function PaymentCardEdit(props) {
   // Creates an imageURL if it exists
   let imageURL = "";
 
+  function _arrayBufferToBase64( buffer ) {
+    var binary = '';
+    var bytes = new Uint8Array( buffer );
+    var len = bytes.byteLength;
+    for (var i = 0; i < len; i++) {
+        binary += String.fromCharCode( bytes[ i ] );
+    }
+    return binary;
+  }
+
   if (DOES_IMAGE_EXIST) {
     const IMAGE = props.payment.image;
-    const IMAGE_BASE64 = String.fromCharCode(
-      ...new Uint8Array(IMAGE.data.data)
-    );
+    const IMAGE_BASE64 =_arrayBufferToBase64(IMAGE.data.data);
     imageURL = `data:${IMAGE.contentType};base64,${IMAGE_BASE64}`;
   }
 

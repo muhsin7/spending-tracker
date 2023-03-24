@@ -108,7 +108,7 @@ function CategoryCard(props) {
   function handleCategoryDelete() {
     confirmAlert({
       title: TITLE,
-      message: "Are you sure you want to delete this payment?",
+      message: "Are you sure you want to delete this category?",
       buttons: [
         {
           label: "Yes",
