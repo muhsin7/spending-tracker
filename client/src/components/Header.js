@@ -4,7 +4,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 export default function Header(props) {
-  const [popup, setPopup] = useState(false);
   const [user, setUser] = useState({});
 
   const [isAuth, setAuth] = props.auth;
@@ -33,10 +32,6 @@ export default function Header(props) {
     setAuth(false);
     localStorage.clear();
     navigate("/");
-  };
-
-  const toggleAccountPopup = () => {
-    setPopup(!popup);
   };
 
   return (
