@@ -88,10 +88,8 @@ function processData({
 }
 
 export default function DashboardChart(props) {
-  const [isCumulative, setIsCumulative] = useState(false);
-
+      
   const [data, setData] = useState([]);
-
   const [dataByDate, setDataByDate] = useState(processData({ payments: data }));
 
   const todayMonthName = () => {
@@ -114,92 +112,54 @@ export default function DashboardChart(props) {
     return `${months[monthIndex]}  ${today.getFullYear()}`;
   };
 
-  const toggleCumulative = (event) => {
-    event.persist();
-    setIsCumulative(event.target.checked);
-    if (event.target.checked) {
-      setDataByDate(
-        processData({
-          data,
-          startDate: props.start,
-          endDate: props.end,
-          cumulative: true,
-        })
-      );
-    } else {
-      setDataByDate(
-        processData({
-          data,
-          startDate: props.start,
-          endDate: props.end,
-          cumulative: false,
-        })
-      );
-    }
-  };
+    useEffect(() =>
+      {
+        setData(props.payments);
+        const newData = processData({payments: props.payments, startDate: props.start, endDate: props.end});
+        console.log(newData);
+        setDataByDate(newData);
+      }, [props.payments, props.start, props.end]);
 
-  useEffect(() => {
-    setData(props.payments);
-    setDataByDate(processData({ payments: data }));
-  }, [props.payments]);
 
-  const renderLineChart = (
-    <>
-      <ResponsiveContainer>
-        <LineChart
-          data={dataByDate}
-          margin={{ top: 5, right: 10, bottom: 5, left: 0 }}
-        >
-          <Line
-            type="monotone"
-            dataKey="amount"
-            strokeWidth={2.5}
-            stroke="#00B57F  "
-          />
-          {/* <CartesianGrid stroke="#ccc" strokeDasharray="5 5" /> */}
-          <CartesianGrid stroke="none" />
-          <XAxis
-            stroke="#ccc"
-            dataKey="date"
-            domain={["auto", "auto"]}
-            height={40}
-            tickFormatter={(unixTimeString) =>
-              dateStringFromUnixString(unixTimeString)
-            }
-            // tickFormatter={unixTime=> new Date(Number(unixTime)).getDate()}
-          >
-            <Label
-              style={{
-                textAnchor: "middle",
-                // fontSize: "130%",
-                fill: "white",
-              }}
-              value={"(Cumulative payments since start date)"}
-              offset={0}
-              position="insideBottom"
-            />
-            {/* // value={(props.start && props.end) ? `${props.start.toDateString()} to ${props.end.toDateString()}` : ""} offset={0} position="insideBottom" /> */}
-          </XAxis>
-          <Label
-            style={{
-              textAnchor: "middle",
-              fontSize: "130%",
-              fill: "white",
-            }}
-            angle={270}
-            value={"Height (ft.)"}
-          />
-          <YAxis stroke="#ccc" tickFormatter={(amount) => "£" + amount} />
-          <Tooltip filterNull={false} content={<CustomTooltip />} />
-          <Tooltip />
-        </LineChart>
-      </ResponsiveContainer>
-      {/* <label className="checkbox-label">
-                <input type="checkbox" checked={isCumulative} onChange={toggleCumulative} />
-                <span>Cumulative data</span>
-            </label> */}
-    </>
-  );
+    const renderLineChart = (
+        <>
+            <ResponsiveContainer>
+                <LineChart data={dataByDate} margin={{ top: 5, right: 10, bottom: 5, left: 0 }}>
+                    <Line type="monotone" dataKey="amount" strokeWidth={2.5} stroke="#00B57F  " />
+                    {/* <CartesianGrid stroke="#ccc" strokeDasharray="5 5" /> */}
+                    <CartesianGrid stroke='none' />
+                    <XAxis
+                        stroke="#ccc"
+                        dataKey="date"
+                        domain={["auto", "auto"]}
+                        height={40}
+                        tickFormatter={unixTimeString => dateStringFromUnixString(unixTimeString)}
+                        // tickFormatter={unixTime=> new Date(Number(unixTime)).getDate()}
+                    >
+                            <Label style={{
+                            textAnchor: "middle",
+                            // fontSize: "130%",
+                            fill: "white",
+                            }}
+                            value={"(Cumulative payments since start date)"} offset={0} position="insideBottom" />
+                        {/* // value={(props.start && props.end) ? `${props.start.toDateString()} to ${props.end.toDateString()}` : ""} offset={0} position="insideBottom" /> */}
+                    </XAxis>
+                    <Label
+                        style={{
+                            textAnchor: "middle",
+                            fontSize: "130%",
+                            fill: "white",
+                        }}
+                        angle={270} 
+                        value={"Height (ft.)"} />
+                    <YAxis stroke="#ccc" tickFormatter={amount => "£"+amount}/>
+                    <Tooltip filterNull={false} content={<CustomTooltip />}/>
+                    <Tooltip />
+                </LineChart>
+            </ResponsiveContainer>
+        </>
+    );
+    
 
   return renderLineChart;
 }
