@@ -16,9 +16,9 @@
 }
 
 .dashboard-edit-profile-details {
-  margin-inline: auto;
+  margin-inline: 10px;
   text-align: center;
-  width: 175px;
+  width: auto;
   height: 30px;
   padding-top: 3px;
 }

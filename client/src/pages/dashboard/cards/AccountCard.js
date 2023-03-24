@@ -73,16 +73,17 @@ export default function AccountCard() {
           <div>{user.email}</div>
         </div>
       </div>
-      <Level />
-      <span className="account-achievements-number">
-        {achievements.filter((achievement) => achievement.owned).length} /{" "}
-        {achievements.length} achievements unlocked
-      </span>
       <Link to="/user/update">
         <div className="btn dashboard-edit-profile-details">
           Edit profile details
         </div>
       </Link>
+      <Level />
+      <span className="account-achievements-number">
+        Achievements unlocked:{" "}
+        {achievements.filter((achievement) => achievement.owned).length} /{" "}
+        {achievements.length}
+      </span>
     </div>
   );
 }
