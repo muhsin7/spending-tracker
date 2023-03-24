@@ -30,18 +30,12 @@ Detailed installation instructions can be found in the developer handbook PDF at
 The React client and Node server dependencies are to be installed separately.
 NOTE: `npm` is included in Node.js installations
 
-### Server
-To install server dependencies:
-```bash
-cd server
-npm install
-```
 
-### Client
-To install client dependencies:
+
+### Dependencies
+To install server & client dependencies:
 ```bash
-cd client
-npm install
+npm installAll
 ```
 
 ### Set up ./server/.env file
@@ -70,13 +64,24 @@ npm run seedAchievements
 ```
 
 ### Server
-Runs server on localhost port 3000
+The commands to install dependencies and run the backend and frontend have been encapsulated in commands that can be run from the root directory:
+
+Running the product (frontend & backend concurrently)
+```bash
+npm run start
+```
+
+Alternatively, you can run the backend and frontend separately with the below commands:
+
+#### Start the backend server
 ```bash
 cd server
 npm run dev
 ```
-### Client
+#### Start the frontend client
 ```bash
 cd client
-npm start
+npm run start
 ```
+
+
